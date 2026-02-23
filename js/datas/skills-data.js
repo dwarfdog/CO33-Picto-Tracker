@@ -3,7 +3,7 @@
 const DATA = {
     "meta": {
         "jeu": "Clair Obscur : Expédition 33",
-        "total_pictos": 194,
+        "total_pictos": 210,
         "traductions_confirmees": 166,
         "traductions_derivees": 27,
         "sources": [
@@ -21,7 +21,7 @@ const DATA = {
             "nom_fr": "Insaisissable",
             "traduction_confirmee": true,
             "effet_en": "Gain 1 AP after Perfect Dodge. Once per turn.",
-            "effet_fr": "",
+            "effet_fr": "+1 PA en réussissant une esquive parfaite. Une fois par tour",
             "statistiques": {
                 "vitesse": "12",
                 "chances_crit": "0.03"
@@ -29,7 +29,7 @@ const DATA = {
             "localisation_en": "Spring Meadows (Meadows Corridor)",
             "localisation_fr": "",
             "obtention_en": "Defeat the Portier after Lune joins the party.",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu automatiquement après le premier combat fait avec Lune.",
             "zone": "Spring Meadows"
         },
         {
@@ -38,7 +38,7 @@ const DATA = {
             "nom_fr": "Brûlures critiques",
             "traduction_confirmee": true,
             "effet_en": "25% increased Critical Chance on Burning Enemies",
-            "effet_fr": "",
+            "effet_fr": "Chances de critique augmentées de 25% contre les ennemis affectés par Brûlure",
             "statistiques": {
                 "vitesse": "8",
                 "chances_crit": "0.06"
@@ -46,7 +46,7 @@ const DATA = {
             "localisation_en": "Spring Meadows (Meadows Corridor)",
             "localisation_fr": "",
             "obtention_en": "After getting Lanceram, look for a path on the right that leads to a small cave.",
-            "obtention_fr": "",
+            "obtention_fr": "Dans la petite grotte à droite après avoir battu les premiers Lanceliers dans le couloir des clairières.",
             "zone": "Spring Meadows"
         },
         {
@@ -63,7 +63,7 @@ const DATA = {
             "localisation_en": "Spring Meadows (Meadows Corridor)",
             "localisation_fr": "",
             "obtention_en": "Defeat the Chromatic Lancelier after learning about flying enemies.",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu en battant le Lancelier Chromatique dans le couloir des clairières.",
             "zone": "Spring Meadows"
         },
         {
@@ -78,9 +78,9 @@ const DATA = {
                 "chances_crit": "0.25"
             },
             "localisation_en": "Spring Meadows (Abandoned Expeditioner)",
-            "localisation_fr": "",
+            "localisation_fr": "20% de chances d’appliquer Brûlure sur les tirs en visée libre",
             "obtention_en": "From the campsite, go through the cave path until you're outside, and then head left towards the cliff.",
-            "obtention_fr": "",
+            "obtention_fr": "Au camp d’expédition abandonné, près du bord de la falaise après avoir rencontré l’Amphorien blanc.",
             "zone": "Spring Meadows"
         },
         {
@@ -89,7 +89,7 @@ const DATA = {
             "nom_fr": "Énergie mortelle II",
             "traduction_confirmee": true,
             "effet_en": "+3 AP on killing an enemy",
-            "effet_fr": "",
+            "effet_fr": "+3 PA en tuant un ennemi",
             "statistiques": {
                 "vitesse": "4",
                 "chances_crit": "0.09"
@@ -97,7 +97,7 @@ const DATA = {
             "localisation_en": "Spring Meadows (Abandoned Expeditioner)",
             "localisation_fr": "",
             "obtention_en": "From the campsite, go through the cave path. When you're outside, turn right and follow the path.",
-            "obtention_fr": "",
+            "obtention_fr": "Au camp d’expédition abandonné, après avoir rencontré l’Amphorien blanc, suivez le chemin à droite dans la zone suivante jusqu’à des caisses.",
             "zone": "Spring Meadows"
         },
         {
@@ -106,7 +106,7 @@ const DATA = {
             "nom_fr": "Teinte purificatrice",
             "traduction_confirmee": true,
             "effet_en": "Healing Tints also remove all Status Effects from the target",
-            "effet_fr": "",
+            "effet_fr": "Les teintes curatives dissipent également les altérations de la cible",
             "statistiques": {
                 "sante": "778",
                 "defense": "319"
@@ -114,7 +114,7 @@ const DATA = {
             "localisation_en": "Spring Meadows (The Indigo Tree)",
             "localisation_fr": "",
             "obtention_en": "Defeat Eveque, the boss of the area, to get this Pictos.",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu en battant l’Evêque.",
             "zone": "Spring Meadows"
         },
         {
@@ -123,7 +123,7 @@ const DATA = {
             "nom_fr": "Attaque renforçante",
             "traduction_confirmee": true,
             "effet_en": "Gain Powerful for 1 turn on Base Attack",
-            "effet_fr": "",
+            "effet_fr": "Les attaques de base confèrent Surpuissance pendant 1 tour",
             "statistiques": {
                 "vitesse": "12",
                 "chances_crit": "0.03"
@@ -131,7 +131,7 @@ const DATA = {
             "localisation_en": "Spring Meadows (The Indigo Tree)",
             "localisation_fr": "",
             "obtention_en": "Instead of leaving Spring Meadows after the Eveque fight, turn around and follow the path on the right.",
-            "obtention_fr": "",
+            "obtention_fr": "Après avoir battu l’Evêque, partez du message laissé en rouge puis suivez le chemin sur la gauche. Le picto est au bout d’une pointe rocheuse.",
             "zone": "Spring Meadows"
         },
         {
@@ -140,7 +140,7 @@ const DATA = {
             "nom_fr": "Danger protecteur",
             "traduction_confirmee": true,
             "effet_en": "Apply Shell when falling below 50% Health",
-            "effet_fr": "",
+            "effet_fr": "Gagne Carapace en tombant en dessous de 50 % de santé",
             "statistiques": {
                 "defense": "13",
                 "vitesse": "14"
@@ -148,7 +148,7 @@ const DATA = {
             "localisation_en": "Flying Waters (Before Any Flag)",
             "localisation_fr": "",
             "obtention_en": "Immediately upon loading the map, enter the path to the left of the anchor. The Pictos is on the ground at the end of the path.",
-            "obtention_fr": "",
+            "obtention_fr": "Face à l’ancre géante, partez vers la gauche pour trouver le picto derrière les algues.",
             "zone": "Flying Waters"
         },
         {
@@ -157,7 +157,7 @@ const DATA = {
             "nom_fr": "Tirs marquants",
             "traduction_confirmee": true,
             "effet_en": "20% Chance to apply Mark on Free Aim shot",
-            "effet_fr": "",
+            "effet_fr": "20% de chances d’appliquer Marque sur les tirs en visée libre",
             "statistiques": {
                 "vitesse": "26",
                 "chances_crit": "0.02"
@@ -165,7 +165,7 @@ const DATA = {
             "localisation_en": "Flying Waters (Before Any Flag)",
             "localisation_fr": "",
             "obtention_en": "Follow the path beyond the Paint Cage to reach a fork that is marked with several lanterns on the ground. Head left at the fork and defeat the two enemies at the end of the path. The Pictos is on the ground just past those enemies.",
-            "obtention_fr": "",
+            "obtention_fr": "Face au sentier éclairé de lanternes, suivez le chemin sur la gauche pour trouver le pic dans le cul-de-sac.",
             "zone": "Flying Waters"
         },
         {
@@ -174,7 +174,7 @@ const DATA = {
             "nom_fr": "Attaque fragilisante",
             "traduction_confirmee": true,
             "effet_en": "Base Attack applies Defenceless for 1 turn",
-            "effet_fr": "",
+            "effet_fr": "Les attaques de base infligent Vulnérabilité pendant 1 tour",
             "statistiques": {
                 "vitesse": "20",
                 "chances_crit": "0.04"
@@ -182,7 +182,7 @@ const DATA = {
             "localisation_en": "Flying Waters (Noco's Hut)",
             "localisation_fr": "",
             "obtention_en": "After Gustave and Lune extract Maelle from the Manor, speak with the Gestral Merchant who appears in front of the hut. Fight and defeat that merchant to add this Pictos to their wares.",
-            "obtention_fr": "",
+            "obtention_fr": "À acheter à Noco après l’avoir affronté.",
             "zone": "Flying Waters"
         },
         {
@@ -191,7 +191,7 @@ const DATA = {
             "nom_fr": "Attaque Fracturante",
             "traduction_confirmee": true,
             "effet_en": "50% Increased Break Damage on Base Attack",
-            "effet_fr": "Dégats de Fracture augmentés de 50% lors des attaques de base.",
+            "effet_fr": "Dégâts de Fracture augmentés de 50% lors des attaques de base",
             "statistiques": {
                 "vitesse": "21",
                 "chances_crit": "0.04"
@@ -199,7 +199,7 @@ const DATA = {
             "localisation_en": "Flying Waters (Coral Cave)",
             "localisation_fr": "",
             "obtention_en": "Pass the Flag and immediately look to the right to find this Pictos on the ground.",
-            "obtention_fr": "",
+            "obtention_fr": "En partant du drapeau de la Grotte de Corail, dirigez-vous vers la droite.",
             "zone": "Flying Waters"
         },
         {
@@ -208,7 +208,7 @@ const DATA = {
             "nom_fr": "Marque gratifiante",
             "traduction_confirmee": true,
             "effet_en": "+2 AP on dealing damage to a Marked target. Once per turn.",
-            "effet_fr": "",
+            "effet_fr": "+2 PA en attaquant une cible marquée. Une fois par tour",
             "statistiques": {
                 "defense": "20",
                 "vitesse": "7"
@@ -216,7 +216,7 @@ const DATA = {
             "localisation_en": "Flying Waters (Coral Cave)",
             "localisation_fr": "",
             "obtention_en": "(1) Players will encounter a mass from which several lanterns extend just past the Expedition Flag. After passing that mass, players should look for a short ramp on their left, which leads to an alcove with this Pictos. (2) Buy from Merchant for 53,880 Chroma from Sacred River.",
-            "obtention_fr": "",
+            "obtention_fr": "Après le drapeau de la Grotte de Corail, montez la pente à votre gauche.",
             "zone": "Flying Waters"
         },
         {
@@ -225,7 +225,7 @@ const DATA = {
             "nom_fr": "Contre amélioré I",
             "traduction_confirmee": true,
             "effet_en": "25% increased Counterattack damage",
-            "effet_fr": "",
+            "effet_fr": "Dégâts de contre augmentés de 25%",
             "statistiques": {
                 "sante": "563",
                 "chances_crit": "0.07"
@@ -233,7 +233,7 @@ const DATA = {
             "localisation_en": "Flying Waters (Coral Cave)",
             "localisation_fr": "",
             "obtention_en": "Players can now climb the aforementioned two-handhold wall and follow the path forward. Before reaching the buildings on this path, players should enter a small corridor on their right and fight the Bourgeon that they encounter to obtain the Pictos, weapon, and quest item.",
-            "obtention_fr": "",
+            "obtention_fr": "Battre le Bourgeon au sud-est des Terres Oubliées. Nécessite d’avoir débloqué la capacité de voler d’Esquie.",
             "zone": "Flying Waters"
         },
         {
@@ -241,8 +241,8 @@ const DATA = {
             "nom_en": "Energising Break",
             "nom_fr": "Fracture énergisante",
             "traduction_confirmee": true,
-            "effet_en": "+3 AP on Breaking a target.",
-            "effet_fr": "",
+            "effet_en": "+3 AP on Breaking a target",
+            "effet_fr": "+3 PA en infligeant Fracture à un ennemi",
             "statistiques": {
                 "vitesse": "14",
                 "chances_crit": "0.07"
@@ -250,7 +250,7 @@ const DATA = {
             "localisation_en": "Flying Waters (Lumieran Street)",
             "localisation_fr": "",
             "obtention_en": "This Pictos is on the ground just past the Chromatic Troubadour.",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu après avoir battu le Troubadour Chromatique. Le picto se ramasse juste derrière lui.",
             "zone": "Flying Waters"
         },
         {
@@ -259,7 +259,7 @@ const DATA = {
             "nom_fr": "Polyvalence",
             "traduction_confirmee": true,
             "effet_en": "After a Free Aim hit, base attack damage is increased by 50% for 1 turn.",
-            "effet_fr": "",
+            "effet_fr": "Après un tir en visée libre, les dégâts d’attaque de base augmentent de 50% pendant 1 tour",
             "statistiques": {
                 "vitesse": "21",
                 "chances_crit": "0.04"
@@ -267,7 +267,7 @@ const DATA = {
             "localisation_en": "Flying Waters (Lumieran Street)",
             "localisation_fr": "",
             "obtention_en": "Players who head straight forward from the Flag will find that there are two buildings emerging from the ground. Players should get on top of those buildings and then use their grappling hooks to reach the buildings on the side of the area. Players should then go right and grab this Pictos from the ground.",
-            "obtention_fr": "",
+            "obtention_fr": "Dans la rue de Lumière, utilisez le grappin pour monter sur les toits et trouver le picto au pied de l’arbre rouge.",
             "zone": "Flying Waters"
         },
         {
@@ -276,7 +276,7 @@ const DATA = {
             "nom_fr": "Énergie de saut",
             "traduction_confirmee": true,
             "effet_en": "+1 AP on Jump Counterattack",
-            "effet_fr": "",
+            "effet_fr": "+1 PA à chaque contre sauté",
             "statistiques": {
                 "sante": "44",
                 "vitesse": "29"
@@ -284,7 +284,7 @@ const DATA = {
             "localisation_en": "Ancient Sanctuary (Entrance)",
             "localisation_fr": "",
             "obtention_en": "Find this Pictos on the ground to the left of the illuminated spot that was used to trap the local Petank.",
-            "obtention_fr": "",
+            "obtention_fr": "En partant de la position du Petank, dirigez-vous vers la gauche pour trouver le picto.",
             "zone": "Ancient Sanctuary"
         },
         {
@@ -293,7 +293,7 @@ const DATA = {
             "nom_fr": "Marque brûlante",
             "traduction_confirmee": true,
             "effet_en": "Apply Burn on hitting a Marked enemy",
-            "effet_fr": "",
+            "effet_fr": "Applique Brûlure en touchant un ennemi marqué.",
             "statistiques": {
                 "sante": "44",
                 "defense": "32"
@@ -301,7 +301,7 @@ const DATA = {
             "localisation_en": "Ancient Sanctuary (Entrance)",
             "localisation_fr": "",
             "obtention_en": "Players should follow the stream in the area with the Petank to reach a wall with handholds, which they can shimmy across. This action will lead players to a small area with this Pictos.",
-            "obtention_fr": "",
+            "obtention_fr": "Après avoir croisé le Petank, suivez le chemin principal et longer la paroi sur la gauche pour trouve le picto légèrement en contrebas.",
             "zone": "Ancient Sanctuary"
         },
         {
@@ -310,14 +310,14 @@ const DATA = {
             "nom_fr": "Énergie — Départ II",
             "traduction_confirmee": true,
             "effet_en": "+1 AP on battle start",
-            "effet_fr": "",
+            "effet_fr": "+1 PA au début du combat",
             "statistiques": {
                 "sante": "175"
             },
             "localisation_en": "Ancient Sanctuary (Sanctuary Maze)",
             "localisation_fr": "",
             "obtention_en": "After passing the Sanctuary Maze Expedition Flag, players should go right at the fork and look for a small alcove on their right. There is a low gap in this alcove through which players can crawl, and they should go right when they emerge. Players should then make their way to the far end of the area and use the two handholds on the left to climb a small wall. There is a path at the top that leads directly to this Pictos.",
-            "obtention_fr": "",
+            "obtention_fr": "Escaladez la paroi près de la grotte pour trouver le picto dans une impasse.",
             "zone": "Ancient Sanctuary"
         },
         {
@@ -326,7 +326,7 @@ const DATA = {
             "nom_fr": "Vol de vie",
             "traduction_confirmee": true,
             "effet_en": "Recover 15% Health on base attack",
-            "effet_fr": "",
+            "effet_fr": "Les attaques de base rendent 15% de santé",
             "statistiques": {
                 "sante": "88",
                 "chances_crit": "0.08"
@@ -334,21 +334,24 @@ const DATA = {
             "localisation_en": "Ancient Sanctuary (Sanctuary Maze)",
             "localisation_fr": "",
             "obtention_en": "Players should now descend the handholds that they used to reach the Energising Start II Pictos and enter the tunnel that is ahead. This tunnel leads to a Catapult Sakapatate, who is guarding this Pictos in a small alcove.",
-            "obtention_fr": "",
+            "obtention_fr": "Après avoir battu un Sakapatate, affrontez l’ennemi dans la partie droite de la caverne pour récupérer le picto.",
             "zone": "Ancient Sanctuary"
         },
         {
             "id": 20,
             "nom_en": "Piercing Shot",
-            "nom_fr": "Tirs perforants",
-            "traduction_confirmee": false,
+            "nom_fr": "Tir perforants",
+            "traduction_confirmee": true,
             "effet_en": "25% increased Free Aim damage. Free Aim shots ignore Shields",
-            "effet_fr": "",
-            "statistiques": {},
+            "effet_fr": "Dégâts de visée libre augmentés de 25%. Les tirs en visée libre ignorent les boucliers",
+            "statistiques": {
+                "sante": "546",
+                "chances_crit": "0.15"
+            },
             "localisation_en": "Ancient Sanctuary (Sanctuary Maze)",
             "localisation_fr": "",
             "obtention_en": "In the area just before the area with the blue statues, use paint break to destroy a root. Head forward to the Gestral Totem expedition flag. Jump into the water and follow it into an alcove with the Pictos.",
-            "obtention_fr": "",
+            "obtention_fr": "En partant du drapeau d’expédition 63, avancez sur votre gauche jusqu’à atteindre une zone où se trouve un sakapatate. Là, vous devrez briser un rocher avec le pouvoir Brise peinture. Le picto se trouve au bout du chemin.",
             "zone": "Ancient Sanctuary"
         },
         {
@@ -357,7 +360,7 @@ const DATA = {
             "nom_fr": "Fracture améliorée",
             "traduction_confirmee": true,
             "effet_en": "25% Increased Break Damage",
-            "effet_fr": "",
+            "effet_fr": "Dégâts de Fracture augmentés de 25%",
             "statistiques": {
                 "vitesse": "26",
                 "chances_crit": "0.09"
@@ -365,7 +368,7 @@ const DATA = {
             "localisation_en": "Ancient Sanctuary (Giant Bell Alley)",
             "localisation_fr": "",
             "obtention_en": "Players will encounter the Ultimate Sakapatate, the map's final boss, not long after passing the Giant Bell Alley Expedition Flag, and they will receive this Pictos upon besting the foe in combat.",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu en battant le Sakapatate Ultime.",
             "zone": "Ancient Sanctuary"
         },
         {
@@ -374,7 +377,7 @@ const DATA = {
             "nom_fr": "Étourdissement opportun",
             "traduction_confirmee": true,
             "effet_en": "30% increased damage on Stunned targets",
-            "effet_fr": "",
+            "effet_fr": "Dégâts augmentés de 30% contre les cibles étourdies",
             "statistiques": {
                 "vitesse": "35",
                 "chances_crit": "0.02"
@@ -382,7 +385,7 @@ const DATA = {
             "localisation_en": "Ancient Sanctuary (Giant Bell Alley)",
             "localisation_fr": "",
             "obtention_en": "There is a tunnel through which players can crawl next to the Energy Tint Shard, and the path that is beyond that tunnel leads directly to this Pictos.",
-            "obtention_fr": "",
+            "obtention_fr": "Dans l’arène du Sakapatate Ultime, baissez-vous pour entrer dans le recoin situé à droite et y trouver le picto.",
             "zone": "Ancient Sanctuary"
         },
         {
@@ -391,7 +394,7 @@ const DATA = {
             "nom_fr": "Instant critique",
             "traduction_confirmee": true,
             "effet_en": "50% increased Critical Chance if Health is below 30%.",
-            "effet_fr": "",
+            "effet_fr": "Chances de critique augmentées de 50% si la santé est en-dessous de 30%",
             "statistiques": {
                 "vitesse": "26",
                 "chances_crit": "0.09"
@@ -399,7 +402,7 @@ const DATA = {
             "localisation_en": "Gestral Village",
             "localisation_fr": "",
             "obtention_en": "Buy from the Bazaar",
-            "obtention_fr": "",
+            "obtention_fr": "À acheter au premier marchand du bazar Gestral.",
             "zone": "Gestral Village"
         },
         {
@@ -408,7 +411,7 @@ const DATA = {
             "nom_fr": "Roulette",
             "traduction_confirmee": true,
             "effet_en": "Every hit has a 50% chance to deal either 50% or 200% of its damage",
-            "effet_fr": "",
+            "effet_fr": "Chaque coup a 50% de chances d’infliger soit 50% soit 200% des dégâts normaux",
             "statistiques": {
                 "defense": "34",
                 "chances_crit": "0.09"
@@ -416,7 +419,7 @@ const DATA = {
             "localisation_en": "Gestral Village",
             "localisation_fr": "",
             "obtention_en": "Speak to the Gambler",
-            "obtention_fr": "",
+            "obtention_fr": "Parler au joueur Gestral et répondez « Je m’en fiche » à sa question pour obtenir le picto.",
             "zone": "Gestral Village"
         },
         {
@@ -425,14 +428,14 @@ const DATA = {
             "nom_fr": "Marque curative",
             "traduction_confirmee": true,
             "effet_en": "Recover 25% Health on hitting a Marked enemy. Once per turn.",
-            "effet_fr": "",
+            "effet_fr": "Récupère 25% de santé en touchant un ennemi marqué",
             "statistiques": {
                 "defense": "65"
             },
             "localisation_en": "Gestral Village",
             "localisation_fr": "",
             "obtention_en": "In the Bazaar, enter the alcove to trigger a duel with a black market Gestral. Defeat to unlock in shop.",
-            "obtention_fr": "",
+            "obtention_fr": "À acheté à l’escroc marchand du bazar Gestral.",
             "zone": "Gestral Village"
         },
         {
@@ -441,7 +444,7 @@ const DATA = {
             "nom_fr": "Dernier rempart critique",
             "traduction_confirmee": true,
             "effet_en": "100% Critical Chance while fighting alone.",
-            "effet_fr": "",
+            "effet_fr": "100% de chances de critique en combattant seul",
             "statistiques": {
                 "sante": "168",
                 "defense": "50"
@@ -449,7 +452,7 @@ const DATA = {
             "localisation_en": "Hidden Gestral Arena",
             "localisation_fr": "",
             "obtention_en": "Beat Matthieu",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu après avoir battu pour la première fois Matthieu le Colosse.",
             "zone": "Hidden Gestral Arena"
         },
         {
@@ -458,7 +461,7 @@ const DATA = {
             "nom_fr": "Dernier rempart accélérant",
             "traduction_confirmee": true,
             "effet_en": "Gain Rush if fighting alone.",
-            "effet_fr": "",
+            "effet_fr": "Le personnage gagne Rapidité s’il se bat seul",
             "statistiques": {
                 "sante": "168",
                 "vitesse": "34"
@@ -466,7 +469,7 @@ const DATA = {
             "localisation_en": "Hidden Gestral Arena",
             "localisation_fr": "",
             "obtention_en": "Beat Bertrand",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu après avoir battu pour la première fois Bertrand les Grosses Mains.",
             "zone": "Hidden Gestral Arena"
         },
         {
@@ -475,7 +478,7 @@ const DATA = {
             "nom_fr": "Dernier rempart protecteur",
             "traduction_confirmee": true,
             "effet_en": "Gain Shell if fighting alone.",
-            "effet_fr": "",
+            "effet_fr": "Le personnage gagne Carapace s’il se bat seul.",
             "statistiques": {
                 "sante": "168",
                 "defense": "50"
@@ -483,7 +486,7 @@ const DATA = {
             "localisation_en": "Hidden Gestral Arena",
             "localisation_fr": "",
             "obtention_en": "Beat Dominique",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu après avoir battu pour la première fois Dominique aux Grands Pieds.",
             "zone": "Hidden Gestral Arena"
         },
         {
@@ -492,7 +495,7 @@ const DATA = {
             "nom_fr": "Loup solitaire",
             "traduction_confirmee": true,
             "effet_en": "Deal 50% more damage if fighting alone.",
-            "effet_fr": "",
+            "effet_fr": "Inflige 50% de dégâts en plus en combattant seul",
             "statistiques": {
                 "sante": "168",
                 "defense": "50"
@@ -500,7 +503,7 @@ const DATA = {
             "localisation_en": "Hidden Gestral Arena",
             "localisation_fr": "",
             "obtention_en": "Beat Julien",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu après avoir battu tous les adversaires de l’arène.",
             "zone": "Hidden Gestral Arena"
         },
         {
@@ -509,7 +512,7 @@ const DATA = {
             "nom_fr": "Dernier rempart renforçant",
             "traduction_confirmee": true,
             "effet_en": "Gain Powerful if fighting alone.",
-            "effet_fr": "",
+            "effet_fr": "Le personnage gagne Surpuissance s’il se bat seul",
             "statistiques": {
                 "sante": "168",
                 "chances_crit": "0.1"
@@ -517,7 +520,7 @@ const DATA = {
             "localisation_en": "Hidden Gestral Arena",
             "localisation_fr": "",
             "obtention_en": "Beat all opponents",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu après avoir battu pour la première fois Julien Petite-Tête.",
             "zone": "Hidden Gestral Arena"
         },
         {
@@ -526,7 +529,7 @@ const DATA = {
             "nom_fr": "Visée améliorée",
             "traduction_confirmee": true,
             "effet_en": "50% increased Free Aim damage.",
-            "effet_fr": "",
+            "effet_fr": "Dégâts de visée libre augmentés de 50%",
             "statistiques": {
                 "vitesse": "39",
                 "chances_crit": "0.05"
@@ -534,7 +537,7 @@ const DATA = {
             "localisation_en": "Gestral Village",
             "localisation_fr": "",
             "obtention_en": "Speak with Merchant in Bazaar after completing Forgotten Battlefield.",
-            "obtention_fr": "",
+            "obtention_fr": "Près de l’épave, escaladez le pilier puis sautez de plateforme en plateforme pour atteint le picto.",
             "zone": "Gestral Village"
         },
         {
@@ -543,7 +546,7 @@ const DATA = {
             "nom_fr": "Initiative améliorée",
             "traduction_confirmee": true,
             "effet_en": "50% Increased damage on the first hit. Once per battle",
-            "effet_fr": "",
+            "effet_fr": "Dégâts du premier coup augmentés de 50%. Une fois par combat",
             "statistiques": {
                 "vitesse": "51",
                 "chances_crit": "0.05"
@@ -551,7 +554,7 @@ const DATA = {
             "localisation_en": "Esquie's Nest",
             "localisation_fr": "",
             "obtention_en": "Defeat Francois.",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu en battant François.",
             "zone": "Esquie's Nest"
         },
         {
@@ -560,28 +563,31 @@ const DATA = {
             "nom_fr": "Énergie — Départ III",
             "traduction_confirmee": true,
             "effet_en": "+1 AP on battle start",
-            "effet_fr": "",
+            "effet_fr": "+1 PA au début du combat",
             "statistiques": {
                 "sante": "320"
             },
             "localisation_en": "Esquie's Nest",
             "localisation_fr": "",
             "obtention_en": "Leave the cave after Esquie makes the path for you, and the Pictos will be outside in the front entrance.",
-            "obtention_fr": "",
+            "obtention_fr": "Sur le chemin pour sortir de la grotte, après avoir utilisé le grappin.",
             "zone": "Esquie's Nest"
         },
         {
             "id": 34,
             "nom_en": "Defensive Mode",
             "nom_fr": "Mode défensif",
-            "traduction_confirmee": false,
+            "traduction_confirmee": true,
             "effet_en": "On receiving damage, consume 1 AP to take 30% less damage, if possible.",
-            "effet_fr": "",
-            "statistiques": {},
+            "effet_fr": "Quand des dégâts sont subis, consomme 1 PA pour subir 30% de dégâts en moins (si possible)",
+            "statistiques": {
+                "sante": "216",
+                "defense": "71"
+            },
             "localisation_en": "Stone Wave Cliffs",
-            "localisation_fr": "",
+            "localisation_fr": "Falaises de Rochevague",
             "obtention_en": "Enter through the portal on the beach. Look forward and to the left.",
-            "obtention_fr": "",
+            "obtention_fr": "À trouver près de l’accès arrière des Falaises de Rochevague.",
             "zone": "Stone Wave Cliffs"
         },
         {
@@ -596,9 +602,9 @@ const DATA = {
                 "chances_crit": "0.13"
             },
             "localisation_en": "Stone Wave Cliffs (Rest Point)",
-            "localisation_fr": "",
+            "localisation_fr": "Falaises de Rochevague",
             "obtention_en": "Defeat the big rock monster 'Hexga' on the path after the entrance rest point.",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu en battant l’Hexga.",
             "zone": "Stone Wave Cliffs"
         },
         {
@@ -607,15 +613,15 @@ const DATA = {
             "nom_fr": "Contre Fracturant",
             "traduction_confirmee": true,
             "effet_en": "50% Increased Break damage on Counterattack",
-            "effet_fr": "",
+            "effet_fr": "Dégâts de Fracture augmentés de 50% lors des contres",
             "statistiques": {
                 "vitesse": "43",
                 "chances_crit": "0.1"
             },
             "localisation_en": "Stone Wave Cliffs (Rest Point)",
-            "localisation_fr": "",
+            "localisation_fr": "Falaises de Rochevague",
             "obtention_en": "Look to the left of the rock monster to find an old ship. Inside the ship is the Pictos",
-            "obtention_fr": "",
+            "obtention_fr": "Entrez dans le dirigeable écrasé pour trouver le picto.",
             "zone": "Stone Wave Cliffs"
         },
         {
@@ -624,15 +630,15 @@ const DATA = {
             "nom_fr": "Énergie douloureuse",
             "traduction_confirmee": true,
             "effet_en": "No longer gain AP on Parry. +1 AP on getting hit",
-            "effet_fr": "",
+            "effet_fr": "Plus aucun gain de PA en cas de parade réussie, mais +1 PA lorsque le personnage se fait toucher",
             "statistiques": {
                 "sante": "1166",
                 "defense": "160"
             },
             "localisation_en": "Stone Wave Cliffs (Rest Point)",
-            "localisation_fr": "",
+            "localisation_fr": "Falaises de Rochevague",
             "obtention_en": "After beating the rock monster, Hexga, continue forward to find some more monsters in the next area. Beat the enemy on the left side of the area to find the Pictos.",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu en battant le cultiste.",
             "zone": "Stone Wave Cliffs"
         },
         {
@@ -641,15 +647,15 @@ const DATA = {
             "nom_fr": "Initiative",
             "traduction_confirmee": true,
             "effet_en": "Play first",
-            "effet_fr": "",
+            "effet_fr": "Joue en premier",
             "statistiques": {
                 "vitesse": "41",
                 "chances_crit": "0.1"
             },
             "localisation_en": "Stone Wave Cliffs (Paintress Shrine)",
-            "localisation_fr": "",
+            "localisation_fr": "Falaises de Rochevague",
             "obtention_en": "Before using the grappling point that leads to the Paintress Shrine rest area, hop on the platforms to the right to find a side area with an enemy and a secret Pictos.",
-            "obtention_fr": "",
+            "obtention_fr": "Grimpez sur les rochers en face du gazébo pour trouver le picto.",
             "zone": "Stone Wave Cliffs"
         },
         {
@@ -658,15 +664,15 @@ const DATA = {
             "nom_fr": "Danger surpuissant",
             "traduction_confirmee": true,
             "effet_en": "Apply Powerful when falling below 50% health",
-            "effet_fr": "",
+            "effet_fr": "Gagne Surpuissance en tombant en dessous de 50% de santé",
             "statistiques": {
                 "vitesse": "43",
                 "chances_crit": "0.1"
             },
             "localisation_en": "Stone Wave Cliffs (Paintress Shrine)",
-            "localisation_fr": "",
+            "localisation_fr": "Falaises de Rochevague",
             "obtention_en": "When a monster jumps out at you, hug the right wall to find a slope leading to the Pictos.",
-            "obtention_fr": "",
+            "obtention_fr": "Derrière un pilier rocheux de la zone centrale du temple de la Peintresse.",
             "zone": "Stone Wave Cliffs"
         },
         {
@@ -675,15 +681,15 @@ const DATA = {
             "nom_fr": "Tirs Fracturants",
             "traduction_confirmee": true,
             "effet_en": "50% increased Break damage with Free Aim shots",
-            "effet_fr": "",
+            "effet_fr": "Dégâts de Fracture augmentés de 50% sur les tirs en visée libre",
             "statistiques": {
                 "vitesse": "43",
                 "chances_crit": "0.1"
             },
             "localisation_en": "Stone Wave Cliffs (Tide Caverns)",
-            "localisation_fr": "",
+            "localisation_fr": "Falaises de Rochevague",
             "obtention_en": "When you're looking for the three rock crystals in a cave, you need to jump across some tall platforms with careful timing.",
-            "obtention_fr": "",
+            "obtention_fr": "Après être sorti dans la Caverne des Marées, partez sur la droite et sautez sur les rochers pour trouver le picto.",
             "zone": "Stone Wave Cliffs"
         },
         {
@@ -692,15 +698,15 @@ const DATA = {
             "nom_fr": "Parade périlleuse",
             "traduction_confirmee": true,
             "effet_en": "+1 AP on Parry, but damage received is doubled.",
-            "effet_fr": "",
+            "effet_fr": "+1 PA en cas de parade réussie, mais les dégâts subis sont doublés",
             "statistiques": {
                 "vitesse": "280",
                 "chances_crit": "0.23"
             },
             "localisation_en": "Stone Wave Cliffs (Tide Caverns)",
-            "localisation_fr": "",
+            "localisation_fr": "Falaises de Rochevague",
             "obtention_en": "Defeat the enemy on the bottom level of the caverns.",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu en battant le chevalier d’or chromatique.",
             "zone": "Stone Wave Cliffs"
         },
         {
@@ -709,14 +715,14 @@ const DATA = {
             "nom_fr": "Carapace immédiate",
             "traduction_confirmee": true,
             "effet_en": "Apply Shell for 3 turns on battle start.",
-            "effet_fr": "",
+            "effet_fr": "Applique Carapace pendant 3 tours au début du combat",
             "statistiques": {
                 "sante": "411"
             },
             "localisation_en": "Stone Wave Cliffs (Tide Caverns)",
-            "localisation_fr": "",
+            "localisation_fr": "Falaises de Rochevague",
             "obtention_en": "Give three crystals to Hexga.",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu en aidant l’Hexga Blanc.",
             "zone": "Stone Wave Cliffs"
         },
         {
@@ -725,15 +731,15 @@ const DATA = {
             "nom_fr": "Teinte curative énergisante",
             "traduction_confirmee": true,
             "effet_en": "Healing Tints also give 1 AP",
-            "effet_fr": "",
+            "effet_fr": "Les teintes curatives confèrent également 1 PA",
             "statistiques": {
                 "sante": "216",
                 "defense": "71"
             },
             "localisation_en": "Stone Wave Cliffs - Flooded Buildings",
-            "localisation_fr": "",
+            "localisation_fr": "Falaises de Rochevague",
             "obtention_en": "Grapple back across, return to the bottom of the building, and use the grapple point to the left to cross the gap. Continue along the path to encounter two Nevrons. The Healing Tint Energy Pictos is on the ground just past those enemies.",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu en battant l’Hexga situé près des bâtiments.",
             "zone": "Stone Wave Cliffs - Flooded Buildings"
         },
         {
@@ -742,15 +748,15 @@ const DATA = {
             "nom_fr": "Marque affaiblissante",
             "traduction_confirmee": true,
             "effet_en": "Marked Targets deal 30% less damage",
-            "effet_fr": "",
+            "effet_fr": "Les cibles marquées infligent 30% de dégâts en moins",
             "statistiques": {
                 "defense": "102",
                 "vitesse": "21"
             },
             "localisation_en": "Stone Wave Cliffs - Flooded Buildings",
-            "localisation_fr": "",
+            "localisation_fr": "Falaises de Rochevague",
             "obtention_en": "Descend through the structure and follow the path to enter yet another building. Climb to the top and look left upon exiting the building to find a grapple point that can be used to reach an area with the Enfeebling Mark Pictos.",
-            "obtention_fr": "",
+            "obtention_fr": "Utilisez le Grappin pour trouver le picto sur le toit de l’immeuble.",
             "zone": "Stone Wave Cliffs - Flooded Buildings"
         },
         {
@@ -759,15 +765,15 @@ const DATA = {
             "nom_fr": "Au seuil de la mort",
             "traduction_confirmee": true,
             "effet_en": "Deal 50% more damage if health is below 10%",
-            "effet_fr": "",
+            "effet_fr": "Inflige 50% de dégâts en plus si la santé est en dessous de 10%",
             "statistiques": {
                 "defense": "96",
                 "chances_crit": "0.11"
             },
             "localisation_en": "Stone Wave Cliffs (Basalt Waves)",
-            "localisation_fr": "",
+            "localisation_fr": "Falaises de Rochevague",
             "obtention_en": "Defeat the Lampmaster boss",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu en battant le Maître des Lampes.",
             "zone": "Stone Wave Cliffs"
         },
         {
@@ -776,7 +782,7 @@ const DATA = {
             "nom_fr": "Énergie mortelle I",
             "traduction_confirmee": true,
             "effet_en": "+3 AP on killing an enemy",
-            "effet_fr": "",
+            "effet_fr": "+3 PA en tuant un ennemi",
             "statistiques": {
                 "vitesse": "?",
                 "chances_crit": "?"
@@ -784,7 +790,7 @@ const DATA = {
             "localisation_en": "The Continent",
             "localisation_fr": "",
             "obtention_en": "Found on the Continent, in front of the entrance to Dark Shores, about 100 feet away is a cluster of crates you can break apart, containing the Picto.",
-            "obtention_fr": "",
+            "obtention_fr": "Sur l’île du mini-niveau Rives Obscures. Nécessite d’avoir débloqué la capacité de nager d’Esquie.",
             "zone": "The Continent"
         },
         {
@@ -793,7 +799,7 @@ const DATA = {
             "nom_fr": "Parade curative",
             "traduction_confirmee": true,
             "effet_en": "Recover 3% health on parry",
-            "effet_fr": "",
+            "effet_fr": "Récupère 3% de santé à chaque parade réussie",
             "statistiques": {
                 "sante": "127",
                 "defense": "34"
@@ -801,7 +807,7 @@ const DATA = {
             "localisation_en": "The Continent",
             "localisation_fr": "",
             "obtention_en": "There is a Bourgeon between Esquie's Nest and Stone Wave Cliffs. There is a Lost Gestral just past it, and this Pictos is in a camp nearby.",
-            "obtention_fr": "",
+            "obtention_fr": "Au fond du chemin où se trouve le bourgeon, le picto est au sol devant un petit campement.",
             "zone": "The Continent"
         },
         {
@@ -810,14 +816,14 @@ const DATA = {
             "nom_fr": "Énergie — Départ I",
             "traduction_confirmee": true,
             "effet_en": "+1 AP on battle start.",
-            "effet_fr": "",
+            "effet_fr": "+1 PA au début du combat",
             "statistiques": {
                 "sante": "320"
             },
             "localisation_en": "The Continent",
             "localisation_fr": "",
             "obtention_en": "Beach north of Gestral Village",
-            "obtention_fr": "",
+            "obtention_fr": "Sur la plage après l’entrée des Falaises de Rochevague. Ne peut être atteint qu’en cassant les rochers avec Esquie.",
             "zone": "The Continent"
         },
         {
@@ -826,7 +832,7 @@ const DATA = {
             "nom_fr": "Soins protecteurs",
             "traduction_confirmee": false,
             "effet_en": "Healing an ally also applies Shell for a turn",
-            "effet_fr": "",
+            "effet_fr": "Soigner un allié lui applique également Carapace pendant 1 tour",
             "statistiques": {
                 "sante": "395",
                 "vitesse": "78"
@@ -834,7 +840,7 @@ const DATA = {
             "localisation_en": "Esoteric Ruins/Continent (Near Old Lumiere Entrance)",
             "localisation_fr": "",
             "obtention_en": "Find the Wood Boards and give it to the spirit by the entrance",
-            "obtention_fr": "",
+            "obtention_fr": "Obtenu en aidant le Portier.",
             "zone": "Esoteric Ruins/Continent"
         },
         {
@@ -843,7 +849,7 @@ const DATA = {
             "nom_fr": "Guérison accelérante",
             "traduction_confirmee": true,
             "effet_en": "Healing an ally also applies Rush for 1 turn",
-            "effet_fr": "",
+            "effet_fr": "Soigner un allié lui confère également Rapidité pendant 1 tour",
             "statistiques": {
                 "sante": "329",
                 "vitesse": "65"
@@ -851,7 +857,7 @@ const DATA = {
             "localisation_en": "The Continent",
             "localisation_fr": "",
             "obtention_en": "On the first Painting Workshop isle. Walk to the opposite side past the monsters.",
-            "obtention_fr": "",
+            "obtention_fr": "Sur la petite île que vous croiserez juste après avoir quitté les Falaises de Rochevague.",
             "zone": "The Continent"
         },
         {
@@ -2550,7 +2556,7 @@ const DATA = {
                 "defense": "96"
             },
             "localisation_en": "Stone Wave Cliffs Cave",
-            "localisation_fr": "",
+            "localisation_fr": "Falaises de Rochevague",
             "obtention_en": "Beat the Chromatic Hexga at the end.",
             "obtention_fr": "",
             "zone": "Stone Wave Cliffs Cave"
@@ -2567,7 +2573,7 @@ const DATA = {
                 "defense": "96"
             },
             "localisation_en": "Stone Wave Cliffs Cave",
-            "localisation_fr": "",
+            "localisation_fr": "Falaises de Rochevague",
             "obtention_en": "Beat the Chromatic Hexga at the end. Look to the left of it.",
             "obtention_fr": "",
             "zone": "Stone Wave Cliffs Cave"
@@ -3135,18 +3141,18 @@ const DATA = {
         {
             "id": 190,
             "nom_en": "Rejuvenating Revive",
-            "nom_fr": "Renaissance revigorante",
-            "traduction_confirmee": false,
+            "nom_fr": "Renaissance régénérante",
+            "traduction_confirmee": true,
             "effet_en": "Apply Regen for 3 turns when revived.",
-            "effet_fr": "",
+            "effet_fr": "Confére Régénération pendant 3 tours en revenant à la vie",
             "statistiques": {
-                "sante": "?",
-                "defense": "?"
+                "sante": "546",
+                "defense": "218"
             },
             "localisation_en": "Stone Wave Cliffs",
-            "localisation_fr": "",
+            "localisation_fr": "Falaises de Rochevague",
             "obtention_en": "You can get the Rejuvenating Revive Pictos after breaking a Paint Spike in the Old Farm area.",
-            "obtention_fr": "",
+            "obtention_fr": "Dans Falaises de Rochevague (Vieille ferme), en bas de la ferme, dans une zone disponible derrière un rocher de peinture à détruire.",
             "zone": "Stone Wave Cliffs"
         },
         {
@@ -3470,10 +3476,10 @@ const DATA = {
         {
             "id": 210,
             "nom_en": "Empowering Jumps",
-            "nom_fr": "",
-            "traduction_confirmee": false,
+            "nom_fr": "Sauts Renforçants",
+            "traduction_confirmee": true,
             "effet_en": "Counters deal 100% more damage for each successful Jump Counter this turn",
-            "effet_fr": "",
+            "effet_fr": "Les contres infligent 100% de dégâts en plus pour chaque contre sauté réussi pendant ce tour",
             "statistiques": {
                 "defense": "1654"
             },
