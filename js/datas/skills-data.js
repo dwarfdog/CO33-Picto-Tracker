@@ -840,8 +840,8 @@ const DATA = {
         {
             "id": 50,
             "nom_en": "Accelerating Heal",
-            "nom_fr": "Soins accélérants",
-            "traduction_confirmee": false,
+            "nom_fr": "Guérison accelérante",
+            "traduction_confirmee": true,
             "effet_en": "Healing an ally also applies Rush for 1 turn",
             "effet_fr": "",
             "statistiques": {
@@ -1027,8 +1027,8 @@ const DATA = {
         {
             "id": 61,
             "nom_en": "Breaking Slow",
-            "nom_fr": "Ralentissement sur fracture",
-            "traduction_confirmee": false,
+            "nom_fr": "Lenteur fracturante",
+            "traduction_confirmee": true,
             "effet_en": "25% increased Break damage against Slowed enemies.",
             "effet_fr": "",
             "statistiques": {
@@ -1061,8 +1061,8 @@ const DATA = {
         {
             "id": 63,
             "nom_en": "Energising Gradient",
-            "nom_fr": "Énergie — Gradient",
-            "traduction_confirmee": false,
+            "nom_fr": "Gradient énergisant",
+            "traduction_confirmee": true,
             "effet_en": "+1 AP per Gradient Charge consumed",
             "effet_fr": "",
             "statistiques": {},
@@ -2230,8 +2230,8 @@ const DATA = {
         {
             "id": 134,
             "nom_en": "Rush on Powerful",
-            "nom_fr": "Rapidité sur surpuissance",
-            "traduction_confirmee": false,
+            "nom_fr": "Surpuissance rapide",
+            "traduction_confirmee": true,
             "effet_en": "Apply Rush on applying Powerful",
             "effet_fr": "",
             "statistiques": {
@@ -2298,8 +2298,8 @@ const DATA = {
         {
             "id": 138,
             "nom_en": "Energetic Healer",
-            "nom_fr": "Soignant énergétique",
-            "traduction_confirmee": false,
+            "nom_fr": "Guérison énergisante",
+            "traduction_confirmee": true,
             "effet_en": "+2 AP when healing an ally",
             "effet_fr": "",
             "statistiques": {
@@ -2400,8 +2400,8 @@ const DATA = {
         {
             "id": 144,
             "nom_en": "Break Specialist",
-            "nom_fr": "Spécialiste en fracture",
-            "traduction_confirmee": false,
+            "nom_fr": "Spécialiste des fractures",
+            "traduction_confirmee": true,
             "effet_en": "Break damage is increased by 50%, but base damage is reduced by 20%",
             "effet_fr": "",
             "statistiques": {
@@ -2501,8 +2501,8 @@ const DATA = {
         {
             "id": 150,
             "nom_en": "Greater Slow",
-            "nom_fr": "Ralentissement amélioré",
-            "traduction_confirmee": false,
+            "nom_fr": "Lenteur améliorée",
+            "traduction_confirmee": true,
             "effet_en": "+15% to Slow Speed reduction",
             "effet_fr": "",
             "statistiques": {
@@ -2667,7 +2667,7 @@ const DATA = {
         {
             "id": 160,
             "nom_en": "Pro Retreat",
-            "nom_fr": "Retraite assurée",
+            "nom_fr": "Pro du repli",
             "traduction_confirmee": false,
             "effet_en": "Allows Flee to be instantaneous",
             "effet_fr": "",
@@ -2729,8 +2729,8 @@ const DATA = {
         {
             "id": 164,
             "nom_en": "Auto Death",
-            "nom_fr": "Mort immédiate",
-            "traduction_confirmee": false,
+            "nom_fr": "Mort subite",
+            "traduction_confirmee": true,
             "effet_en": "Kill self on battle start",
             "effet_fr": "",
             "statistiques": {},
@@ -2962,8 +2962,8 @@ const DATA = {
         {
             "id": 180,
             "nom_en": "Shell On Rush",
-            "nom_fr": "Carapace sur Rapidité",
-            "traduction_confirmee": false,
+            "nom_fr": "Rapidité protectrice",
+            "traduction_confirmee": true,
             "effet_en": "Apply Shell on applying Rush",
             "effet_fr": "",
             "statistiques": {},
