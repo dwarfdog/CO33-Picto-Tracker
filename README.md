@@ -8,7 +8,7 @@
 
 ### Qu'est-ce que c'est ?
 
-Un **carnet de collection** pour suivre les 193 Pictos du jeu *Clair Obscur : Expedition 33*.
+Un **carnet de collection** pour suivre les Pictos du jeu *Clair Obscur : Expedition 33*.
 
 Cochez les Pictos que vous possedez, consultez leurs effets et statistiques, et suivez votre progression — le tout **sans compte, sans installation, directement dans votre navigateur**.
 
@@ -135,7 +135,7 @@ CO33-Script/
     ui-translate.js      <- Traduction de l'interface
     utils.js             <- Fonctions utilitaires
     datas/
-      skills-data.js     <- Donnees des 193 Pictos
+      skills-data.js     <- Donnees des Pictos
   lang/
     fr.js                <- Traduction francaise
     en.js                <- Traduction anglaise
@@ -158,7 +158,7 @@ CO33-Script/
 
 ### What is this?
 
-A **collection tracker** for the 193 Pictos in *Clair Obscur: Expedition 33*.
+A **collection tracker** for the Pictos in *Clair Obscur: Expedition 33*.
 
 Check off the Pictos you own, view their effects and stats, and track your progress — all **with no account, no install, straight in your browser**.
 
@@ -285,7 +285,7 @@ CO33-Script/
     ui-translate.js      <- Interface translation
     utils.js             <- Utility functions
     datas/
-      skills-data.js     <- Data for all 193 Pictos
+      skills-data.js     <- Data for all Pictos
   lang/
     fr.js                <- French translation
     en.js                <- English translation
