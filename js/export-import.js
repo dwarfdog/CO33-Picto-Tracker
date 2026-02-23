@@ -1,0 +1,130 @@
+// © 2026 Nicolas Markiewicz (DwarfDog) — MIT License
+// https://github.com/DwarfDog/CO33-Picto-Tracker
+// ══════════════════════════════════════════════════════
+//  EXPORT / IMPORT — Gestion de l'export et de l'import
+//  Dépend de : App (app.js), DATA (skills-data.js)
+// ══════════════════════════════════════════════════════
+
+/**
+ * Affiche un toast de notification.
+ * @param {string}  message - Texte à afficher
+ * @param {boolean} [erreur=false] - Style erreur si true
+ */
+App.afficherToast = function (message, erreur) {
+  var toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.className = 'toast' + (erreur ? ' erreur' : '');
+  requestAnimationFrame(function () { toast.classList.add('visible'); });
+  setTimeout(function () { toast.classList.remove('visible'); }, App.TOAST_DURATION);
+};
+
+/**
+ * Génère un code d'export en base64.
+ * @returns {string}
+ */
+App.genererCodeExport = function () {
+  var ids = Array.from(App.etat.possedes).sort(function (a, b) { return a - b; });
+  return btoa(JSON.stringify(ids));
+};
+
+/**
+ * Exporte la progression (copie dans le presse-papier, fallback fichier).
+ */
+App.exporterProgression = function () {
+  var code = App.genererCodeExport();
+  navigator.clipboard.writeText(code).then(function () {
+    App.afficherToast(App.t('toast_copied', { n: App.etat.possedes.size }));
+  }).catch(function () {
+    App.telechargerFichier();
+  });
+};
+
+/**
+ * Télécharge la progression en fichier JSON.
+ */
+App.telechargerFichier = function () {
+  var data = {
+    version: 1,
+    date: new Date().toISOString(),
+    possedes: Array.from(App.etat.possedes).sort(function (a, b) { return a - b; }),
+    total: App.etat.possedes.size,
+  };
+  var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'co33-pictos-' + data.total + 'sur' + DATA.pictos.length + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  App.afficherToast(App.t('toast_downloaded', { n: data.total }));
+};
+
+/**
+ * Valide et applique un tableau d'IDs importés.
+ * @param {number[]} ids
+ * @returns {boolean} true si l'import a réussi
+ */
+App.appliquerImport = function (ids) {
+  var idsValides = new Set(DATA.pictos.map(function (p) { return p.id; }));
+  if (!Array.isArray(ids) || !ids.every(function (id) { return typeof id === 'number' && idsValides.has(id); })) {
+    App.afficherToast(App.t('toast_invalid_data'), true);
+    return false;
+  }
+  App.etat.possedes.clear();
+  ids.forEach(function (id) { App.etat.possedes.add(id); });
+  App.sauvegarder();
+  App.toutes_cartes.forEach(function (c) {
+    var id = parseInt(c.dataset.id);
+    c.classList.toggle('possede', App.etat.possedes.has(id));
+  });
+  App.mettreAJourProgression();
+  App.appliquerTri();
+  App.appliquerFiltres();
+  return true;
+};
+
+/**
+ * Décode et importe un code (base64 ou JSON brut).
+ * @param {string} code
+ * @returns {boolean} true si l'import a réussi
+ */
+App.importerDepuisCode = function (code) {
+  try {
+    var decoded = JSON.parse(atob(code.trim()));
+    if (App.appliquerImport(decoded)) {
+      App.afficherToast(App.t('toast_imported', { n: App.etat.possedes.size }));
+      return true;
+    }
+  } catch (e) {
+    // Peut-être du JSON brut
+    try {
+      var json = JSON.parse(code.trim());
+      var ids = json.possedes || json;
+      if (App.appliquerImport(Array.isArray(ids) ? ids : [])) {
+        App.afficherToast(App.t('toast_imported', { n: App.etat.possedes.size }));
+        return true;
+      }
+    } catch (e2) {
+      App.afficherToast(App.t('toast_invalid_code'), true);
+    }
+  }
+  return false;
+};
+
+/**
+ * Ouvre la modal d'import.
+ */
+App.ouvrirImportModal = function () {
+  document.getElementById('import-textarea').value = '';
+  document.getElementById('import-overlay').classList.add('visible');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('import-textarea').focus();
+};
+
+/**
+ * Ferme la modal d'import.
+ */
+App.fermerImportModal = function () {
+  document.getElementById('import-overlay').classList.remove('visible');
+  document.body.style.overflow = '';
+};

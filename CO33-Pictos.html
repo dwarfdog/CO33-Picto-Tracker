@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════════════════ -->
+<header>
+  <div class="ornement-top">
+    <div class="ligne"></div>
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 L18 12 L28 8 L22 16 L30 20 L20 20 L18 30 L16 22 L14 30 L12 20 L2 20 L10 16 L4 8 L14 12 Z"/></svg>
+    <div class="ligne"></div>
+  </div>
+  <h1> <span></span></h1>
+  <div class="ornement-bas">✦ &nbsp; ✦ &nbsp; ✦</div>
+  <div class="lang-switcher" id="lang-switcher"></div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════
+     PROGRESSION
+══════════════════════════════════════════════════════ -->
+<div class="progression-wrapper">
+  <div class="progression-header">
+    <span class="progression-label"></span>
+    <span class="progression-chiffres">
+      <span id="nb-possedes">0</span><small> / <span id="nb-total">0</span></small>
+    </span>
+  </div>
+  <div class="barre-conteneur">
+    <div class="barre-remplie" id="barre-prog" style="width:0%"></div>
+  </div>
+  <div class="progression-pourcent" id="prog-pct"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     CONTRÔLES
+══════════════════════════════════════════════════════ -->
+<div class="controles">
+  <!-- Recherche -->
+  <div class="champ-recherche">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+    <input type="text" id="recherche" placeholder="" autocomplete="off" spellcheck="false">
+  </div>
+
+  <!-- Zone -->
+  <select class="select-zone" id="filtre-zone">
+    <option value=""></option>
+  </select>
+
+  <!-- Tri -->
+  <select class="select-zone" id="tri-select">
+    <option value="id-asc"></option>
+    <option value="id-desc"></option>
+    <option value="nom-asc"></option>
+    <option value="nom-desc"></option>
+    <option value="zone-asc"></option>
+    <option value="zone-desc"></option>
+    <option value="possedes-first"></option>
+    <option value="manquants-first"></option>
+  </select>
+
+  <div class="controles-separateur"></div>
+
+  <!-- Filtres collection -->
+  <div class="filtre-groupe">
+    <span class="filtre-label"></span>
+    <button class="btn-filtre actif" data-filtre="tous"></button>
+    <button class="btn-filtre" data-filtre="possedes"></button>
+    <button class="btn-filtre" data-filtre="manquants"></button>
+  </div>
+
+  <!-- Gestion progression -->
+  <div class="filtre-groupe">
+    <span class="filtre-label"></span>
+    <button class="btn-action btn-export" id="btn-export"></button>
+    <button class="btn-action btn-import" id="btn-import"></button>
+    <input type="file" id="import-fichier" accept=".json,.txt" style="display:none">
+  </div>
+
+  <!-- Reset -->
+  <button class="btn-reset" id="btn-reset"></button>
+</div>
+
+<!-- Compteurs -->
+<div class="compteurs">
+  <div class="compteur-item">
+    <div class="compteur-dot possede"></div>
+    <span><strong id="cpt-possedes">0</strong></span>
+  </div>
+  <div class="compteur-item">
+    <div class="compteur-dot manquant"></div>
+    <span><strong id="cpt-manquants">0</strong></span>
+  </div>
+  <div class="compteur-item">
+    <div class="compteur-dot resultats"></div>
+    <span><strong id="cpt-affiches">0</strong></span>
+  </div>
+</div>
+
+<!-- Légende interactions -->
+<div class="legende-interactions">
+  <div class="legende-item">
+    <span class="legende-touche"></span>
+    <span class="legende-texte"></span>
+  </div>
+  <div class="legende-item">
+    <span class="legende-icone check"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="legende-texte"></span>
+  </div>
+  <div class="legende-item">
+    <span class="legende-touche"></span>
+    <span class="legende-texte"></span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     GRILLE
+══════════════════════════════════════════════════════ -->
+<div class="grille-conteneur">
+  <div class="grille" id="grille"></div>
+  <div class="etat-vide" id="etat-vide">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.172 16.172a4 4 0 0 1 5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+    <p></p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     TOOLTIP / MODAL
+══════════════════════════════════════════════════════ -->
+<div class="tooltip-overlay" id="tooltip-overlay" role="dialog" aria-modal="true">
+  <div class="tooltip-panneau" id="tooltip-panneau">
+    <button class="tooltip-fermer" id="tooltip-fermer" aria-label="">&#215;</button>
+    <div class="tooltip-entete">
+      <div class="tooltip-nom-fr" id="tt-nom-fr"></div>
+      <div class="tooltip-nom-en" id="tt-nom-en"></div>
+    </div>
+    <div class="tooltip-corps">
+      <div class="tooltip-section" id="tt-sec-effet">
+        <div class="tooltip-section-titre"></div>
+        <div class="tooltip-section-contenu or" id="tt-effet"></div>
+      </div>
+      <div class="tooltip-section" id="tt-sec-stats">
+        <div class="tooltip-section-titre"></div>
+        <div class="tooltip-stats-grille" id="tt-stats"></div>
+      </div>
+      <div class="tooltip-section" id="tt-sec-zone">
+        <div class="tooltip-section-titre"></div>
+        <div class="tooltip-section-contenu" id="tt-zone"></div>
+      </div>
+      <div class="tooltip-section" id="tt-sec-obtention">
+        <div class="tooltip-section-titre"></div>
+        <div class="tooltip-section-contenu italique" id="tt-obtention"></div>
+      </div>
+      <button class="tooltip-btn-possession" id="tt-btn-possession"></button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     MODAL IMPORT
+══════════════════════════════════════════════════════ -->
+<div class="import-overlay" id="import-overlay">
+  <div class="import-panneau">
+    <div class="import-titre"></div>
+    <div class="import-description"></div>
+    <textarea class="import-textarea" id="import-textarea" placeholder="" spellcheck="false"></textarea>
+    <div class="import-actions">
+      <button class="btn-import-valider" id="btn-import-valider"></button>
+      <button class="btn-import-fichier" id="btn-import-fichier"></button>
+      <button class="btn-import-annuler" id="btn-import-annuler"></button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ══════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════ -->
+<footer></footer>
+
+<!-- ══ Namespace ══ -->
+<script src="js/app.js"></script>
+
+<!-- ══ Data ══ -->
+<script src="js/datas/skills-data.js"></script>
+
+<!-- ══ Langues (auto-enregistrement) ══ -->
+<script src="lang/fr.js"></script>
+<script src="lang/en.js"></script>
+
+<!-- ══ Core ══ -->
+<script src="js/i18n.js"></script>
+<script src="js/state.js"></script>
+<script src="js/utils.js"></script>
+
+<!-- ══ Features ══ -->
+<script src="js/progress.js"></script>
+<script src="js/tooltip.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/export-import.js"></script>
+<script src="js/cards.js"></script>
+<script src="js/ui-translate.js"></script>
+<script src="js/events.js"></script>
+
+<!-- ══ Boot ══ -->
+<script src="js/boot.js"></script>
+</body>
+</html>
