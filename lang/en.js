@@ -26,6 +26,8 @@
     sort_zone_desc:          'Sort: Zone (Z → A)',
     sort_owned_first:        'Sort: Owned first',
     sort_missing_first:      'Sort: Missing first',
+    sort_lumina_asc:         'Sort: Lumina (ascending)',
+    sort_lumina_desc:        'Sort: Lumina (descending)',
 
     // Filters
     filter_label:            'Show',
@@ -55,6 +57,7 @@
     // Tooltip
     tooltip_effect:          'Effect',
     tooltip_stats:           'Statistics',
+    tooltip_lumina:          'Lumina Cost',
     tooltip_zone:            'Zone',
     tooltip_obtain:          'How to obtain',
     tooltip_close:           'Close',
@@ -100,6 +103,7 @@
     stat_defense:            'Defense',
     stat_speed:              'Speed',
     stat_crit:               'Crit.',
+    stat_lumina:             'Lumina',
 
     // Switcher
     lang_label:              'Language',

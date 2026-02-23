@@ -26,6 +26,8 @@
     sort_zone_desc:          'Tri : Zone (Z → A)',
     sort_owned_first:        'Tri : Possédés d\'abord',
     sort_missing_first:      'Tri : Manquants d\'abord',
+    sort_lumina_asc:         'Tri : Lumina (croissant)',
+    sort_lumina_desc:        'Tri : Lumina (décroissant)',
 
     // Filtres
     filter_label:            'Afficher',
@@ -55,6 +57,7 @@
     // Tooltip
     tooltip_effect:          'Effet',
     tooltip_stats:           'Statistiques',
+    tooltip_lumina:          'Coût Lumina',
     tooltip_zone:            'Zone',
     tooltip_obtain:          'Comment l\'obtenir',
     tooltip_close:           'Fermer',
@@ -100,6 +103,7 @@
     stat_defense:            'Défense',
     stat_speed:              'Vitesse',
     stat_crit:               'Crit.',
+    stat_lumina:             'Lumina',
 
     // Switcher
     lang_label:              'Langue',

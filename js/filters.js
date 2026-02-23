@@ -36,6 +36,10 @@ App.appliquerTri = function () {
         oa = App.etat.possedes.has(pa.id) ? 1 : 0;
         ob = App.etat.possedes.has(pb.id) ? 1 : 0;
         return oa !== ob ? oa - ob : pa.id - pb.id;
+      case 'lumina-asc':
+        return (pa.lumina || 0) - (pb.lumina || 0) || pa.id - pb.id;
+      case 'lumina-desc':
+        return (pb.lumina || 0) - (pa.lumina || 0) || pa.id - pb.id;
       default: return 0;
     }
   });

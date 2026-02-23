@@ -21,6 +21,7 @@
 
   --stat-sante:   #d47c6a;
   --stat-defense: #6ab8b8;
+  --stat-lumina:  #c4a0ff;
 
   --card-width: 220px;
   --gap: 16px;
@@ -540,6 +541,21 @@ h1 span {
   color: var(--or-mat);
 }
 
+.carte-lumina {
+  position: absolute;
+  top: 28px;
+  right: 14px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  color: var(--stat-lumina);
+  letter-spacing: 0.05em;
+  opacity: 0.65;
+}
+
+.carte-picto.possede .carte-lumina {
+  opacity: 1;
+}
+
 .carte-nom-fr {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.05rem;
@@ -901,6 +917,7 @@ h1 span {
 
 .tooltip-section-contenu.or { color: var(--or); font-size: 1.1rem; font-weight: 600; }
 .tooltip-section-contenu.italique { font-style: italic; color: var(--gris-text); }
+.tooltip-section-contenu.lumina { color: var(--stat-lumina); font-size: 1.2rem; font-weight: 600; }
 
 .tooltip-stats-grille {
   display: grid;

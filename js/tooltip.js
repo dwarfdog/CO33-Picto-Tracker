@@ -62,6 +62,16 @@ App.ouvrirTooltip = function (picto) {
     secStats.style.display = 'none';
   }
 
+  // Lumina
+  var ttLumina = document.getElementById('tt-lumina');
+  var secLumina = document.getElementById('tt-sec-lumina');
+  if (picto.lumina) {
+    ttLumina.textContent = '✦ ' + picto.lumina;
+    secLumina.style.display = '';
+  } else {
+    secLumina.style.display = 'none';
+  }
+
   // Bouton possession
   var btn = document.getElementById('tt-btn-possession');
   var possede = App.etat.possedes.has(picto.id);

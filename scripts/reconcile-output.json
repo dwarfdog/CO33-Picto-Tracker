@@ -1,0 +1,61 @@
+{
+  "stats_filled": [
+    "Defensive Mode",
+    "Energising Gradient",
+    "Warming Up",
+    "Energy Master",
+    "Longer Rush",
+    "Healing Death",
+    "Revive Paradox",
+    "Random Defense",
+    "Exposing Break",
+    "Pro Retreat",
+    "Death Bomb",
+    "Auto Death",
+    "Teamwork",
+    "Recovery",
+    "Combo Attack III",
+    "Survivor",
+    "Greater Rush",
+    "Shielding Death",
+    "Powerful Shield",
+    "Powerful Heal",
+    "Protecting Attack",
+    "Shell On Rush"
+  ],
+  "stats_still_empty": [
+    "Piercing Shot",
+    "Critical Stun",
+    "Auto Powerful",
+    "Charging Mark",
+    "Accelerating Tint"
+  ],
+  "question_marks_fixed": [
+    "Dead Energy I.vitesse: ? → 162",
+    "Dead Energy I.chances_crit: ? → 0.17",
+    "Critical Break.vitesse: ? → 203",
+    "Critical Break.chances_crit: ? → 0.08",
+    "Critical Vulnerability.defense: ? → 116",
+    "Critical Vulnerability.vitesse: ? → 62",
+    "Energising Burn.defense: ? → 401",
+    "Energising Burn.vitesse: ? → 321",
+    "Energising Stun.vitesse: ? → 519",
+    "Energising Stun.chances_crit: ? → 0.31",
+    "Marking Break.vitesse: ? → 434",
+    "Marking Break.chances_crit: ? → 0.28",
+    "Powerful Shots.sante: ? → 983",
+    "Powerful Shots.defense: ? → 44",
+    "Gradient Break.vitesse: ? → 434",
+    "Gradient Break.chances_crit: ? → 0.28"
+  ],
+  "question_marks_still_unknown": [
+    "Effective Support.sante",
+    "Effective Support.vitesse",
+    "Powerful Mark.vitesse",
+    "Powerful Mark.chances_crit"
+  ],
+  "lumina_added": 209,
+  "lumina_not_found": [
+    "Protecting Shots"
+  ]
+}

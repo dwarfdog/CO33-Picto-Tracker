@@ -62,6 +62,7 @@ App.creerCartePicto = function (picto) {
       '<div class="carte-nom-en">' + nomSec + '</div>' +
       badgeTrad +
       '<div class="carte-id">#' + String(picto.id).padStart(3, '0') + '</div>' +
+      (picto.lumina ? '<div class="carte-lumina">✦ ' + picto.lumina + '</div>' : '') +
     '</div>' +
     '<div class="carte-corps">' +
       '<div class="carte-effet">' + App.champ(picto, 'effet') + '</div>' +
