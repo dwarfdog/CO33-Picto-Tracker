@@ -3,7 +3,7 @@
 const DATA = {
     "meta": {
         "jeu": "Clair Obscur : Expédition 33",
-        "total_pictos": 193,
+        "total_pictos": 194,
         "traductions_confirmees": 166,
         "traductions_derivees": 27,
         "sources": [
@@ -55,7 +55,7 @@ const DATA = {
             "nom_fr": "Attaque améliorée",
             "traduction_confirmee": true,
             "effet_en": "50% increased Base Attack damage",
-            "effet_fr": "",
+            "effet_fr": "Dégâts d'attaque de base augmentés de 50%",
             "statistiques": {
                 "defense": "8",
                 "vitesse": "10"
@@ -1801,7 +1801,7 @@ const DATA = {
             "nom_fr": "Attaque affaiblissante",
             "traduction_confirmee": true,
             "effet_en": "Base Attack applies powerless for 1 turn",
-            "effet_fr": "",
+            "effet_fr": "Les attaques de base infligent Affaiblissement pendant 1 tour",
             "statistiques": {
                 "sante": "1789",
                 "defense": "3542"
@@ -3214,6 +3214,272 @@ const DATA = {
             "localisation_en": "Verso's Drafts",
             "localisation_fr": "Esquisses de Verso",
             "obtention_en": "Alternating Critical can be found at Verso's Drafts. Can be found from the Open Playground expedition flag. Head towards the left fork and enter the cave. From the cave entrance, enter the tunnel on the right to find the picto at the end.",
+            "obtention_fr": "",
+            "zone": "Verso's Drafts"
+        },
+        {
+            "id": 195,
+            "nom_en": "Consuming Attack",
+            "nom_fr": "Attaque brûlante",
+            "traduction_confirmee": true,
+            "effet_en": "Base attack consumes up to 100 Burns to deal 10% more damage per Burn consumed",
+            "effet_fr": "Les attaques de base consomment jusqu'à 100 Brûlures pour infliger 10% de dégats en plus par Brûlure consommée",
+            "statistiques": {
+                "vitesse": "836",
+                "chances_crit": "0.16"
+            },
+            "localisation_en": "Verso's Drafts",
+            "localisation_fr": "Esquisses de Verso",
+            "obtention_en": "Consuming Attack can be obtained by exchanging 130,200 Chromas from Najabla at Verso's Drafts.",
+            "obtention_fr": "",
+            "zone": "Verso's Drafts"
+        },
+        {
+            "id": 196,
+            "nom_en": "Slowing Attack",
+            "nom_fr": "Attaque ralentissante",
+            "traduction_confirmee": true,
+            "effet_en": "Base attack applies Slow for 1 turn",
+            "effet_fr": "Les attaques de base infligent Lenteur pendant 1 tour",
+            "statistiques": {
+                "sante": "2757",
+                "vitesse": "557"
+            },
+            "localisation_en": "Verso's Drafts",
+            "localisation_fr": "Esquisses de Verso",
+            "obtention_en": "Slowing Attack can be found at Verso's Drafts. It's found in a pool near the Gestral Baths flag, and the orange glowing Esquies.",
+            "obtention_fr": "",
+            "zone": "Verso's Drafts"
+        },
+        {
+            "id": 197,
+            "nom_en": "Double Third",
+            "nom_fr": "Double triple",
+            "traduction_confirmee": true,
+            "effet_en": "Every third hit of a Skill deals double damage",
+            "effet_fr": "Tous les trois coups portés par une même compétence, les dégâts sont doublés",
+            "statistiques": {
+                "sante": "2757",
+                "vitesse": "279",
+                "chances_crit": "0.16"
+            },
+            "localisation_en": "Verso's Drafts",
+            "localisation_fr": "Esquisses de Verso",
+            "obtention_en": "Double Third can be found at Verso's Drafts. Defeat the Barbacusette and Machinepieds on the cliff past the Open Playground expedition flag.",
+            "obtention_fr": "",
+            "zone": "Verso's Drafts"
+        },
+        {
+            "id": 198,
+            "nom_en": "Trigger-Happy",
+            "nom_fr": "Excité de la gâchette",
+            "traduction_confirmee": true,
+            "effet_en": "After shooting 10 times in the same turn, gain +2 AP (once). And following Shots this turn deal 200% more damage",
+            "effet_fr": "Après avoir tiré 10 fois dans le même tour, gain de +2 PA (une seule fois). Puis, les tirs suivants au cours du même tour infligent 200% de dégâts en plus",
+            "statistiques": {
+                "vitesse": "1114"
+            },
+            "localisation_en": "Verso's Drafts",
+            "localisation_fr": "Esquisses de Verso",
+            "obtention_en": "Trigger-Happy is obtained as a drop by defeating Romanifo (Half-Baked Gestral) found at Verso's Drafts.",
+            "obtention_fr": "",
+            "zone": "Verso's Drafts"
+        },
+        {
+            "id": 199,
+            "nom_en": "Feint",
+            "nom_fr": "Feinte",
+            "traduction_confirmee": true,
+            "effet_en": "Start each turn with 4 Barbapapa stacks. Every 5th hit with a Skill deals 600% more damage",
+            "effet_fr": "Commence chaque tour avec 4 effets de Barbapapa. Tous les 5 coups avec une compétence, l'attaque inflige 600% de dégâts en plus.",
+            "statistiques": {
+                "chances_crit": "0.66"
+            },
+            "localisation_en": "Verso's Drafts",
+            "localisation_fr": "Esquisses de Verso",
+            "obtention_en": "Feint can be found at Verso's Drafts. Beat Monsieur Frappe in the Candy Land area by parrying his attack 3 times.",
+            "obtention_fr": "",
+            "zone": "Verso's Drafts"
+        },
+        {
+            "id": 200,
+            "nom_en": "Frenzy",
+            "nom_fr": "Frénésie",
+            "traduction_confirmee": true,
+            "effet_en": "Each successive Skill hit deals 10% more damage",
+            "effet_fr": "Chaque coup consécutif à l'aide d'une compétence inflige 10% de dégâts en plus",
+            "statistiques": {
+                "chances_crit": "0.66"
+            },
+            "localisation_en": "Verso's Drafts",
+            "localisation_fr": "Esquisses de Verso",
+            "obtention_en": "Frenzy can be found at Verso's Drafts. Defeat the Licornapieds boss near the Licornapieds Station flag to get the Picto.",
+            "obtention_fr": "",
+            "zone": "Verso's Drafts"
+        },
+        {
+            "id": 201,
+            "nom_en": "Longer Break",
+            "nom_fr": "Longue Fracture",
+            "traduction_confirmee": true,
+            "effet_en": "Breaks last 1 more turn but the target can't be Broken twice",
+            "effet_fr": "Les Fractures durent 1 tour de plus, mais une même cible ne peut pas subir plus d'une Fracture",
+            "statistiques": {
+                "sante": "2757",
+                "defense": "786",
+                "vitesse": "279"
+            },
+            "localisation_en": "Verso's Drafts",
+            "localisation_fr": "Esquisses de Verso",
+            "obtention_en": "Longer Break can be found at Verso's Drafts. Defeat the Barbacusette and Machinepieds on the cliff past the Open Playground expedition flag.",
+            "obtention_fr": "",
+            "zone": "Verso's Drafts"
+        },
+        {
+            "id": 202,
+            "nom_en": "Clea's Death",
+            "nom_fr": "Mort de Cléa",
+            "traduction_confirmee": true,
+            "effet_en": "On death, allies gain 25% increased damage until they die",
+            "effet_fr": "A la mort, les alliés bénificient d'un bonus de 25% de dégâts jusqu'à leur mort",
+            "statistiques": {
+                "vitesse": "726",
+                "chances_crit": "0.37"
+            },
+            "localisation_en": "Endless Tower",
+            "localisation_fr": "",
+            "obtention_en": "Clea's Death is obtained as a drop by defeating Clea Unleashed found at the Endless Tower. You'll need to beat the original Clea in the Flying Manor first to unlock her Unleashed version. Interact with the painting to start the boss fight.",
+            "obtention_fr": "",
+            "zone": "Endless Tower"
+        },
+        {
+            "id": 203,
+            "nom_en": "Gradient Parry",
+            "nom_fr": "Parade Gradient",
+            "traduction_confirmee": true,
+            "effet_en": "+5% of a gradient charge on Parry",
+            "effet_fr": "+5% de charge Gradient en cas de parade réussie",
+            "statistiques": {
+                "vitesse": "557",
+                "chances_crit": "0.32"
+            },
+            "localisation_en": "Verso's Drafts",
+            "localisation_fr": "Esquisses de Verso",
+            "obtention_en": "Gradient Parry can be found at Verso's Drafts. Go down the pathway from the Gestral Baths expedition flag and pick up Gradient Parry from the Esquie statue's hand. The statue is near a #5 Hopscotch tile.",
+            "obtention_fr": "",
+            "zone": "Verso's Drafts"
+        },
+        {
+            "id": 204,
+            "nom_en": "Damage Share",
+            "nom_fr": "Partage de dégâts",
+            "traduction_confirmee": true,
+            "effet_en": "50% damage taken is redirected to other allies (if possible)",
+            "effet_fr": "50% des dégats subis sont redirigés vers d'autres alliés (si possible)",
+            "statistiques": {
+                "sante": "2612",
+                "defense": "1489"
+            },
+            "localisation_en": "Verso's Drafts",
+            "localisation_fr": "Esquisses de Verso",
+            "obtention_en": "Damage Share can be found at Verso's Drafts. Defeat the Barbacusette and two Licornes just past the entrance of the cave to obtain Damage Share. You can reach this cave from the Open Playground expedition flag and taking the left fork.",
+            "obtention_fr": "",
+            "zone": "Verso's Drafts"
+        },
+        {
+            "id": 205,
+            "nom_en": "First Life",
+            "nom_fr": "Première vie",
+            "traduction_confirmee": true,
+            "effet_en": "25% increased damage until death. 20% decreased damage on death. (Once)",
+            "effet_fr": "+25% de dégâts jusqu'à la mort, -20% après la mort (une fois)",
+            "statistiques": {
+                "defense": "4722"
+            },
+            "localisation_en": "Endless Tower",
+            "localisation_fr": "",
+            "obtention_en": "First Life can be found at Endless Tower. Interact with the painting and defeat Chromatic Lampmaster in the the boss fight.",
+            "obtention_fr": "",
+            "zone": "Endless Tower"
+        },
+        {
+            "id": 206,
+            "nom_en": "AP Discount",
+            "nom_fr": "Réduction de PA",
+            "traduction_confirmee": true,
+            "effet_en": "Skills cost 1 less AP",
+            "effet_fr": "Les compétences coûtent 1 PA de moins",
+            "statistiques": {
+                "vitesse": "1055"
+            },
+            "localisation_en": "Verso's Drafts",
+            "localisation_fr": "Esquisses de Verso",
+            "obtention_en": "AP Discount can be obtained by exchanging 217,000 Chromas from Najabla at Verso's Drafts.",
+            "obtention_fr": "",
+            "zone": "Verso's Drafts"
+        },
+        {
+            "id": 207,
+            "nom_en": "SOS Healing Tint",
+            "nom_fr": "SOS teinte curative",
+            "traduction_confirmee": true,
+            "effet_en": "Consume a Healing Tint when falling below 50% Health",
+            "effet_fr": "Consomme une teinte curative en tombant en dessous de 50% de santé",
+            "statistiques": {
+                "defense": "1572"
+            },
+            "localisation_en": "Verso's Drafts",
+            "localisation_fr": "Esquisses de Verso",
+            "obtention_en": "SOS Healing Tint can be found at Verso's Drafts. Defeat the Franctale on the left path past the Open Playground expedition flag.",
+            "obtention_fr": "",
+            "zone": "Verso's Drafts"
+        },
+        {
+            "id": 208,
+            "nom_en": "Empowered Healer",
+            "nom_fr": "Soigneur offensif",
+            "traduction_confirmee": true,
+            "effet_en": "Using a Healing Skill gives 50% more damage for 1 turn",
+            "effet_fr": "Utiliser une compétence de soins permet d'infliger 50% de dégâts en plus pendant 1 tour",
+            "statistiques": {
+                "sante": "2757",
+                "chances_crit": "0.32"
+            },
+            "localisation_en": "Verso's Drafts",
+            "localisation_fr": "Esquisses de Verso",
+            "obtention_en": "Empowered Healer can be found at Verso's Drafts. From the Gestral Baths flag, head onward down the path, keeping right. There will be a short platforming section across planks of a broken bridge. Jump across successfully to obtain this Picto.",
+            "obtention_fr": "",
+            "zone": "Verso's Drafts"
+        },
+        {
+            "id": 209,
+            "nom_en": "Gradient Overcharge",
+            "nom_fr": "Surcharge Gradient",
+            "traduction_confirmee": true,
+            "effet_en": "On turn start, consume 3 Gradient Charges (if able) to deal 200% more damage this turn",
+            "effet_fr": "Au début du tour, consomme 3 charges Gradient (si possible) pour infliger 200% de dégâts en plus pendant le tour",
+            "statistiques": {
+                "sante": "5514"
+            },
+            "localisation_en": "Verso's Drafts",
+            "localisation_fr": "Esquisses de Verso",
+            "obtention_en": "Gradient Overcharge can be found at Verso's Drafts. It's found on a large piece of floating candy near the entrance of Candy Land. Climb the overhead beams of the swing in the area to reach the candy.",
+            "obtention_fr": "",
+            "zone": "Verso's Drafts"
+        },
+        {
+            "id": 210,
+            "nom_en": "Empowering Jumps",
+            "nom_fr": "",
+            "traduction_confirmee": false,
+            "effet_en": "Counters deal 100% more damage for each successful Jump Counter this turn",
+            "effet_fr": "",
+            "statistiques": {
+                "defense": "1654"
+            },
+            "localisation_en": "Verso's Drafts",
+            "localisation_fr": "Esquisses de Verso",
+            "obtention_en": "Empowering Jumps can be found at Verso's Drafts. Head north from the Open Playground expedition flag to the Half-Baked Gestral on a seesaw. Start the Seesaw Challenge and jump each time the Gestral lands. Completing it rewards you with Empowering Jumps.",
             "obtention_fr": "",
             "zone": "Verso's Drafts"
         }
