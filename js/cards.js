@@ -1,4 +1,4 @@
-// © 2026 Nicolas Markiewicz (DwarfDog) — MIT License
+// © 2026 DwarfDog — MIT License
 // https://github.com/DwarfDog/CO33-Picto-Tracker
 // ══════════════════════════════════════════════════════
 //  CARDS — Création des cartes et rendu de la grille

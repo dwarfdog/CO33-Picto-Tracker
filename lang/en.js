@@ -1,4 +1,4 @@
-// © 2026 Nicolas Markiewicz (DwarfDog) — MIT License
+// © 2026 DwarfDog — MIT License
 // https://github.com/DwarfDog/CO33-Picto-Tracker
 // ══════════════════════════════════════════════════════
 //  LANGUAGE: English
@@ -93,7 +93,7 @@
     import_cancel:           'Cancel',
 
     // Footer
-    footer_text:             'Data extracted from <span>Clair Obscur: Expedition 33</span> — Sandfall Interactive &nbsp;·&nbsp; Progress saved locally<br>MIT License © 2026 Nicolas Markiewicz (DwarfDog)',
+    footer_text:             'Data extracted from <span>Clair Obscur: Expedition 33</span> — Sandfall Interactive &nbsp;·&nbsp; Progress saved locally<br>MIT License © 2026 DwarfDog',
 
     // Stats
     stat_health:             'Health',
