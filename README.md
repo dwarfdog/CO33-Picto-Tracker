@@ -3,6 +3,9 @@
 > **[Francais](#-version-francaise)** | **[English](#-english-version)**
 
 ---
+## 📌 Dernière mise à jour — 23/02/2026 : 210 Pictos
+
+---
 
 ## <img src="https://flagcdn.com/24x18/fr.png" alt="FR"> Version Francaise
 
