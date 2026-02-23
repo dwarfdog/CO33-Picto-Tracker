@@ -1,4 +1,4 @@
-// © 2026 Nicolas Markiewicz (DwarfDog) — MIT License
+// © 2026 DwarfDog — MIT License
 // https://github.com/DwarfDog/CO33-Picto-Tracker
 const DATA = {
     "meta": {
@@ -191,7 +191,7 @@ const DATA = {
             "nom_fr": "Attaque Fracturante",
             "traduction_confirmee": true,
             "effet_en": "50% Increased Break Damage on Base Attack",
-            "effet_fr": "",
+            "effet_fr": "Dégats de Fracture augmentés de 50% lors des attaques de base.",
             "statistiques": {
                 "vitesse": "21",
                 "chances_crit": "0.04"
@@ -590,7 +590,7 @@ const DATA = {
             "nom_fr": "Assurance",
             "traduction_confirmee": true,
             "effet_en": "Take 50% less damage, but can't be healed",
-            "effet_fr": "",
+            "effet_fr": "Subit 50% de dégâts en moins mais ne peut pas recevoir de soins",
             "statistiques": {
                 "vitesse": "75",
                 "chances_crit": "0.13"
@@ -1120,8 +1120,11 @@ const DATA = {
             "nom_fr": "Anti-étourdissement",
             "traduction_confirmee": true,
             "effet_en": "Immune to Stun.",
-            "effet_fr": "",
-            "statistiques": {},
+            "effet_fr": "Immunité contre Etourdissement",
+            "statistiques": {
+                "sante": "2757",
+                "defense": "1572"
+            },
             "localisation_en": "The Continent",
             "localisation_fr": "",
             "obtention_en": "Beat the Chromatic Petank in the field southeast of Forgotten Battlefield/East of Gestral Village.",
@@ -1234,7 +1237,7 @@ const DATA = {
             "nom_fr": "Affinité Inversée",
             "traduction_confirmee": true,
             "effet_en": "Apply Inverted on self for three turns at battle start. 50 % increased damage while inverted.",
-            "effet_fr": "",
+            "effet_fr": "Applique Inversion sur soi-même pendant 3 tours au début du combat. Dégâts augmentés de 50% en état d'Inversion",
             "statistiques": {
                 "sante": "270",
                 "chances_crit": "0.11"
@@ -1431,7 +1434,7 @@ const DATA = {
             "nom_fr": "Attaque accrue",
             "traduction_confirmee": true,
             "effet_en": "On every damage dealt, try to consume 1 AP. If successful, increase damage by 20%",
-            "effet_fr": "",
+            "effet_fr": "Chaque fois que le personnage inflige des dégâts, il tente de consommer 1 PA. S'il y parvient, les dégats sont augmentés de 20%",
             "statistiques": {
                 "vitesse": "132",
                 "chances_crit": "0.07"
@@ -1599,7 +1602,7 @@ const DATA = {
             "nom_fr": "Anti-charme",
             "traduction_confirmee": true,
             "effet_en": "Immune to Charm",
-            "effet_fr": "",
+            "effet_fr": "Immunité contre Charme",
             "statistiques": {
                 "sante": "599",
                 "defense": "240"
@@ -2103,8 +2106,11 @@ const DATA = {
             "nom_fr": "Anti-corruption",
             "traduction_confirmee": true,
             "effet_en": "Immune to Blight",
-            "effet_fr": "",
-            "statistiques": {},
+            "effet_fr": "Immunité contre Corruption",
+            "statistiques": {
+                "sante": "1897",
+                "defense": "949"
+            },
             "localisation_en": "The Reacher (Foggy Area)",
             "localisation_fr": "",
             "obtention_en": "Head to the path on the left to find a hot air balloon ride, and speak to the nearby Merchant. 67,350 Chroma.",
@@ -2148,7 +2154,7 @@ const DATA = {
             "nom_fr": "Altéré",
             "traduction_confirmee": true,
             "effet_en": "15% Increased damage for each Status Effect on self",
-            "effet_fr": "",
+            "effet_fr": "Dégats augmentés de 15% par altération sur le personnage",
             "statistiques": {
                 "defense": "1022",
                 "chances_crit": "0.12"
@@ -2250,7 +2256,7 @@ const DATA = {
             "nom_fr": "Affaiblissement amélioré",
             "traduction_confirmee": true,
             "effet_en": "+15% to Powerless damage reduction",
-            "effet_fr": "",
+            "effet_fr": "+15% à la réduction de dégâts infligée par  Affaiblissement",
             "statistiques": {
                 "defense": "1727",
                 "vitesse": "597"
@@ -2267,7 +2273,7 @@ const DATA = {
             "nom_fr": "Anti-brûlure",
             "traduction_confirmee": true,
             "effet_en": "Immune to Burn",
-            "effet_fr": "",
+            "effet_fr": "Immunité contre Brûlure",
             "statistiques": {
                 "sante": "2757",
                 "defense": "1572"
@@ -2701,7 +2707,7 @@ const DATA = {
             "nom_fr": "Affinité brûlante",
             "traduction_confirmee": true,
             "effet_en": "25% increased damage on Burning targets",
-            "effet_fr": "",
+            "effet_fr": "Dégâts augmentés de 25% contre les cibles affectées par Brûlure",
             "statistiques": {
                 "vitesse": "439",
                 "chances_crit": "0.12"
@@ -2979,8 +2985,11 @@ const DATA = {
             "nom_fr": "Anti-gel",
             "traduction_confirmee": true,
             "effet_en": "Immune to Freeze",
-            "effet_fr": "",
-            "statistiques": {},
+            "effet_fr": "Immunité contre Gel",
+            "statistiques": {
+                "sante": "1464",
+                "defense": "733"
+            },
             "localisation_en": "Frozen Hearts",
             "localisation_fr": "",
             "obtention_en": "Can be obtained upon destroying the Paint Cage in Glacial Falls past the Manor entrance.",
@@ -3190,6 +3199,23 @@ const DATA = {
             "obtention_en": "The Gradient Break Pictos can be found in a tiny alcove in the passage between the two paths past the behind the Grandis Engineer in Endless Night Sanctuary.",
             "obtention_fr": "",
             "zone": "Endless Night Sanctuary"
+        },
+        {
+            "id": 194,
+            "nom_en": "Alternating Critical",
+            "nom_fr": "Alternance critique",
+            "traduction_confirmee": true,
+            "effet_en": "On Critical hit, 100% increased damage of the next non-Critical hit",
+            "effet_fr": "En cas de coup critique, +100% de dégats sur le prochain coup non critique",
+            "statistiques": {
+                "vitesse": "293",
+                "chances_crit": "0.5"
+            },
+            "localisation_en": "Verso's Drafts",
+            "localisation_fr": "Esquisses de Verso",
+            "obtention_en": "Alternating Critical can be found at Verso's Drafts. Can be found from the Open Playground expedition flag. Head towards the left fork and enter the cave. From the cave entrance, enter the tunnel on the right to find the picto at the end.",
+            "obtention_fr": "",
+            "zone": "Verso's Drafts"
         }
     ]
 };
