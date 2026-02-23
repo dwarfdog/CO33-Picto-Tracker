@@ -3742,17 +3742,17 @@ const DATA = {
         {
             "id": 210,
             "nom_en": "Empowering Jumps",
-            "nom_fr": "",
+            "nom_fr": "Sauts renforçants",
             "traduction_confirmee": false,
             "effet_en": "Counters deal 100% more damage for each successful Jump Counter this turn",
-            "effet_fr": "",
+            "effet_fr": "Les contres infligent 100% de dégâts en plus pour chaque contre sauté réussi pendant ce tour",
             "statistiques": {
                 "defense": "1654"
             },
             "localisation_en": "Verso's Drafts",
             "localisation_fr": "Esquisses de Verso",
             "obtention_en": "Empowering Jumps can be found at Verso's Drafts. Head north from the Open Playground expedition flag to the Half-Baked Gestral on a seesaw. Start the Seesaw Challenge and jump each time the Gestral lands. Completing it rewards you with Empowering Jumps.",
-            "obtention_fr": "",
+            "obtention_fr": "En vous baladant parmi les Gestral dans les Esquisses de Verso, la nouvelle région de la Thank You Update de Clair Obscur Expedition 33, vous trouverez un petit bonhomme qui cherche quelqu'un pour faire de la balançoire avec lui.",
             "zone": "Verso's Drafts",
             "lumina": 5
         }
