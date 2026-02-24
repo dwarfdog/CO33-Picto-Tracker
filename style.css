@@ -1,4 +1,103 @@
 /* ══════════════════════════════════════════════════════
+  FONTS (LOCAL OFFLINE)
+══════════════════════════════════════════════════════ */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('assets/fonts/CormorantGaramond-300.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('assets/fonts/CormorantGaramond-400.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('assets/fonts/CormorantGaramond-600.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('assets/fonts/CormorantGaramond-700.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('assets/fonts/CormorantGaramond-Italic-300.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('assets/fonts/CormorantGaramond-Italic-400.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url('assets/fonts/CormorantGaramond-Italic-600.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('assets/fonts/Cinzel-400.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('assets/fonts/Cinzel-600.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('assets/fonts/Cinzel-700.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'IM Fell English';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('assets/fonts/IMFellEnglish-400.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'IM Fell English';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('assets/fonts/IMFellEnglish-Italic-400.ttf') format('truetype');
+}
+
+/* ══════════════════════════════════════════════════════
   VARIABLES & RESET
 ══════════════════════════════════════════════════════ */
 :root {
@@ -19,7 +118,7 @@
   --gris-text: #9a8870;
   --gris-dim: #5a4a38;
 
-  /* Webfonts conservées, avec fallback système pour usage 100% offline */
+  /* Fonts locales + fallback système */
   --font-body: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
   --font-title: 'Cinzel', 'Palatino Linotype', 'Book Antiqua', 'Times New Roman', serif;
   --font-alt: 'IM Fell English', Garamond, 'Times New Roman', serif;
