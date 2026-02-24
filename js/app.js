@@ -14,7 +14,7 @@ var App = {
   // ── Configuration ──
   STORAGE_KEY: 'ce33_pictos_possedes',
   LANG_STORAGE_KEY: 'ce33_langue',
-  STORAGE_VERSION: 3,
+  STORAGE_VERSION: 4,
   MAX_PROFILES: 12,
 
   // ── Constantes ──

@@ -37,6 +37,10 @@ App.appliquerTri = function () {
         oa = App.etat.possedes.has(pa.id) ? 1 : 0;
         ob = App.etat.possedes.has(pb.id) ? 1 : 0;
         return oa !== ob ? oa - ob : pa.id - pb.id;
+      case 'build-first':
+        oa = App.estDansBuild(pa.id) ? 0 : 1;
+        ob = App.estDansBuild(pb.id) ? 0 : 1;
+        return oa !== ob ? oa - ob : ((pa.lumina || 0) - (pb.lumina || 0) || pa.id - pb.id);
       case 'lumina-asc':
         return (pa.lumina || 0) - (pb.lumina || 0) || pa.id - pb.id;
       case 'lumina-desc':
@@ -60,11 +64,16 @@ App.appliquerFiltres = function () {
   App.toutes_cartes.forEach(function (carte) {
     var picto = carte._picto;
     var possede = App.etat.possedes.has(picto.id);
+    var dansBuild = App.estDansBuild(picto.id);
 
     // Filtre collection
     var ok = true;
     if (App.etat.filtreCollection === 'possedes' && !possede) ok = false;
     if (App.etat.filtreCollection === 'manquants' && possede) ok = false;
+
+    // Filtre build
+    if (App.etat.filtreBuild === 'planifies' && !dansBuild) ok = false;
+    if (App.etat.filtreBuild === 'hors-plan' && dansBuild) ok = false;
 
     // Filtre zone
     if (App.etat.filtreZone && App.zoneKey(picto) !== App.etat.filtreZone) ok = false;

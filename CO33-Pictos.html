@@ -80,6 +80,7 @@
 				<option value="zone-desc"></option>
 				<option value="possedes-first"></option>
 				<option value="manquants-first"></option>
+				<option value="build-first"></option>
 				<option value="lumina-asc"></option>
 				<option value="lumina-desc"></option>
 			</select>
@@ -108,6 +109,29 @@
 			<!-- Reset -->
 			<button type="button" class="btn-reset" id="btn-reset"></button>
 		</div>
+
+		<!-- Planificateur Lumina -->
+		<section class="lumina-planner" id="lumina-planner">
+			<div class="lumina-planner-entete">
+				<div class="lumina-planner-titre" id="lumina-planner-title"></div>
+				<div class="lumina-planner-actions">
+					<label for="lumina-budget" class="sr-only" id="lbl-lumina-budget">Lumina budget</label>
+					<input type="number" id="lumina-budget" class="lumina-budget-input" min="0" step="1" inputmode="numeric" value="0">
+					<button type="button" class="btn-action" id="btn-lumina-clear"></button>
+				</div>
+			</div>
+			<div class="lumina-planner-stats">
+				<span class="lumina-chip" id="lumina-selected-count"></span>
+				<span class="lumina-chip" id="lumina-total-cost"></span>
+				<span class="lumina-chip" id="lumina-remaining"></span>
+			</div>
+			<div class="lumina-planner-filtres">
+				<span class="filtre-label" id="lumina-filter-label"></span>
+				<button type="button" class="btn-filtre btn-filtre-build actif" data-build-filtre="tous"></button>
+				<button type="button" class="btn-filtre btn-filtre-build" data-build-filtre="planifies"></button>
+				<button type="button" class="btn-filtre btn-filtre-build" data-build-filtre="hors-plan"></button>
+			</div>
+		</section>
 
 		<!-- Compteurs -->
 		<div class="compteurs">
@@ -265,6 +289,7 @@
 		<script src="js/progress.js"></script>
 		<script src="js/tooltip.js"></script>
 		<script src="js/filters.js"></script>
+		<script src="js/lumina-planner.js"></script>
 		<script src="js/export-import.js"></script>
 		<script src="js/cards.js"></script>
 		<script src="js/ui-translate.js"></script>

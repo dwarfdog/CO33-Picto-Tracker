@@ -38,7 +38,7 @@ App.appliquerTraductions = function () {
   var sortKeys = [
     'sort_id_asc', 'sort_id_desc', 'sort_name_asc', 'sort_name_desc',
     'sort_zone_asc', 'sort_zone_desc', 'sort_owned_first', 'sort_missing_first',
-    'sort_lumina_asc', 'sort_lumina_desc'
+    'sort_build_first', 'sort_lumina_asc', 'sort_lumina_desc'
   ];
   for (var i = 0; i < sortKeys.length; i++) {
     triSelect.options[i].textContent = App.t(sortKeys[i]);
@@ -61,6 +61,19 @@ App.appliquerTraductions = function () {
   document.getElementById('btn-export').textContent = App.t('btn_export');
   document.getElementById('btn-import').textContent = App.t('btn_import');
   document.getElementById('btn-reset').textContent = App.t('btn_reset');
+
+  // Planificateur Lumina
+  document.getElementById('lumina-planner-title').textContent = App.t('lumina_planner_title');
+  document.getElementById('lbl-lumina-budget').textContent = App.t('lumina_budget_label');
+  document.getElementById('lumina-budget').setAttribute('aria-label', App.t('lumina_budget_label'));
+  document.getElementById('btn-lumina-clear').textContent = App.t('lumina_clear_build');
+  document.getElementById('btn-lumina-clear').setAttribute('aria-label', App.t('lumina_clear_build'));
+  document.getElementById('lumina-filter-label').textContent = App.t('lumina_filter_label');
+
+  var luminaFilterButtons = document.querySelectorAll('.btn-filtre-build[data-build-filtre]');
+  luminaFilterButtons[0].textContent = App.t('lumina_filter_all');
+  luminaFilterButtons[1].textContent = App.t('lumina_filter_selected');
+  luminaFilterButtons[2].textContent = App.t('lumina_filter_unselected');
 
   // Compteurs — mise à jour du label via textContent (plus de innerHTML)
   var cptItems = document.querySelectorAll('.compteur-item');
@@ -133,6 +146,11 @@ App.appliquerTraductions = function () {
 
   // Profils
   App.rafraichirSelectProfils();
+
+  // Planificateur Lumina
+  if (typeof App.mettreAJourPlanificateurLumina === 'function') {
+    App.mettreAJourPlanificateurLumina();
+  }
 };
 
 /**

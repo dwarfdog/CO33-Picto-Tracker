@@ -9,7 +9,10 @@ App.etat = {
   profils: [],
   profilActifId: '',
   possedes: new Set(),
+  buildLumina: new Set(),
+  luminaBudget: 0,
   filtreCollection: 'tous', // 'tous' | 'possedes' | 'manquants'
+  filtreBuild: 'tous', // 'tous' | 'planifies' | 'hors-plan'
   filtreZone: '',
   recherche: '',
   tri: 'id-asc',
@@ -86,9 +89,27 @@ App.normaliserIdsPossedes = function (ids) {
 };
 
 /**
+ * Normalise un budget Lumina.
+ * @param {*} raw
+ * @returns {{value:number, changed:boolean}}
+ */
+App.normaliserBudgetLumina = function (raw) {
+  if (raw === undefined || raw === null || raw === '') {
+    return { value: 0, changed: true };
+  }
+
+  var n = parseInt(raw, 10);
+  if (!isFinite(n) || n < 0) {
+    return { value: 0, changed: true };
+  }
+
+  return { value: n, changed: String(n) !== String(raw) };
+};
+
+/**
  * Retourne un profil par son ID.
  * @param {string} profilId
- * @returns {{id:string, nom:string, possedes:Set<number>}|null}
+ * @returns {{id:string, nom:string, possedes:Set<number>, buildLumina:Set<number>, budgetLumina:number}|null}
  */
 App.getProfilById = function (profilId) {
   for (var i = 0; i < App.etat.profils.length; i++) {
@@ -99,7 +120,7 @@ App.getProfilById = function (profilId) {
 
 /**
  * Retourne le profil actif.
- * @returns {{id:string, nom:string, possedes:Set<number>}|null}
+ * @returns {{id:string, nom:string, possedes:Set<number>, buildLumina:Set<number>, budgetLumina:number}|null}
  */
 App.getProfilActif = function () {
   return App.getProfilById(App.etat.profilActifId);
@@ -107,8 +128,8 @@ App.getProfilActif = function () {
 
 /**
  * Ajoute un profil dans l'état applicatif.
- * @param {{id?:string, nom?:string, possedes?:Array}} config
- * @returns {{profil:{id:string, nom:string, possedes:Set<number>}, changed:boolean}}
+ * @param {{id?:string, nom?:string, possedes?:Array, build_lumina?:Array, buildLumina?:Array, budget_lumina?:number, budgetLumina?:number}} config
+ * @returns {{profil:{id:string, nom:string, possedes:Set<number>, buildLumina:Set<number>, budgetLumina:number}, changed:boolean}}
  */
 App.ajouterProfil = function (config) {
   var cfg = config || {};
@@ -129,10 +150,32 @@ App.ajouterProfil = function (config) {
   var normalized = App.normaliserIdsPossedes(cfg.possedes || []);
   if (normalized.purged) changed = true;
 
+  var buildSource = cfg.build_lumina;
+  if (buildSource === undefined) buildSource = cfg.buildLumina;
+  if (buildSource === undefined) {
+    buildSource = [];
+    changed = true;
+  }
+
+  var normalizedBuild = App.normaliserIdsPossedes(buildSource);
+  if (normalizedBuild.purged) changed = true;
+
+  var budgetSource = cfg.budget_lumina;
+  if (budgetSource === undefined) budgetSource = cfg.budgetLumina;
+  if (budgetSource === undefined) {
+    budgetSource = 0;
+    changed = true;
+  }
+
+  var normalizedBudget = App.normaliserBudgetLumina(budgetSource);
+  if (normalizedBudget.changed) changed = true;
+
   var profil = {
     id: profilId,
     nom: nom,
-    possedes: normalized.set
+    possedes: normalized.set,
+    buildLumina: normalizedBuild.set,
+    budgetLumina: normalizedBudget.value
   };
 
   App.etat.profils.push(profil);
@@ -153,7 +196,7 @@ App.assurerProfils = function () {
   }
 
   if (!App.etat.profils.length) {
-    App.ajouterProfil({});
+    App.ajouterProfil({ possedes: [], build_lumina: [], budget_lumina: 0 });
     changed = true;
   }
 
@@ -164,6 +207,14 @@ App.assurerProfils = function () {
 
   var profilActif = App.getProfilActif();
   App.etat.possedes = profilActif ? profilActif.possedes : new Set();
+  App.etat.buildLumina = profilActif ? profilActif.buildLumina : new Set();
+  App.etat.luminaBudget = profilActif ? profilActif.budgetLumina : 0;
+
+  if (['tous', 'planifies', 'hors-plan'].indexOf(App.etat.filtreBuild) === -1) {
+    App.etat.filtreBuild = 'tous';
+    changed = true;
+  }
+
   return changed;
 };
 
@@ -176,11 +227,20 @@ App.rafraichirEtatCartes = function () {
   App.toutes_cartes.forEach(function (carte) {
     var id = parseInt(carte.dataset.id, 10);
     var possede = App.etat.possedes.has(id);
+    var dansBuild = App.etat.buildLumina.has(id);
+
     carte.classList.toggle('possede', possede);
+    carte.classList.toggle('dans-build', dansBuild);
 
     var btnPossession = carte.querySelector('.possession-indicateur');
     if (btnPossession) {
       btnPossession.setAttribute('aria-pressed', possede ? 'true' : 'false');
+    }
+
+    var btnBuild = carte.querySelector('.build-indicateur');
+    if (btnBuild) {
+      btnBuild.setAttribute('aria-pressed', dansBuild ? 'true' : 'false');
+      btnBuild.classList.toggle('actif', dansBuild);
     }
   });
 };
@@ -227,6 +287,8 @@ App.activerProfil = function (profilId, options) {
   var profilChanged = App.etat.profilActifId !== profil.id;
   App.etat.profilActifId = profil.id;
   App.etat.possedes = profil.possedes;
+  App.etat.buildLumina = profil.buildLumina;
+  App.etat.luminaBudget = profil.budgetLumina;
 
   App.rafraichirSelectProfils();
 
@@ -236,6 +298,7 @@ App.activerProfil = function (profilId, options) {
 
   if (!opts.skipRender) {
     App.rafraichirEtatCartes();
+    if (typeof App.mettreAJourPlanificateurLumina === 'function') App.mettreAJourPlanificateurLumina();
     if (typeof App.mettreAJourProgression === 'function') App.mettreAJourProgression();
     if (typeof App.appliquerTri === 'function') App.appliquerTri();
     if (typeof App.appliquerFiltres === 'function') App.appliquerFiltres();
@@ -256,7 +319,7 @@ App.activerProfil = function (profilId, options) {
 /**
  * Crée un nouveau profil (run) puis l'active.
  * @param {string} nom
- * @returns {{id:string, nom:string, possedes:Set<number>}|null}
+ * @returns {{id:string, nom:string, possedes:Set<number>, buildLumina:Set<number>, budgetLumina:number}|null}
  */
 App.creerEtActiverProfil = function (nom) {
   if (App.etat.profils.length >= App.MAX_PROFILES) {
@@ -266,7 +329,7 @@ App.creerEtActiverProfil = function (nom) {
     return null;
   }
 
-  var result = App.ajouterProfil({ nom: nom, possedes: [] });
+  var result = App.ajouterProfil({ nom: nom, possedes: [], build_lumina: [], budget_lumina: 0 });
   var profil = result.profil;
   App.activerProfil(profil.id, { skipSave: true, silentToast: true });
   App.sauvegarder();
@@ -281,7 +344,7 @@ App.creerEtActiverProfil = function (nom) {
 /**
  * Charge la progression depuis localStorage.
  * Supporte les formats v1 (tableau brut), v2 (objet possedes)
- * et v3 (multi-profils).
+ * et v3+/v4 (multi-profils).
  */
 App.chargerSauvegarde = function () {
   App.etat.profils = [];
@@ -308,11 +371,11 @@ App.chargerSauvegarde = function () {
 
     if (Array.isArray(parsed)) {
       // Format v1: tableau d'IDs
-      App.ajouterProfil({ possedes: parsed });
+      App.ajouterProfil({ possedes: parsed, build_lumina: [], budget_lumina: 0 });
       needsMigration = true;
     } else if (parsed && typeof parsed === 'object') {
       if (Array.isArray(parsed.profils)) {
-        // Format v3: multi-profils
+        // Format v3+/v4: multi-profils
         parsed.profils.forEach(function (entry) {
           if (!entry || typeof entry !== 'object') {
             needsMigration = true;
@@ -321,11 +384,37 @@ App.chargerSauvegarde = function () {
 
           var possedes = Array.isArray(entry.possedes) ? entry.possedes : [];
           if (!Array.isArray(entry.possedes)) needsMigration = true;
+          var buildLumina = [];
+
+          if (Array.isArray(entry.build_lumina)) {
+            buildLumina = entry.build_lumina;
+          } else if (Array.isArray(entry.buildLumina)) {
+            buildLumina = entry.buildLumina;
+            needsMigration = true;
+          } else {
+            needsMigration = true;
+          }
+
+          var budgetLumina = entry.budget_lumina;
+          if (budgetLumina === undefined) {
+            if (entry.budgetLumina !== undefined) {
+              budgetLumina = entry.budgetLumina;
+              needsMigration = true;
+            } else if (entry.lumina_budget !== undefined) {
+              budgetLumina = entry.lumina_budget;
+              needsMigration = true;
+            } else {
+              budgetLumina = 0;
+              needsMigration = true;
+            }
+          }
 
           var added = App.ajouterProfil({
             id: entry.id,
             nom: entry.nom,
-            possedes: possedes
+            possedes: possedes,
+            build_lumina: buildLumina,
+            budget_lumina: budgetLumina
           });
 
           if (added.changed) needsMigration = true;
@@ -342,7 +431,7 @@ App.chargerSauvegarde = function () {
         }
       } else if (Array.isArray(parsed.possedes)) {
         // Format v2: objet {version, possedes}
-        App.ajouterProfil({ possedes: parsed.possedes });
+        App.ajouterProfil({ possedes: parsed.possedes, build_lumina: [], budget_lumina: 0 });
         needsMigration = true;
       } else {
         needsMigration = true;
@@ -365,12 +454,12 @@ App.chargerSauvegarde = function () {
 };
 
 /**
- * Sauvegarde la progression dans localStorage au format v3 (multi-profils).
+ * Sauvegarde la progression dans localStorage au format v4 (multi-profils).
  * Format :
  * {
- *   version: 3,
+ *   version: 4,
  *   profil_actif: 'profil_xxx',
- *   profils: [{ id, nom, possedes: [...] }, ...]
+ *   profils: [{ id, nom, possedes: [...], build_lumina: [...], budget_lumina: 0 }, ...]
  * }
  */
 App.sauvegarder = function () {
@@ -381,7 +470,9 @@ App.sauvegarder = function () {
       return {
         id: profil.id,
         nom: profil.nom,
-        possedes: Array.from(profil.possedes).sort(function (a, b) { return a - b; })
+        possedes: Array.from(profil.possedes).sort(function (a, b) { return a - b; }),
+        build_lumina: Array.from(profil.buildLumina).sort(function (a, b) { return a - b; }),
+        budget_lumina: profil.budgetLumina
       };
     });
 

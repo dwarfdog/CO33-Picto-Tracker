@@ -30,6 +30,7 @@
     sort_zone_desc:          'Sort: Zone (Z → A)',
     sort_owned_first:        'Sort: Owned first',
     sort_missing_first:      'Sort: Missing first',
+    sort_build_first:        'Sort: Build first',
     sort_lumina_asc:         'Sort: Lumina (ascending)',
     sort_lumina_desc:        'Sort: Lumina (descending)',
 
@@ -43,6 +44,18 @@
     btn_export:              'Export',
     btn_import:              'Import',
     btn_reset:               '✕ Uncheck all',
+
+    // Lumina planner
+    lumina_planner_title:    'Lumina Planner',
+    lumina_budget_label:     'Lumina budget',
+    lumina_clear_build:      'Clear build',
+    lumina_filter_label:     'Build filter',
+    lumina_filter_all:       'All',
+    lumina_filter_selected:  'In build',
+    lumina_filter_unselected:'Out of build',
+    lumina_selected_count:   'Selected: {n}',
+    lumina_total_cost:       'Total Lumina: {n}',
+    lumina_remaining:        'Remaining: {n}',
 
     // Counters
     counter_owned:           'Owned:',
@@ -76,6 +89,7 @@
     aria_owned:              'Owned',
     aria_not_owned:          'Not owned',
     aria_toggle:             'Check / uncheck',
+    aria_build_toggle:       'Add or remove from Lumina build',
 
     // Fallbacks
     effect_undocumented:     'Effect not documented.',
@@ -88,6 +102,7 @@
     toast_profile_created:   'Profile created — {name}',
     toast_profile_switched:  'Active profile — {name}',
     toast_profile_limit:     'Limit reached — max {max} profiles',
+    toast_build_cleared:     'Lumina build cleared',
     toast_invalid_data:      'Invalid data.',
     toast_invalid_code:      'Invalid code — format not recognized.',
     toast_no_code:           'No code entered.',

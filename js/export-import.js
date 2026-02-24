@@ -56,6 +56,8 @@ App.telechargerFichier = function () {
       nom: profilNom
     },
     possedes: Array.from(App.etat.possedes).sort(function (a, b) { return a - b; }),
+    build_lumina: Array.from(App.etat.buildLumina || []).sort(function (a, b) { return a - b; }),
+    budget_lumina: App.etat.luminaBudget || 0,
     total: App.etat.possedes.size,
   };
 
@@ -75,26 +77,38 @@ App.telechargerFichier = function () {
 };
 
 /**
- * Parse une chaîne d'import (base64 ou JSON) et retourne les IDs.
+ * Parse une chaîne d'import (base64 ou JSON) en payload normalisé.
  * @param {string} code - Code à parser
- * @returns {number[]|null} Tableau d'IDs ou null si format invalide
+ * @returns {{possedes:number[], buildLumina:number[]|null, budgetLumina:number|null}|null}
  */
-App.parseImportData = function (code) {
+App.parseImportPayload = function (code) {
   var trimmed = code.trim();
 
-  // Tentative 1 : base64
-  try {
-    var decoded = JSON.parse(atob(trimmed));
-    if (Array.isArray(decoded)) return decoded;
-  } catch (e) { /* pas du base64 valide */ }
+  function fromJsonPayload(json) {
+    if (Array.isArray(json)) {
+      return { possedes: json, buildLumina: null, budgetLumina: null };
+    }
 
-  // Tentative 2 : JSON brut
-  try {
-    var json = JSON.parse(trimmed);
-    // Format v2 : { possedes: [...] }
-    if (json && json.possedes && Array.isArray(json.possedes)) return json.possedes;
-    // Format v3 stockage global : { profils: [...], profil_actif: ... }
-    if (json && Array.isArray(json.profils)) {
+    if (!json || typeof json !== 'object') return null;
+
+    if (Array.isArray(json.possedes)) {
+      var buildLumina = null;
+      if (Array.isArray(json.build_lumina)) buildLumina = json.build_lumina;
+      else if (Array.isArray(json.buildLumina)) buildLumina = json.buildLumina;
+
+      var budgetLumina = null;
+      if (json.budget_lumina !== undefined) budgetLumina = json.budget_lumina;
+      else if (json.budgetLumina !== undefined) budgetLumina = json.budgetLumina;
+      else if (json.lumina_budget !== undefined) budgetLumina = json.lumina_budget;
+
+      return {
+        possedes: json.possedes,
+        buildLumina: buildLumina,
+        budgetLumina: budgetLumina
+      };
+    }
+
+    if (Array.isArray(json.profils)) {
       var profilSource = null;
       if (typeof json.profil_actif === 'string') {
         for (var i = 0; i < json.profils.length; i++) {
@@ -104,35 +118,95 @@ App.parseImportData = function (code) {
           }
         }
       }
-      if (!profilSource && json.profils.length) {
-        profilSource = json.profils[0];
-      }
-      if (profilSource && Array.isArray(profilSource.possedes)) return profilSource.possedes;
+      if (!profilSource && json.profils.length) profilSource = json.profils[0];
+      if (!profilSource || !Array.isArray(profilSource.possedes)) return null;
+
+      return {
+        possedes: profilSource.possedes,
+        buildLumina: Array.isArray(profilSource.build_lumina)
+          ? profilSource.build_lumina
+          : (Array.isArray(profilSource.buildLumina) ? profilSource.buildLumina : null),
+        budgetLumina: profilSource.budget_lumina !== undefined
+          ? profilSource.budget_lumina
+          : (profilSource.budgetLumina !== undefined ? profilSource.budgetLumina : null)
+      };
     }
-    // Format tableau brut
-    if (Array.isArray(json)) return json;
+
+    return null;
+  }
+
+  // Tentative 1 : base64
+  try {
+    var decoded = JSON.parse(atob(trimmed));
+    var payloadFromB64 = fromJsonPayload(decoded);
+    if (payloadFromB64) return payloadFromB64;
+  } catch (e) { /* pas du base64 valide */ }
+
+  // Tentative 2 : JSON brut
+  try {
+    var payloadFromJson = fromJsonPayload(JSON.parse(trimmed));
+    if (payloadFromJson) return payloadFromJson;
   } catch (e2) { /* pas du JSON valide */ }
 
   return null;
 };
 
 /**
+ * Parse une chaîne d'import (base64 ou JSON) et retourne les IDs possédés.
+ * @param {string} code
+ * @returns {number[]|null}
+ */
+App.parseImportData = function (code) {
+  var payload = App.parseImportPayload(code);
+  return payload ? payload.possedes : null;
+};
+
+/**
  * Valide et applique un tableau d'IDs importés.
  * Utilise le cache App._idsValides pour validation O(1).
  * @param {number[]} ids
+ * @param {{buildLumina?:number[]|null,budgetLumina?:number|null}} [options]
  * @returns {boolean} true si l'import a réussi
  */
-App.appliquerImport = function (ids) {
+App.appliquerImport = function (ids, options) {
+  var opts = options || {};
+
   if (!Array.isArray(ids) || !ids.every(function (id) {
     return typeof id === 'number' && App._idsValides.has(id);
   })) {
     App.afficherToast(App.t('toast_invalid_data'), true);
     return false;
   }
+
+  if (opts.buildLumina !== null && opts.buildLumina !== undefined) {
+    if (!Array.isArray(opts.buildLumina) || !opts.buildLumina.every(function (id) {
+      return typeof id === 'number' && App._idsValides.has(id);
+    })) {
+      App.afficherToast(App.t('toast_invalid_data'), true);
+      return false;
+    }
+  }
+
   App.etat.possedes.clear();
   ids.forEach(function (id) { App.etat.possedes.add(id); });
+
+  if (opts.buildLumina !== null && opts.buildLumina !== undefined) {
+    App.etat.buildLumina.clear();
+    opts.buildLumina.forEach(function (id) { App.etat.buildLumina.add(id); });
+  }
+
+  if (opts.budgetLumina !== null && opts.budgetLumina !== undefined) {
+    var budget = App.normaliserBudgetLumina(opts.budgetLumina).value;
+    App.etat.luminaBudget = budget;
+    var profil = App.getProfilActif();
+    if (profil) profil.budgetLumina = budget;
+  }
+
   App.sauvegarder();
   App.rafraichirEtatCartes();
+  if (typeof App.mettreAJourPlanificateurLumina === 'function') {
+    App.mettreAJourPlanificateurLumina();
+  }
   App.mettreAJourProgression();
   App.appliquerTri();
   App.appliquerFiltres();
@@ -152,12 +226,15 @@ App.appliquerImport = function (ids) {
  * @returns {boolean} true si l'import a réussi
  */
 App.importerDepuisCode = function (code) {
-  var ids = App.parseImportData(code);
-  if (ids === null) {
+  var payload = App.parseImportPayload(code);
+  if (payload === null) {
     App.afficherToast(App.t('toast_invalid_code'), true);
     return false;
   }
-  if (App.appliquerImport(ids)) {
+  if (App.appliquerImport(payload.possedes, {
+    buildLumina: payload.buildLumina,
+    budgetLumina: payload.budgetLumina
+  })) {
     App.afficherToast(App.t('toast_imported', { n: App.etat.possedes.size }));
     return true;
   }
