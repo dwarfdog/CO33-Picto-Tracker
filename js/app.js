@@ -14,7 +14,8 @@ var App = {
   // ── Configuration ──
   STORAGE_KEY: 'ce33_pictos_possedes',
   LANG_STORAGE_KEY: 'ce33_langue',
-  STORAGE_VERSION: 2,
+  STORAGE_VERSION: 3,
+  MAX_PROFILES: 12,
 
   // ── Constantes ──
   ANIMATION_DELAY_PER_CARD: 15,

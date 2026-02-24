@@ -78,6 +78,47 @@ test('imports progress from code and updates owned counters', async ({ page }) =
   await expect(page.locator('.carte-picto[data-id="1"]')).toHaveClass(/possede/);
 });
 
+test('isolates owned state between progression profiles', async ({ page }) => {
+  await openApp(page);
+
+  const profileSelect = page.locator('#profil-select');
+  await expect(profileSelect.locator('option')).toHaveCount(1);
+  const baseProfileId = await profileSelect.inputValue();
+
+  await page.locator('.carte-picto[data-id="1"] .possession-indicateur').click();
+  await expect(page.locator('#nb-possedes')).toHaveText('1');
+
+  page.once('dialog', async dialog => {
+    expect(dialog.type()).toBe('prompt');
+    await dialog.accept('Run B');
+  });
+  await page.locator('#btn-profil-add').click();
+
+  await expect(profileSelect.locator('option')).toHaveCount(2);
+  const runBId = await profileSelect.inputValue();
+  expect(runBId).not.toBe(baseProfileId);
+  await expect(page.locator('#nb-possedes')).toHaveText('0');
+  await expect(page.locator('.carte-picto[data-id="1"]')).not.toHaveClass(/possede/);
+
+  const runBImportCode = Buffer.from(JSON.stringify([2, 3])).toString('base64');
+  await page.locator('#btn-import').click();
+  await expect(page.locator('#import-overlay.visible')).toBeVisible();
+  await page.locator('#import-textarea').fill(runBImportCode);
+  await page.locator('#btn-import-valider').click();
+  await expect(page.locator('#import-overlay.visible')).toHaveCount(0);
+  await expect(page.locator('#nb-possedes')).toHaveText('2');
+  await expect(page.locator('.carte-picto[data-id="2"]')).toHaveClass(/possede/);
+
+  await profileSelect.selectOption(baseProfileId);
+  await expect(page.locator('#nb-possedes')).toHaveText('1');
+  await expect(page.locator('.carte-picto[data-id="1"]')).toHaveClass(/possede/);
+  await expect(page.locator('.carte-picto[data-id="2"]')).not.toHaveClass(/possede/);
+
+  await profileSelect.selectOption(runBId);
+  await expect(page.locator('#nb-possedes')).toHaveText('2');
+  await expect(page.locator('.carte-picto[data-id="2"]')).toHaveClass(/possede/);
+});
+
 test('switches language and updates searchable placeholder', async ({ page }) => {
   await openApp(page);
 
