@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Usage question
+    url: https://github.com/dwarfdog/CO33-Picto-Tracker/discussions
+    about: Please ask usage questions in Discussions.

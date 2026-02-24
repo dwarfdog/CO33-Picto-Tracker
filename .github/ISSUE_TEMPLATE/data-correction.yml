@@ -1,0 +1,56 @@
+name: Data correction
+description: Report a wrong or missing Picto entry
+title: "[Data] "
+labels:
+  - data
+body:
+  - type: input
+    id: picto_id
+    attributes:
+      label: Picto ID
+      description: Numeric ID from the tracker card
+      placeholder: "e.g. 193"
+    validations:
+      required: true
+
+  - type: input
+    id: field_name
+    attributes:
+      label: Field to correct
+      description: Example: effet_en, effet_fr, zone_en, obtention_fr, statistiques
+      placeholder: "effet_en"
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_value
+    attributes:
+      label: Current value
+      description: Value currently shown in the tracker
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_value
+    attributes:
+      label: Expected value
+      description: Correct value to use
+    validations:
+      required: true
+
+  - type: textarea
+    id: source_links
+    attributes:
+      label: Source links
+      description: Add direct links proving the correction
+      placeholder: "https://..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Optional details
+    validations:
+      required: false

@@ -32,6 +32,32 @@ function validate() {
   const pictos = data.pictos;
   const meta = data.meta || {};
 
+  if (!isNonEmptyString(meta.dataset_version)) {
+    errors.push('meta.dataset_version is required.');
+  }
+
+  if (!isNonEmptyString(meta.game_version)) {
+    errors.push('meta.game_version is required.');
+  }
+
+  if (!isNonEmptyString(meta.updated_at)) {
+    errors.push('meta.updated_at is required.');
+  } else {
+    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+    if (!datePattern.test(meta.updated_at)) {
+      errors.push('meta.updated_at must use YYYY-MM-DD format.');
+    } else {
+      const dateObj = new Date(meta.updated_at + 'T00:00:00Z');
+      if (Number.isNaN(dateObj.getTime())) {
+        errors.push('meta.updated_at must be a valid date.');
+      }
+    }
+  }
+
+  if (!Array.isArray(meta.sources) || meta.sources.length === 0) {
+    errors.push('meta.sources must be a non-empty array.');
+  }
+
   if (meta.total_pictos !== pictos.length) {
     errors.push('meta.total_pictos (' + meta.total_pictos + ') does not match pictos.length (' + pictos.length + ').');
   }

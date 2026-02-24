@@ -145,6 +145,13 @@ CO33-Script/
     en.js                <- Traduction anglaise
   docs/
     images/              <- Captures d'ecran du README
+    data-maintenance.md   <- Processus de maintenance des donnees
+  tools/
+    check-all.js         <- Lance tous les controles locaux
+    check-syntax.js      <- Verification de syntaxe JS
+    validate-data.js     <- Validation des contraintes de donnees
+    test-core.js         <- Tests coeur (sans navigateur)
+    report-data.js       <- Rapport de couverture des donnees
 ```
 
 ---
@@ -155,6 +162,12 @@ Pour executer tous les controles locaux (syntaxe, coherence des donnees, tests c
 
 ```bash
 node tools/check-all.js
+```
+
+Pour afficher un rapport de couverture des donnees :
+
+```bash
+node tools/report-data.js
 ```
 
 ---
@@ -305,6 +318,13 @@ CO33-Script/
     en.js                <- English translation
   docs/
     images/              <- README screenshots
+    data-maintenance.md   <- Data maintenance workflow
+  tools/
+    check-all.js         <- Runs all local checks
+    check-syntax.js      <- JS syntax validation
+    validate-data.js     <- Data constraint validation
+    test-core.js         <- Core tests (no browser required)
+    report-data.js       <- Data coverage report
 ```
 
 ---
@@ -315,6 +335,12 @@ Run all local checks (syntax, data consistency, core tests):
 
 ```bash
 node tools/check-all.js
+```
+
+To print a data coverage report:
+
+```bash
+node tools/report-data.js
 ```
 
 ---

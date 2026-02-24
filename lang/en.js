@@ -109,6 +109,7 @@
     footer_data:             'Data extracted from Clair Obscur: Expedition 33',
     footer_studio:           'Sandfall Interactive',
     footer_save:             'Progress saved locally',
+    footer_dataset_line:     'Dataset {dataset} · Game {game} · Updated {date}',
     footer_license:          'MIT License \u00a9 2026 DwarfDog',
 
     // File validation

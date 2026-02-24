@@ -104,10 +104,22 @@ App.appliquerTraductions = function () {
   var ftData = document.getElementById('ft-data');
   var ftStudio = document.getElementById('ft-studio');
   var ftSave = document.getElementById('ft-save');
+  var ftDataset = document.getElementById('ft-dataset');
   var ftLicense = document.getElementById('ft-license');
+  var meta = (typeof DATA !== 'undefined' && DATA.meta) ? DATA.meta : {};
+  var datasetVersion = meta.dataset_version || 'n/a';
+  var gameVersion = meta.game_version || 'n/a';
+  var updatedAt = meta.updated_at || 'n/a';
   if (ftData) ftData.textContent = App.t('footer_data');
   if (ftStudio) ftStudio.textContent = App.t('footer_studio');
   if (ftSave) ftSave.textContent = App.t('footer_save');
+  if (ftDataset) {
+    ftDataset.textContent = App.t('footer_dataset_line', {
+      dataset: datasetVersion,
+      game: gameVersion,
+      date: updatedAt
+    });
+  }
   if (ftLicense) ftLicense.textContent = App.t('footer_license');
 
   // Zone select
