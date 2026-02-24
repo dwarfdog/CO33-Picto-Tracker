@@ -371,8 +371,6 @@ const DATA = {
                 "chances_crit": "0.08"
             },
             "lumina": 15,
-            "localisation_en": "Ancient Sanctuary",
-            "localisation_fr": "",
             "zone_en": "Ancient Sanctuary",
             "zone_fr": "Sanctuaire Ancien",
             "flag_en": "Sanctuary Maze",
@@ -2164,6 +2162,7 @@ const DATA = {
                 "defense": "373",
                 "vitesse": "173"
             },
+            "lumina": 10,
             "zone_en": "Lumiere",
             "zone_fr": "Lumière",
             "flag_en": "Harbour",
@@ -3874,8 +3873,7 @@ const DATA = {
             "zone_fr": "Tour infinie",
             "flag_en": "",
             "flag_fr": "",
-            "localisation_fr": "",
-            "obtention_en": "First Life can be found at Endless Tower. Interact with the painting and defeat Chromatic Lampmaster in the the boss fight.",
+            "obtention_en": "First Life can be found at Endless Tower. Interact with the painting and defeat Chromatic Lampmaster in the boss fight.",
             "obtention_fr": "Peut être trouvé à la Tour infinie. Interagissez avec le tableau et battre Chromatic Lampmaster dans le combat de boss.",
         },
         {

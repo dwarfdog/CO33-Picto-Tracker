@@ -100,12 +100,12 @@ App.normaliserTexte = function (str) {
 
 /**
  * Retourne une clé de zone stable pour les filtres/tri.
- * Priorité : zone_en > zone_fr > zone.
+ * Priorité : zone_en > zone_fr.
  * @param {Object} picto
  * @returns {string}
  */
 App.zoneKey = function (picto) {
-  return picto.zone_en || picto.zone_fr || picto.zone || '';
+  return picto.zone_en || picto.zone_fr || '';
 };
 
 /**
@@ -207,8 +207,7 @@ App.buildSearchIndex = function () {
     picto._searchIndex = App.normaliserTexte(
       (picto.nom_fr || '') + ' ' + (picto.nom_en || '') + ' ' +
       (picto.effet_en || '') + ' ' + (picto.effet_fr || '') + ' ' +
-      (picto.zone || '') + ' ' + (picto.zone_en || '') + ' ' + (picto.zone_fr || '') + ' ' +
-      (picto.localisation_en || '') + ' ' + (picto.localisation_fr || '') + ' ' +
+      (picto.zone_en || '') + ' ' + (picto.zone_fr || '') + ' ' +
       (picto.flag_en || '') + ' ' + (picto.flag_fr || '')
     );
     picto._nomNorm = App.normaliserTexte(App.champ(picto, 'nom'));

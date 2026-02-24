@@ -89,10 +89,23 @@ function validate() {
     if (!isNonEmptyString(p.nom_en)) errors.push('id ' + p.id + ': nom_en is required.');
     if (!isNonEmptyString(p.nom_fr)) errors.push('id ' + p.id + ': nom_fr is required.');
     if (!isNonEmptyString(p.effet_en)) errors.push('id ' + p.id + ': effet_en is required.');
-    if (!isNonEmptyString(p.zone_en) && !isNonEmptyString(p.zone_fr) && !isNonEmptyString(p.zone)) {
-      errors.push('id ' + p.id + ': zone is required (zone_en, zone_fr, or zone).');
+    if (!isNonEmptyString(p.zone_en) && !isNonEmptyString(p.zone_fr)) {
+      errors.push('id ' + p.id + ': zone is required (zone_en or zone_fr).');
     }
     if (!isNonEmptyString(p.obtention_en)) errors.push('id ' + p.id + ': obtention_en is required.');
+
+    if (Object.prototype.hasOwnProperty.call(p, 'zone')) {
+      errors.push('id ' + p.id + ': legacy field zone is forbidden. Use zone_en/zone_fr.');
+    }
+    if (Object.prototype.hasOwnProperty.call(p, 'localisation')) {
+      errors.push('id ' + p.id + ': legacy field localisation is forbidden.');
+    }
+    if (Object.prototype.hasOwnProperty.call(p, 'localisation_en')) {
+      errors.push('id ' + p.id + ': legacy field localisation_en is forbidden.');
+    }
+    if (Object.prototype.hasOwnProperty.call(p, 'localisation_fr')) {
+      errors.push('id ' + p.id + ': legacy field localisation_fr is forbidden.');
+    }
 
     if (typeof p.traduction_confirmee !== 'boolean') {
       errors.push('id ' + p.id + ': traduction_confirmee must be boolean.');
