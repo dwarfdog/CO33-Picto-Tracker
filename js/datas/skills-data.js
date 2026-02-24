@@ -4,8 +4,8 @@ const DATA = {
     "meta": {
         "jeu": "Clair Obscur : Expédition 33",
         "total_pictos": 210,
-        "traductions_confirmees": 192,
-        "traductions_derivees": 18,
+        "traductions_confirmees": 194,
+        "traductions_derivees": 16,
         "sources": [
             "monster-soluce.com/jeux/clair-obscur-expedition-33/guide-solution/pictos",
             "generation-game.com/guide-emplacements-de-tous-les-pictos-de-clair-obscur-expedition-33",
@@ -2654,7 +2654,8 @@ const DATA = {
                 "vitesse": "546",
                 "chances_crit": "0.32"
             },
-            "localisation_en": "Flying Manor",
+            "lumina": 3,
+            "zone_en": "Flying Manor",
             "zone_fr": "Manoir Suspendu",
             "flag_en": "Central Plaza",
             "flag_fr": "Place Centrale",
@@ -3470,10 +3471,7 @@ const DATA = {
             "traduction_confirmee": true,
             "effet_en": "+2 AP on using an item.",
             "effet_fr": "",
-            "statistiques": {
-                "sante": "?",
-                "vitesse": "?"
-            },
+            "statistiques": {},
             "lumina": 5,
             "zone_en": "The Continent",
             "zone_fr": "Le Continent",
@@ -3546,10 +3544,7 @@ const DATA = {
             "traduction_confirmee": true,
             "effet_en": "Gain Powerful on hitting a Marked enemy.",
             "effet_fr": "",
-            "statistiques": {
-                "vitesse": "?",
-                "chances_crit": "?"
-            },
+            "statistiques": {},
             "lumina": 5,
             "zone_en": "Flying Manor",
             "zone_fr": "Manoir Suspendu",
@@ -3639,8 +3634,8 @@ const DATA = {
             "nom_en": "Gradient Break",
             "nom_fr": "Fracture Gradient",
             "traduction_confirmee": true,
-            "effet_en": "",
-            "effet_fr": "",
+            "effet_en": "+50% of a Gradient Charge on Breaking a target",
+            "effet_fr": "+50% de charge Gradient en infligeant une Fracture à une cible",
             "statistiques": {
                 "vitesse": "434",
                 "chances_crit": "0.28"
