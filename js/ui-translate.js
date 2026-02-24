@@ -31,6 +31,7 @@ App.appliquerTraductions = function () {
   document.getElementById('lbl-recherche').textContent = App.t('label_search');
   document.getElementById('lbl-filtre-zone').textContent = App.t('label_zone_filter');
   document.getElementById('lbl-tri-select').textContent = App.t('label_sort_order');
+  document.getElementById('lbl-profil-select').textContent = App.t('label_profile_select');
 
   // Tri
   var triSelect = document.getElementById('tri-select');
@@ -55,6 +56,8 @@ App.appliquerTraductions = function () {
   filtreGroupes[1].querySelector('.filtre-label').textContent = App.t('progression_group_label');
 
   // Boutons
+  document.getElementById('btn-profil-add').textContent = App.t('btn_profile_add');
+  document.getElementById('btn-profil-add').setAttribute('aria-label', App.t('btn_profile_add'));
   document.getElementById('btn-export').textContent = App.t('btn_export');
   document.getElementById('btn-import').textContent = App.t('btn_import');
   document.getElementById('btn-reset').textContent = App.t('btn_reset');
@@ -127,6 +130,9 @@ App.appliquerTraductions = function () {
 
   // Zone select
   App.initialiserSelectZone();
+
+  // Profils
+  App.rafraichirSelectProfils();
 };
 
 /**

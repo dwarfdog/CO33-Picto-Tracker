@@ -20,6 +20,7 @@
     label_search:            'Search',
     label_zone_filter:       'Zone filter',
     label_sort_order:        'Sort order',
+    label_profile_select:    'Active profile',
     zone_all:                'All zones',
     sort_id_asc:             'Sort: # ascending',
     sort_id_desc:            'Sort: # descending',
@@ -38,6 +39,7 @@
     filter_owned:            'Owned',
     filter_missing:          'Missing',
     progression_group_label: 'Progression',
+    btn_profile_add:         '+ Profile',
     btn_export:              'Export',
     btn_import:              'Import',
     btn_reset:               '✕ Uncheck all',
@@ -83,6 +85,9 @@
     toast_copied:            'Code copied — {n} picto(s)',
     toast_downloaded:        'File downloaded — {n} picto(s)',
     toast_imported:          'Import successful — {n} picto(s)',
+    toast_profile_created:   'Profile created — {name}',
+    toast_profile_switched:  'Active profile — {name}',
+    toast_profile_limit:     'Limit reached — max {max} profiles',
     toast_invalid_data:      'Invalid data.',
     toast_invalid_code:      'Invalid code — format not recognized.',
     toast_no_code:           'No code entered.',
@@ -91,6 +96,8 @@
 
     // Confirmation
     confirm_reset:           'Clear all progress? This action is irreversible.',
+    profile_prompt_name:     'Name for the new profile:',
+    profile_default_name:    'Profile {n}',
 
     // Modal import
     import_title:            'Import progress',

@@ -34,6 +34,18 @@ App.attacher = function () {
     App.appliquerFiltres();
   });
 
+  // ── Profils de progression ──
+  document.getElementById('profil-select').addEventListener('change', function (e) {
+    App.activerProfil(e.target.value);
+  });
+
+  document.getElementById('btn-profil-add').addEventListener('click', function () {
+    var suggestion = App.nomProfilParDefaut(App.etat.profils.length + 1);
+    var nom = prompt(App.t('profile_prompt_name'), suggestion);
+    if (nom === null) return; // Annulation utilisateur
+    App.creerEtActiverProfil(nom);
+  });
+
   // ── Filtres collection (délégation) ──
   document.querySelectorAll('.btn-filtre[data-filtre]').forEach(function (btn) {
     btn.addEventListener('click', function () {

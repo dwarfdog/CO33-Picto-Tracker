@@ -20,6 +20,7 @@
     label_search:            'Recherche',
     label_zone_filter:       'Filtre de zone',
     label_sort_order:        'Ordre de tri',
+    label_profile_select:    'Profil actif',
     zone_all:                'Toutes les zones',
     sort_id_asc:             'Tri : # croissant',
     sort_id_desc:            'Tri : # décroissant',
@@ -38,6 +39,7 @@
     filter_owned:            'Possédés',
     filter_missing:          'Manquants',
     progression_group_label: 'Progression',
+    btn_profile_add:         '+ Profil',
     btn_export:              'Exporter',
     btn_import:              'Importer',
     btn_reset:               '✕ Tout décocher',
@@ -83,6 +85,9 @@
     toast_copied:            'Code copié — {n} picto(s)',
     toast_downloaded:        'Fichier téléchargé — {n} picto(s)',
     toast_imported:          'Import réussi — {n} picto(s)',
+    toast_profile_created:   'Profil créé — {name}',
+    toast_profile_switched:  'Profil actif — {name}',
+    toast_profile_limit:     'Limite atteinte — {max} profils max',
     toast_invalid_data:      'Données invalides.',
     toast_invalid_code:      'Code invalide — format non reconnu.',
     toast_no_code:           'Aucun code saisi.',
@@ -91,6 +96,8 @@
 
     // Confirmation
     confirm_reset:           'Effacer toute la progression ? Cette action est irréversible.',
+    profile_prompt_name:     'Nom du nouveau profil :',
+    profile_default_name:    'Profil {n}',
 
     // Modal import
     import_title:            'Importer une progression',

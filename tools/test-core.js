@@ -25,7 +25,27 @@ function loadScript(relPath) {
   vm.runInThisContext(code, { filename: relPath });
 }
 
+function createLocalStorageMock() {
+  const store = {};
+  return {
+    getItem: function (key) {
+      return Object.prototype.hasOwnProperty.call(store, key) ? store[key] : null;
+    },
+    setItem: function (key, value) {
+      store[key] = String(value);
+    },
+    removeItem: function (key) {
+      delete store[key];
+    },
+    clear: function () {
+      Object.keys(store).forEach(function (key) { delete store[key]; });
+    }
+  };
+}
+
 function run() {
+  global.localStorage = createLocalStorageMock();
+
   loadScript('js/app.js');
   loadScript('js/datas/skills-data.js');
   loadScript('lang/fr.js');
@@ -62,7 +82,39 @@ function run() {
   assert.deepStrictEqual(App.parseImportData(b64), sampleIds);
   assert.deepStrictEqual(App.parseImportData(JSON.stringify(sampleIds)), sampleIds);
   assert.deepStrictEqual(App.parseImportData(JSON.stringify({ possedes: sampleIds })), sampleIds);
+  assert.deepStrictEqual(
+    App.parseImportData(JSON.stringify({
+      version: 3,
+      profil_actif: 'run-b',
+      profils: [
+        { id: 'run-a', nom: 'Run A', possedes: [1] },
+        { id: 'run-b', nom: 'Run B', possedes: [2, 3] }
+      ]
+    })),
+    [2, 3]
+  );
   assert.strictEqual(App.parseImportData('not-a-valid-code'), null);
+
+  // migration and persistence for multi-profile storage (v2 -> v3)
+  localStorage.setItem(App.STORAGE_KEY, JSON.stringify({ version: 2, possedes: [1, 2, 999999, 2] }));
+  App.chargerSauvegarde();
+  assert.strictEqual(App.etat.profils.length, 1);
+  assert.strictEqual(App.etat.profilActifId, App.etat.profils[0].id);
+  assert.deepStrictEqual(Array.from(App.etat.possedes).sort(function (a, b) { return a - b; }), [1, 2]);
+
+  const newProfile = App.creerEtActiverProfil('Run B');
+  assert.ok(newProfile && newProfile.id, 'New profile should be created');
+  App.etat.possedes.add(3);
+  App.sauvegarder();
+
+  const saved = JSON.parse(localStorage.getItem(App.STORAGE_KEY));
+  assert.strictEqual(saved.version, App.STORAGE_VERSION);
+  assert.strictEqual(Array.isArray(saved.profils), true);
+  assert.strictEqual(saved.profils.length, 2);
+  assert.strictEqual(saved.profil_actif, newProfile.id);
+  const savedRunB = saved.profils.find(function (p) { return p.id === newProfile.id; });
+  assert.ok(savedRunB, 'Saved payload should include active profile');
+  assert.deepStrictEqual(savedRunB.possedes, [3]);
 
   // meta translation counters should match actual values
   const confirmed = DATA.pictos.filter(function (p) { return p.traduction_confirmee === true; }).length;
