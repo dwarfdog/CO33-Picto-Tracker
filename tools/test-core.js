@@ -38,10 +38,10 @@ function run() {
   App.LANG = 'fr';
   App.construireCaches();
 
-  // zoneKey fallback order
-  assert.strictEqual(App.zoneKey({ zone_en: 'A', zone_fr: 'B', zone: 'C' }), 'A');
-  assert.strictEqual(App.zoneKey({ zone_fr: 'B', zone: 'C' }), 'B');
-  assert.strictEqual(App.zoneKey({ zone: 'C' }), 'C');
+  // zoneKey fallback order (zone_en -> zone_fr)
+  assert.strictEqual(App.zoneKey({ zone_en: 'A', zone_fr: 'B' }), 'A');
+  assert.strictEqual(App.zoneKey({ zone_fr: 'B' }), 'B');
+  assert.strictEqual(App.zoneKey({ zone_en: '', zone_fr: 'B' }), 'B');
   assert.strictEqual(App.zoneKey({}), '');
 
   // champ fallback FR -> EN when FR value is missing
@@ -69,6 +69,12 @@ function run() {
   const derived = DATA.pictos.filter(function (p) { return p.traduction_confirmee === false; }).length;
   assert.strictEqual(DATA.meta.traductions_confirmees, confirmed);
   assert.strictEqual(DATA.meta.traductions_derivees, derived);
+
+  // legacy fields should not exist in dataset
+  assert.strictEqual(DATA.pictos.some(function (p) { return Object.prototype.hasOwnProperty.call(p, 'zone'); }), false);
+  assert.strictEqual(DATA.pictos.some(function (p) { return Object.prototype.hasOwnProperty.call(p, 'localisation'); }), false);
+  assert.strictEqual(DATA.pictos.some(function (p) { return Object.prototype.hasOwnProperty.call(p, 'localisation_en'); }), false);
+  assert.strictEqual(DATA.pictos.some(function (p) { return Object.prototype.hasOwnProperty.call(p, 'localisation_fr'); }), false);
 
   // meta dataset governance fields
   assert.ok(typeof DATA.meta.dataset_version === 'string' && DATA.meta.dataset_version.length > 0);

@@ -2,6 +2,17 @@
 
 This project stores Picto data in `js/datas/skills-data.js`.
 
+## Picto schema
+
+Each `DATA.pictos[]` entry must follow this contract:
+
+- Required: `id`, `nom_en`, `nom_fr`, `effet_en`, `zone_en` or `zone_fr`, `obtention_en`, `traduction_confirmee`
+- Optional: `effet_fr`, `obtention_fr`, `flag_en`, `flag_fr`, `lumina`, `statistiques`
+- Legacy fields are forbidden: `zone`, `localisation`, `localisation_en`, `localisation_fr`
+
+For a new language `xx`, add `lang/xx.js` and data fields like `nom_xx`, `effet_xx`, `zone_xx`, `flag_xx`, `obtention_xx`.
+Runtime fallback stays English (`*_en`) when `*_xx` is missing.
+
 ## Required metadata
 
 `DATA.meta` must include:
