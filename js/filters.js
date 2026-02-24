@@ -67,7 +67,7 @@ App.appliquerFiltres = function () {
     if (App.etat.filtreCollection === 'manquants' && possede) ok = false;
 
     // Filtre zone
-    if (App.etat.filtreZone && picto.zone !== App.etat.filtreZone) ok = false;
+    if (App.etat.filtreZone && App.zoneKey(picto) !== App.etat.filtreZone) ok = false;
 
     // Filtre recherche — utilise l'index pré-calculé
     if (ok && rechercheNorm) {

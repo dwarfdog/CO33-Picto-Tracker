@@ -127,8 +127,9 @@ App.initialiserSelectZone = function () {
 
   var zonesMap = {};
   DATA.pictos.forEach(function (p) {
-    if (p.zone && !zonesMap[p.zone]) {
-      zonesMap[p.zone] = App.champ(p, 'zone');
+    var zoneKey = App.zoneKey(p);
+    if (zoneKey && !zonesMap[zoneKey]) {
+      zonesMap[zoneKey] = App.champ(p, 'zone');
     }
   });
 

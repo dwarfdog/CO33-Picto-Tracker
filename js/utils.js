@@ -99,16 +99,26 @@ App.normaliserTexte = function (str) {
 };
 
 /**
+ * Retourne une clé de zone stable pour les filtres/tri.
+ * Priorité : zone_en > zone_fr > zone.
+ * @param {Object} picto
+ * @returns {string}
+ */
+App.zoneKey = function (picto) {
+  return picto.zone_en || picto.zone_fr || picto.zone || '';
+};
+
+/**
  * Construit l'index de recherche pré-normalisé sur chaque picto.
  * Appelé au boot et lors d'un changement de langue.
  * Enrichit chaque objet picto avec _searchIndex, _nomNorm, _zoneNorm.
- */
+*/
 App.buildSearchIndex = function () {
   DATA.pictos.forEach(function (picto) {
     picto._searchIndex = App.normaliserTexte(
       (picto.nom_fr || '') + ' ' + (picto.nom_en || '') + ' ' +
       (picto.effet_en || '') + ' ' + (picto.effet_fr || '') + ' ' +
-      (picto.zone || '') + ' ' + (picto.zone_fr || '') + ' ' +
+      (picto.zone || '') + ' ' + (picto.zone_en || '') + ' ' + (picto.zone_fr || '') + ' ' +
       (picto.localisation_en || '') + ' ' + (picto.localisation_fr || '') + ' ' +
       (picto.flag_en || '') + ' ' + (picto.flag_fr || '')
     );
