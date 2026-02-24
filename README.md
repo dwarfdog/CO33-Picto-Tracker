@@ -172,6 +172,8 @@ node tools/report-data.js
 
 Le rapport inclut la couverture par langue (`nom`, `effet`, `zone`, `flag`, `obtention`) en brut (`*_xx`) et en resolution avec fallback anglais.
 
+Les tests E2E navigateur sont executes en CI avec Playwright.
+
 ---
 
 ### Credits
@@ -346,6 +348,8 @@ node tools/report-data.js
 ```
 
 The report includes per-language coverage (`nom`, `effet`, `zone`, `flag`, `obtention`) for raw fields (`*_xx`) and resolved values with English fallback.
+
+Browser E2E tests are executed in CI using Playwright.
 
 ---
 
