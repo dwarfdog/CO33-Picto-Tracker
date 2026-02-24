@@ -53,7 +53,7 @@ App.telechargerFichier = function () {
   var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
   a.href = url;
-  a.download = 'co33-pictos-' + data.total + 'sur' + DATA.pictos.length + '.json';
+  a.download = 'co33-pictos-' + data.total + '-' + DATA.pictos.length + '.json';
   a.click();
   URL.revokeObjectURL(url);
   App.afficherToast(App.t('toast_downloaded', { n: data.total }));

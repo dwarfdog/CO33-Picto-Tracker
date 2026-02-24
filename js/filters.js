@@ -26,8 +26,12 @@ App.appliquerTri = function () {
       case 'nom-desc':
         return App.normaliserTexte(App.champ(pb, 'nom'))
           .localeCompare(App.normaliserTexte(App.champ(pa, 'nom')));
-      case 'zone-asc':  return (pa.zone || '').localeCompare(pb.zone || '');
-      case 'zone-desc': return (pb.zone || '').localeCompare(pa.zone || '');
+      case 'zone-asc':
+        return App.normaliserTexte(App.champ(pa, 'zone'))
+          .localeCompare(App.normaliserTexte(App.champ(pb, 'zone')));
+      case 'zone-desc':
+        return App.normaliserTexte(App.champ(pb, 'zone'))
+          .localeCompare(App.normaliserTexte(App.champ(pa, 'zone')));
       case 'possedes-first':
         oa = App.etat.possedes.has(pa.id) ? 0 : 1;
         ob = App.etat.possedes.has(pb.id) ? 0 : 1;
@@ -67,11 +71,14 @@ App.appliquerFiltres = function () {
     // Filtre zone
     if (App.etat.filtreZone && picto.zone !== App.etat.filtreZone) ok = false;
 
-    // Filtre recherche (toujours sur les deux langues)
+    // Filtre recherche (bilingue, toutes données)
     if (rechercheNorm) {
       var haystack = App.normaliserTexte(
         (picto.nom_fr || '') + ' ' + (picto.nom_en || '') + ' ' +
-        (picto.effet_en || '') + ' ' + (picto.effet_fr || '')
+        (picto.effet_en || '') + ' ' + (picto.effet_fr || '') + ' ' +
+        (picto.zone || '') + ' ' + (picto.zone_fr || '') + ' ' +
+        (picto.localisation_en || '') + ' ' + (picto.localisation_fr || '') + ' ' +
+        (picto.flag_en || '') + ' ' + (picto.flag_fr || '')
       );
       if (haystack.indexOf(rechercheNorm) === -1) ok = false;
     }

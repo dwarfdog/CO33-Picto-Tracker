@@ -69,7 +69,11 @@ App.creerCartePicto = function (picto) {
       (statsHTML ? '<div class="carte-stats">' + statsHTML + '</div>' : '') +
     '</div>' +
     '<div class="carte-footer">' +
-      '<div class="carte-zone">' + (picto.zone || '') + '</div>' +
+      '<div class="carte-zone">' + App.champ(picto, 'zone') + '</div>' +
+      '<div class="carte-flag"' + (App.champ(picto, 'flag') ? '' : ' style="display:none"') + '>' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2v20M4 4h12l-3 4 3 4H4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+        '<span class="carte-flag-texte">' + App.champ(picto, 'flag') + '</span>' +
+      '</div>' +
       '<button class="possession-indicateur" aria-label="' + App.t('aria_toggle') + '">' +
         '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
       '</button>' +
@@ -159,6 +163,13 @@ App.mettreAJourCartesTexte = function () {
     el.querySelector('.carte-nom-en').textContent = App.nomSecondaire(picto);
     el.querySelector('.carte-effet').textContent = App.champ(picto, 'effet');
     el.querySelector('.possession-indicateur').setAttribute('aria-label', App.t('aria_toggle'));
+    // Zone (traduite)
+    el.querySelector('.carte-zone').textContent = App.champ(picto, 'zone');
+    // Flag
+    var flagEl = el.querySelector('.carte-flag');
+    var flagTexte = App.champ(picto, 'flag');
+    flagEl.querySelector('.carte-flag-texte').textContent = flagTexte;
+    flagEl.style.display = flagTexte ? '' : 'none';
     // Badge traduction
     var badge = el.querySelector('.badge-non-confirme');
     if (badge) badge.textContent = App.t('badge_derived');

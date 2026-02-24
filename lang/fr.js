@@ -59,6 +59,7 @@
     tooltip_stats:           'Statistiques',
     tooltip_lumina:          'Coût Lumina',
     tooltip_zone:            'Zone',
+    tooltip_flag:            'Drapeau à proximité',
     tooltip_obtain:          'Comment l\'obtenir',
     tooltip_close:           'Fermer',
     tooltip_detail:          'Voir le détail',

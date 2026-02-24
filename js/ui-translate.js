@@ -80,6 +80,7 @@ App.appliquerTraductions = function () {
   document.querySelector('#tt-sec-stats .tooltip-section-titre').textContent = App.t('tooltip_stats');
   document.querySelector('#tt-sec-zone .tooltip-section-titre').textContent = App.t('tooltip_zone');
   document.querySelector('#tt-sec-lumina .tooltip-section-titre').textContent = App.t('tooltip_lumina');
+  document.querySelector('#tt-sec-flag .tooltip-section-titre').textContent = App.t('tooltip_flag');
   document.querySelector('#tt-sec-obtention .tooltip-section-titre').textContent = App.t('tooltip_obtain');
   document.getElementById('tooltip-fermer').setAttribute('aria-label', App.t('tooltip_close'));
 
@@ -109,16 +110,22 @@ App.initialiserSelectZone = function () {
   while (sel.options.length > 1) sel.remove(1);
   sel.options[0].textContent = App.t('zone_all');
 
-  var zonesSet = {};
+  var zonesMap = {};
   DATA.pictos.forEach(function (p) {
-    if (p.zone) zonesSet[p.zone] = true;
+    if (p.zone && !zonesMap[p.zone]) {
+      zonesMap[p.zone] = App.champ(p, 'zone');
+    }
   });
-  var zones = Object.keys(zonesSet).sort();
 
-  zones.forEach(function (zone) {
+  // Trier par nom traduit
+  var zoneKeys = Object.keys(zonesMap).sort(function (a, b) {
+    return zonesMap[a].localeCompare(zonesMap[b]);
+  });
+
+  zoneKeys.forEach(function (zoneKey) {
     var opt = document.createElement('option');
-    opt.value = zone;
-    opt.textContent = zone;
+    opt.value = zoneKey;
+    opt.textContent = zonesMap[zoneKey];
     sel.appendChild(opt);
   });
 

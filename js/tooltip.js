@@ -23,7 +23,20 @@ App.ouvrirTooltip = function (picto) {
 
   // Zone / Localisation
   document.getElementById('tt-zone').textContent =
-    App.champ(picto, 'localisation') || picto.zone || App.t('zone_unknown');
+    App.champ(picto, 'localisation') || App.champ(picto, 'zone') || App.t('zone_unknown');
+
+  // Flag (drapeau de téléportation)
+  var flagEl = document.getElementById('tt-flag');
+  var secFlag = document.getElementById('tt-sec-flag');
+  var flagText = App.champ(picto, 'flag');
+  if (flagText) {
+    flagEl.innerHTML =
+      '<svg class="flag-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2v20M4 4h12l-3 4 3 4H4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> ' +
+      flagText;
+    secFlag.style.display = '';
+  } else {
+    secFlag.style.display = 'none';
+  }
 
   // Obtention
   var obtentionEl = document.getElementById('tt-obtention');

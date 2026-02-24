@@ -49,6 +49,9 @@ App.champ = function (picto, field) {
     var val = picto[field + '_' + App.SUPPORTED_LANGS[i]];
     if (val !== undefined && val !== '') return val;
   }
+  // Ultime fallback : champ nu (ex: 'zone' sans suffixe de langue)
+  var bare = picto[field];
+  if (bare !== undefined && bare !== '') return bare;
   return '';
 };
 
@@ -65,6 +68,11 @@ App.changerLangue = function (nouvelleLang) {
   App.mettreAJourCartesTexte();
   App.appliquerTri();
   App.mettreAJourProgression();
+
+  // Rafraîchir le contenu du tooltip si ouvert
+  if (App.etat.pictoOuvert) {
+    App.ouvrirTooltip(App.etat.pictoOuvert);
+  }
 };
 
 /**

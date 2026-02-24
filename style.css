@@ -635,6 +635,33 @@ h1 span {
   color: var(--or-mat);
 }
 
+/* Flag (drapeau de téléportation) */
+.carte-flag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.carte-flag svg {
+  width: 12px;
+  height: 12px;
+  color: var(--gris-dim);
+  flex-shrink: 0;
+}
+
+.carte-flag-texte {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.6rem;
+  color: var(--gris-dim);
+  letter-spacing: 0.05em;
+}
+
+.carte-picto.possede .carte-flag svg,
+.carte-picto.possede .carte-flag-texte {
+  color: var(--or-mat);
+}
+
 /* Bouton possession (check en bas à droite) */
 .possession-indicateur {
   position: absolute;
@@ -918,6 +945,19 @@ h1 span {
 .tooltip-section-contenu.or { color: var(--or); font-size: 1.1rem; font-weight: 600; }
 .tooltip-section-contenu.italique { font-style: italic; color: var(--gris-text); }
 .tooltip-section-contenu.lumina { color: var(--stat-lumina); font-size: 1.2rem; font-weight: 600; }
+
+.tooltip-section-contenu.flag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tooltip-section-contenu.flag .flag-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--or-mat);
+  flex-shrink: 0;
+}
 
 .tooltip-stats-grille {
   display: grid;
@@ -1248,6 +1288,8 @@ footer span { color: var(--or-mat); }
   .carte-nom-en { color: #666; }
   .carte-effet { color: #444; }
   .carte-zone { color: #666; }
+  .carte-flag-texte { color: #666; }
+  .carte-flag svg { color: #666; }
 
   .barre-conteneur { border: 1px solid #ccc; }
   .barre-remplie { background: var(--or) !important; box-shadow: none; }
