@@ -18,8 +18,8 @@ App.appliquerTri = function () {
     var oa, ob;
 
     switch (tri) {
-      case 'id-asc':   return pa.id - pb.id;
-      case 'id-desc':  return pb.id - pa.id;
+      case 'id-asc': return pa.id - pb.id;
+      case 'id-desc': return pb.id - pa.id;
       case 'nom-asc':
         return App.normaliserTexte(App.champ(pa, 'nom'))
           .localeCompare(App.normaliserTexte(App.champ(pb, 'nom')));

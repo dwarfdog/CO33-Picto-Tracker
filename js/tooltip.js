@@ -65,8 +65,8 @@ App.ouvrirTooltip = function (picto) {
       var meta = LABELS[k] || { label: k, classe: 'vitesse' };
       htmlParts.push(
         '<div class="tooltip-stat-item">' +
-          '<span class="tooltip-stat-nom">' + meta.label + '</span>' +
-          '<span class="tooltip-stat-val ' + meta.classe + '">' + App.formatStatVal(k, v) + '</span>' +
+        '<span class="tooltip-stat-nom">' + meta.label + '</span>' +
+        '<span class="tooltip-stat-val ' + meta.classe + '">' + App.formatStatVal(k, v) + '</span>' +
         '</div>'
       );
     });

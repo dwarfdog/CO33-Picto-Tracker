@@ -58,25 +58,25 @@ App.creerCartePicto = function (picto) {
   el.innerHTML =
     '<div class="coin-deco"></div>' +
     '<div class="carte-header">' +
-      '<div class="carte-nom-fr">' + nomPrincipal + '</div>' +
-      '<div class="carte-nom-en">' + nomSec + '</div>' +
-      badgeTrad +
-      '<div class="carte-id">#' + String(picto.id).padStart(3, '0') + '</div>' +
-      (picto.lumina ? '<div class="carte-lumina">✦ ' + picto.lumina + '</div>' : '') +
+    '<div class="carte-nom-fr">' + nomPrincipal + '</div>' +
+    '<div class="carte-nom-en">' + nomSec + '</div>' +
+    badgeTrad +
+    '<div class="carte-id">#' + String(picto.id).padStart(3, '0') + '</div>' +
+    (picto.lumina ? '<div class="carte-lumina">✦ ' + picto.lumina + '</div>' : '') +
     '</div>' +
     '<div class="carte-corps">' +
-      '<div class="carte-effet">' + App.champ(picto, 'effet') + '</div>' +
-      (statsHTML ? '<div class="carte-stats">' + statsHTML + '</div>' : '') +
+    '<div class="carte-effet">' + App.champ(picto, 'effet') + '</div>' +
+    (statsHTML ? '<div class="carte-stats">' + statsHTML + '</div>' : '') +
     '</div>' +
     '<div class="carte-footer">' +
-      '<div class="carte-zone">' + App.champ(picto, 'zone') + '</div>' +
-      '<div class="carte-flag"' + (App.champ(picto, 'flag') ? '' : ' style="display:none"') + '>' +
-        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2v20M4 4h12l-3 4 3 4H4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-        '<span class="carte-flag-texte">' + App.champ(picto, 'flag') + '</span>' +
-      '</div>' +
-      '<button class="possession-indicateur" aria-label="' + App.t('aria_toggle') + '">' +
-        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-      '</button>' +
+    '<div class="carte-zone">' + App.champ(picto, 'zone') + '</div>' +
+    '<div class="carte-flag"' + (App.champ(picto, 'flag') ? '' : ' style="display:none"') + '>' +
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2v20M4 4h12l-3 4 3 4H4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+    '<span class="carte-flag-texte">' + App.champ(picto, 'flag') + '</span>' +
+    '</div>' +
+    '<button class="possession-indicateur" aria-label="' + App.t('aria_toggle') + '">' +
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+    '</button>' +
     '</div>';
 
   // Référence au picto pour tri/filtre

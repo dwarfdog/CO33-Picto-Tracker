@@ -24,8 +24,8 @@ App.detecterLangue = function () {
  */
 App.t = function (key, params) {
   var str = (App.langs[App.LANG] && App.langs[App.LANG][key])
-         || (App.langs[App.DEFAULT_LANG] && App.langs[App.DEFAULT_LANG][key])
-         || key;
+    || (App.langs[App.DEFAULT_LANG] && App.langs[App.DEFAULT_LANG][key])
+    || key;
   if (!params) return str;
   return str.replace(/\{(\w+)\}/g, function (_, k) {
     return params[k] !== undefined ? params[k] : '{' + k + '}';
@@ -81,9 +81,9 @@ App.changerLangue = function (nouvelleLang) {
  */
 App.getStatLabels = function () {
   return {
-    sante:        { label: App.t('stat_health'),  classe: 'sante',   icone: '♥' },
-    defense:      { label: App.t('stat_defense'), classe: 'defense', icone: '⛨' },
-    vitesse:      { label: App.t('stat_speed'),   classe: 'vitesse', icone: '⚡' },
-    chances_crit: { label: App.t('stat_crit'),    classe: 'crit',    icone: '✦' },
+    sante: { label: App.t('stat_health'), classe: 'sante', icone: '♥' },
+    defense: { label: App.t('stat_defense'), classe: 'defense', icone: '⛨' },
+    vitesse: { label: App.t('stat_speed'), classe: 'vitesse', icone: '⚡' },
+    chances_crit: { label: App.t('stat_crit'), classe: 'crit', icone: '✦' },
   };
 };
