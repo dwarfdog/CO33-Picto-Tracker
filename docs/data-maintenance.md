@@ -45,6 +45,12 @@ Generate a coverage report:
 node tools/report-data.js
 ```
 
+The report includes:
+
+- Summary coverage for current tracked fields
+- Coverage by language for `nom`, `effet`, `zone`, `flag`, `obtention`
+- `raw` values (exact `*_xx` field) and `resolved` values (with English fallback)
+
 JSON output:
 
 ```bash
