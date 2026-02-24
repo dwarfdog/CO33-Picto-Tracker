@@ -69,6 +69,11 @@ function run() {
   const derived = DATA.pictos.filter(function (p) { return p.traduction_confirmee === false; }).length;
   assert.strictEqual(DATA.meta.traductions_confirmees, confirmed);
   assert.strictEqual(DATA.meta.traductions_derivees, derived);
+
+  // meta dataset governance fields
+  assert.ok(typeof DATA.meta.dataset_version === 'string' && DATA.meta.dataset_version.length > 0);
+  assert.ok(typeof DATA.meta.game_version === 'string' && DATA.meta.game_version.length > 0);
+  assert.ok(/^\d{4}-\d{2}-\d{2}$/.test(DATA.meta.updated_at));
 }
 
 if (require.main === module) {

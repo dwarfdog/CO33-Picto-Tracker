@@ -6,6 +6,9 @@ const DATA = {
         "total_pictos": 210,
         "traductions_confirmees": 194,
         "traductions_derivees": 16,
+        "dataset_version": "2026.02.24",
+        "game_version": "1.5.0",
+        "updated_at": "2026-02-24",
         "sources": [
             "monster-soluce.com/jeux/clair-obscur-expedition-33/guide-solution/pictos",
             "generation-game.com/guide-emplacements-de-tous-les-pictos-de-clair-obscur-expedition-33",
