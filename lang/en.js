@@ -17,6 +17,9 @@
 
     // Controls
     search_placeholder:      'Search for a picto…',
+    label_search:            'Search',
+    label_zone_filter:       'Zone filter',
+    label_sort_order:        'Sort order',
     zone_all:                'All zones',
     sort_id_asc:             'Sort: # ascending',
     sort_id_desc:            'Sort: # descending',

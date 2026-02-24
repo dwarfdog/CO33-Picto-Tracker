@@ -28,6 +28,9 @@ App.appliquerTraductions = function () {
   var recherche = document.getElementById('recherche');
   recherche.placeholder = App.t('search_placeholder');
   recherche.setAttribute('aria-label', App.t('search_placeholder'));
+  document.getElementById('lbl-recherche').textContent = App.t('label_search');
+  document.getElementById('lbl-filtre-zone').textContent = App.t('label_zone_filter');
+  document.getElementById('lbl-tri-select').textContent = App.t('label_sort_order');
 
   // Tri
   var triSelect = document.getElementById('tri-select');
@@ -86,16 +89,16 @@ App.appliquerTraductions = function () {
   document.getElementById('tooltip-fermer').setAttribute('aria-label', App.t('tooltip_close'));
 
   // Modal import
-  document.querySelector('.import-titre').textContent = App.t('import_title');
-  document.querySelector('.import-description').textContent = App.t('import_desc');
+  document.getElementById('import-title').textContent = App.t('import_title');
+  document.getElementById('import-description').textContent = App.t('import_desc');
   document.getElementById('import-textarea').placeholder = App.t('import_placeholder');
   document.getElementById('btn-import-valider').textContent = App.t('import_apply');
   document.getElementById('btn-import-fichier').textContent = App.t('import_file');
   document.getElementById('btn-import-annuler').textContent = App.t('import_cancel');
 
   // Modal export
-  document.querySelector('.export-titre').textContent = App.t('export_title');
-  document.querySelector('.export-description').textContent = App.t('export_desc');
+  document.getElementById('export-title').textContent = App.t('export_title');
+  document.getElementById('export-description').textContent = App.t('export_desc');
   document.getElementById('btn-export-copier').textContent = App.t('export_copy');
   document.getElementById('btn-export-fichier').textContent = App.t('export_download');
   document.getElementById('btn-export-fermer').textContent = App.t('export_close');

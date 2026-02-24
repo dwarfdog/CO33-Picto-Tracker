@@ -17,6 +17,9 @@
 
     // Contrôles
     search_placeholder:      'Rechercher un picto…',
+    label_search:            'Recherche',
+    label_zone_filter:       'Filtre de zone',
+    label_sort_order:        'Ordre de tri',
     zone_all:                'Toutes les zones',
     sort_id_asc:             'Tri : # croissant',
     sort_id_desc:            'Tri : # décroissant',

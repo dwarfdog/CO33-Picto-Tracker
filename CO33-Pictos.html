@@ -62,18 +62,18 @@
 			<!-- Recherche -->
 			<div class="champ-recherche">
 				<svg viewbox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-				<label for="recherche" class="sr-only">Search</label>
+				<label for="recherche" class="sr-only" id="lbl-recherche">Search</label>
 				<input type="text" id="recherche" placeholder="" autocomplete="off" spellcheck="false">
 			</div>
 
 			<!-- Zone -->
-			<label for="filtre-zone" class="sr-only">Zone filter</label>
+			<label for="filtre-zone" class="sr-only" id="lbl-filtre-zone">Zone filter</label>
 			<select class="select-zone" id="filtre-zone">
 				<option value=""></option>
 			</select>
 
 			<!-- Tri -->
-			<label for="tri-select" class="sr-only">Sort order</label>
+			<label for="tri-select" class="sr-only" id="lbl-tri-select">Sort order</label>
 			<select class="select-zone" id="tri-select">
 				<option value="id-asc"></option>
 				<option value="id-desc"></option>
@@ -165,8 +165,8 @@
 		<!-- ══════════════════════════════════════════════════════
 		TOOLTIP / MODAL
 		══════════════════════════════════════════════════════ -->
-		<div class="tooltip-overlay" id="tooltip-overlay" role="dialog" aria-modal="true">
-			<div class="tooltip-panneau" id="tooltip-panneau">
+		<div class="tooltip-overlay" id="tooltip-overlay" role="dialog" aria-modal="true" aria-labelledby="tt-nom-fr" aria-describedby="tt-effet">
+			<div class="tooltip-panneau" id="tooltip-panneau" role="document">
 				<button type="button" class="tooltip-fermer" id="tooltip-fermer" aria-label="">&#215;</button>
 				<div class="tooltip-entete">
 					<div class="tooltip-nom-fr" id="tt-nom-fr"></div>
@@ -205,10 +205,10 @@
 		<!-- ══════════════════════════════════════════════════════
 		MODAL IMPORT
 		══════════════════════════════════════════════════════ -->
-		<div class="import-overlay" id="import-overlay" role="dialog" aria-modal="true">
-			<div class="import-panneau">
-				<div class="import-titre"></div>
-				<div class="import-description"></div>
+		<div class="import-overlay" id="import-overlay" role="dialog" aria-modal="true" aria-labelledby="import-title" aria-describedby="import-description">
+			<div class="import-panneau" role="document">
+				<div class="import-titre" id="import-title"></div>
+				<div class="import-description" id="import-description"></div>
 				<textarea class="import-textarea" id="import-textarea" placeholder="" spellcheck="false"></textarea>
 				<div class="import-actions">
 					<button type="button" class="btn-import-valider" id="btn-import-valider"></button>
@@ -221,10 +221,10 @@
 		<!-- ══════════════════════════════════════════════════════
 		MODAL EXPORT
 		══════════════════════════════════════════════════════ -->
-		<div class="export-overlay" id="export-overlay" role="dialog" aria-modal="true">
-			<div class="export-panneau">
-				<div class="export-titre"></div>
-				<div class="export-description"></div>
+		<div class="export-overlay" id="export-overlay" role="dialog" aria-modal="true" aria-labelledby="export-title" aria-describedby="export-description">
+			<div class="export-panneau" role="document">
+				<div class="export-titre" id="export-title"></div>
+				<div class="export-description" id="export-description"></div>
 				<textarea class="export-textarea" id="export-textarea" readonly spellcheck="false"></textarea>
 				<div class="export-actions">
 					<button type="button" class="btn-export-copier" id="btn-export-copier"></button>
