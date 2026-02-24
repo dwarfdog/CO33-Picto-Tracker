@@ -3,11 +3,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA_FILE = path.resolve(__dirname, '..', 'js', 'datas', 'skills-data.js');
+const ROOT = path.resolve(__dirname, '..');
+const DATA_FILE = path.join(ROOT, 'js', 'datas', 'skills-data.js');
 const TRANSLATABLE_FIELDS = ['nom', 'effet', 'zone', 'flag', 'obtention'];
 
-function loadData() {
-  const src = fs.readFileSync(DATA_FILE, 'utf8');
+function loadDataFromFile(filePath) {
+  const src = fs.readFileSync(filePath, 'utf8');
   return new Function(src + '; return DATA;')(); // eslint-disable-line no-new-func
 }
 
@@ -87,12 +88,101 @@ function buildLanguageCoverage(pictos, total, languages) {
   return coverage;
 }
 
-function run() {
-  const data = loadData();
+function stableClone(value) {
+  if (Array.isArray(value)) {
+    return value.map(stableClone);
+  }
+
+  if (value && typeof value === 'object') {
+    const out = {};
+    Object.keys(value).sort().forEach(function (k) {
+      out[k] = stableClone(value[k]);
+    });
+    return out;
+  }
+
+  return value;
+}
+
+function isEqual(a, b) {
+  return JSON.stringify(stableClone(a)) === JSON.stringify(stableClone(b));
+}
+
+function compareDatasets(baseData, targetData) {
+  const basePictos = Array.isArray(baseData && baseData.pictos) ? baseData.pictos : [];
+  const targetPictos = Array.isArray(targetData && targetData.pictos) ? targetData.pictos : [];
+
+  const baseById = new Map();
+  const targetById = new Map();
+
+  basePictos.forEach(function (p) {
+    if (p && typeof p.id === 'number') baseById.set(p.id, p);
+  });
+  targetPictos.forEach(function (p) {
+    if (p && typeof p.id === 'number') targetById.set(p.id, p);
+  });
+
+  const addedIds = [];
+  const removedIds = [];
+  const updated = [];
+
+  targetById.forEach(function (_, id) {
+    if (!baseById.has(id)) addedIds.push(id);
+  });
+  baseById.forEach(function (_, id) {
+    if (!targetById.has(id)) removedIds.push(id);
+  });
+
+  targetById.forEach(function (nextPicto, id) {
+    if (!baseById.has(id)) return;
+    const prevPicto = baseById.get(id);
+    const keys = new Set();
+
+    Object.keys(prevPicto || {}).forEach(function (k) { keys.add(k); });
+    Object.keys(nextPicto || {}).forEach(function (k) { keys.add(k); });
+
+    const changedFields = [];
+    Array.from(keys).sort().forEach(function (key) {
+      if (key === 'id' || key.charAt(0) === '_') return;
+      if (!isEqual(prevPicto[key], nextPicto[key])) changedFields.push(key);
+    });
+
+    if (changedFields.length) {
+      updated.push({ id: id, fields: changedFields });
+    }
+  });
+
+  addedIds.sort(function (a, b) { return a - b; });
+  removedIds.sort(function (a, b) { return a - b; });
+  updated.sort(function (a, b) { return a.id - b.id; });
+
+  return {
+    base: {
+      dataset_version: baseData && baseData.meta && baseData.meta.dataset_version,
+      game_version: baseData && baseData.meta && baseData.meta.game_version,
+      total_pictos: basePictos.length
+    },
+    target: {
+      dataset_version: targetData && targetData.meta && targetData.meta.dataset_version,
+      game_version: targetData && targetData.meta && targetData.meta.game_version,
+      total_pictos: targetPictos.length
+    },
+    added_ids: addedIds,
+    removed_ids: removedIds,
+    updated: updated,
+    counts: {
+      added: addedIds.length,
+      removed: removedIds.length,
+      updated: updated.length
+    }
+  };
+}
+
+function buildReport(data, options) {
+  const opts = options || {};
   const pictos = Array.isArray(data.pictos) ? data.pictos : [];
   const total = pictos.length;
   const languageCodes = detectLanguageCodes(pictos);
-
   const report = {
     meta: {
       dataset_version: data.meta && data.meta.dataset_version,
@@ -116,9 +206,60 @@ function run() {
     }
   };
 
-  if (process.argv.indexOf('--json') !== -1) {
+  if (opts.compareData) {
+    report.comparison = compareDatasets(opts.compareData, data);
+  }
+
+  return report;
+}
+
+function parseArgs(argv) {
+  const options = {
+    file: DATA_FILE,
+    compare: null,
+    json: false
+  };
+
+  for (let i = 2; i < argv.length; i++) {
+    const arg = argv[i];
+
+    if (arg === '--json') {
+      options.json = true;
+      continue;
+    }
+
+    if (arg === '--file') {
+      const value = argv[i + 1];
+      if (!value) throw new Error('Missing value for --file');
+      options.file = path.resolve(process.cwd(), value);
+      i++;
+      continue;
+    }
+
+    if (arg === '--compare') {
+      const value = argv[i + 1];
+      if (!value) throw new Error('Missing value for --compare');
+      options.compare = path.resolve(process.cwd(), value);
+      i++;
+      continue;
+    }
+
+    throw new Error('Unknown argument: ' + arg);
+  }
+
+  return options;
+}
+
+function run(options) {
+  const opts = options || parseArgs(process.argv);
+  const data = loadDataFromFile(opts.file);
+  const compareData = opts.compare ? loadDataFromFile(opts.compare) : null;
+  const report = buildReport(data, { compareData: compareData });
+  const total = report.meta.total_pictos;
+
+  if (opts.json) {
     console.log(JSON.stringify(report, null, 2));
-    return;
+    return report;
   }
 
   console.log('[report-data] Dataset:', report.meta.dataset_version);
@@ -161,6 +302,55 @@ function run() {
       );
     }
   });
+
+  if (report.comparison) {
+    console.log('[report-data] Dataset diff:');
+    console.log(
+      '  - Base: ' + (report.comparison.base.dataset_version || 'n/a') +
+      ' / game ' + (report.comparison.base.game_version || 'n/a') +
+      ' / pictos ' + report.comparison.base.total_pictos
+    );
+    console.log(
+      '  - Target: ' + (report.comparison.target.dataset_version || 'n/a') +
+      ' / game ' + (report.comparison.target.game_version || 'n/a') +
+      ' / pictos ' + report.comparison.target.total_pictos
+    );
+    console.log(
+      '  - Added: ' + report.comparison.counts.added +
+      ' | Updated: ' + report.comparison.counts.updated +
+      ' | Removed: ' + report.comparison.counts.removed
+    );
+
+    if (report.comparison.added_ids.length) {
+      console.log('  - Added IDs: ' + report.comparison.added_ids.join(', '));
+    }
+    if (report.comparison.removed_ids.length) {
+      console.log('  - Removed IDs: ' + report.comparison.removed_ids.join(', '));
+    }
+    if (report.comparison.updated.length) {
+      console.log('  - Updated IDs / fields:');
+      report.comparison.updated.forEach(function (entry) {
+        console.log('    - #' + entry.id + ': ' + entry.fields.join(', '));
+      });
+    }
+  }
+
+  return report;
 }
 
-run();
+if (require.main === module) {
+  try {
+    run();
+  } catch (err) {
+    console.error('[report-data] FAILED:', err.message);
+    process.exit(1);
+  }
+}
+
+module.exports = {
+  run,
+  parseArgs,
+  buildReport,
+  compareDatasets,
+  loadDataFromFile
+};

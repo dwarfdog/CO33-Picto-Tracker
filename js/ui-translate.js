@@ -151,6 +151,11 @@ App.appliquerTraductions = function () {
   if (typeof App.mettreAJourPlanificateurLumina === 'function') {
     App.mettreAJourPlanificateurLumina();
   }
+
+  // Nouveautes dataset
+  if (typeof App.rendreNouveautesDataset === 'function') {
+    App.rendreNouveautesDataset();
+  }
 };
 
 /**

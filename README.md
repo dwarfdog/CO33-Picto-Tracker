@@ -29,6 +29,7 @@ Vos donnees restent sur votre ordinateur (sauvegarde locale).
 - Recherche par nom ou effet
 - Filtres : par zone, possedes/manquants
 - Tri : par numero, nom, zone, possession
+- Vue des nouveautes dataset (ajouts / modifications entre versions)
 - Export / import de votre progression (partage entre appareils)
 - Interface en francais et anglais (detection automatique)
 - Fonctionne hors-ligne, sans serveur
@@ -129,10 +130,12 @@ CO33-Script/
     app.js               <- Configuration centrale
     boot.js              <- Demarrage de l'application
     cards.js             <- Affichage des cartes
+    dataset-changes.js   <- Vue des changements de version dataset
     events.js            <- Interactions utilisateur
     export-import.js     <- Export / import de progression
     filters.js           <- Filtres et tri
     i18n.js              <- Systeme de traduction
+    lumina-planner.js    <- Planificateur de build Lumina
     progress.js          <- Barre de progression
     state.js             <- Sauvegarde locale
     tooltip.js           <- Fiche detail (modal)
@@ -152,6 +155,7 @@ CO33-Script/
     validate-data.js     <- Validation des contraintes de donnees
     test-core.js         <- Tests coeur (sans navigateur)
     report-data.js       <- Rapport de couverture des donnees
+    fixtures/            <- Datasets simules pour comparaison
 ```
 
 ---
@@ -171,6 +175,12 @@ node tools/report-data.js
 ```
 
 Le rapport inclut la couverture par langue (`nom`, `effet`, `zone`, `flag`, `obtention`) en brut (`*_xx`) et en resolution avec fallback anglais.
+
+Pour comparer deux versions simulees de dataset :
+
+```bash
+node tools/report-data.js --file tools/fixtures/dataset-sim-v2.js --compare tools/fixtures/dataset-sim-v1.js
+```
 
 Les tests E2E navigateur sont executes en CI avec Playwright.
 
@@ -206,6 +216,7 @@ Your data stays on your computer (local storage).
 - Search by name or effect
 - Filters: by zone, owned/missing
 - Sort: by number, name, zone, ownership
+- Dataset updates view (additions / edits between versions)
 - Export / import your progress (share between devices)
 - French and English interface (auto-detected)
 - Works offline, no server needed
@@ -306,10 +317,12 @@ CO33-Script/
     app.js               <- Central configuration
     boot.js              <- Application startup
     cards.js             <- Card display
+    dataset-changes.js   <- Dataset version change view
     events.js            <- User interactions
     export-import.js     <- Progress export / import
     filters.js           <- Filters and sorting
     i18n.js              <- Translation system
+    lumina-planner.js    <- Lumina build planner
     progress.js          <- Progress bar
     state.js             <- Local storage
     tooltip.js           <- Detail panel (modal)
@@ -329,6 +342,7 @@ CO33-Script/
     validate-data.js     <- Data constraint validation
     test-core.js         <- Core tests (no browser required)
     report-data.js       <- Data coverage report
+    fixtures/            <- Simulated datasets for comparison
 ```
 
 ---
@@ -348,6 +362,12 @@ node tools/report-data.js
 ```
 
 The report includes per-language coverage (`nom`, `effet`, `zone`, `flag`, `obtention`) for raw fields (`*_xx`) and resolved values with English fallback.
+
+To compare two simulated dataset versions:
+
+```bash
+node tools/report-data.js --file tools/fixtures/dataset-sim-v2.js --compare tools/fixtures/dataset-sim-v1.js
+```
 
 Browser E2E tests are executed in CI using Playwright.
 

@@ -9,6 +9,19 @@ const DATA = {
         "dataset_version": "2026.02.24",
         "game_version": "1.5.0",
         "updated_at": "2026-02-24",
+        "changes": {
+            "from_dataset_version": "2026.02.17",
+            "from_game_version": "1.4.6",
+            "added_ids": [205, 206, 207, 208, 209, 210],
+            "updated": [
+                { "id": 45, "fields": ["effet_fr", "obtention_fr"] },
+                { "id": 114, "fields": ["lumina"] },
+                { "id": 140, "fields": ["zone_en", "zone_fr"] }
+            ],
+            "removed_ids": [],
+            "note_en": "Summary generated from dataset review: includes new pictos and edited fields since the previous release.",
+            "note_fr": "Resume genere depuis la revue dataset : inclut les nouveaux pictos et les champs modifies depuis la version precedente."
+        },
         "sources": [
             "monster-soluce.com/jeux/clair-obscur-expedition-33/guide-solution/pictos",
             "generation-game.com/guide-emplacements-de-tous-les-pictos-de-clair-obscur-expedition-33",

@@ -25,6 +25,15 @@ Runtime fallback stays English (`*_en`) when `*_xx` is missing.
 - `traductions_derivees` (must match actual count)
 - `sources` (non-empty array)
 
+Optional but recommended for changelog UI:
+
+- `changes.from_dataset_version` (string)
+- `changes.from_game_version` (string)
+- `changes.added_ids` (array of existing current IDs)
+- `changes.updated` (array of `{ id, fields[] }`)
+- `changes.removed_ids` (array of IDs removed since previous dataset)
+- `changes.note_en` / `changes.note_fr` (short release note)
+
 ## Local checks
 
 Run all checks:
@@ -57,6 +66,12 @@ JSON output:
 node tools/report-data.js --json
 ```
 
+Compare two dataset files (base -> target):
+
+```bash
+node tools/report-data.js --file tools/fixtures/dataset-sim-v2.js --compare tools/fixtures/dataset-sim-v1.js
+```
+
 ## New language checklist
 
 1. Add a new file `lang/xx.js`.
@@ -72,4 +87,6 @@ node tools/report-data.js --json
 2. Update metadata fields in `DATA.meta`.
 3. Run `node tools/check-all.js`.
 4. Run `node tools/report-data.js` and review coverage.
-5. Open a pull request with source links for modified entries.
+5. Run `node tools/report-data.js --compare <previous-dataset-file>` to review additions/updates/removals.
+6. Update `DATA.meta.changes` so the in-app changelog view reflects the release.
+7. Open a pull request with source links for modified entries.

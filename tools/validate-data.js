@@ -31,6 +31,10 @@ function validate() {
 
   const pictos = data.pictos;
   const meta = data.meta || {};
+  const changesMeta = meta.changes;
+  let changeAddedIds = [];
+  let changeRemovedIds = [];
+  let changeUpdatedEntries = [];
 
   if (!isNonEmptyString(meta.dataset_version)) {
     errors.push('meta.dataset_version is required.');
@@ -56,6 +60,108 @@ function validate() {
 
   if (!Array.isArray(meta.sources) || meta.sources.length === 0) {
     errors.push('meta.sources must be a non-empty array.');
+  }
+
+  if (changesMeta !== undefined) {
+    if (!changesMeta || typeof changesMeta !== 'object' || Array.isArray(changesMeta)) {
+      errors.push('meta.changes must be an object when provided.');
+    } else {
+      if (changesMeta.from_dataset_version !== undefined && !isNonEmptyString(changesMeta.from_dataset_version)) {
+        errors.push('meta.changes.from_dataset_version must be a non-empty string when provided.');
+      }
+      if (changesMeta.from_game_version !== undefined && !isNonEmptyString(changesMeta.from_game_version)) {
+        errors.push('meta.changes.from_game_version must be a non-empty string when provided.');
+      }
+      if (changesMeta.note_en !== undefined && typeof changesMeta.note_en !== 'string') {
+        errors.push('meta.changes.note_en must be a string when provided.');
+      }
+      if (changesMeta.note_fr !== undefined && typeof changesMeta.note_fr !== 'string') {
+        errors.push('meta.changes.note_fr must be a string when provided.');
+      }
+
+      if (changesMeta.added_ids !== undefined) {
+        if (!Array.isArray(changesMeta.added_ids)) {
+          errors.push('meta.changes.added_ids must be an array when provided.');
+        } else {
+          changeAddedIds = changesMeta.added_ids.slice();
+          const seenAdded = new Set();
+          for (let i = 0; i < changeAddedIds.length; i++) {
+            const id = changeAddedIds[i];
+            if (typeof id !== 'number' || !Number.isInteger(id) || id <= 0) {
+              errors.push('meta.changes.added_ids[' + i + '] must be a positive integer.');
+              continue;
+            }
+            if (seenAdded.has(id)) {
+              errors.push('meta.changes.added_ids contains duplicate id ' + id + '.');
+            }
+            seenAdded.add(id);
+          }
+        }
+      }
+
+      if (changesMeta.removed_ids !== undefined) {
+        if (!Array.isArray(changesMeta.removed_ids)) {
+          errors.push('meta.changes.removed_ids must be an array when provided.');
+        } else {
+          changeRemovedIds = changesMeta.removed_ids.slice();
+          const seenRemoved = new Set();
+          for (let i = 0; i < changeRemovedIds.length; i++) {
+            const id = changeRemovedIds[i];
+            if (typeof id !== 'number' || !Number.isInteger(id) || id <= 0) {
+              errors.push('meta.changes.removed_ids[' + i + '] must be a positive integer.');
+              continue;
+            }
+            if (seenRemoved.has(id)) {
+              errors.push('meta.changes.removed_ids contains duplicate id ' + id + '.');
+            }
+            seenRemoved.add(id);
+          }
+        }
+      }
+
+      if (changesMeta.updated !== undefined) {
+        if (!Array.isArray(changesMeta.updated)) {
+          errors.push('meta.changes.updated must be an array when provided.');
+        } else {
+          const seenUpdated = new Set();
+          for (let i = 0; i < changesMeta.updated.length; i++) {
+            const entry = changesMeta.updated[i];
+            if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
+              errors.push('meta.changes.updated[' + i + '] must be an object.');
+              continue;
+            }
+            if (typeof entry.id !== 'number' || !Number.isInteger(entry.id) || entry.id <= 0) {
+              errors.push('meta.changes.updated[' + i + '].id must be a positive integer.');
+              continue;
+            }
+            if (seenUpdated.has(entry.id)) {
+              errors.push('meta.changes.updated contains duplicate id ' + entry.id + '.');
+            }
+            seenUpdated.add(entry.id);
+
+            if (!Array.isArray(entry.fields)) {
+              errors.push('meta.changes.updated[' + i + '].fields must be an array.');
+              continue;
+            }
+
+            const fieldSeen = new Set();
+            for (let j = 0; j < entry.fields.length; j++) {
+              const field = entry.fields[j];
+              if (!isNonEmptyString(field)) {
+                errors.push('meta.changes.updated[' + i + '].fields[' + j + '] must be a non-empty string.');
+                continue;
+              }
+              if (fieldSeen.has(field)) {
+                errors.push('meta.changes.updated[' + i + '].fields contains duplicate field "' + field + '".');
+              }
+              fieldSeen.add(field);
+            }
+
+            changeUpdatedEntries.push({ id: entry.id, fields: entry.fields.slice() });
+          }
+        }
+      }
+    }
   }
 
   if (meta.total_pictos !== pictos.length) {
@@ -160,6 +266,28 @@ function validate() {
     const expected = maxId - minId + 1;
     if (expected !== ids.size) {
       warnings.push('IDs are not contiguous: range [' + minId + '..' + maxId + '] but only ' + ids.size + ' unique IDs.');
+    }
+  }
+
+  for (let i = 0; i < changeAddedIds.length; i++) {
+    const id = changeAddedIds[i];
+    if (!ids.has(id)) {
+      errors.push('meta.changes.added_ids contains unknown id ' + id + '.');
+    }
+  }
+
+  for (let i = 0; i < changeUpdatedEntries.length; i++) {
+    const id = changeUpdatedEntries[i].id;
+    if (!ids.has(id)) {
+      errors.push('meta.changes.updated contains unknown id ' + id + '.');
+    }
+  }
+
+  // removed_ids represent entries from previous dataset: they should not exist in current pictos
+  for (let i = 0; i < changeRemovedIds.length; i++) {
+    const id = changeRemovedIds[i];
+    if (ids.has(id)) {
+      warnings.push('meta.changes.removed_ids contains id ' + id + ' still present in current dataset.');
     }
   }
 
