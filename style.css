@@ -774,6 +774,44 @@ h1 span {
   color: var(--rouille);
 }
 
+/* Bouton détail (infos en bas à gauche) */
+.btn-detail {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid var(--brun-clair);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  background: var(--brun-fonce);
+  color: var(--gris-text);
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.btn-detail:hover {
+  border-color: var(--or-mat);
+  background: rgba(201, 168, 76, 0.08);
+  color: var(--or);
+  transform: scale(1.12);
+}
+
+.carte-picto.possede .btn-detail {
+  border-color: var(--or-mat);
+  color: var(--or-mat);
+}
+
+.carte-picto.possede .btn-detail:hover {
+  border-color: var(--or);
+  color: var(--or);
+}
+
 /* Légende interactions */
 .legende-interactions {
   max-width: 1600px;

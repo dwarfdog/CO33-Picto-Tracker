@@ -84,15 +84,9 @@ App.creerStatsBadges = function (stats) {
  */
 App.creerCartePicto = function (picto) {
   var possede = App.etat.possedes.has(picto.id);
-  var el = document.createElement('div');
+  var el = document.createElement('article');
   el.className = 'carte-picto' + (possede ? ' possede' : '');
   el.dataset.id = picto.id;
-  el.setAttribute('role', 'button');
-  el.setAttribute('tabindex', '0');
-  el.setAttribute('aria-label',
-    App.champ(picto, 'nom') + ' \u2014 ' +
-    (possede ? App.t('aria_owned') : App.t('aria_not_owned'))
-  );
 
   // ── Coin décoratif ──
   var coinDeco = document.createElement('div');
@@ -105,6 +99,7 @@ App.creerCartePicto = function (picto) {
 
   var nomFr = document.createElement('div');
   nomFr.className = 'carte-nom-fr';
+  nomFr.id = 'carte-nom-' + picto.id;
   nomFr.textContent = App.champ(picto, 'nom');
   header.appendChild(nomFr);
 
@@ -172,10 +167,20 @@ App.creerCartePicto = function (picto) {
 
   // Bouton possession
   var btnPossession = document.createElement('button');
+  btnPossession.type = 'button';
   btnPossession.className = 'possession-indicateur';
   btnPossession.setAttribute('aria-label', App.t('aria_toggle'));
+  btnPossession.setAttribute('aria-pressed', possede ? 'true' : 'false');
   btnPossession.appendChild(App._svgTemplates.check.cloneNode(true));
   footer.appendChild(btnPossession);
+
+  // Bouton détail
+  var btnDetail = document.createElement('button');
+  btnDetail.type = 'button';
+  btnDetail.className = 'btn-detail';
+  btnDetail.setAttribute('aria-label', App.t('tooltip_detail'));
+  btnDetail.textContent = '\u24D8';
+  footer.appendChild(btnDetail);
 
   el.appendChild(footer);
 
@@ -188,6 +193,11 @@ App.creerCartePicto = function (picto) {
     App.togglePossession(picto.id, el);
   });
 
+  btnDetail.addEventListener('click', function (e) {
+    e.stopPropagation();
+    App.ouvrirTooltip(picto);
+  });
+
   el.addEventListener('click', function () {
     App.ouvrirTooltip(picto);
   });
@@ -195,11 +205,6 @@ App.creerCartePicto = function (picto) {
   el.addEventListener('contextmenu', function (e) {
     e.preventDefault();
     App.ouvrirTooltip(picto);
-  });
-
-  el.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') App.ouvrirTooltip(picto);
-    if (e.key === ' ') { e.preventDefault(); App.togglePossession(picto.id, el); }
   });
 
   return el;
@@ -219,11 +224,10 @@ App.togglePossession = function (id, el) {
     App.etat.possedes.add(id);
     el.classList.add('possede');
   }
-  // Reconstruire l'aria-label
-  var nom = App.champ(el._picto, 'nom');
-  el.setAttribute('aria-label',
-    nom + ' \u2014 ' + (App.etat.possedes.has(id) ? App.t('aria_owned') : App.t('aria_not_owned'))
-  );
+  var btnPossession = el.querySelector('.possession-indicateur');
+  if (btnPossession) {
+    btnPossession.setAttribute('aria-pressed', App.etat.possedes.has(id) ? 'true' : 'false');
+  }
   App.sauvegarder();
   requestAnimationFrame(function () {
     App.mettreAJourProgression();
@@ -263,6 +267,8 @@ App.mettreAJourCartesTexte = function () {
     el.querySelector('.carte-nom-en').textContent = App.nomSecondaire(picto);
     el.querySelector('.carte-effet').textContent = App.champ(picto, 'effet');
     el.querySelector('.possession-indicateur').setAttribute('aria-label', App.t('aria_toggle'));
+    el.querySelector('.possession-indicateur').setAttribute('aria-pressed', App.etat.possedes.has(picto.id) ? 'true' : 'false');
+    el.querySelector('.btn-detail').setAttribute('aria-label', App.t('tooltip_detail'));
     // Zone (traduite)
     el.querySelector('.carte-zone').textContent = App.champ(picto, 'zone');
     // Flag
@@ -280,11 +286,5 @@ App.mettreAJourCartesTexte = function () {
     var corps = el.querySelector('.carte-corps');
     if (oldStats) corps.removeChild(oldStats);
     if (newStats) corps.appendChild(newStats);
-
-    // Aria-label
-    var nom = App.champ(picto, 'nom');
-    el.setAttribute('aria-label',
-      nom + ' \u2014 ' + (App.etat.possedes.has(picto.id) ? App.t('aria_owned') : App.t('aria_not_owned'))
-    );
   });
 };
