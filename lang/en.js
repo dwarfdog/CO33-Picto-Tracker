@@ -57,6 +57,27 @@
     lumina_total_cost:       'Total Lumina: {n}',
     lumina_remaining:        'Remaining: {n}',
 
+    // Dataset changes
+    dataset_changes_title:         'Dataset updates',
+    dataset_changes_meta_line:     'Comparison {fromDataset} / game {fromGame} -> {toDataset} / game {toGame}',
+    dataset_changes_note_fallback: 'No release note provided.',
+    dataset_changes_added_title:   'Additions ({n})',
+    dataset_changes_updated_title: 'Updates ({n})',
+    dataset_changes_removed_title: 'Removals ({n})',
+    dataset_changes_none:          'No entries',
+    dataset_changes_unknown_picto: 'Unknown picto',
+    dataset_changes_unknown_fields:'Fields not specified',
+    dataset_changes_lumina_tag:    'Lumina {n}',
+    dataset_change_field_name:     'Name',
+    dataset_change_field_effect:   'Effect',
+    dataset_change_field_zone:     'Zone',
+    dataset_change_field_flag:     'Flag',
+    dataset_change_field_obtain:   'Obtention',
+    dataset_change_field_lumina:   'Lumina cost',
+    dataset_change_field_stats:    'Stats',
+    dataset_change_field_translation:'Translation state',
+    dataset_change_field_other:    'Field {field}',
+
     // Counters
     counter_owned:           'Owned:',
     counter_missing:         'Missing:',

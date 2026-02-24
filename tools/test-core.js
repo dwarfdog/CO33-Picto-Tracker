@@ -4,6 +4,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
+const reportData = require('./report-data');
 
 const ROOT = path.resolve(__dirname, '..');
 
@@ -54,6 +55,7 @@ function run() {
   loadScript('js/utils.js');
   loadScript('js/state.js');
   loadScript('js/lumina-planner.js');
+  loadScript('js/dataset-changes.js');
   loadScript('js/export-import.js');
 
   App.LANG = 'fr';
@@ -140,6 +142,23 @@ function run() {
   assert.deepStrictEqual(savedRunB.possedes, [3]);
   assert.deepStrictEqual(savedRunB.build_lumina, [1, 2]);
   assert.strictEqual(savedRunB.budget_lumina, 10);
+
+  // simulated dataset comparison (added/updated/removed)
+  const simV1 = reportData.loadDataFromFile(path.join(ROOT, 'tools', 'fixtures', 'dataset-sim-v1.js'));
+  const simV2 = reportData.loadDataFromFile(path.join(ROOT, 'tools', 'fixtures', 'dataset-sim-v2.js'));
+  const diff = reportData.compareDatasets(simV1, simV2);
+  assert.deepStrictEqual(diff.added_ids, [3]);
+  assert.deepStrictEqual(diff.removed_ids, [1]);
+  assert.strictEqual(diff.updated.length, 1);
+  assert.strictEqual(diff.updated[0].id, 2);
+  assert.ok(diff.updated[0].fields.indexOf('effet_fr') !== -1);
+  assert.ok(diff.updated[0].fields.indexOf('lumina') !== -1);
+
+  // dataset changelog metadata should expose visible additions/updates
+  const changesMeta = App.getDatasetChangesMeta();
+  assert.deepStrictEqual(changesMeta.addedIds, [205, 206, 207, 208, 209, 210]);
+  assert.strictEqual(changesMeta.updated.length, 3);
+  assert.strictEqual(changesMeta.removedIds.length, 0);
 
   // meta translation counters should match actual values
   const confirmed = DATA.pictos.filter(function (p) { return p.traduction_confirmee === true; }).length;

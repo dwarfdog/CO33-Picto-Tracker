@@ -57,6 +57,27 @@
     lumina_total_cost:       'Total Lumina : {n}',
     lumina_remaining:        'Restant : {n}',
 
+    // Nouveautes dataset
+    dataset_changes_title:         'Nouveautes dataset',
+    dataset_changes_meta_line:     'Comparaison {fromDataset} / jeu {fromGame} -> {toDataset} / jeu {toGame}',
+    dataset_changes_note_fallback: 'Aucune note de publication fournie.',
+    dataset_changes_added_title:   'Ajouts ({n})',
+    dataset_changes_updated_title: 'Modifications ({n})',
+    dataset_changes_removed_title: 'Suppressions ({n})',
+    dataset_changes_none:          'Aucun element',
+    dataset_changes_unknown_picto: 'Picto inconnu',
+    dataset_changes_unknown_fields:'Champs non precises',
+    dataset_changes_lumina_tag:    'Lumina {n}',
+    dataset_change_field_name:     'Nom',
+    dataset_change_field_effect:   'Effet',
+    dataset_change_field_zone:     'Zone',
+    dataset_change_field_flag:     'Drapeau',
+    dataset_change_field_obtain:   'Obtention',
+    dataset_change_field_lumina:   'Cout Lumina',
+    dataset_change_field_stats:    'Statistiques',
+    dataset_change_field_translation:'Etat traduction',
+    dataset_change_field_other:    'Champ {field}',
+
     // Compteurs
     counter_owned:           'Possédés :',
     counter_missing:         'Manquants :',
