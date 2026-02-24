@@ -109,10 +109,99 @@ App.zoneKey = function (picto) {
 };
 
 /**
+ * Retourne les éléments focusables d'un conteneur.
+ * @param {HTMLElement} root
+ * @returns {HTMLElement[]}
+ */
+App.getFocusableElements = function (root) {
+  if (!root) return [];
+  var selectors = [
+    'a[href]',
+    'button:not([disabled])',
+    'input:not([disabled]):not([type="hidden"])',
+    'select:not([disabled])',
+    'textarea:not([disabled])',
+    '[tabindex]:not([tabindex="-1"])'
+  ].join(',');
+
+  return Array.prototype.slice.call(root.querySelectorAll(selectors)).filter(function (el) {
+    return el.getClientRects && el.getClientRects().length > 0 && !el.hasAttribute('inert');
+  });
+};
+
+/**
+ * Ouvre une modal avec gestion du focus clavier.
+ * @param {HTMLElement} overlay
+ * @param {HTMLElement} [initialFocusEl]
+ */
+App.ouvrirModal = function (overlay, initialFocusEl) {
+  if (!overlay || overlay.classList.contains('visible')) return;
+
+  App._lastFocusedBeforeModal = document.activeElement;
+  App._activeModal = overlay;
+  overlay.classList.add('visible');
+  document.body.style.overflow = 'hidden';
+
+  var focusables = App.getFocusableElements(overlay);
+  var target = initialFocusEl || focusables[0] || overlay;
+  if (target === overlay && !overlay.hasAttribute('tabindex')) {
+    overlay.setAttribute('tabindex', '-1');
+  }
+  requestAnimationFrame(function () { target.focus(); });
+};
+
+/**
+ * Ferme une modal et restaure le focus.
+ * @param {HTMLElement} overlay
+ */
+App.fermerModal = function (overlay) {
+  if (!overlay || !overlay.classList.contains('visible')) return;
+
+  overlay.classList.remove('visible');
+  if (App._activeModal === overlay) App._activeModal = null;
+
+  if (!document.querySelector('.tooltip-overlay.visible, .import-overlay.visible, .export-overlay.visible')) {
+    document.body.style.overflow = '';
+    if (App._lastFocusedBeforeModal && typeof App._lastFocusedBeforeModal.focus === 'function') {
+      App._lastFocusedBeforeModal.focus();
+    }
+    App._lastFocusedBeforeModal = null;
+  }
+};
+
+/**
+ * Maintient le focus dans la modal active lors d'un appui sur Tab.
+ * @param {KeyboardEvent} e
+ */
+App.maintenirFocusDansModal = function (e) {
+  var overlay = App._activeModal;
+  if (!overlay || !overlay.classList.contains('visible')) return;
+
+  var focusables = App.getFocusableElements(overlay);
+  if (!focusables.length) {
+    e.preventDefault();
+    overlay.focus();
+    return;
+  }
+
+  var first = focusables[0];
+  var last = focusables[focusables.length - 1];
+  var active = document.activeElement;
+
+  if (e.shiftKey && active === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && active === last) {
+    e.preventDefault();
+    first.focus();
+  }
+};
+
+/**
  * Construit l'index de recherche pré-normalisé sur chaque picto.
  * Appelé au boot et lors d'un changement de langue.
  * Enrichit chaque objet picto avec _searchIndex, _nomNorm, _zoneNorm.
-*/
+ */
 App.buildSearchIndex = function () {
   DATA.pictos.forEach(function (picto) {
     picto._searchIndex = App.normaliserTexte(

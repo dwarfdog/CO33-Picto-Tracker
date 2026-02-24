@@ -131,18 +131,16 @@ App.importerDepuisCode = function (code) {
  * Ouvre la modal d'import.
  */
 App.ouvrirImportModal = function () {
-  document.getElementById('import-textarea').value = '';
-  document.getElementById('import-overlay').classList.add('visible');
-  document.body.style.overflow = 'hidden';
-  document.getElementById('import-textarea').focus();
+  var textarea = document.getElementById('import-textarea');
+  textarea.value = '';
+  App.ouvrirModal(document.getElementById('import-overlay'), textarea);
 };
 
 /**
  * Ferme la modal d'import.
  */
 App.fermerImportModal = function () {
-  document.getElementById('import-overlay').classList.remove('visible');
-  document.body.style.overflow = '';
+  App.fermerModal(document.getElementById('import-overlay'));
 };
 
 /**
@@ -152,8 +150,7 @@ App.ouvrirExportModal = function () {
   var code = App.genererCodeExport();
   var textarea = document.getElementById('export-textarea');
   textarea.value = code;
-  document.getElementById('export-overlay').classList.add('visible');
-  document.body.style.overflow = 'hidden';
+  App.ouvrirModal(document.getElementById('export-overlay'), textarea);
   textarea.select();
 };
 
@@ -161,6 +158,5 @@ App.ouvrirExportModal = function () {
  * Ferme la modal d'export.
  */
 App.fermerExportModal = function () {
-  document.getElementById('export-overlay').classList.remove('visible');
-  document.body.style.overflow = '';
+  App.fermerModal(document.getElementById('export-overlay'));
 };

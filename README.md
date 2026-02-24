@@ -149,6 +149,16 @@ CO33-Script/
 
 ---
 
+### Verification rapide
+
+Pour executer tous les controles locaux (syntaxe, coherence des donnees, tests coeur) :
+
+```bash
+node tools/check-all.js
+```
+
+---
+
 ### Credits
 
 - **Jeu** : *Clair Obscur : Expedition 33* par [Sandfall Interactive](https://www.sandfallinteractive.com/)
@@ -295,6 +305,16 @@ CO33-Script/
     en.js                <- English translation
   docs/
     images/              <- README screenshots
+```
+
+---
+
+### Quick validation
+
+Run all local checks (syntax, data consistency, core tests):
+
+```bash
+node tools/check-all.js
 ```
 
 ---
