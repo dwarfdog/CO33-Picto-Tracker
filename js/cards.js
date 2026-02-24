@@ -84,8 +84,11 @@ App.creerStatsBadges = function (stats) {
  */
 App.creerCartePicto = function (picto) {
   var possede = App.etat.possedes.has(picto.id);
+  var dansBuild = App.estDansBuild(picto.id);
   var el = document.createElement('article');
-  el.className = 'carte-picto' + (possede ? ' possede' : '');
+  el.className = 'carte-picto'
+    + (possede ? ' possede' : '')
+    + (dansBuild ? ' dans-build' : '');
   el.dataset.id = picto.id;
 
   // ── Coin décoratif ──
@@ -174,6 +177,15 @@ App.creerCartePicto = function (picto) {
   btnPossession.appendChild(App._svgTemplates.check.cloneNode(true));
   footer.appendChild(btnPossession);
 
+  // Bouton build Lumina
+  var btnBuild = document.createElement('button');
+  btnBuild.type = 'button';
+  btnBuild.className = 'build-indicateur' + (dansBuild ? ' actif' : '');
+  btnBuild.setAttribute('aria-label', App.t('aria_build_toggle'));
+  btnBuild.setAttribute('aria-pressed', dansBuild ? 'true' : 'false');
+  btnBuild.textContent = '\u2726';
+  footer.appendChild(btnBuild);
+
   // Bouton détail
   var btnDetail = document.createElement('button');
   btnDetail.type = 'button';
@@ -191,6 +203,11 @@ App.creerCartePicto = function (picto) {
   btnPossession.addEventListener('click', function (e) {
     e.stopPropagation();
     App.togglePossession(picto.id, el);
+  });
+
+  btnBuild.addEventListener('click', function (e) {
+    e.stopPropagation();
+    App.toggleBuildSelection(picto.id, el);
   });
 
   btnDetail.addEventListener('click', function (e) {
@@ -263,11 +280,15 @@ App.rendreGrille = function () {
 App.mettreAJourCartesTexte = function () {
   App.toutes_cartes.forEach(function (el) {
     var picto = el._picto;
+    el.classList.toggle('dans-build', App.estDansBuild(picto.id));
     el.querySelector('.carte-nom-fr').textContent = App.champ(picto, 'nom');
     el.querySelector('.carte-nom-en').textContent = App.nomSecondaire(picto);
     el.querySelector('.carte-effet').textContent = App.champ(picto, 'effet');
     el.querySelector('.possession-indicateur').setAttribute('aria-label', App.t('aria_toggle'));
     el.querySelector('.possession-indicateur').setAttribute('aria-pressed', App.etat.possedes.has(picto.id) ? 'true' : 'false');
+    el.querySelector('.build-indicateur').setAttribute('aria-label', App.t('aria_build_toggle'));
+    el.querySelector('.build-indicateur').setAttribute('aria-pressed', App.estDansBuild(picto.id) ? 'true' : 'false');
+    el.querySelector('.build-indicateur').classList.toggle('actif', App.estDansBuild(picto.id));
     el.querySelector('.btn-detail').setAttribute('aria-label', App.t('tooltip_detail'));
     // Zone (traduite)
     el.querySelector('.carte-zone').textContent = App.champ(picto, 'zone');

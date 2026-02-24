@@ -521,6 +521,96 @@ h1 span {
 }
 
 /* ══════════════════════════════════════════════════════
+  PLANIFICATEUR LUMINA
+══════════════════════════════════════════════════════ */
+.lumina-planner {
+  max-width: 1600px;
+  margin: 0 auto 24px;
+  padding: 14px 20px;
+  border: 1px solid var(--brun-clair);
+  background:
+    linear-gradient(180deg, rgba(196, 160, 255, 0.06) 0%, rgba(18, 16, 14, 0.95) 45%),
+    var(--encre);
+}
+
+.lumina-planner-entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.lumina-planner-titre {
+  font-family: var(--font-title);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: var(--or-pale);
+  text-transform: uppercase;
+}
+
+.lumina-planner-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lumina-budget-input {
+  width: 110px;
+  background: var(--brun-fonce);
+  border: 1px solid var(--brun-clair);
+  border-bottom: 1px solid var(--stat-lumina);
+  color: var(--ivoire);
+  font-family: var(--font-title);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-align: right;
+  padding: 7px 10px;
+  outline: none;
+}
+
+.lumina-budget-input:focus {
+  background: var(--brun-moyen);
+  border-color: var(--stat-lumina);
+}
+
+.lumina-planner-stats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.lumina-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 5px 10px;
+  border: 1px solid rgba(196, 160, 255, 0.35);
+  background: rgba(42, 33, 25, 0.7);
+  color: var(--creme);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+}
+
+#lumina-remaining.negative {
+  border-color: rgba(192, 57, 43, 0.5);
+  color: #e07060;
+}
+
+.lumina-planner.over-budget {
+  border-color: rgba(192, 57, 43, 0.45);
+}
+
+.lumina-planner-filtres {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+/* ══════════════════════════════════════════════════════
   COMPTEURS RAPIDES
 ══════════════════════════════════════════════════════ */
 .compteurs {
@@ -625,6 +715,11 @@ h1 span {
   inset: 0;
   background: linear-gradient(135deg, rgba(201, 168, 76, 0.04), transparent 60%);
   pointer-events: none;
+}
+
+.carte-picto.dans-build {
+  border-color: rgba(196, 160, 255, 0.55);
+  box-shadow: 0 0 22px rgba(196, 160, 255, 0.12), var(--shadow-card);
 }
 
 .carte-picto.cachee {
@@ -871,6 +966,42 @@ h1 span {
 
 .carte-picto.possede .possession-indicateur:hover svg {
   color: var(--rouille);
+}
+
+/* Bouton build Lumina (bas-centre) */
+.build-indicateur {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(196, 160, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  background: rgba(18, 16, 14, 0.95);
+  color: rgba(196, 160, 255, 0.75);
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.62rem;
+  line-height: 1;
+}
+
+.build-indicateur:hover {
+  border-color: var(--stat-lumina);
+  color: #d9c2ff;
+  background: rgba(196, 160, 255, 0.15);
+  transform: translateX(-50%) scale(1.12);
+}
+
+.build-indicateur.actif {
+  border-color: var(--stat-lumina);
+  color: #e7d8ff;
+  background: rgba(196, 160, 255, 0.22);
+  box-shadow: 0 0 10px rgba(196, 160, 255, 0.32);
 }
 
 /* Bouton détail (infos en bas à gauche) */
@@ -1492,6 +1623,20 @@ footer span {
     width: 100%;
     justify-content: center;
   }
+
+  .lumina-planner-entete {
+    justify-content: center;
+  }
+
+  .lumina-planner-actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .lumina-planner-stats,
+  .lumina-planner-filtres {
+    justify-content: center;
+  }
 }
 
 @media (max-width: 600px) {
@@ -1514,6 +1659,11 @@ footer span {
 
   .select-zone {
     min-width: 100%;
+  }
+
+  .lumina-budget-input {
+    width: 100%;
+    max-width: 280px;
   }
 }
 
@@ -1560,6 +1710,7 @@ footer span {
   .export-overlay,
   .toast,
   .btn-detail,
+  .build-indicateur,
   .possession-indicateur,
   .coin-deco {
     display: none !important;

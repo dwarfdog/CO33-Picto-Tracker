@@ -67,6 +67,9 @@
   // Rendu de la grille et mise à jour de la progression
   App.rendreGrille();
   App.mettreAJourProgression();
+  if (typeof App.mettreAJourPlanificateurLumina === 'function') {
+    App.mettreAJourPlanificateurLumina();
+  }
 
   // Attachement des événements
   App.attacher();

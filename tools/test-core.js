@@ -53,6 +53,7 @@ function run() {
   loadScript('js/i18n.js');
   loadScript('js/utils.js');
   loadScript('js/state.js');
+  loadScript('js/lumina-planner.js');
   loadScript('js/export-import.js');
 
   App.LANG = 'fr';
@@ -76,7 +77,7 @@ function run() {
   assert.ok(picto140, 'Picto 140 must exist');
   assert.ok((picto140._searchIndex || '').indexOf('flying manor') !== -1);
 
-  // parseImportData supports base64 and raw JSON/v2
+  // parseImportData supports base64 and raw JSON/v2+/v4
   const sampleIds = [1, 2, 3];
   const b64 = btoa(JSON.stringify(sampleIds));
   assert.deepStrictEqual(App.parseImportData(b64), sampleIds);
@@ -93,18 +94,40 @@ function run() {
     })),
     [2, 3]
   );
+  const importPayload = App.parseImportPayload(JSON.stringify({
+    possedes: [4, 5],
+    build_lumina: [4],
+    budget_lumina: 25
+  }));
+  assert.ok(importPayload, 'parseImportPayload should decode object payload');
+  assert.deepStrictEqual(importPayload.possedes, [4, 5]);
+  assert.deepStrictEqual(importPayload.buildLumina, [4]);
+  assert.strictEqual(importPayload.budgetLumina, 25);
   assert.strictEqual(App.parseImportData('not-a-valid-code'), null);
 
-  // migration and persistence for multi-profile storage (v2 -> v3)
+  // migration and persistence for multi-profile storage (v2 -> v4)
   localStorage.setItem(App.STORAGE_KEY, JSON.stringify({ version: 2, possedes: [1, 2, 999999, 2] }));
   App.chargerSauvegarde();
   assert.strictEqual(App.etat.profils.length, 1);
   assert.strictEqual(App.etat.profilActifId, App.etat.profils[0].id);
   assert.deepStrictEqual(Array.from(App.etat.possedes).sort(function (a, b) { return a - b; }), [1, 2]);
+  assert.deepStrictEqual(Array.from(App.etat.buildLumina), []);
+  assert.strictEqual(App.etat.luminaBudget, 0);
 
   const newProfile = App.creerEtActiverProfil('Run B');
   assert.ok(newProfile && newProfile.id, 'New profile should be created');
   App.etat.possedes.add(3);
+  App.etat.buildLumina.add(1);
+  App.etat.buildLumina.add(2);
+  App.definirBudgetLumina(10);
+
+  const expectedBuildTotal = App.getLuminaCost(App.getPictoById(1)) + App.getLuminaCost(App.getPictoById(2));
+  const metrics = App.calculerPlanLumina();
+  assert.strictEqual(metrics.count, 2);
+  assert.strictEqual(metrics.total, expectedBuildTotal);
+  assert.strictEqual(metrics.budget, 10);
+  assert.strictEqual(metrics.remaining, 10 - expectedBuildTotal);
+
   App.sauvegarder();
 
   const saved = JSON.parse(localStorage.getItem(App.STORAGE_KEY));
@@ -115,6 +138,8 @@ function run() {
   const savedRunB = saved.profils.find(function (p) { return p.id === newProfile.id; });
   assert.ok(savedRunB, 'Saved payload should include active profile');
   assert.deepStrictEqual(savedRunB.possedes, [3]);
+  assert.deepStrictEqual(savedRunB.build_lumina, [1, 2]);
+  assert.strictEqual(savedRunB.budget_lumina, 10);
 
   // meta translation counters should match actual values
   const confirmed = DATA.pictos.filter(function (p) { return p.traduction_confirmee === true; }).length;

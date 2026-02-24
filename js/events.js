@@ -46,10 +46,39 @@ App.attacher = function () {
     App.creerEtActiverProfil(nom);
   });
 
+  // ── Planificateur Lumina ──
+  var budgetDebounced = App.debounce(function (value) {
+    App.definirBudgetLumina(value);
+  }, App.DEBOUNCE_DELAY);
+
+  document.getElementById('lumina-budget').addEventListener('input', function (e) {
+    budgetDebounced(e.target.value);
+  });
+
+  document.getElementById('lumina-budget').addEventListener('change', function (e) {
+    App.definirBudgetLumina(e.target.value);
+    App.mettreAJourPlanificateurLumina();
+  });
+
+  document.getElementById('btn-lumina-clear').addEventListener('click', function () {
+    App.viderBuildLumina();
+  });
+
+  document.querySelectorAll('.btn-filtre-build[data-build-filtre]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.btn-filtre-build[data-build-filtre]').forEach(function (b) {
+        b.classList.remove('actif');
+      });
+      btn.classList.add('actif');
+      App.etat.filtreBuild = btn.dataset.buildFiltre;
+      App.appliquerFiltres();
+    });
+  });
+
   // ── Filtres collection (délégation) ──
   document.querySelectorAll('.btn-filtre[data-filtre]').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      document.querySelectorAll('.btn-filtre').forEach(function (b) { b.classList.remove('actif'); });
+      document.querySelectorAll('.btn-filtre[data-filtre]').forEach(function (b) { b.classList.remove('actif'); });
       btn.classList.add('actif');
       App.etat.filtreCollection = btn.dataset.filtre;
       App.appliquerFiltres();
@@ -61,7 +90,7 @@ App.attacher = function () {
     if (!confirm(App.t('confirm_reset'))) return;
     App.etat.possedes.clear();
     App.sauvegarder();
-    App.toutes_cartes.forEach(function (c) { c.classList.remove('possede'); });
+    App.rafraichirEtatCartes();
     App.mettreAJourProgression();
     App.appliquerFiltres();
   });

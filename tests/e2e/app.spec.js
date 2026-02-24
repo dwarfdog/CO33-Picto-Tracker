@@ -119,6 +119,27 @@ test('isolates owned state between progression profiles', async ({ page }) => {
   await expect(page.locator('.carte-picto[data-id="2"]')).toHaveClass(/possede/);
 });
 
+test('build planner computes lumina totals and dedicated filtering', async ({ page }) => {
+  await openApp(page);
+
+  await page.locator('#lumina-budget').fill('10');
+  await page.locator('.carte-picto[data-id="1"] .build-indicateur').click();
+  await page.locator('.carte-picto[data-id="2"] .build-indicateur').click();
+  await page.locator('.carte-picto[data-id="3"] .build-indicateur').click();
+
+  await expect(page.locator('#lumina-selected-count')).toContainText('3');
+  await expect(page.locator('#lumina-total-cost')).toContainText('13');
+  await expect(page.locator('#lumina-remaining')).toContainText('-3');
+
+  await page.locator('.btn-filtre-build[data-build-filtre="planifies"]').click();
+  const visibleCards = page.locator('#grille .carte-picto:not(.cachee)');
+  await expect(visibleCards).toHaveCount(3);
+
+  await page.selectOption('#tri-select', 'build-first');
+  const firstVisibleId = await visibleCards.first().getAttribute('data-id');
+  expect(firstVisibleId).toBe('1');
+});
+
 test('switches language and updates searchable placeholder', async ({ page }) => {
   await openApp(page);
 
