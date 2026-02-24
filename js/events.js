@@ -148,6 +148,9 @@ App.attacher = function () {
 
   // ── Clavier global ──
   document.addEventListener('keydown', function (e) {
+    if (e.key === 'Tab') {
+      App.maintenirFocusDansModal(e);
+    }
     if (e.key === 'Escape') {
       App.fermerTooltip();
       App.fermerImportModal();

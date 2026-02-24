@@ -37,5 +37,9 @@ var App = {
   _idsValides: null,       // Set<number> — IDs valides issus de DATA.pictos
   _pictoParId: null,       // Map<number, Object> — Lookup rapide par ID
   _cachedStatLabels: null, // Object — Labels de stats mis en cache après changement de langue
-  _svgTemplates: {}        // Object — SVGs clonables (flag, checkmark)
+  _svgTemplates: {},       // Object — SVGs clonables (flag, checkmark)
+
+  // ── État d'accessibilité des modales ──
+  _activeModal: null,
+  _lastFocusedBeforeModal: null
 };

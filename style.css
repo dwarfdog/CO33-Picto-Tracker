@@ -19,6 +19,11 @@
   --gris-text: #9a8870;
   --gris-dim: #5a4a38;
 
+  /* Webfonts conservées, avec fallback système pour usage 100% offline */
+  --font-body: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
+  --font-title: 'Cinzel', 'Palatino Linotype', 'Book Antiqua', 'Times New Roman', serif;
+  --font-alt: 'IM Fell English', Garamond, 'Times New Roman', serif;
+
   --stat-sante: #d47c6a;
   --stat-defense: #6ab8b8;
   --stat-lumina: #c4a0ff;
@@ -43,6 +48,12 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Focus visible clavier */
+:where(button, [role="button"], input, select, textarea, a, [tabindex]):focus-visible {
+  outline: 2px solid var(--or);
+  outline-offset: 2px;
+}
+
 /* Accessible : caché visuellement mais lu par les lecteurs d'écran */
 .sr-only {
   position: absolute;
@@ -63,7 +74,7 @@ body {
     radial-gradient(ellipse at 80% 100%, rgba(45, 110, 110, 0.06) 0%, transparent 50%),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
   color: var(--ivoire);
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--font-body);
   font-size: 16px;
   min-height: 100vh;
   overflow-x: hidden;
@@ -115,7 +126,7 @@ header::before {
 }
 
 h1 {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: clamp(2rem, 5vw, 3.8rem);
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -126,7 +137,7 @@ h1 {
 
 h1 span {
   display: block;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: clamp(0.9rem, 2vw, 1.2rem);
   font-weight: 300;
   font-style: italic;
@@ -160,7 +171,7 @@ h1 span {
   background: var(--brun-fonce);
   border: 1px solid var(--brun-clair);
   color: var(--gris-dim);
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 0.6rem;
   letter-spacing: 0.1em;
   padding: 5px 10px;
@@ -197,7 +208,7 @@ h1 span {
 }
 
 .progression-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 0.75rem;
   letter-spacing: 0.2em;
   color: var(--gris-text);
@@ -205,7 +216,7 @@ h1 span {
 }
 
 .progression-chiffres {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--or);
@@ -256,7 +267,7 @@ h1 span {
 .progression-pourcent {
   margin-top: 6px;
   text-align: right;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-style: italic;
   font-size: 0.9rem;
   color: var(--gris-text);
@@ -294,7 +305,7 @@ h1 span {
   border: 1px solid var(--brun-clair);
   border-bottom: 1px solid var(--or-mat);
   color: var(--ivoire);
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: 1rem;
   padding: 10px 16px 10px 40px;
   outline: none;
@@ -331,7 +342,7 @@ h1 span {
 }
 
 .filtre-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 0.65rem;
   letter-spacing: 0.15em;
   color: var(--gris-dim);
@@ -343,7 +354,7 @@ h1 span {
   background: var(--brun-fonce);
   border: 1px solid var(--brun-clair);
   color: var(--creme);
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: 0.9rem;
   padding: 7px 16px;
   cursor: pointer;
@@ -369,7 +380,7 @@ h1 span {
   border: 1px solid var(--brun-clair);
   border-bottom: 1px solid var(--or-mat);
   color: var(--creme);
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: 0.95rem;
   padding: 8px 32px 8px 12px;
   outline: none;
@@ -396,7 +407,7 @@ h1 span {
   background: transparent;
   border: 1px solid var(--gris-dim);
   color: var(--gris-dim);
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 0.65rem;
   letter-spacing: 0.12em;
   padding: 8px 14px;
@@ -451,7 +462,7 @@ h1 span {
 }
 
 .compteur-item span {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: 0.95rem;
   color: var(--gris-text);
 }
@@ -559,7 +570,7 @@ h1 span {
   position: absolute;
   top: 14px;
   right: 14px;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 0.6rem;
   color: var(--gris-dim);
   letter-spacing: 0.1em;
@@ -573,7 +584,7 @@ h1 span {
   position: absolute;
   top: 28px;
   right: 14px;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 0.55rem;
   color: var(--stat-lumina);
   letter-spacing: 0.05em;
@@ -585,7 +596,7 @@ h1 span {
 }
 
 .carte-nom-fr {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--creme);
@@ -599,7 +610,7 @@ h1 span {
 }
 
 .carte-nom-en {
-  font-family: 'IM Fell English', serif;
+  font-family: var(--font-alt);
   font-style: italic;
   font-size: 0.78rem;
   color: var(--gris-dim);
@@ -613,7 +624,7 @@ h1 span {
 }
 
 .carte-effet {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: 0.85rem;
   line-height: 1.4;
   color: var(--gris-text);
@@ -633,7 +644,7 @@ h1 span {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 0.62rem;
   letter-spacing: 0.05em;
   padding: 3px 7px;
@@ -671,7 +682,7 @@ h1 span {
 }
 
 .carte-zone {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 0.62rem;
   letter-spacing: 0.1em;
   color: var(--gris-dim);
@@ -698,7 +709,7 @@ h1 span {
 }
 
 .carte-flag-texte {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: 0.6rem;
   color: var(--gris-dim);
   letter-spacing: 0.05em;
@@ -778,7 +789,7 @@ h1 span {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: 0.82rem;
   font-style: italic;
   color: var(--gris-dim);
@@ -793,7 +804,7 @@ h1 span {
   padding: 0 5px;
   border: 1px solid var(--brun-clair);
   background: var(--brun-fonce);
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 0.55rem;
   font-style: normal;
   letter-spacing: 0.05em;
@@ -834,7 +845,7 @@ h1 span {
   display: inline-flex;
   align-items: center;
   gap: 3px;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 0.55rem;
   letter-spacing: 0.08em;
   color: var(--or-mat);
@@ -866,7 +877,7 @@ h1 span {
 }
 
 .etat-vide p {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-style: italic;
   font-size: 1.2rem;
 }
@@ -961,7 +972,7 @@ h1 span {
 }
 
 .tooltip-nom-fr {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--ivoire);
@@ -969,7 +980,7 @@ h1 span {
 }
 
 .tooltip-nom-en {
-  font-family: 'IM Fell English', serif;
+  font-family: var(--font-alt);
   font-style: italic;
   font-size: 1rem;
   color: var(--gris-text);
@@ -989,7 +1000,7 @@ h1 span {
 }
 
 .tooltip-section-titre {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 0.65rem;
   letter-spacing: 0.2em;
   color: var(--gris-dim);
@@ -998,7 +1009,7 @@ h1 span {
 }
 
 .tooltip-section-contenu {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.5;
   color: var(--creme);
@@ -1050,7 +1061,7 @@ h1 span {
 }
 
 .tooltip-stat-nom {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 0.65rem;
   letter-spacing: 0.1em;
   color: var(--gris-dim);
@@ -1058,7 +1069,7 @@ h1 span {
 }
 
 .tooltip-stat-val {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: 1.1rem;
   font-weight: 600;
 }
@@ -1083,7 +1094,7 @@ h1 span {
   width: 100%;
   padding: 14px;
   margin-top: 20px;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 0.8rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -1115,7 +1126,7 @@ footer {
   text-align: center;
   padding: 30px 20px;
   border-top: 1px solid var(--brun-clair);
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: 0.85rem;
   font-style: italic;
   color: var(--gris-dim);
@@ -1132,7 +1143,7 @@ footer span {
   background: var(--brun-fonce);
   border: 1px solid var(--brun-clair);
   color: var(--creme);
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 0.65rem;
   letter-spacing: 0.1em;
   padding: 7px 14px;
@@ -1196,7 +1207,7 @@ footer span {
 
 .import-titre,
 .export-titre {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 1.1rem;
   color: var(--ivoire);
   letter-spacing: 0.1em;
@@ -1205,7 +1216,7 @@ footer span {
 
 .import-description,
 .export-description {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: 0.9rem;
   color: var(--gris-text);
   font-style: italic;
@@ -1221,7 +1232,7 @@ footer span {
   border: 1px solid var(--brun-clair);
   border-bottom: 1px solid var(--or-mat);
   color: var(--ivoire);
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: 0.9rem;
   padding: 12px;
   resize: vertical;
@@ -1252,7 +1263,7 @@ footer span {
 .export-actions button {
   flex: 1;
   padding: 10px;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 0.7rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1306,7 +1317,7 @@ footer span {
   background: var(--encre);
   border: 1px solid var(--or-mat);
   color: var(--or);
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-title);
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   padding: 12px 24px;

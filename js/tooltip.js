@@ -102,15 +102,13 @@ App.ouvrirTooltip = function (picto) {
   btn.textContent = possede ? App.t('tooltip_remove') : App.t('tooltip_add');
   btn.className = 'tooltip-btn-possession' + (possede ? ' possede-btn' : '');
 
-  overlay.classList.add('visible');
-  document.body.style.overflow = 'hidden';
+  App.ouvrirModal(overlay, document.getElementById('tooltip-fermer'));
 };
 
 /**
  * Ferme la modal de détail.
  */
 App.fermerTooltip = function () {
-  document.getElementById('tooltip-overlay').classList.remove('visible');
-  document.body.style.overflow = '';
+  App.fermerModal(document.getElementById('tooltip-overlay'));
   App.etat.pictoOuvert = null;
 };
