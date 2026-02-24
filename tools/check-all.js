@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const runSyntaxCheck = require('./check-syntax');
+const runI18nCheck = require('./check-i18n');
 const validateData = require('./validate-data');
 const runCoreTests = require('./test-core');
 
@@ -31,6 +32,29 @@ const STEPS = [
         throw new Error('Data validation failed');
       }
       console.log('[validate-data] OK');
+    }
+  },
+  {
+    name: 'i18n',
+    run: function () {
+      const result = runI18nCheck();
+      console.log('[check-i18n] Lang files:', result.langFiles.length);
+      console.log('[check-i18n] Registered:', result.supported.length ? result.supported.join(', ') : '(none)');
+      console.log('[check-i18n] Default:', result.defaultLang || '(none)');
+      if (result.warnings.length) {
+        console.log('[check-i18n] Warnings:');
+        for (let i = 0; i < result.warnings.length; i++) {
+          console.log('  - ' + result.warnings[i]);
+        }
+      }
+      if (result.errors.length) {
+        console.error('[check-i18n] Errors (' + result.errors.length + '):');
+        for (let i = 0; i < result.errors.length; i++) {
+          console.error('  - ' + result.errors[i]);
+        }
+        throw new Error('I18n validation failed');
+      }
+      console.log('[check-i18n] OK');
     }
   },
   {

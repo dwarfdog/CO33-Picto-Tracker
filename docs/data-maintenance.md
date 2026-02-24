@@ -33,6 +33,12 @@ Run all checks:
 node tools/check-all.js
 ```
 
+Run i18n checks only:
+
+```bash
+node tools/check-i18n.js
+```
+
 Generate a coverage report:
 
 ```bash
@@ -44,6 +50,15 @@ JSON output:
 ```bash
 node tools/report-data.js --json
 ```
+
+## New language checklist
+
+1. Add a new file `lang/xx.js`.
+2. Register it in `App.langs.xx` and `App.SUPPORTED_LANGS`.
+3. Keep the same translation keys as `lang/en.js`.
+4. Keep placeholder tokens identical to `lang/en.js` (example: `{n}`, `{pct}`).
+5. Add optional data fields in `js/datas/skills-data.js` (`nom_xx`, `effet_xx`, `zone_xx`, `flag_xx`, `obtention_xx`).
+6. Run `node tools/check-i18n.js` and `node tools/check-all.js`.
 
 ## Update procedure
 
