@@ -83,6 +83,7 @@
     toast_invalid_data:      'Données invalides.',
     toast_invalid_code:      'Code invalide — format non reconnu.',
     toast_no_code:           'Aucun code saisi.',
+    toast_copy_fallback:     'Sélectionnez et copiez manuellement (Ctrl+C)',
     toast_save_error:        'Sauvegarde impossible (stockage plein).',
 
     // Confirmation
@@ -95,6 +96,13 @@
     import_apply:            'Appliquer',
     import_file:             'Fichier .json',
     import_cancel:           'Annuler',
+
+    // Modal export
+    export_title:            'Exporter la progression',
+    export_desc:             'Copiez le code ci-dessous, ou téléchargez un fichier .json',
+    export_copy:             'Copier',
+    export_download:         'Fichier .json',
+    export_close:            'Fermer',
 
     // Footer
     footer_text:             'Données extraites de <span>Clair Obscur : Expédition 33</span> — Sandfall Interactive &nbsp;·&nbsp; Progression sauvegardée localement<br>MIT License © 2026 DwarfDog',

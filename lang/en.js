@@ -83,6 +83,7 @@
     toast_invalid_data:      'Invalid data.',
     toast_invalid_code:      'Invalid code — format not recognized.',
     toast_no_code:           'No code entered.',
+    toast_copy_fallback:     'Select and copy manually (Ctrl+C)',
     toast_save_error:        'Unable to save (storage full).',
 
     // Confirmation
@@ -95,6 +96,13 @@
     import_apply:            'Apply',
     import_file:             '.json file',
     import_cancel:           'Cancel',
+
+    // Modal export
+    export_title:            'Export progress',
+    export_desc:             'Copy the code below, or download a .json file',
+    export_copy:             'Copy',
+    export_download:         '.json file',
+    export_close:            'Close',
 
     // Footer
     footer_text:             'Data extracted from <span>Clair Obscur: Expedition 33</span> — Sandfall Interactive &nbsp;·&nbsp; Progress saved locally<br>MIT License © 2026 DwarfDog',

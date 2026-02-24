@@ -92,6 +92,13 @@ App.appliquerTraductions = function () {
   document.getElementById('btn-import-fichier').textContent = App.t('import_file');
   document.getElementById('btn-import-annuler').textContent = App.t('import_cancel');
 
+  // Modal export
+  document.querySelector('.export-titre').textContent = App.t('export_title');
+  document.querySelector('.export-description').textContent = App.t('export_desc');
+  document.getElementById('btn-export-copier').textContent = App.t('export_copy');
+  document.getElementById('btn-export-fichier').textContent = App.t('export_download');
+  document.getElementById('btn-export-fermer').textContent = App.t('export_close');
+
   // Footer
   document.querySelector('footer').innerHTML = App.t('footer_text');
 

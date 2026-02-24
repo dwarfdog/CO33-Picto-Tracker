@@ -1064,8 +1064,9 @@ footer span { color: var(--or-mat); }
   color: var(--teal-clair);
 }
 
-/* ── Modal Import ── */
-.import-overlay {
+/* ── Modals Import / Export ── */
+.import-overlay,
+.export-overlay {
   position: fixed;
   inset: 0;
   z-index: 1000;
@@ -1077,9 +1078,11 @@ footer span { color: var(--or-mat); }
   padding: 20px;
 }
 
-.import-overlay.visible { display: flex; }
+.import-overlay.visible,
+.export-overlay.visible { display: flex; }
 
-.import-panneau {
+.import-panneau,
+.export-panneau {
   background: var(--encre);
   border: 1px solid var(--or-mat);
   max-width: 500px;
@@ -1090,14 +1093,16 @@ footer span { color: var(--or-mat); }
   animation: panneau-entree 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.import-panneau::before {
+.import-panneau::before,
+.export-panneau::before {
   content: '';
   position: absolute;
   top: -1px; left: 20px; right: 20px; height: 1px;
   background: linear-gradient(90deg, transparent, var(--or), transparent);
 }
 
-.import-titre {
+.import-titre,
+.export-titre {
   font-family: 'Cinzel', serif;
   font-size: 1.1rem;
   color: var(--ivoire);
@@ -1105,7 +1110,8 @@ footer span { color: var(--or-mat); }
   margin-bottom: 16px;
 }
 
-.import-description {
+.import-description,
+.export-description {
   font-family: 'Cormorant Garamond', serif;
   font-size: 0.9rem;
   color: var(--gris-text);
@@ -1114,7 +1120,8 @@ footer span { color: var(--or-mat); }
   line-height: 1.4;
 }
 
-.import-textarea {
+.import-textarea,
+.export-textarea {
   width: 100%;
   min-height: 100px;
   background: var(--brun-fonce);
@@ -1128,24 +1135,28 @@ footer span { color: var(--or-mat); }
   outline: none;
 }
 
-.import-textarea:focus {
+.import-textarea:focus,
+.export-textarea:focus {
   border-color: var(--or-mat);
   background: var(--brun-moyen);
   border-bottom-color: var(--or);
 }
 
-.import-textarea::placeholder {
+.import-textarea::placeholder,
+.export-textarea::placeholder {
   color: var(--gris-dim);
   font-style: italic;
 }
 
-.import-actions {
+.import-actions,
+.export-actions {
   display: flex;
   gap: 10px;
   margin-top: 16px;
 }
 
-.import-actions button {
+.import-actions button,
+.export-actions button {
   flex: 1;
   padding: 10px;
   font-family: 'Cinzel', serif;
@@ -1156,33 +1167,39 @@ footer span { color: var(--or-mat); }
   transition: all 0.2s;
 }
 
-.btn-import-valider {
+.btn-import-valider,
+.btn-export-copier {
   background: transparent;
   border: 1px solid var(--or-mat);
   color: var(--or);
 }
 
-.btn-import-valider:hover {
+.btn-import-valider:hover,
+.btn-export-copier:hover {
   background: rgba(201, 168, 76, 0.1);
 }
 
-.btn-import-fichier {
+.btn-import-fichier,
+.btn-export-fichier {
   background: transparent;
   border: 1px solid var(--teal);
   color: var(--teal-clair);
 }
 
-.btn-import-fichier:hover {
+.btn-import-fichier:hover,
+.btn-export-fichier:hover {
   background: rgba(45, 110, 110, 0.1);
 }
 
-.btn-import-annuler {
+.btn-import-annuler,
+.btn-export-fermer {
   background: transparent;
   border: 1px solid var(--gris-dim);
   color: var(--gris-dim);
 }
 
-.btn-import-annuler:hover {
+.btn-import-annuler:hover,
+.btn-export-fermer:hover {
   border-color: var(--rouille);
   color: var(--rouille);
 }
@@ -1268,6 +1285,7 @@ footer span { color: var(--or-mat); }
   .legende-interactions,
   .tooltip-overlay,
   .import-overlay,
+  .export-overlay,
   .toast,
   .btn-detail,
   .possession-indicateur,

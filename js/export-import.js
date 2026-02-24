@@ -28,15 +28,10 @@ App.genererCodeExport = function () {
 };
 
 /**
- * Exporte la progression (copie dans le presse-papier, fallback fichier).
+ * Exporte la progression en ouvrant la modal d'export.
  */
 App.exporterProgression = function () {
-  var code = App.genererCodeExport();
-  navigator.clipboard.writeText(code).then(function () {
-    App.afficherToast(App.t('toast_copied', { n: App.etat.possedes.size }));
-  }).catch(function () {
-    App.telechargerFichier();
-  });
+  App.ouvrirExportModal();
 };
 
 /**
@@ -126,5 +121,25 @@ App.ouvrirImportModal = function () {
  */
 App.fermerImportModal = function () {
   document.getElementById('import-overlay').classList.remove('visible');
+  document.body.style.overflow = '';
+};
+
+/**
+ * Ouvre la modal d'export avec le code base64 pré-rempli.
+ */
+App.ouvrirExportModal = function () {
+  var code = App.genererCodeExport();
+  var textarea = document.getElementById('export-textarea');
+  textarea.value = code;
+  document.getElementById('export-overlay').classList.add('visible');
+  document.body.style.overflow = 'hidden';
+  textarea.select();
+};
+
+/**
+ * Ferme la modal d'export.
+ */
+App.fermerExportModal = function () {
+  document.getElementById('export-overlay').classList.remove('visible');
   document.body.style.overflow = '';
 };

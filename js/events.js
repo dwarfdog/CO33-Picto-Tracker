@@ -92,6 +92,29 @@ App.attacher = function () {
     if (e.target === document.getElementById('import-overlay')) App.fermerImportModal();
   });
 
+  // ── Export modal — copier le code ──
+  document.getElementById('btn-export-copier').addEventListener('click', function () {
+    var code = document.getElementById('export-textarea').value;
+    navigator.clipboard.writeText(code).then(function () {
+      App.afficherToast(App.t('toast_copied', { n: App.etat.possedes.size }));
+      App.fermerExportModal();
+    }).catch(function () {
+      document.getElementById('export-textarea').select();
+      App.afficherToast(App.t('toast_copy_fallback'), true);
+    });
+  });
+
+  // ── Export modal — télécharger fichier .json ──
+  document.getElementById('btn-export-fichier').addEventListener('click', function () {
+    App.telechargerFichier();
+  });
+
+  // ── Export modal — fermer ──
+  document.getElementById('btn-export-fermer').addEventListener('click', App.fermerExportModal);
+  document.getElementById('export-overlay').addEventListener('click', function (e) {
+    if (e.target === document.getElementById('export-overlay')) App.fermerExportModal();
+  });
+
   // ── Tooltip ──
   document.getElementById('tooltip-fermer').addEventListener('click', App.fermerTooltip);
   document.getElementById('tooltip-overlay').addEventListener('click', function (e) {
@@ -111,6 +134,7 @@ App.attacher = function () {
     if (e.key === 'Escape') {
       App.fermerTooltip();
       App.fermerImportModal();
+      App.fermerExportModal();
     }
   });
 
