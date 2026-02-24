@@ -7,10 +7,11 @@
 
 /**
  * Ouvre la modal de détail pour un picto donné.
+ * Construction DOM pure — aucun innerHTML avec données picto.
  * @param {Object} picto - Objet picto issu de DATA.pictos
  */
 App.ouvrirTooltip = function (picto) {
-  App.etat.pictoOuvert = picto;
+  App.etat.pictoOuvert = picto.id;
   var overlay = document.getElementById('tooltip-overlay');
 
   // Noms
@@ -25,14 +26,17 @@ App.ouvrirTooltip = function (picto) {
   document.getElementById('tt-zone').textContent =
     App.champ(picto, 'localisation') || App.champ(picto, 'zone') || App.t('zone_unknown');
 
-  // Flag (drapeau de téléportation)
+  // Flag (drapeau de téléportation) — DOM pur
   var flagEl = document.getElementById('tt-flag');
   var secFlag = document.getElementById('tt-sec-flag');
   var flagText = App.champ(picto, 'flag');
   if (flagText) {
-    flagEl.innerHTML =
-      '<svg class="flag-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2v20M4 4h12l-3 4 3 4H4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> ' +
-      flagText;
+    // Vider et reconstruire sans innerHTML
+    while (flagEl.firstChild) flagEl.removeChild(flagEl.firstChild);
+    var flagSvg = App._svgTemplates.flag.cloneNode(true);
+    flagSvg.classList.add('flag-icon');
+    flagEl.appendChild(flagSvg);
+    flagEl.appendChild(document.createTextNode(' ' + flagText));
     secFlag.style.display = '';
   } else {
     secFlag.style.display = 'none';
@@ -49,28 +53,35 @@ App.ouvrirTooltip = function (picto) {
     secObtention.style.display = 'none';
   }
 
-  // Stats
+  // Stats — construction DOM pure
   var statsGrille = document.getElementById('tt-stats');
   var secStats = document.getElementById('tt-sec-stats');
-  statsGrille.innerHTML = '';
-  var LABELS = App.getStatLabels();
+  while (statsGrille.firstChild) statsGrille.removeChild(statsGrille.firstChild);
+  var LABELS = App._cachedStatLabels || App.getStatLabels();
   var stats = picto.statistiques || {};
   var statEntries = Object.entries(stats);
 
   if (statEntries.length) {
     secStats.style.display = '';
-    var htmlParts = [];
     statEntries.forEach(function (entry) {
       var k = entry[0], v = entry[1];
       var meta = LABELS[k] || { label: k, classe: 'vitesse' };
-      htmlParts.push(
-        '<div class="tooltip-stat-item">' +
-        '<span class="tooltip-stat-nom">' + meta.label + '</span>' +
-        '<span class="tooltip-stat-val ' + meta.classe + '">' + App.formatStatVal(k, v) + '</span>' +
-        '</div>'
-      );
+
+      var item = document.createElement('div');
+      item.className = 'tooltip-stat-item';
+
+      var nomSpan = document.createElement('span');
+      nomSpan.className = 'tooltip-stat-nom';
+      nomSpan.textContent = meta.label;
+      item.appendChild(nomSpan);
+
+      var valSpan = document.createElement('span');
+      valSpan.className = 'tooltip-stat-val ' + meta.classe;
+      valSpan.textContent = App.formatStatVal(k, v);
+      item.appendChild(valSpan);
+
+      statsGrille.appendChild(item);
     });
-    statsGrille.innerHTML = htmlParts.join('');
   } else {
     secStats.style.display = 'none';
   }
@@ -79,7 +90,7 @@ App.ouvrirTooltip = function (picto) {
   var ttLumina = document.getElementById('tt-lumina');
   var secLumina = document.getElementById('tt-sec-lumina');
   if (picto.lumina) {
-    ttLumina.textContent = '✦ ' + picto.lumina;
+    ttLumina.textContent = '\u2726 ' + picto.lumina;
     secLumina.style.display = '';
   } else {
     secLumina.style.display = 'none';

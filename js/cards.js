@@ -6,6 +6,40 @@
 // ══════════════════════════════════════════════════════
 
 /**
+ * Initialise les templates SVG réutilisables (appelé une fois au boot).
+ * Évite de re-parser le SVG pour chaque carte.
+ */
+App.initSvgTemplates = function () {
+  // SVG drapeau
+  var flagSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  flagSvg.setAttribute('viewBox', '0 0 24 24');
+  flagSvg.setAttribute('aria-hidden', 'true');
+  var flagPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  flagPath.setAttribute('d', 'M4 2v20M4 4h12l-3 4 3 4H4');
+  flagPath.setAttribute('stroke', 'currentColor');
+  flagPath.setAttribute('stroke-width', '2');
+  flagPath.setAttribute('fill', 'none');
+  flagPath.setAttribute('stroke-linecap', 'round');
+  flagPath.setAttribute('stroke-linejoin', 'round');
+  flagSvg.appendChild(flagPath);
+
+  // SVG checkmark
+  var checkSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  checkSvg.setAttribute('viewBox', '0 0 24 24');
+  checkSvg.setAttribute('aria-hidden', 'true');
+  var checkPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  checkPath.setAttribute('d', 'M20 6L9 17l-5-5');
+  checkPath.setAttribute('stroke', 'currentColor');
+  checkPath.setAttribute('stroke-width', '2.5');
+  checkPath.setAttribute('fill', 'none');
+  checkPath.setAttribute('stroke-linecap', 'round');
+  checkPath.setAttribute('stroke-linejoin', 'round');
+  checkSvg.appendChild(checkPath);
+
+  App._svgTemplates = { flag: flagSvg, check: checkSvg };
+};
+
+/**
  * Retourne le nom du picto dans la première langue disponible
  * qui n'est pas la langue courante (pour affichage secondaire).
  * @param {Object} picto
@@ -20,86 +54,149 @@ App.nomSecondaire = function (picto) {
 };
 
 /**
- * Crée un élément DOM pour une carte picto.
+ * Construit les éléments DOM des badges de stats pour un picto.
+ * @param {Object} stats - Objet statistiques du picto
+ * @returns {HTMLElement|null} - div.carte-stats ou null si pas de stats
+ */
+App.creerStatsBadges = function (stats) {
+  var keys = Object.keys(stats);
+  if (!keys.length) return null;
+
+  var LABELS = App._cachedStatLabels || App.getStatLabels();
+  var container = document.createElement('div');
+  container.className = 'carte-stats';
+
+  for (var i = 0; i < keys.length; i++) {
+    var k = keys[i], v = stats[k];
+    var meta = LABELS[k] || { label: k, classe: 'vitesse', icone: '\u2022' };
+    var badge = document.createElement('span');
+    badge.className = 'stat-badge ' + meta.classe;
+    badge.textContent = meta.icone + ' ' + App.formatStatVal(k, v);
+    container.appendChild(badge);
+  }
+  return container;
+};
+
+/**
+ * Crée un élément DOM pour une carte picto (construction DOM pure, sans innerHTML).
  * @param {Object} picto - Objet picto issu de DATA.pictos
  * @returns {HTMLElement}
  */
 App.creerCartePicto = function (picto) {
+  var possede = App.etat.possedes.has(picto.id);
   var el = document.createElement('div');
-  el.className = 'carte-picto' + (App.etat.possedes.has(picto.id) ? ' possede' : '');
+  el.className = 'carte-picto' + (possede ? ' possede' : '');
   el.dataset.id = picto.id;
   el.setAttribute('role', 'button');
   el.setAttribute('tabindex', '0');
   el.setAttribute('aria-label',
-    App.champ(picto, 'nom') + ' — ' +
-    (App.etat.possedes.has(picto.id) ? App.t('aria_owned') : App.t('aria_not_owned'))
+    App.champ(picto, 'nom') + ' \u2014 ' +
+    (possede ? App.t('aria_owned') : App.t('aria_not_owned'))
   );
 
-  // Stats badges
-  var statsHTML = '';
-  var LABELS = App.getStatLabels();
-  var stats = picto.statistiques || {};
-  var keys = Object.keys(stats);
-  for (var i = 0; i < keys.length; i++) {
-    var k = keys[i], v = stats[k];
-    var meta = LABELS[k] || { label: k, classe: 'vitesse', icone: '•' };
-    statsHTML += '<span class="stat-badge ' + meta.classe + '">' + meta.icone + ' ' + App.formatStatVal(k, v) + '</span>';
+  // ── Coin décoratif ──
+  var coinDeco = document.createElement('div');
+  coinDeco.className = 'coin-deco';
+  el.appendChild(coinDeco);
+
+  // ── Header ──
+  var header = document.createElement('div');
+  header.className = 'carte-header';
+
+  var nomFr = document.createElement('div');
+  nomFr.className = 'carte-nom-fr';
+  nomFr.textContent = App.champ(picto, 'nom');
+  header.appendChild(nomFr);
+
+  var nomEn = document.createElement('div');
+  nomEn.className = 'carte-nom-en';
+  nomEn.textContent = App.nomSecondaire(picto);
+  header.appendChild(nomEn);
+
+  if (!picto.traduction_confirmee) {
+    var badgeTrad = document.createElement('span');
+    badgeTrad.className = 'badge-non-confirme';
+    badgeTrad.textContent = App.t('badge_derived');
+    header.appendChild(badgeTrad);
   }
 
-  // Badge traduction non confirmée
-  var badgeTrad = !picto.traduction_confirmee
-    ? '<span class="badge-non-confirme">' + App.t('badge_derived') + '</span>'
-    : '';
+  var carteId = document.createElement('div');
+  carteId.className = 'carte-id';
+  carteId.textContent = '#' + String(picto.id).padStart(3, '0');
+  header.appendChild(carteId);
 
-  // Nom principal = langue courante, nom secondaire = autre langue
-  var nomPrincipal = App.champ(picto, 'nom');
-  var nomSec = App.nomSecondaire(picto);
+  if (picto.lumina) {
+    var lumina = document.createElement('div');
+    lumina.className = 'carte-lumina';
+    lumina.textContent = '\u2726 ' + picto.lumina;
+    header.appendChild(lumina);
+  }
 
-  el.innerHTML =
-    '<div class="coin-deco"></div>' +
-    '<div class="carte-header">' +
-    '<div class="carte-nom-fr">' + nomPrincipal + '</div>' +
-    '<div class="carte-nom-en">' + nomSec + '</div>' +
-    badgeTrad +
-    '<div class="carte-id">#' + String(picto.id).padStart(3, '0') + '</div>' +
-    (picto.lumina ? '<div class="carte-lumina">✦ ' + picto.lumina + '</div>' : '') +
-    '</div>' +
-    '<div class="carte-corps">' +
-    '<div class="carte-effet">' + App.champ(picto, 'effet') + '</div>' +
-    (statsHTML ? '<div class="carte-stats">' + statsHTML + '</div>' : '') +
-    '</div>' +
-    '<div class="carte-footer">' +
-    '<div class="carte-zone">' + App.champ(picto, 'zone') + '</div>' +
-    '<div class="carte-flag"' + (App.champ(picto, 'flag') ? '' : ' style="display:none"') + '>' +
-    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2v20M4 4h12l-3 4 3 4H4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-    '<span class="carte-flag-texte">' + App.champ(picto, 'flag') + '</span>' +
-    '</div>' +
-    '<button class="possession-indicateur" aria-label="' + App.t('aria_toggle') + '">' +
-    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-    '</button>' +
-    '</div>';
+  el.appendChild(header);
 
-  // Référence au picto pour tri/filtre
+  // ── Corps ──
+  var corps = document.createElement('div');
+  corps.className = 'carte-corps';
+
+  var effet = document.createElement('div');
+  effet.className = 'carte-effet';
+  effet.textContent = App.champ(picto, 'effet');
+  corps.appendChild(effet);
+
+  var stats = picto.statistiques || {};
+  var statsBadges = App.creerStatsBadges(stats);
+  if (statsBadges) corps.appendChild(statsBadges);
+
+  el.appendChild(corps);
+
+  // ── Footer ──
+  var footer = document.createElement('div');
+  footer.className = 'carte-footer';
+
+  var zone = document.createElement('div');
+  zone.className = 'carte-zone';
+  zone.textContent = App.champ(picto, 'zone');
+  footer.appendChild(zone);
+
+  // Flag (drapeau de téléportation)
+  var flagTexte = App.champ(picto, 'flag');
+  var flagDiv = document.createElement('div');
+  flagDiv.className = 'carte-flag';
+  if (!flagTexte) flagDiv.style.display = 'none';
+  flagDiv.appendChild(App._svgTemplates.flag.cloneNode(true));
+  var flagSpan = document.createElement('span');
+  flagSpan.className = 'carte-flag-texte';
+  flagSpan.textContent = flagTexte;
+  flagDiv.appendChild(flagSpan);
+  footer.appendChild(flagDiv);
+
+  // Bouton possession
+  var btnPossession = document.createElement('button');
+  btnPossession.className = 'possession-indicateur';
+  btnPossession.setAttribute('aria-label', App.t('aria_toggle'));
+  btnPossession.appendChild(App._svgTemplates.check.cloneNode(true));
+  footer.appendChild(btnPossession);
+
+  el.appendChild(footer);
+
+  // ── Référence au picto pour tri/filtre ──
   el._picto = picto;
 
-  // Clic sur l'indicateur de possession → toggle (intercepte avant le clic carte)
-  el.querySelector('.possession-indicateur').addEventListener('click', function (e) {
+  // ── Événements ──
+  btnPossession.addEventListener('click', function (e) {
     e.stopPropagation();
     App.togglePossession(picto.id, el);
   });
 
-  // Clic gauche sur la carte → ouvrir le détail
   el.addEventListener('click', function () {
     App.ouvrirTooltip(picto);
   });
 
-  // Clic droit → détail
   el.addEventListener('contextmenu', function (e) {
     e.preventDefault();
     App.ouvrirTooltip(picto);
   });
 
-  // Clavier : Enter → détail, Espace → toggle possession
   el.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') App.ouvrirTooltip(picto);
     if (e.key === ' ') { e.preventDefault(); App.togglePossession(picto.id, el); }
@@ -110,6 +207,7 @@ App.creerCartePicto = function (picto) {
 
 /**
  * Bascule l'état de possession d'un picto.
+ * Utilise requestAnimationFrame pour batacher les mises à jour DOM.
  * @param {number} id - ID du picto
  * @param {HTMLElement} el - Élément carte DOM
  */
@@ -124,18 +222,20 @@ App.togglePossession = function (id, el) {
   // Reconstruire l'aria-label
   var nom = App.champ(el._picto, 'nom');
   el.setAttribute('aria-label',
-    nom + ' — ' + (App.etat.possedes.has(id) ? App.t('aria_owned') : App.t('aria_not_owned'))
+    nom + ' \u2014 ' + (App.etat.possedes.has(id) ? App.t('aria_owned') : App.t('aria_not_owned'))
   );
   App.sauvegarder();
-  App.mettreAJourProgression();
-  App.appliquerFiltres();
+  requestAnimationFrame(function () {
+    App.mettreAJourProgression();
+    App.appliquerFiltres();
+  });
 };
 
 /**
  * Rend la grille complète à partir de DATA.pictos.
  */
 App.rendreGrille = function () {
-  var grille = document.getElementById('grille');
+  var grille = App._dom.grille || document.getElementById('grille');
   grille.innerHTML = '';
   App.toutes_cartes = [];
   App.cartesParId = {};
@@ -173,10 +273,18 @@ App.mettreAJourCartesTexte = function () {
     // Badge traduction
     var badge = el.querySelector('.badge-non-confirme');
     if (badge) badge.textContent = App.t('badge_derived');
+
+    // Stats — reconstruire les badges via DOM pur
+    var oldStats = el.querySelector('.carte-stats');
+    var newStats = App.creerStatsBadges(picto.statistiques || {});
+    var corps = el.querySelector('.carte-corps');
+    if (oldStats) corps.removeChild(oldStats);
+    if (newStats) corps.appendChild(newStats);
+
     // Aria-label
     var nom = App.champ(picto, 'nom');
     el.setAttribute('aria-label',
-      nom + ' — ' + (App.etat.possedes.has(picto.id) ? App.t('aria_owned') : App.t('aria_not_owned'))
+      nom + ' \u2014 ' + (App.etat.possedes.has(picto.id) ? App.t('aria_owned') : App.t('aria_not_owned'))
     );
   });
 };

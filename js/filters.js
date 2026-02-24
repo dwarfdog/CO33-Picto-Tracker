@@ -7,9 +7,10 @@
 
 /**
  * Trie les cartes dans la grille selon le critère actif (App.etat.tri).
+ * Utilise les index pré-normalisés (_nomNorm, _zoneNorm) pour la performance.
  */
 App.appliquerTri = function () {
-  var grille = document.getElementById('grille');
+  var grille = App._dom.grille || document.getElementById('grille');
   var tri = App.etat.tri;
 
   App.toutes_cartes.sort(function (a, b) {
@@ -21,17 +22,13 @@ App.appliquerTri = function () {
       case 'id-asc': return pa.id - pb.id;
       case 'id-desc': return pb.id - pa.id;
       case 'nom-asc':
-        return App.normaliserTexte(App.champ(pa, 'nom'))
-          .localeCompare(App.normaliserTexte(App.champ(pb, 'nom')));
+        return (pa._nomNorm || '').localeCompare(pb._nomNorm || '');
       case 'nom-desc':
-        return App.normaliserTexte(App.champ(pb, 'nom'))
-          .localeCompare(App.normaliserTexte(App.champ(pa, 'nom')));
+        return (pb._nomNorm || '').localeCompare(pa._nomNorm || '');
       case 'zone-asc':
-        return App.normaliserTexte(App.champ(pa, 'zone'))
-          .localeCompare(App.normaliserTexte(App.champ(pb, 'zone')));
+        return (pa._zoneNorm || '').localeCompare(pb._zoneNorm || '');
       case 'zone-desc':
-        return App.normaliserTexte(App.champ(pb, 'zone'))
-          .localeCompare(App.normaliserTexte(App.champ(pa, 'zone')));
+        return (pb._zoneNorm || '').localeCompare(pa._zoneNorm || '');
       case 'possedes-first':
         oa = App.etat.possedes.has(pa.id) ? 0 : 1;
         ob = App.etat.possedes.has(pb.id) ? 0 : 1;
@@ -53,10 +50,11 @@ App.appliquerTri = function () {
 
 /**
  * Applique tous les filtres actifs : collection, zone, recherche.
+ * Utilise l'index de recherche pré-normalisé (_searchIndex) pour la performance.
  * Met à jour le compteur d'affichés et l'état vide.
  */
 App.appliquerFiltres = function () {
-  var rechercheNorm = App.normaliserTexte(App.etat.recherche);
+  var rechercheNorm = App.etat.recherche ? App.normaliserTexte(App.etat.recherche) : '';
   var nbAffiches = 0;
 
   App.toutes_cartes.forEach(function (carte) {
@@ -71,22 +69,16 @@ App.appliquerFiltres = function () {
     // Filtre zone
     if (App.etat.filtreZone && picto.zone !== App.etat.filtreZone) ok = false;
 
-    // Filtre recherche (bilingue, toutes données)
-    if (rechercheNorm) {
-      var haystack = App.normaliserTexte(
-        (picto.nom_fr || '') + ' ' + (picto.nom_en || '') + ' ' +
-        (picto.effet_en || '') + ' ' + (picto.effet_fr || '') + ' ' +
-        (picto.zone || '') + ' ' + (picto.zone_fr || '') + ' ' +
-        (picto.localisation_en || '') + ' ' + (picto.localisation_fr || '') + ' ' +
-        (picto.flag_en || '') + ' ' + (picto.flag_fr || '')
-      );
-      if (haystack.indexOf(rechercheNorm) === -1) ok = false;
+    // Filtre recherche — utilise l'index pré-calculé
+    if (ok && rechercheNorm) {
+      if ((picto._searchIndex || '').indexOf(rechercheNorm) === -1) ok = false;
     }
 
     carte.classList.toggle('cachee', !ok);
     if (ok) nbAffiches++;
   });
 
-  document.getElementById('cpt-affiches').textContent = nbAffiches;
-  document.getElementById('etat-vide').classList.toggle('visible', nbAffiches === 0);
+  var dom = App._dom;
+  dom.cptAffiches.textContent = nbAffiches;
+  dom.etatVide.classList.toggle('visible', nbAffiches === 0);
 };

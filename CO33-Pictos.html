@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title></title>
+		<title>Clair Obscur — Picto Tracker</title>
+		<meta name="description" content="Track your Picto collection in Clair Obscur: Expedition 33. Bilingual FR/EN tracker with export/import.">
+		<meta name="theme-color" content="#c9a84c">
+		<meta property="og:title" content="CO33 Picto Tracker">
+		<meta property="og:description" content="Track your Picto collection in Clair Obscur: Expedition 33">
+		<meta property="og:type" content="website">
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
@@ -24,9 +29,11 @@
 			<h1>
 				<span></span>
 			</h1>
-			<div class="ornement-bas">✦ &nbsp; ✦ &nbsp; ✦</div>
+			<div class="ornement-bas">&#10022; &nbsp; &#10022; &nbsp; &#10022;</div>
 			<div class="lang-switcher" id="lang-switcher"></div>
 		</header>
+
+		<main>
 
 		<!-- ══════════════════════════════════════════════════════
 		PROGRESSION
@@ -51,20 +58,22 @@
 		<!-- ══════════════════════════════════════════════════════
 		CONTROLES
 		══════════════════════════════════════════════════════ -->
-		<div
-			class="controles">
+		<div class="controles">
 			<!-- Recherche -->
 			<div class="champ-recherche">
 				<svg viewbox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+				<label for="recherche" class="sr-only">Search</label>
 				<input type="text" id="recherche" placeholder="" autocomplete="off" spellcheck="false">
 			</div>
 
 			<!-- Zone -->
+			<label for="filtre-zone" class="sr-only">Zone filter</label>
 			<select class="select-zone" id="filtre-zone">
 				<option value=""></option>
 			</select>
 
 			<!-- Tri -->
+			<label for="tri-select" class="sr-only">Sort order</label>
 			<select class="select-zone" id="tri-select">
 				<option value="id-asc"></option>
 				<option value="id-desc"></option>
@@ -83,21 +92,21 @@
 			<!-- Filtres collection -->
 			<div class="filtre-groupe">
 				<span class="filtre-label"></span>
-				<button class="btn-filtre actif" data-filtre="tous"></button>
-				<button class="btn-filtre" data-filtre="possedes"></button>
-				<button class="btn-filtre" data-filtre="manquants"></button>
+				<button type="button" class="btn-filtre actif" data-filtre="tous"></button>
+				<button type="button" class="btn-filtre" data-filtre="possedes"></button>
+				<button type="button" class="btn-filtre" data-filtre="manquants"></button>
 			</div>
 
 			<!-- Gestion progression -->
 			<div class="filtre-groupe">
 				<span class="filtre-label"></span>
-				<button class="btn-action btn-export" id="btn-export"></button>
-				<button class="btn-action btn-import" id="btn-import"></button>
+				<button type="button" class="btn-action btn-export" id="btn-export"></button>
+				<button type="button" class="btn-action btn-import" id="btn-import"></button>
 				<input type="file" id="import-fichier" accept=".json,.txt" style="display:none">
 			</div>
 
 			<!-- Reset -->
-			<button class="btn-reset" id="btn-reset"></button>
+			<button type="button" class="btn-reset" id="btn-reset"></button>
 		</div>
 
 		<!-- Compteurs -->
@@ -105,19 +114,19 @@
 			<div class="compteur-item">
 				<div class="compteur-dot possede"></div>
 				<span>
-					<strong id="cpt-possedes">0</strong>
+					<span class="cpt-label"></span><strong id="cpt-possedes">0</strong>
 				</span>
 			</div>
 			<div class="compteur-item">
 				<div class="compteur-dot manquant"></div>
 				<span>
-					<strong id="cpt-manquants">0</strong>
+					<span class="cpt-label"></span><strong id="cpt-manquants">0</strong>
 				</span>
 			</div>
 			<div class="compteur-item">
 				<div class="compteur-dot resultats"></div>
 				<span>
-					<strong id="cpt-affiches">0</strong>
+					<span class="cpt-label"></span><strong id="cpt-affiches">0</strong>
 				</span>
 			</div>
 		</div>
@@ -151,12 +160,14 @@
 			</div>
 		</div>
 
+		</main>
+
 		<!-- ══════════════════════════════════════════════════════
 		TOOLTIP / MODAL
 		══════════════════════════════════════════════════════ -->
 		<div class="tooltip-overlay" id="tooltip-overlay" role="dialog" aria-modal="true">
 			<div class="tooltip-panneau" id="tooltip-panneau">
-				<button class="tooltip-fermer" id="tooltip-fermer" aria-label="">&#215;</button>
+				<button type="button" class="tooltip-fermer" id="tooltip-fermer" aria-label="">&#215;</button>
 				<div class="tooltip-entete">
 					<div class="tooltip-nom-fr" id="tt-nom-fr"></div>
 					<div class="tooltip-nom-en" id="tt-nom-en"></div>
@@ -186,7 +197,7 @@
 						<div class="tooltip-section-titre"></div>
 						<div class="tooltip-section-contenu italique" id="tt-obtention"></div>
 					</div>
-					<button class="tooltip-btn-possession" id="tt-btn-possession"></button>
+					<button type="button" class="tooltip-btn-possession" id="tt-btn-possession"></button>
 				</div>
 			</div>
 		</div>
@@ -194,15 +205,15 @@
 		<!-- ══════════════════════════════════════════════════════
 		MODAL IMPORT
 		══════════════════════════════════════════════════════ -->
-		<div class="import-overlay" id="import-overlay">
+		<div class="import-overlay" id="import-overlay" role="dialog" aria-modal="true">
 			<div class="import-panneau">
 				<div class="import-titre"></div>
 				<div class="import-description"></div>
 				<textarea class="import-textarea" id="import-textarea" placeholder="" spellcheck="false"></textarea>
 				<div class="import-actions">
-					<button class="btn-import-valider" id="btn-import-valider"></button>
-					<button class="btn-import-fichier" id="btn-import-fichier"></button>
-					<button class="btn-import-annuler" id="btn-import-annuler"></button>
+					<button type="button" class="btn-import-valider" id="btn-import-valider"></button>
+					<button type="button" class="btn-import-fichier" id="btn-import-fichier"></button>
+					<button type="button" class="btn-import-annuler" id="btn-import-annuler"></button>
 				</div>
 			</div>
 		</div>
@@ -210,26 +221,29 @@
 		<!-- ══════════════════════════════════════════════════════
 		MODAL EXPORT
 		══════════════════════════════════════════════════════ -->
-		<div class="export-overlay" id="export-overlay">
+		<div class="export-overlay" id="export-overlay" role="dialog" aria-modal="true">
 			<div class="export-panneau">
 				<div class="export-titre"></div>
 				<div class="export-description"></div>
 				<textarea class="export-textarea" id="export-textarea" readonly spellcheck="false"></textarea>
 				<div class="export-actions">
-					<button class="btn-export-copier" id="btn-export-copier"></button>
-					<button class="btn-export-fichier" id="btn-export-fichier"></button>
-					<button class="btn-export-fermer" id="btn-export-fermer"></button>
+					<button type="button" class="btn-export-copier" id="btn-export-copier"></button>
+					<button type="button" class="btn-export-fichier" id="btn-export-fichier"></button>
+					<button type="button" class="btn-export-fermer" id="btn-export-fermer"></button>
 				</div>
 			</div>
 		</div>
 
 		<!-- Toast -->
-		<div class="toast" id="toast"></div>
+		<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 		<!-- ══════════════════════════════════════════════════════
 		FOOTER
 		══════════════════════════════════════════════════════ -->
-		<footer></footer>
+		<footer>
+			<span id="ft-data"></span> — <span id="ft-studio"></span> &middot; <span id="ft-save"></span><br>
+			<span id="ft-license"></span>
+		</footer>
 
 		<!-- ══ Namespace ══ -->
 		<script src="js/app.js"></script>

@@ -7,11 +7,12 @@
 
 /**
  * Affiche un toast de notification.
+ * Utilise le cache DOM (App._dom) et aria-live pour l'accessibilité.
  * @param {string}  message - Texte à afficher
  * @param {boolean} [erreur=false] - Style erreur si true
  */
 App.afficherToast = function (message, erreur) {
-  var toast = document.getElementById('toast');
+  var toast = App._dom.toast || document.getElementById('toast');
   toast.textContent = message;
   toast.className = 'toast' + (erreur ? ' erreur' : '');
   requestAnimationFrame(function () { toast.classList.add('visible'); });
@@ -35,11 +36,12 @@ App.exporterProgression = function () {
 };
 
 /**
- * Télécharge la progression en fichier JSON.
+ * Télécharge la progression en fichier JSON au format v2.
+ * Le format est extensible pour accueillir les futures données.
  */
 App.telechargerFichier = function () {
   var data = {
-    version: 1,
+    version: App.STORAGE_VERSION,
     date: new Date().toISOString(),
     possedes: Array.from(App.etat.possedes).sort(function (a, b) { return a - b; }),
     total: App.etat.possedes.size,
@@ -55,13 +57,41 @@ App.telechargerFichier = function () {
 };
 
 /**
+ * Parse une chaîne d'import (base64 ou JSON) et retourne les IDs.
+ * @param {string} code - Code à parser
+ * @returns {number[]|null} Tableau d'IDs ou null si format invalide
+ */
+App.parseImportData = function (code) {
+  var trimmed = code.trim();
+
+  // Tentative 1 : base64
+  try {
+    var decoded = JSON.parse(atob(trimmed));
+    if (Array.isArray(decoded)) return decoded;
+  } catch (e) { /* pas du base64 valide */ }
+
+  // Tentative 2 : JSON brut
+  try {
+    var json = JSON.parse(trimmed);
+    // Format v2 : { possedes: [...] }
+    if (json && json.possedes && Array.isArray(json.possedes)) return json.possedes;
+    // Format tableau brut
+    if (Array.isArray(json)) return json;
+  } catch (e2) { /* pas du JSON valide */ }
+
+  return null;
+};
+
+/**
  * Valide et applique un tableau d'IDs importés.
+ * Utilise le cache App._idsValides pour validation O(1).
  * @param {number[]} ids
  * @returns {boolean} true si l'import a réussi
  */
 App.appliquerImport = function (ids) {
-  var idsValides = new Set(DATA.pictos.map(function (p) { return p.id; }));
-  if (!Array.isArray(ids) || !ids.every(function (id) { return typeof id === 'number' && idsValides.has(id); })) {
+  if (!Array.isArray(ids) || !ids.every(function (id) {
+    return typeof id === 'number' && App._idsValides.has(id);
+  })) {
     App.afficherToast(App.t('toast_invalid_data'), true);
     return false;
   }
@@ -80,28 +110,19 @@ App.appliquerImport = function (ids) {
 
 /**
  * Décode et importe un code (base64 ou JSON brut).
+ * Utilise parseImportData pour un parsing consolidé.
  * @param {string} code
  * @returns {boolean} true si l'import a réussi
  */
 App.importerDepuisCode = function (code) {
-  try {
-    var decoded = JSON.parse(atob(code.trim()));
-    if (App.appliquerImport(decoded)) {
-      App.afficherToast(App.t('toast_imported', { n: App.etat.possedes.size }));
-      return true;
-    }
-  } catch (e) {
-    // Peut-être du JSON brut
-    try {
-      var json = JSON.parse(code.trim());
-      var ids = json.possedes || json;
-      if (App.appliquerImport(Array.isArray(ids) ? ids : [])) {
-        App.afficherToast(App.t('toast_imported', { n: App.etat.possedes.size }));
-        return true;
-      }
-    } catch (e2) {
-      App.afficherToast(App.t('toast_invalid_code'), true);
-    }
+  var ids = App.parseImportData(code);
+  if (ids === null) {
+    App.afficherToast(App.t('toast_invalid_code'), true);
+    return false;
+  }
+  if (App.appliquerImport(ids)) {
+    App.afficherToast(App.t('toast_imported', { n: App.etat.possedes.size }));
+    return true;
   }
   return false;
 };

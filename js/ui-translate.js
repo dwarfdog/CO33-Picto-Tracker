@@ -7,6 +7,7 @@
 
 /**
  * Met à jour tous les textes statiques du DOM pour la langue courante.
+ * Aucun innerHTML avec données dynamiques — construction DOM pure.
  */
 App.appliquerTraductions = function () {
   document.title = App.t('page_title');
@@ -55,14 +56,14 @@ App.appliquerTraductions = function () {
   document.getElementById('btn-import').textContent = App.t('btn_import');
   document.getElementById('btn-reset').textContent = App.t('btn_reset');
 
-  // Compteurs — mise à jour du label sans détruire le <strong>
+  // Compteurs — mise à jour du label via textContent (plus de innerHTML)
   var cptItems = document.querySelectorAll('.compteur-item');
-  cptItems[0].querySelector('span').innerHTML =
-    App.t('counter_owned') + ' <strong id="cpt-possedes">' + document.getElementById('cpt-possedes').textContent + '</strong>';
-  cptItems[1].querySelector('span').innerHTML =
-    App.t('counter_missing') + ' <strong id="cpt-manquants">' + document.getElementById('cpt-manquants').textContent + '</strong>';
-  cptItems[2].querySelector('span').innerHTML =
-    App.t('counter_shown') + ' <strong id="cpt-affiches">' + document.getElementById('cpt-affiches').textContent + '</strong>';
+  var cptLabel0 = cptItems[0].querySelector('.cpt-label');
+  if (cptLabel0) cptLabel0.textContent = App.t('counter_owned') + ' ';
+  var cptLabel1 = cptItems[1].querySelector('.cpt-label');
+  if (cptLabel1) cptLabel1.textContent = App.t('counter_missing') + ' ';
+  var cptLabel2 = cptItems[2].querySelector('.cpt-label');
+  if (cptLabel2) cptLabel2.textContent = App.t('counter_shown') + ' ';
 
   // Légende
   var legendItems = document.querySelectorAll('.legende-item');
@@ -99,8 +100,15 @@ App.appliquerTraductions = function () {
   document.getElementById('btn-export-fichier').textContent = App.t('export_download');
   document.getElementById('btn-export-fermer').textContent = App.t('export_close');
 
-  // Footer
-  document.querySelector('footer').innerHTML = App.t('footer_text');
+  // Footer — éléments séparés, sans innerHTML
+  var ftData = document.getElementById('ft-data');
+  var ftStudio = document.getElementById('ft-studio');
+  var ftSave = document.getElementById('ft-save');
+  var ftLicense = document.getElementById('ft-license');
+  if (ftData) ftData.textContent = App.t('footer_data');
+  if (ftStudio) ftStudio.textContent = App.t('footer_studio');
+  if (ftSave) ftSave.textContent = App.t('footer_save');
+  if (ftLicense) ftLicense.textContent = App.t('footer_license');
 
   // Zone select
   App.initialiserSelectZone();
@@ -146,10 +154,11 @@ App.initialiserSelectZone = function () {
  */
 App.genererBoutonsLangue = function () {
   var container = document.getElementById('lang-switcher');
-  container.innerHTML = '';
+  while (container.firstChild) container.removeChild(container.firstChild);
 
   App.SUPPORTED_LANGS.forEach(function (code) {
     var btn = document.createElement('button');
+    btn.type = 'button';
     btn.className = 'btn-lang' + (code === App.LANG ? ' actif' : '');
     btn.dataset.lang = code;
     btn.title = (App.langs[code] && App.langs[code].lang_name) || code.toUpperCase();

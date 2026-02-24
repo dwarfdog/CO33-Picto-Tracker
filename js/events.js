@@ -75,6 +75,21 @@ App.attacher = function () {
   document.getElementById('import-fichier').addEventListener('change', function (e) {
     var fichier = e.target.files[0];
     if (!fichier) return;
+
+    // Validation taille
+    if (fichier.size > App.FILE_MAX_SIZE) {
+      App.afficherToast(App.t('toast_file_too_large'), true);
+      e.target.value = '';
+      return;
+    }
+
+    // Validation type
+    if (!fichier.name.match(/\.(json|txt)$/i)) {
+      App.afficherToast(App.t('toast_file_wrong_type'), true);
+      e.target.value = '';
+      return;
+    }
+
     var reader = new FileReader();
     reader.onload = function (ev) {
       if (App.importerDepuisCode(ev.target.result)) App.fermerImportModal();
@@ -121,12 +136,14 @@ App.attacher = function () {
     if (e.target === document.getElementById('tooltip-overlay')) App.fermerTooltip();
   });
 
+  // ── Tooltip — toggle possession (pictoOuvert = ID maintenant) ──
   document.getElementById('tt-btn-possession').addEventListener('click', function () {
     if (!App.etat.pictoOuvert) return;
-    var id = App.etat.pictoOuvert.id;
+    var id = App.etat.pictoOuvert;
     var carte = App.cartesParId[id];
+    var picto = App.getPictoById(id);
     if (carte) App.togglePossession(id, carte);
-    App.ouvrirTooltip(App.etat.pictoOuvert);
+    if (picto) App.ouvrirTooltip(picto);
   });
 
   // ── Clavier global ──

@@ -12,7 +12,7 @@
 App.detecterLangue = function () {
   var saved = localStorage.getItem(App.LANG_STORAGE_KEY);
   if (saved && App.SUPPORTED_LANGS.indexOf(saved) !== -1) return saved;
-  var nav = (navigator.language || navigator.userLanguage || '').slice(0, 2).toLowerCase();
+  var nav = (navigator.language || '').slice(0, 2).toLowerCase();
   return App.SUPPORTED_LANGS.indexOf(nav) !== -1 ? nav : App.DEFAULT_LANG;
 };
 
@@ -57,6 +57,7 @@ App.champ = function (picto, field) {
 
 /**
  * Change la langue courante, persiste le choix et re-rend l'UI.
+ * Met à jour les caches dépendant de la langue (statLabels, searchIndex).
  * @param {string} nouvelleLang - Code langue ('fr', 'en', etc.)
  */
 App.changerLangue = function (nouvelleLang) {
@@ -64,26 +65,33 @@ App.changerLangue = function (nouvelleLang) {
   App.LANG = nouvelleLang;
   localStorage.setItem(App.LANG_STORAGE_KEY, App.LANG);
   document.documentElement.lang = App.LANG;
+
+  // Invalider et reconstruire les caches dépendant de la langue
+  App._cachedStatLabels = App.getStatLabels();
+  App.buildSearchIndex();
+
   App.appliquerTraductions();
   App.mettreAJourCartesTexte();
   App.appliquerTri();
   App.mettreAJourProgression();
 
-  // Rafraîchir le contenu du tooltip si ouvert
+  // Rafraîchir le contenu du tooltip si ouvert (pictoOuvert = ID)
   if (App.etat.pictoOuvert) {
-    App.ouvrirTooltip(App.etat.pictoOuvert);
+    var picto = App.getPictoById(App.etat.pictoOuvert);
+    if (picto) App.ouvrirTooltip(picto);
   }
 };
 
 /**
  * Retourne les labels de stats traduits.
+ * Utilise le cache si disponible (invalidé par changerLangue).
  * @returns {Object} ex: { sante: { label: 'Santé', classe: 'sante', icone: '♥' }, ... }
  */
 App.getStatLabels = function () {
   return {
-    sante: { label: App.t('stat_health'), classe: 'sante', icone: '♥' },
-    defense: { label: App.t('stat_defense'), classe: 'defense', icone: '⛨' },
-    vitesse: { label: App.t('stat_speed'), classe: 'vitesse', icone: '⚡' },
-    chances_crit: { label: App.t('stat_crit'), classe: 'crit', icone: '✦' },
+    sante: { label: App.t('stat_health'), classe: 'sante', icone: '\u2665' },
+    defense: { label: App.t('stat_defense'), classe: 'defense', icone: '\u26E8' },
+    vitesse: { label: App.t('stat_speed'), classe: 'vitesse', icone: '\u26A1' },
+    chances_crit: { label: App.t('stat_crit'), classe: 'crit', icone: '\u2726' },
   };
 };

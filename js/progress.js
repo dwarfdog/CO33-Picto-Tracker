@@ -7,16 +7,18 @@
 
 /**
  * Met à jour la barre de progression, les compteurs et le pourcentage.
+ * Utilise le cache DOM (App._dom) pour éviter les lookups répétés.
  */
 App.mettreAJourProgression = function () {
   var n = App.etat.possedes.size;
   var total = DATA.pictos.length;
   var pct = total ? (n / total * 100).toFixed(1) : '0.0';
+  var dom = App._dom;
 
-  document.getElementById('nb-possedes').textContent = n;
-  document.getElementById('nb-total').textContent = total;
-  document.getElementById('barre-prog').style.width = pct + '%';
-  document.getElementById('prog-pct').textContent = App.t('progression_pct', { pct: pct });
-  document.getElementById('cpt-possedes').textContent = n;
-  document.getElementById('cpt-manquants').textContent = total - n;
+  dom.nbPossedes.textContent = n;
+  dom.nbTotal.textContent = total;
+  dom.barreProg.style.width = pct + '%';
+  dom.progPct.textContent = App.t('progression_pct', { pct: pct });
+  dom.cptPossedes.textContent = n;
+  dom.cptManquants.textContent = total - n;
 };

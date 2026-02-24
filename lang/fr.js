@@ -106,6 +106,14 @@
 
     // Footer
     footer_text:             'Données extraites de <span>Clair Obscur : Expédition 33</span> — Sandfall Interactive &nbsp;·&nbsp; Progression sauvegardée localement<br>MIT License © 2026 DwarfDog',
+    footer_data:             'Données extraites de Clair Obscur : Expédition 33',
+    footer_studio:           'Sandfall Interactive',
+    footer_save:             'Progression sauvegardée localement',
+    footer_license:          'MIT License \u00a9 2026 DwarfDog',
+
+    // Validation fichier
+    toast_file_too_large:    'Fichier trop volumineux (max 1 Mo).',
+    toast_file_wrong_type:   'Type de fichier non supporté (.json ou .txt uniquement).',
 
     // Stats
     stat_health:             'Santé',
