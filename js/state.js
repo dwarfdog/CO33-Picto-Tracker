@@ -439,6 +439,17 @@ App.chargerSauvegarde = function () {
           needsMigration = true;
         }
 
+        // Restaurer les préférences UI persistées
+        if (parsed.ui && typeof parsed.ui === 'object') {
+          var validTri = ['id-asc','id-desc','nom-asc','nom-desc','zone-asc','zone-desc','possedes-first','manquants-first','build-first','lumina-asc','lumina-desc'];
+          if (validTri.indexOf(parsed.ui.tri) !== -1) App.etat.tri = parsed.ui.tri;
+          if (['tous','possedes','manquants'].indexOf(parsed.ui.filtreCollection) !== -1) App.etat.filtreCollection = parsed.ui.filtreCollection;
+          if (typeof parsed.ui.filtreZone === 'string') App.etat.filtreZone = parsed.ui.filtreZone;
+          if (['tous','planifies','hors-plan'].indexOf(parsed.ui.filtreBuild) !== -1) App.etat.filtreBuild = parsed.ui.filtreBuild;
+          if (['any','all'].indexOf(parsed.ui.filtreGameplayMode) !== -1) App.etat.filtreGameplayMode = parsed.ui.filtreGameplayMode;
+          if (Array.isArray(parsed.ui.filtreGameplayTags)) App.etat.filtreGameplayTags = parsed.ui.filtreGameplayTags;
+        }
+
         if (parsed.version !== App.STORAGE_VERSION) {
           needsMigration = true;
         }
@@ -492,7 +503,15 @@ App.sauvegarder = function () {
     var data = {
       version: App.STORAGE_VERSION,
       profil_actif: App.etat.profilActifId,
-      profils: profils
+      profils: profils,
+      ui: {
+        tri: App.etat.tri,
+        filtreCollection: App.etat.filtreCollection,
+        filtreZone: App.etat.filtreZone,
+        filtreBuild: App.etat.filtreBuild,
+        filtreGameplayMode: App.etat.filtreGameplayMode,
+        filtreGameplayTags: App.etat.filtreGameplayTags
+      }
     };
 
     localStorage.setItem(App.STORAGE_KEY, JSON.stringify(data));

@@ -218,6 +218,103 @@ App.maintenirFocusDansModal = function (e) {
 };
 
 /**
+ * Ouvre une modal de prompt personnalisée (remplace le prompt() natif).
+ * @param {string}   titre    - Texte affiché comme titre/question
+ * @param {string}   defaut   - Valeur par défaut dans l'input
+ * @param {Function} callback - callback(valeur) si OK, callback(null) si annulé
+ */
+App.ouvrirPrompt = function (titre, defaut, callback) {
+  var overlay = App._dom.promptOverlay || document.getElementById('prompt-overlay');
+  var titleEl = App._dom.promptTitle || document.getElementById('prompt-title');
+  var inputEl = App._dom.promptInput || document.getElementById('prompt-input');
+  var btnOk = App._dom.btnPromptOk || document.getElementById('btn-prompt-ok');
+  var btnCancel = App._dom.btnPromptCancel || document.getElementById('btn-prompt-cancel');
+
+  if (!overlay || !inputEl) {
+    // Fallback au prompt natif si le DOM n'est pas prêt
+    var result = prompt(titre, defaut);
+    if (callback) callback(result);
+    return;
+  }
+
+  if (titleEl) titleEl.textContent = titre || '';
+  inputEl.value = defaut || '';
+  if (btnOk) btnOk.textContent = App.t('prompt_ok');
+  if (btnCancel) btnCancel.textContent = App.t('prompt_cancel');
+
+  function cleanup() {
+    if (btnOk) btnOk.removeEventListener('click', onOk);
+    if (btnCancel) btnCancel.removeEventListener('click', onCancel);
+    if (inputEl) inputEl.removeEventListener('keydown', onKey);
+    App.fermerModal(overlay);
+  }
+
+  function onOk() {
+    var val = inputEl.value.trim();
+    cleanup();
+    if (callback) callback(val || null);
+  }
+
+  function onCancel() {
+    cleanup();
+    if (callback) callback(null);
+  }
+
+  function onKey(e) {
+    if (e.key === 'Enter') { e.preventDefault(); onOk(); }
+    if (e.key === 'Escape') { e.preventDefault(); onCancel(); }
+  }
+
+  if (btnOk) btnOk.addEventListener('click', onOk);
+  if (btnCancel) btnCancel.addEventListener('click', onCancel);
+  inputEl.addEventListener('keydown', onKey);
+  App.ouvrirModal(overlay, inputEl);
+};
+
+/**
+ * Ouvre une modal de confirmation personnalisée (remplace le confirm() natif).
+ * @param {string}   message  - Message de confirmation
+ * @param {Function} callback - callback(true) si confirmé, callback(false) si annulé
+ */
+App.ouvrirConfirm = function (message, callback) {
+  var overlay = App._dom.confirmOverlay || document.getElementById('confirm-overlay');
+  var messageEl = App._dom.confirmMessage || document.getElementById('confirm-message');
+  var btnYes = App._dom.btnConfirmYes || document.getElementById('btn-confirm-yes');
+  var btnNo = App._dom.btnConfirmNo || document.getElementById('btn-confirm-no');
+
+  if (!overlay) {
+    // Fallback au confirm natif si le DOM n'est pas prêt
+    var result = confirm(message);
+    if (callback) callback(result);
+    return;
+  }
+
+  if (messageEl) messageEl.textContent = message || '';
+  if (btnYes) btnYes.textContent = App.t('confirm_yes');
+  if (btnNo) btnNo.textContent = App.t('confirm_no');
+
+  function cleanup() {
+    if (btnYes) btnYes.removeEventListener('click', onYes);
+    if (btnNo) btnNo.removeEventListener('click', onNo);
+    App.fermerModal(overlay);
+  }
+
+  function onYes() {
+    cleanup();
+    if (callback) callback(true);
+  }
+
+  function onNo() {
+    cleanup();
+    if (callback) callback(false);
+  }
+
+  if (btnYes) btnYes.addEventListener('click', onYes);
+  if (btnNo) btnNo.addEventListener('click', onNo);
+  App.ouvrirModal(overlay, btnNo);
+};
+
+/**
  * Construit l'index de recherche pré-normalisé sur chaque picto.
  * Appelé au boot et lors d'un changement de langue.
  * Enrichit chaque objet picto avec _searchIndex, _nomNorm, _zoneNorm.

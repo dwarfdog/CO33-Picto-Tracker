@@ -52,9 +52,9 @@ App.attacher = function () {
   if (dom.btnProfilAdd) {
     dom.btnProfilAdd.addEventListener('click', function () {
       var suggestion = App.nomProfilParDefaut(App.etat.profils.length + 1);
-      var nom = prompt(App.t('profile_prompt_name'), suggestion);
-      if (nom === null) return; // Annulation utilisateur
-      App.creerEtActiverProfil(nom);
+      App.ouvrirPrompt(App.t('profile_prompt_name'), suggestion, function (nom) {
+        if (nom !== null) App.creerEtActiverProfil(nom);
+      });
     });
   }
 
@@ -118,9 +118,11 @@ App.attacher = function () {
   // ── Reset ──
   if (dom.btnReset) {
     dom.btnReset.addEventListener('click', function () {
-      if (!confirm(App.t('confirm_reset'))) return;
-      App.etat.possedes.clear();
-      App.rafraichirComplet();
+      App.ouvrirConfirm(App.t('confirm_reset'), function (ok) {
+        if (!ok) return;
+        App.etat.possedes.clear();
+        App.rafraichirComplet();
+      });
     });
   }
 
@@ -209,6 +211,13 @@ App.attacher = function () {
   if (dom.btnExportFichier) {
     dom.btnExportFichier.addEventListener('click', function () {
       App.telechargerFichier();
+    });
+  }
+
+  // ── Export modal — exporter tous les profils ──
+  if (dom.btnExportAll) {
+    dom.btnExportAll.addEventListener('click', function () {
+      App.telechargerTousProfils();
     });
   }
 

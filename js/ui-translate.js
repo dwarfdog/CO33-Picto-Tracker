@@ -134,7 +134,16 @@ App.appliquerTraductions = function () {
   document.getElementById('export-description').textContent = App.t('export_desc');
   document.getElementById('btn-export-copier').textContent = App.t('export_copy');
   document.getElementById('btn-export-fichier').textContent = App.t('export_download');
+  document.getElementById('btn-export-all').textContent = App.t('export_all_profiles');
   document.getElementById('btn-export-fermer').textContent = App.t('export_close');
+
+  // Modal prompt
+  document.getElementById('btn-prompt-ok').textContent = App.t('prompt_ok');
+  document.getElementById('btn-prompt-cancel').textContent = App.t('prompt_cancel');
+
+  // Modal confirm
+  document.getElementById('btn-confirm-yes').textContent = App.t('confirm_yes');
+  document.getElementById('btn-confirm-no').textContent = App.t('confirm_no');
 
   // Footer — éléments séparés, sans innerHTML
   var ftData = document.getElementById('ft-data');

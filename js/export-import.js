@@ -77,6 +77,81 @@ App.telechargerFichier = function () {
 };
 
 /**
+ * Télécharge un fichier JSON contenant tous les profils.
+ */
+App.telechargerTousProfils = function () {
+  var data = {
+    version: App.STORAGE_VERSION,
+    date: new Date().toISOString(),
+    profil_actif: App.etat.profilActifId,
+    profils: App.etat.profils.map(function (p) {
+      return {
+        id: p.id,
+        nom: p.nom,
+        possedes: Array.from(p.possedes).sort(function (a, b) { return a - b; }),
+        build_lumina: Array.from(p.buildLumina).sort(function (a, b) { return a - b; }),
+        budget_lumina: p.budgetLumina
+      };
+    }),
+    total_pictos: DATA.pictos.length
+  };
+
+  var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'co33-pictos-all-profiles-' + data.profils.length + 'p.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  App.afficherToast(App.t('toast_imported_profiles', { n: data.profils.length }));
+};
+
+/**
+ * Importe tous les profils depuis un payload multi-profils.
+ * @param {string} code - Code JSON brut ou base64
+ * @returns {boolean}
+ */
+App.importerTousProfils = function (code) {
+  var payload = App.parseImportPayload(code);
+  if (!payload) {
+    App.afficherToast(App.t('toast_invalid_code'), true);
+    return false;
+  }
+
+  // Si le payload contient des profils multiples (JSON brut)
+  var trimmed = code.trim();
+  var parsed = null;
+  try { parsed = JSON.parse(trimmed); } catch (e) {
+    try { parsed = JSON.parse(atob(trimmed)); } catch (e2) { /* ignore */ }
+  }
+
+  if (parsed && Array.isArray(parsed.profils) && parsed.profils.length) {
+    App.etat.profils = [];
+    parsed.profils.forEach(function (entry) {
+      if (!entry || typeof entry !== 'object') return;
+      App.ajouterProfil({
+        id: entry.id,
+        nom: entry.nom,
+        possedes: entry.possedes || [],
+        build_lumina: entry.build_lumina || entry.buildLumina || [],
+        budget_lumina: entry.budget_lumina !== undefined ? entry.budget_lumina : (entry.budgetLumina || 0)
+      });
+    });
+    if (typeof parsed.profil_actif === 'string') {
+      App.etat.profilActifId = parsed.profil_actif;
+    }
+    App.assurerProfils();
+    App.activerProfil(App.etat.profilActifId, { silentToast: true });
+    App.sauvegarder();
+    App.afficherToast(App.t('toast_imported_profiles', { n: App.etat.profils.length }));
+    return true;
+  }
+
+  // Fallback : import mono-profil classique
+  return App.importerDepuisCode(code);
+};
+
+/**
  * Parse une chaîne d'import (base64 ou JSON) en payload normalisé.
  * @param {string} code - Code à parser
  * @returns {{possedes:number[], buildLumina:number[]|null, budgetLumina:number|null}|null}

@@ -188,6 +188,17 @@
     stat_crit:               'Crit.',
     stat_lumina:             'Lumina',
 
+    // Modals prompt / confirm
+    prompt_ok:               'Valider',
+    prompt_cancel:           'Annuler',
+    confirm_yes:             'Confirmer',
+    confirm_no:              'Annuler',
+
+    // Export multi-profils
+    export_all_profiles:     'Exporter tout',
+    toast_imported_profiles: '{n} profil(s) importé(s).',
+    import_all_profiles:     'Importer tous les profils',
+
     // Switcher
     lang_label:              'Langue',
     lang_name:               'Français',

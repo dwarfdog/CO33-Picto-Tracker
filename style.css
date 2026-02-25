@@ -1853,14 +1853,16 @@ footer span {
 }
 
 .btn-import-fichier,
-.btn-export-fichier {
+.btn-export-fichier,
+.btn-export-all {
   background: transparent;
   border: 1px solid var(--teal);
   color: var(--teal-clair);
 }
 
 .btn-import-fichier:hover,
-.btn-export-fichier:hover {
+.btn-export-fichier:hover,
+.btn-export-all:hover {
   background: rgba(45, 110, 110, 0.1);
 }
 
@@ -1873,6 +1875,121 @@ footer span {
 
 .btn-import-annuler:hover,
 .btn-export-fermer:hover {
+  border-color: var(--rouille);
+  color: var(--rouille);
+}
+
+/* ── Modals Prompt / Confirm ── */
+.prompt-overlay,
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 9, 8, 0.85);
+  backdrop-filter: blur(4px);
+  padding: 20px;
+}
+
+.prompt-overlay.visible,
+.confirm-overlay.visible {
+  display: flex;
+}
+
+.prompt-panneau,
+.confirm-panneau {
+  background: var(--encre);
+  border: 1px solid var(--or-mat);
+  max-width: 400px;
+  width: 100%;
+  padding: 28px;
+  position: relative;
+  box-shadow: 0 0 60px rgba(201, 168, 76, 0.15), 0 20px 60px rgba(0, 0, 0, 0.8);
+  animation: panneau-entree 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.prompt-panneau::before,
+.confirm-panneau::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--or), transparent);
+}
+
+.prompt-titre,
+.confirm-message {
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+  color: var(--ivoire);
+  letter-spacing: 0.08em;
+  margin-bottom: 18px;
+  line-height: 1.4;
+}
+
+.prompt-input {
+  width: 100%;
+  background: var(--brun-fonce);
+  border: 1px solid var(--brun-clair);
+  border-bottom: 1px solid var(--or-mat);
+  color: var(--ivoire);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 10px 12px;
+  outline: none;
+  margin-bottom: 4px;
+}
+
+.prompt-input:focus {
+  border-color: var(--or-mat);
+  background: var(--brun-moyen);
+  border-bottom-color: var(--or);
+}
+
+.prompt-actions,
+.confirm-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.prompt-actions button,
+.confirm-actions button {
+  flex: 1;
+  padding: 10px;
+  font-family: var(--font-title);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-prompt-ok,
+.btn-confirm-yes {
+  background: transparent;
+  border: 1px solid var(--or-mat);
+  color: var(--or);
+}
+
+.btn-prompt-ok:hover,
+.btn-confirm-yes:hover {
+  background: rgba(201, 168, 76, 0.1);
+}
+
+.btn-prompt-cancel,
+.btn-confirm-no {
+  background: transparent;
+  border: 1px solid var(--gris-dim);
+  color: var(--gris-dim);
+}
+
+.btn-prompt-cancel:hover,
+.btn-confirm-no:hover {
   border-color: var(--rouille);
   color: var(--rouille);
 }

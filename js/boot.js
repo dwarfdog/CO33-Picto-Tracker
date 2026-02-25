@@ -101,6 +101,7 @@
     btnImportAnnuler:'btn-import-annuler',
     btnExportCopier: 'btn-export-copier',
     btnExportFichier:'btn-export-fichier',
+    btnExportAll:    'btn-export-all',
     btnExportFermer: 'btn-export-fermer',
     // Tooltip
     tooltipOverlay:  'tooltip-overlay',
@@ -112,7 +113,35 @@
     // Gameplay
     filtreGameplayMode:'filtre-gameplay-mode',
     btnGameplayClear:'btn-gameplay-clear',
+    // Modal prompt
+    promptOverlay:   'prompt-overlay',
+    promptTitle:     'prompt-title',
+    promptInput:     'prompt-input',
+    btnPromptOk:     'btn-prompt-ok',
+    btnPromptCancel: 'btn-prompt-cancel',
+    // Modal confirm
+    confirmOverlay:  'confirm-overlay',
+    confirmMessage:  'confirm-message',
+    btnConfirmYes:   'btn-confirm-yes',
+    btnConfirmNo:    'btn-confirm-no',
   });
+
+  // Restaurer les préférences UI persistées dans les contrôles DOM
+  if (App._dom.triSelect && App.etat.tri) App._dom.triSelect.value = App.etat.tri;
+  if (App._dom.filtreZone && App.etat.filtreZone) App._dom.filtreZone.value = App.etat.filtreZone;
+  if (App.etat.filtreCollection && App.etat.filtreCollection !== 'tous') {
+    document.querySelectorAll('.btn-filtre[data-filtre]').forEach(function (btn) {
+      btn.classList.toggle('actif', btn.dataset.filtre === App.etat.filtreCollection);
+    });
+  }
+  if (App.etat.filtreBuild && App.etat.filtreBuild !== 'tous') {
+    document.querySelectorAll('.btn-filtre-build[data-build-filtre]').forEach(function (btn) {
+      btn.classList.toggle('actif', btn.dataset.buildFiltre === App.etat.filtreBuild);
+    });
+  }
+  if (App._dom.filtreGameplayMode && App.etat.filtreGameplayMode) {
+    App._dom.filtreGameplayMode.value = App.etat.filtreGameplayMode;
+  }
 
   // Rendu de la grille et mise à jour de la progression
   App.rendreGrille();
