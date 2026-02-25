@@ -123,6 +123,8 @@ App.appliquerTraductions = function () {
   document.querySelector('#tt-sec-obtention .tooltip-section-titre').textContent = App.t('tooltip_obtain');
   document.querySelector('#tt-sec-categorie .tooltip-section-titre').textContent = App.t('tooltip_categorie');
   document.querySelector('#tt-sec-obtention-type .tooltip-section-titre').textContent = App.t('tooltip_obtention_type');
+  var secCharAffinTitle = document.querySelector('#tt-sec-char-affinity .tooltip-section-titre');
+  if (secCharAffinTitle) secCharAffinTitle.textContent = App.t('tooltip_char_affinity');
   document.querySelector('#tt-sec-mastery .tooltip-section-titre').textContent = App.t('tooltip_mastery');
   document.querySelector('#tt-sec-level .tooltip-section-titre').textContent = App.t('tooltip_level');
   document.getElementById('tooltip-fermer').setAttribute('aria-label', App.t('tooltip_close'));
@@ -198,6 +200,11 @@ App.appliquerTraductions = function () {
   // Route de collecte
   if (typeof App.rendreRouteCollecte === 'function') {
     App.rendreRouteCollecte();
+  }
+
+  // Character builds
+  if (typeof App.rendreCharacterBuilds === 'function') {
+    App.rendreCharacterBuilds();
   }
 };
 

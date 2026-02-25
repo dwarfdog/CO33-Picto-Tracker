@@ -157,6 +157,9 @@
   if (typeof App.mettreAJourPlanificateurLumina === 'function') {
     App.mettreAJourPlanificateurLumina();
   }
+  if (typeof App.rendreCharacterBuilds === 'function') {
+    App.rendreCharacterBuilds();
+  }
 
   // Attachement des événements
   App.attacher();

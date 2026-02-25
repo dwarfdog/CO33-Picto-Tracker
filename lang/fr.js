@@ -209,6 +209,13 @@
     toast_imported_profiles: '{n} profil(s) importé(s).',
     import_all_profiles:     'Importer tous les profils',
 
+    // Character builds
+    character_builds_title:  'Build par personnage',
+    character_affinities:    'Affinités :',
+    character_recommended:   'Pictos recommandés',
+    character_synergies:     'Synergies actives',
+    tooltip_char_affinity:   'Affinités personnages',
+
     // Switcher
     lang_label:              'Langue',
     lang_name:               'Français',

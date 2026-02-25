@@ -28,6 +28,7 @@ var ASSETS_TO_CACHE = [
   './js/lumina-planner.js',
   './js/gameplay-expert.js',
   './js/dataset-changes.js',
+  './js/character-builds.js',
   // JS — data
   './js/datas/skills-data.js',
   // Langues

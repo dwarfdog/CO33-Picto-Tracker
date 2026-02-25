@@ -132,6 +132,33 @@ App.ouvrirTooltip = function (picto) {
     secObtType.style.display = 'none';
   }
 
+  // Affinités par personnage
+  var secCharAffinity = document.getElementById('tt-sec-char-affinity');
+  var charAffinEl = document.getElementById('tt-char-affinities');
+  var chars = (typeof App.getCharacterCatalog === 'function') ? App.getCharacterCatalog() : [];
+  if (chars.length) {
+    while (charAffinEl.firstChild) charAffinEl.removeChild(charAffinEl.firstChild);
+    chars.forEach(function (ch) {
+      var score = App.getCharacterAffinityScore(ch.id, picto);
+      var item = document.createElement('span');
+      item.className = 'char-affin-inline';
+      var nameSpan = document.createElement('span');
+      nameSpan.className = 'char-affin-inline-name';
+      nameSpan.textContent = App.LANG === 'fr' ? ch.nom_fr : ch.nom_en;
+      item.appendChild(nameSpan);
+      var stars = '';
+      for (var si = 0; si < 3; si++) stars += (si < score) ? '\u2605' : '\u2606';
+      var starsSpan = document.createElement('span');
+      starsSpan.className = 'char-affin-inline-stars' + (score > 0 ? ' has-affinity' : '');
+      starsSpan.textContent = stars;
+      item.appendChild(starsSpan);
+      charAffinEl.appendChild(item);
+    });
+    secCharAffinity.style.display = '';
+  } else {
+    secCharAffinity.style.display = 'none';
+  }
+
   // Maîtrise Lumina (0-4 circles)
   var secMastery = document.getElementById('tt-sec-mastery');
   var masteryControls = document.getElementById('tt-mastery-controls');

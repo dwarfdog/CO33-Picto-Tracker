@@ -362,6 +362,143 @@ var DATA = {
                 "label_en": "Story",
                 "label_fr": "Histoire"
             }
+        ],
+        "characters": [
+            {
+                "id": "gustave",
+                "nom_en": "Gustave",
+                "nom_fr": "Gustave",
+                "role_en": "Charged AoE / Lightning",
+                "role_fr": "AoE chargé / Foudre",
+                "affinities": [
+                    "break",
+                    "base_attack",
+                    "buff_debuff"
+                ],
+                "max_pictos": 3
+            },
+            {
+                "id": "lune",
+                "nom_en": "Lune",
+                "nom_fr": "Lune",
+                "role_en": "Versatile Utility",
+                "role_fr": "Utilitaire polyvalent",
+                "affinities": [
+                    "burn",
+                    "survival",
+                    "buff_debuff"
+                ],
+                "max_pictos": 3
+            },
+            {
+                "id": "maelle",
+                "nom_en": "Maëlle",
+                "nom_fr": "Maëlle",
+                "role_en": "Primary DPS / Fire",
+                "role_fr": "DPS principal / Feu",
+                "affinities": [
+                    "burn",
+                    "crit",
+                    "base_attack"
+                ],
+                "max_pictos": 3
+            },
+            {
+                "id": "sciel",
+                "nom_en": "Sciel",
+                "nom_fr": "Sciel",
+                "role_en": "Fortune / Dual mechanic",
+                "role_fr": "Fortune / Double mécanique",
+                "affinities": [
+                    "crit",
+                    "ap",
+                    "buff_debuff"
+                ],
+                "max_pictos": 3
+            },
+            {
+                "id": "verso",
+                "nom_en": "Verso",
+                "nom_fr": "Verso",
+                "role_en": "Burn enabler / Perfection",
+                "role_fr": "Applicateur Brûlure / Perfection",
+                "affinities": [
+                    "burn",
+                    "free_aim",
+                    "mark"
+                ],
+                "max_pictos": 3
+            },
+            {
+                "id": "monoco",
+                "nom_en": "Monoco",
+                "nom_fr": "Monoco",
+                "role_en": "Shapeshifter / Break",
+                "role_fr": "Métamorphe / Fracture",
+                "affinities": [
+                    "break",
+                    "survival",
+                    "base_attack"
+                ],
+                "max_pictos": 3
+            }
+        ],
+        "synergies": [
+            {
+                "id": "burn_crit",
+                "label_en": "Burn + Critical",
+                "label_fr": "Brûlure + Critique",
+                "required_tags": [
+                    "burn",
+                    "crit"
+                ],
+                "description_en": "Maximize critical damage on burning targets",
+                "description_fr": "Maximiser les dégâts critiques sur cibles en brûlure"
+            },
+            {
+                "id": "break_attack",
+                "label_en": "Break + Attack",
+                "label_fr": "Fracture + Attaque",
+                "required_tags": [
+                    "break",
+                    "base_attack"
+                ],
+                "description_en": "Stack break damage with base attack bonuses",
+                "description_fr": "Cumuler les dégâts de fracture avec les bonus d'attaque de base"
+            },
+            {
+                "id": "ap_survival",
+                "label_en": "AP + Survival",
+                "label_fr": "PA + Survie",
+                "required_tags": [
+                    "ap",
+                    "survival"
+                ],
+                "description_en": "Sustain AP economy while maintaining team health",
+                "description_fr": "Économie de PA avec maintien de la santé de l'équipe"
+            },
+            {
+                "id": "mark_burn",
+                "label_en": "Mark + Burn",
+                "label_fr": "Marque + Brûlure",
+                "required_tags": [
+                    "mark",
+                    "burn"
+                ],
+                "description_en": "Exploit marked targets with burn damage over time",
+                "description_fr": "Exploiter les cibles marquées avec les brûlures"
+            },
+            {
+                "id": "buff_crit",
+                "label_en": "Buff + Critical",
+                "label_fr": "Buff + Critique",
+                "required_tags": [
+                    "buff_debuff",
+                    "crit"
+                ],
+                "description_en": "Amplify critical output through status buffs",
+                "description_fr": "Amplifier les critiques via les buffs de statut"
+            }
         ]
     },
     "pictos": [

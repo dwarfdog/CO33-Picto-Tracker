@@ -23,6 +23,7 @@ App.etat = {
   recherche: '',
   tri: 'id-asc',
   pictoOuvert: null, // ID du picto ouvert (number | null)
+  selectedCharacter: 'gustave', // ID du personnage sélectionné dans le build planner
 };
 
 /**
