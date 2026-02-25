@@ -1489,6 +1489,8 @@ h1 span {
   border: 1px solid var(--or-mat);
   max-width: 540px;
   width: 100%;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
   position: relative;
   box-shadow: 0 0 60px rgba(201, 168, 76, 0.15), 0 20px 60px rgba(0, 0, 0, 0.8);
   animation: panneau-entree 0.25s cubic-bezier(0.22, 1, 0.36, 1);
