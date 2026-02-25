@@ -237,6 +237,7 @@ App.ouvrirTooltip = function (picto) {
       circle.addEventListener('click', function () {
         var newVal = (App.getMaitrise(picto.id) === level) ? level - 1 : level;
         App.setMaitrise(picto.id, newVal);
+        App.mettreAJourCarteTracking(picto.id);
         App.ouvrirTooltip(picto);
       });
     })(mi);
@@ -263,6 +264,7 @@ App.ouvrirTooltip = function (picto) {
   btnLevelDown.disabled = currentLevel <= 1;
   btnLevelDown.addEventListener('click', function () {
     App.setNiveau(picto.id, App.getNiveau(picto.id) - 1);
+    App.mettreAJourCarteTracking(picto.id);
     App.ouvrirTooltip(picto);
   });
 
@@ -277,6 +279,7 @@ App.ouvrirTooltip = function (picto) {
   btnLevelUp.disabled = currentLevel >= maxLevel;
   btnLevelUp.addEventListener('click', function () {
     App.setNiveau(picto.id, Math.min(App.getNiveau(picto.id) + 1, App.PICTO_LEVEL_MAX));
+    App.mettreAJourCarteTracking(picto.id);
     App.ouvrirTooltip(picto);
   });
 

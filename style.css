@@ -1384,6 +1384,55 @@ h1 span {
   color: var(--or-mat);
 }
 
+/* Indicateurs maîtrise + niveau (lecture seule) */
+.carte-tracking {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.carte-mastery {
+  font-size: 0.45rem;
+  letter-spacing: 1px;
+  color: var(--gris-dim);
+  opacity: 0.4;
+}
+
+.carte-mastery.actif {
+  color: var(--or);
+  opacity: 0.85;
+}
+
+.carte-level {
+  font-family: var(--font-title);
+  font-size: 0.5rem;
+  letter-spacing: 0.06em;
+  color: var(--gris-dim);
+  opacity: 0.4;
+}
+
+.carte-level.actif {
+  color: var(--or-pale);
+  opacity: 0.85;
+}
+
+.carte-picto.possede .carte-mastery {
+  opacity: 0.5;
+}
+
+.carte-picto.possede .carte-mastery.actif {
+  opacity: 1;
+}
+
+.carte-picto.possede .carte-level {
+  opacity: 0.5;
+}
+
+.carte-picto.possede .carte-level.actif {
+  opacity: 1;
+}
+
 /* Barre d'actions (détail, build, possession) */
 .carte-actions {
   display: flex;

@@ -211,6 +211,12 @@ App.creerCartePicto = function (picto) {
   flagDiv.appendChild(flagSpan);
   footer.appendChild(flagDiv);
 
+  // Suivi (maîtrise + niveau — lecture seule)
+  var tracking = document.createElement('div');
+  tracking.className = 'carte-tracking';
+  App._remplirCarteTracking(tracking, picto.id);
+  footer.appendChild(tracking);
+
   el.appendChild(footer);
 
   // ── Actions (détail, build, possession) ──
@@ -364,5 +370,49 @@ App.mettreAJourCartesTexte = function () {
     var corps = el.querySelector('.carte-corps');
     if (oldStats) corps.removeChild(oldStats);
     if (newStats) corps.appendChild(newStats);
+
+    // Tracking (maîtrise + niveau)
+    var trackingEl = el.querySelector('.carte-tracking');
+    if (trackingEl) App._remplirCarteTracking(trackingEl, picto.id);
   });
+};
+
+/**
+ * Remplit le contenu d'un élément carte-tracking (maîtrise + niveau).
+ * @param {HTMLElement} container - Élément .carte-tracking à remplir
+ * @param {number} pictoId - ID du picto
+ */
+App._remplirCarteTracking = function (container, pictoId) {
+  while (container.firstChild) container.removeChild(container.firstChild);
+
+  var mastery = App.getMaitrise(pictoId);
+  var level = App.getNiveau(pictoId);
+
+  // Maîtrise : petits cercles ● / ○
+  var masterySpan = document.createElement('span');
+  masterySpan.className = 'carte-mastery' + (mastery > 0 ? ' actif' : '');
+  var dots = '';
+  for (var i = 0; i < App.MASTERY_MAX; i++) {
+    dots += (i < mastery) ? '\u25CF' : '\u25CB';
+  }
+  masterySpan.textContent = dots;
+  container.appendChild(masterySpan);
+
+  // Niveau
+  var levelSpan = document.createElement('span');
+  levelSpan.className = 'carte-level' + (level > 1 ? ' actif' : '');
+  levelSpan.textContent = App.t('tooltip_level_count', { n: level, max: App.PICTO_LEVEL_MAX });
+  container.appendChild(levelSpan);
+};
+
+/**
+ * Met à jour l'indicateur tracking d'une carte spécifique.
+ * Appelé après modification de maîtrise ou niveau dans la modal.
+ * @param {number} pictoId - ID du picto
+ */
+App.mettreAJourCarteTracking = function (pictoId) {
+  var carte = App.cartesParId && App.cartesParId[pictoId];
+  if (!carte) return;
+  var trackingEl = carte.querySelector('.carte-tracking');
+  if (trackingEl) App._remplirCarteTracking(trackingEl, pictoId);
 };
