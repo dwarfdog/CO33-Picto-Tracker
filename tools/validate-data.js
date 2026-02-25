@@ -538,14 +538,20 @@ function validate() {
       }
     }
 
-    // Validate categorie
-    if (p.categorie !== undefined) {
-      if (!isNonEmptyString(p.categorie)) {
-        errors.push('id ' + p.id + ': categorie must be a non-empty string when provided.');
-      } else if (validCategories.size && !validCategories.has(p.categorie)) {
-        errors.push('id ' + p.id + ': categorie "' + p.categorie + '" is not declared in meta.categories.');
+    // Validate categories (array of 1-2 strings)
+    if (p.categories !== undefined) {
+      if (!Array.isArray(p.categories) || p.categories.length === 0) {
+        errors.push('id ' + p.id + ': categories must be a non-empty array.');
       } else {
-        categorieUsage[p.categorie] = (categorieUsage[p.categorie] || 0) + 1;
+        for (let k = 0; k < p.categories.length; k++) {
+          if (!isNonEmptyString(p.categories[k])) {
+            errors.push('id ' + p.id + ': categories[' + k + '] must be a non-empty string.');
+          } else if (validCategories.size && !validCategories.has(p.categories[k])) {
+            errors.push('id ' + p.id + ': categories "' + p.categories[k] + '" not in meta.categories.');
+          } else {
+            categorieUsage[p.categories[k]] = (categorieUsage[p.categories[k]] || 0) + 1;
+          }
+        }
       }
     }
 
@@ -628,14 +634,17 @@ function validate() {
     warnings.push('Gameplay tags coverage: ' + (coverage || 'none') + '.');
   }
 
-  // Report categorie coverage
+  // Report categories coverage (multi-category: count pictos, not assignments)
   if (validCategories.size) {
     const catCoverage = Object.keys(categorieUsage)
       .sort()
       .map(function (k) { return k + '=' + categorieUsage[k]; })
       .join(', ');
-    const catTotal = Object.values(categorieUsage).reduce(function (a, b) { return a + b; }, 0);
-    warnings.push('Categorie coverage: ' + catTotal + '/' + pictos.length + ' (' + (catCoverage || 'none') + ').');
+    let pictosWithCat = 0;
+    for (let i = 0; i < pictos.length; i++) {
+      if (Array.isArray(pictos[i].categories) && pictos[i].categories.length) pictosWithCat++;
+    }
+    warnings.push('Categories coverage: ' + pictosWithCat + '/' + pictos.length + ' pictos (' + (catCoverage || 'none') + ').');
   }
 
   // Report obtention_type coverage

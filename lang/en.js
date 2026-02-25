@@ -37,6 +37,8 @@
     sort_build_first:        'Sort: Build first',
     sort_lumina_asc:         'Sort: Lumina (ascending)',
     sort_lumina_desc:        'Sort: Lumina (descending)',
+    sort_categorie_asc:      'Sort: Category (A \u2192 Z)',
+    sort_categorie_desc:     'Sort: Category (Z \u2192 A)',
 
     // Filters
     filter_label:            'Show',

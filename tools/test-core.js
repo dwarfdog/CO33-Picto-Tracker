@@ -227,12 +227,16 @@ function run() {
   assert.ok(Array.isArray(DATA.meta.categories) && DATA.meta.categories.length >= 3);
   assert.ok(Array.isArray(DATA.meta.obtention_types) && DATA.meta.obtention_types.length >= 4);
 
-  // Every picto should have valid categorie and obtention_type
+  // Every picto should have valid categories (array) and obtention_type
   var validCats = new Set(DATA.meta.categories.map(function (c) { return c.id; }));
   var validObts = new Set(DATA.meta.obtention_types.map(function (o) { return o.id; }));
   DATA.pictos.forEach(function (p) {
-    assert.ok(typeof p.categorie === 'string' && validCats.has(p.categorie),
-      'Picto ' + p.id + ' should have valid categorie, got: ' + p.categorie);
+    assert.ok(Array.isArray(p.categories) && p.categories.length > 0,
+      'Picto ' + p.id + ' should have non-empty categories array, got: ' + JSON.stringify(p.categories));
+    p.categories.forEach(function (cat) {
+      assert.ok(validCats.has(cat),
+        'Picto ' + p.id + ' has invalid category: ' + cat);
+    });
     assert.ok(typeof p.obtention_type === 'string' && validObts.has(p.obtention_type),
       'Picto ' + p.id + ' should have valid obtention_type, got: ' + p.obtention_type);
   });

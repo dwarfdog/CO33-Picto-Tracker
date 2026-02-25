@@ -141,6 +141,17 @@ App.creerCartePicto = function (picto) {
     header.appendChild(endgameBadge);
   }
 
+  // Badge catégorie (O/D/S avec couleur)
+  if (Array.isArray(picto.categories) && picto.categories.length) {
+    var catBadge = document.createElement('div');
+    catBadge.className = 'carte-cat-badge cat-' + picto.categories[0];
+    catBadge.textContent = picto.categories[0].charAt(0).toUpperCase();
+    if (picto.categories.length > 1) {
+      catBadge.textContent += '/' + picto.categories[1].charAt(0).toUpperCase();
+    }
+    header.appendChild(catBadge);
+  }
+
   el.appendChild(header);
 
   // ── Corps ──
@@ -311,6 +322,15 @@ App.mettreAJourCartesTexte = function () {
     // Badge traduction
     var badge = el.querySelector('.badge-non-confirme');
     if (badge) badge.textContent = App.t('badge_derived');
+
+    // Badge catégorie — mettre à jour le texte (pas la classe, elle est stable)
+    var catBadge = el.querySelector('.carte-cat-badge');
+    if (catBadge && Array.isArray(picto.categories) && picto.categories.length) {
+      catBadge.textContent = picto.categories[0].charAt(0).toUpperCase();
+      if (picto.categories.length > 1) {
+        catBadge.textContent += '/' + picto.categories[1].charAt(0).toUpperCase();
+      }
+    }
 
     // Stats — reconstruire les badges via DOM pur
     var oldStats = el.querySelector('.carte-stats');

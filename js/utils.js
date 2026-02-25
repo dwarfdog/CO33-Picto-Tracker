@@ -331,12 +331,14 @@ App.buildSearchIndex = function () {
       }
     }
 
+    var categorySearch = Array.isArray(picto.categories) ? picto.categories.join(' ') : '';
+
     picto._searchIndex = App.normaliserTexte(
       (picto.nom_fr || '') + ' ' + (picto.nom_en || '') + ' ' +
       (picto.effet_en || '') + ' ' + (picto.effet_fr || '') + ' ' +
       (picto.zone_en || '') + ' ' + (picto.zone_fr || '') + ' ' +
       (picto.flag_en || '') + ' ' + (picto.flag_fr || '') + ' ' +
-      gameplaySearch
+      gameplaySearch + ' ' + categorySearch
     );
     picto._nomNorm = App.normaliserTexte(App.champ(picto, 'nom'));
     picto._zoneNorm = App.normaliserTexte(App.champ(picto, 'zone'));

@@ -45,6 +45,14 @@ App.appliquerTri = function () {
         return (pa.lumina || 0) - (pb.lumina || 0) || pa.id - pb.id;
       case 'lumina-desc':
         return (pb.lumina || 0) - (pa.lumina || 0) || pa.id - pb.id;
+      case 'categorie-asc':
+        var cA = (Array.isArray(pa.categories) && pa.categories[0]) || '';
+        var cB = (Array.isArray(pb.categories) && pb.categories[0]) || '';
+        return cA.localeCompare(cB) || pa.id - pb.id;
+      case 'categorie-desc':
+        var cA2 = (Array.isArray(pa.categories) && pa.categories[0]) || '';
+        var cB2 = (Array.isArray(pb.categories) && pb.categories[0]) || '';
+        return cB2.localeCompare(cA2) || pa.id - pb.id;
       default: return 0;
     }
   });
@@ -80,8 +88,11 @@ App.appliquerFiltres = function () {
     // Filtre zone
     if (App.etat.filtreZone && App.zoneKey(picto) !== App.etat.filtreZone) ok = false;
 
-    // Filtre catégorie
-    if (ok && App.etat.filtreCategorie && picto.categorie !== App.etat.filtreCategorie) ok = false;
+    // Filtre catégorie (support bi-types : un picto match si la catégorie est dans son tableau)
+    if (ok && App.etat.filtreCategorie) {
+      var cats = Array.isArray(picto.categories) ? picto.categories : [];
+      if (cats.indexOf(App.etat.filtreCategorie) === -1) ok = false;
+    }
 
     // Filtre type d'obtention
     if (ok && App.etat.filtreObtention && picto.obtention_type !== App.etat.filtreObtention) ok = false;
