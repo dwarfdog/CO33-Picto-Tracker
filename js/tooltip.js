@@ -113,16 +113,21 @@ App.ouvrirTooltip = function (picto) {
     secLumina.style.display = 'none';
   }
 
-  // Catégorie
+  // Catégorie (support bi-types via tableau categories)
   var secCategorie = document.getElementById('tt-sec-categorie');
   var ttCategorie = document.getElementById('tt-categorie');
-  if (picto.categorie && DATA.meta && Array.isArray(DATA.meta.categories)) {
-    var catMeta = null;
-    for (var ci = 0; ci < DATA.meta.categories.length; ci++) {
-      if (DATA.meta.categories[ci].id === picto.categorie) { catMeta = DATA.meta.categories[ci]; break; }
+  if (Array.isArray(picto.categories) && picto.categories.length && DATA.meta && Array.isArray(DATA.meta.categories)) {
+    var catLabels = [];
+    for (var ci = 0; ci < picto.categories.length; ci++) {
+      for (var cm = 0; cm < DATA.meta.categories.length; cm++) {
+        if (DATA.meta.categories[cm].id === picto.categories[ci]) {
+          catLabels.push(App.LANG === 'fr' ? DATA.meta.categories[cm].label_fr : DATA.meta.categories[cm].label_en);
+          break;
+        }
+      }
     }
-    if (catMeta) {
-      ttCategorie.textContent = App.LANG === 'fr' ? catMeta.label_fr : catMeta.label_en;
+    if (catLabels.length) {
+      ttCategorie.textContent = catLabels.join(' / ');
       secCategorie.style.display = '';
     } else {
       secCategorie.style.display = 'none';
@@ -164,7 +169,7 @@ App.ouvrirTooltip = function (picto) {
       nameSpan.textContent = App.LANG === 'fr' ? ch.nom_fr : ch.nom_en;
       item.appendChild(nameSpan);
       var stars = '';
-      for (var si = 0; si < 3; si++) stars += (si < score) ? '\u2605' : '\u2606';
+      for (var si = 0; si < 4; si++) stars += (si < score) ? '\u2605' : '\u2606';
       var starsSpan = document.createElement('span');
       starsSpan.className = 'char-affin-inline-stars' + (score > 0 ? ' has-affinity' : '');
       starsSpan.textContent = stars;

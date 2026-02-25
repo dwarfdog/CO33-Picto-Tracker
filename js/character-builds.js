@@ -28,22 +28,33 @@ App.getCharacterById = function (id) {
 
 /**
  * Calcule un score d'affinité entre un personnage et un picto.
- * Score basé sur l'intersection des affinités du personnage avec les tags gameplay du picto.
+ * Double scoring : tags gameplay (0-3) + bonus catégorie (+1) = max 4.
  * @param {string} characterId
  * @param {Object} picto
- * @returns {number} 0-3
+ * @returns {number} 0-4
  */
 App.getCharacterAffinityScore = function (characterId, picto) {
   var character = App.getCharacterById(characterId);
   if (!character || !Array.isArray(character.affinities)) return 0;
 
   var tags = (typeof App.resolveGameplayTags === 'function') ? App.resolveGameplayTags(picto) : [];
-  if (!tags.length) return 0;
-
   var score = 0;
+
+  // Score tags gameplay (0-3)
   for (var i = 0; i < character.affinities.length; i++) {
     if (tags.indexOf(character.affinities[i]) !== -1) score++;
   }
+
+  // Bonus catégorie (+1 si match preferred_categories)
+  if (Array.isArray(character.preferred_categories) && Array.isArray(picto.categories)) {
+    for (var c = 0; c < character.preferred_categories.length; c++) {
+      if (picto.categories.indexOf(character.preferred_categories[c]) !== -1) {
+        score++;
+        break; // +1 max pour match catégorie
+      }
+    }
+  }
+
   return score;
 };
 
@@ -200,7 +211,7 @@ App.rendreCharacterBuilds = function () {
 
     var stars = '';
     for (var s = 0; s < rec.score; s++) stars += '\u2605';
-    for (var e = rec.score; e < 3; e++) stars += '\u2606';
+    for (var e = rec.score; e < 4; e++) stars += '\u2606';
 
     var nameSpan = document.createElement('span');
     nameSpan.className = 'char-reco-name';

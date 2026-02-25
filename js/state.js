@@ -600,7 +600,7 @@ App.chargerSauvegarde = function () {
 
         // Restaurer les préférences UI persistées
         if (parsed.ui && typeof parsed.ui === 'object') {
-          var validTri = ['id-asc','id-desc','nom-asc','nom-desc','zone-asc','zone-desc','possedes-first','manquants-first','build-first','lumina-asc','lumina-desc'];
+          var validTri = ['id-asc','id-desc','nom-asc','nom-desc','zone-asc','zone-desc','possedes-first','manquants-first','build-first','lumina-asc','lumina-desc','categorie-asc','categorie-desc'];
           if (validTri.indexOf(parsed.ui.tri) !== -1) App.etat.tri = parsed.ui.tri;
           if (['tous','possedes','manquants'].indexOf(parsed.ui.filtreCollection) !== -1) App.etat.filtreCollection = parsed.ui.filtreCollection;
           if (typeof parsed.ui.filtreZone === 'string') App.etat.filtreZone = parsed.ui.filtreZone;

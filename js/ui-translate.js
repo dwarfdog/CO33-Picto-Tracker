@@ -42,7 +42,8 @@ App.appliquerTraductions = function () {
   var sortKeys = [
     'sort_id_asc', 'sort_id_desc', 'sort_name_asc', 'sort_name_desc',
     'sort_zone_asc', 'sort_zone_desc', 'sort_owned_first', 'sort_missing_first',
-    'sort_build_first', 'sort_lumina_asc', 'sort_lumina_desc'
+    'sort_build_first', 'sort_lumina_asc', 'sort_lumina_desc',
+    'sort_categorie_asc', 'sort_categorie_desc'
   ];
   for (var i = 0; i < sortKeys.length; i++) {
     triSelect.options[i].textContent = App.t(sortKeys[i]);

@@ -201,7 +201,7 @@ test('shows dataset additions and updates from metadata changelog', async ({ pag
   await switchTab(page, 'infos');
 
   await expect(page.locator('#dataset-changes-title')).not.toBeEmpty();
-  await expect(page.locator('#dataset-changes-meta')).toContainText('2026.02.24');
+  await expect(page.locator('#dataset-changes-meta')).toContainText('2026.02.25');
   await expect(page.locator('#dataset-changes-added-list li')).toHaveCount(6);
   await expect(page.locator('#dataset-changes-updated-list li')).toHaveCount(3);
 });

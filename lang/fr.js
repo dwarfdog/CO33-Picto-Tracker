@@ -37,6 +37,8 @@
     sort_build_first:        'Tri : Build en premier',
     sort_lumina_asc:         'Tri : Lumina (croissant)',
     sort_lumina_desc:        'Tri : Lumina (décroissant)',
+    sort_categorie_asc:      'Tri : Catégorie (A \u2192 Z)',
+    sort_categorie_desc:     'Tri : Catégorie (Z \u2192 A)',
 
     // Filtres
     filter_label:            'Afficher',
