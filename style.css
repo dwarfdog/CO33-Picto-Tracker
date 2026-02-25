@@ -98,6 +98,19 @@
 }
 
 /* ══════════════════════════════════════════════════════
+  SCROLLBAR — Fin, discret, intégré au thème
+══════════════════════════════════════════════════════ */
+/* Webkit (Chrome, Safari, Edge) */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: rgba(28, 23, 20, 0.4); }
+::-webkit-scrollbar-thumb { background: rgba(201, 168, 76, 0.25); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(201, 168, 76, 0.45); }
+::-webkit-scrollbar-corner { background: transparent; }
+
+/* Firefox */
+* { scrollbar-width: thin; scrollbar-color: rgba(201, 168, 76, 0.25) rgba(28, 23, 20, 0.4); }
+
+/* ══════════════════════════════════════════════════════
   VARIABLES & RESET
 ══════════════════════════════════════════════════════ */
 :root {
@@ -1181,44 +1194,16 @@ h1 span {
   display: none;
 }
 
-/* Coin décoratif */
-.coin-deco {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 32px;
-  height: 32px;
-  overflow: hidden;
-}
-
-.coin-deco::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 32px 32px 0;
-  border-color: transparent var(--brun-clair) transparent transparent;
-  transition: border-color 0.2s;
-}
-
-.carte-picto.possede .coin-deco::before {
-  border-color: transparent var(--or-mat) transparent transparent;
-}
-
-/* En-tête de la carte */
-.carte-header {
-  padding: 14px 14px 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  position: relative;
+/* Barre supérieure (flex row : endgame, #ID, cat-badge, ✦lumina) */
+.carte-topbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .carte-id {
-  position: absolute;
-  top: 14px;
-  right: 14px;
   font-family: var(--font-title);
   font-size: 0.6rem;
   color: var(--gris-dim);
@@ -1230,14 +1215,15 @@ h1 span {
 }
 
 .carte-lumina {
-  position: absolute;
-  top: 28px;
-  right: 14px;
+  margin-left: auto;
   font-family: var(--font-title);
   font-size: 0.55rem;
   color: var(--stat-lumina);
   letter-spacing: 0.05em;
   opacity: 0.65;
+  padding: 1px 6px;
+  border: 1px solid rgba(196, 160, 255, 0.2);
+  border-radius: 2px;
 }
 
 .carte-picto.possede .carte-lumina {
@@ -1245,13 +1231,11 @@ h1 span {
 }
 
 .carte-endgame-badge {
-  position: absolute;
-  top: 6px;
-  left: 14px;
   font-size: 0.75rem;
   color: var(--teal-clair);
   opacity: 0.7;
   letter-spacing: 0.05em;
+  flex-shrink: 0;
 }
 
 .carte-picto.possede .carte-endgame-badge {
@@ -1266,15 +1250,16 @@ h1 span {
   padding: 2px 6px;
   border-radius: 2px;
   color: #fff;
-  margin-left: auto;
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  z-index: 1;
 }
 .cat-offensive { background: rgba(192, 57, 43, 0.8); }
 .cat-defensive { background: rgba(41, 128, 185, 0.8); }
 .cat-support   { background: rgba(39, 174, 96, 0.8); }
+
+/* En-tête de la carte */
+.carte-header {
+  padding: 10px 14px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
 
 .carte-nom-fr {
   font-family: var(--font-body);
@@ -1282,7 +1267,6 @@ h1 span {
   font-weight: 600;
   color: var(--creme);
   line-height: 1.2;
-  padding-right: 30px;
   transition: color 0.2s;
 }
 
@@ -1296,7 +1280,6 @@ h1 span {
   font-size: 0.78rem;
   color: var(--gris-dim);
   margin-top: 2px;
-  padding-right: 30px;
 }
 
 /* Corps de la carte */
@@ -1356,9 +1339,9 @@ h1 span {
   background: rgba(74, 155, 155, 0.1);
 }
 
-/* Pied de carte */
+/* Pied de carte (zone + flag) */
 .carte-footer {
-  padding: 8px 14px 12px;
+  padding: 6px 14px;
   border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
@@ -1401,11 +1384,61 @@ h1 span {
   color: var(--or-mat);
 }
 
-/* Bouton possession (check en bas à droite) */
+/* Indicateurs maîtrise + niveau (lecture seule) */
+.carte-tracking {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.carte-mastery {
+  font-size: 0.45rem;
+  letter-spacing: 1px;
+  color: var(--gris-dim);
+  opacity: 0.4;
+}
+
+.carte-mastery.actif {
+  color: var(--or);
+  opacity: 0.85;
+}
+
+.carte-level {
+  font-family: var(--font-title);
+  font-size: 0.5rem;
+  letter-spacing: 0.06em;
+  color: var(--gris-dim);
+  opacity: 0.4;
+}
+
+.carte-level.actif {
+  color: var(--or-pale);
+  opacity: 0.85;
+}
+
+.carte-picto.possede .carte-mastery {
+  color: var(--or);
+  opacity: 1;
+}
+
+.carte-picto.possede .carte-level {
+  color: var(--or-pale);
+  opacity: 1;
+}
+
+/* Barre d'actions (détail, build, possession) */
+.carte-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 6px 14px 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Bouton possession (check) */
 .possession-indicateur {
-  position: absolute;
-  bottom: 10px;
-  right: 12px;
   width: 26px;
   height: 26px;
   border-radius: 50%;
@@ -1455,12 +1488,8 @@ h1 span {
   color: var(--rouille);
 }
 
-/* Bouton build Lumina (bas-centre) */
+/* Bouton build Lumina */
 .build-indicateur {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
   width: 26px;
   height: 26px;
   border-radius: 50%;
@@ -1481,7 +1510,7 @@ h1 span {
   border-color: var(--stat-lumina);
   color: #d9c2ff;
   background: rgba(196, 160, 255, 0.15);
-  transform: translateX(-50%) scale(1.12);
+  transform: scale(1.12);
 }
 
 .build-indicateur.actif {
@@ -1491,11 +1520,8 @@ h1 span {
   box-shadow: 0 0 10px rgba(196, 160, 255, 0.32);
 }
 
-/* Bouton détail (infos en bas à gauche) */
+/* Bouton détail (œil) */
 .btn-detail {
-  position: absolute;
-  bottom: 10px;
-  left: 12px;
   width: 26px;
   height: 26px;
   border-radius: 50%;
@@ -1508,15 +1534,18 @@ h1 span {
   color: var(--gris-text);
   cursor: pointer;
   padding: 0;
-  font-size: 0.75rem;
-  line-height: 1;
+}
+
+.btn-detail svg {
+  width: 13px;
+  height: 13px;
 }
 
 .btn-detail:hover {
   border-color: var(--or-mat);
   background: rgba(201, 168, 76, 0.08);
   color: var(--or);
-  transform: scale(1.12);
+  box-shadow: 0 0 6px rgba(201, 168, 76, 0.25);
 }
 
 .carte-picto.possede .btn-detail {
@@ -1702,20 +1731,21 @@ h1 span {
 
 .tooltip-fermer {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  background: transparent;
+  top: 10px;
+  right: 10px;
+  background: var(--encre);
   border: 1px solid var(--brun-clair);
   color: var(--gris-dim);
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   line-height: 1;
+  z-index: 2;
 }
 
 .tooltip-fermer:hover {
@@ -1724,13 +1754,48 @@ h1 span {
 }
 
 .tooltip-entete {
-  padding: 28px 28px 16px;
+  padding: 16px 20px 12px;
   border-bottom: 1px solid var(--brun-clair);
+  padding-right: 40px;
+}
+
+.tooltip-entete-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.tooltip-meta-id {
+  font-family: var(--font-title);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--gris-dim);
+}
+
+.tooltip-meta-cat {
+  font-family: var(--font-title);
+  font-size: 0.55rem;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: 2px;
+  color: #fff;
+}
+
+.tooltip-meta-lumina {
+  margin-left: auto;
+  font-family: var(--font-title);
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  color: var(--stat-lumina);
+  padding: 2px 8px;
+  border: 1px solid rgba(196, 160, 255, 0.25);
+  border-radius: 2px;
 }
 
 .tooltip-nom-fr {
   font-family: var(--font-title);
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 600;
   color: var(--ivoire);
   letter-spacing: 0.05em;
@@ -1739,87 +1804,134 @@ h1 span {
 .tooltip-nom-en {
   font-family: var(--font-alt);
   font-style: italic;
-  font-size: 1rem;
-  color: var(--gris-text);
-  margin-top: 4px;
+  font-size: 0.85rem;
+  color: var(--gris-dim);
+  margin-top: 2px;
 }
 
 .tooltip-corps {
-  padding: 20px 28px;
+  padding: 14px 20px;
+}
+
+/* Groupes thématiques */
+.tooltip-group {
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.tooltip-group:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.tooltip-group-titre {
+  font-family: var(--font-title);
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  color: var(--or-mat);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+}
+
+/* Ligne 2 colonnes */
+.tooltip-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 14px;
 }
 
 .tooltip-section {
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .tooltip-section:last-child {
   margin-bottom: 0;
 }
 
+.tooltip-row-2col > .tooltip-section {
+  margin-bottom: 0;
+}
+
 .tooltip-section-titre {
   font-family: var(--font-title);
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   letter-spacing: 0.2em;
   color: var(--gris-dim);
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .tooltip-section-contenu {
   font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.5;
+  font-size: 0.92rem;
+  line-height: 1.4;
   color: var(--creme);
 }
 
 .tooltip-section-contenu.or {
   color: var(--or);
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
 .tooltip-section-contenu.italique {
   font-style: italic;
   color: var(--gris-text);
-}
-
-.tooltip-section-contenu.lumina {
-  color: var(--stat-lumina);
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 0.85rem;
 }
 
 .tooltip-section-contenu.flag {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .tooltip-section-contenu.flag .flag-icon {
-  width: 16px;
-  height: 16px;
+  width: 13px;
+  height: 13px;
   color: var(--or-mat);
   flex-shrink: 0;
+}
+
+/* Badges catégorie inline (dans classification) */
+.tooltip-cat-badges {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+
+.tooltip-cat-badge {
+  font-family: var(--font-title);
+  font-size: 0.52rem;
+  letter-spacing: 0.06em;
+  padding: 1px 6px;
+  border-radius: 2px;
+  color: #fff;
+  display: inline-block;
 }
 
 .tooltip-stats-grille {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
+  gap: 6px;
 }
 
 .tooltip-stat-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 10px;
+  padding: 4px 8px;
   border: 1px solid var(--brun-clair);
   background: var(--brun-fonce);
 }
 
 .tooltip-stat-nom {
   font-family: var(--font-title);
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   letter-spacing: 0.1em;
   color: var(--gris-dim);
   text-transform: uppercase;
@@ -1827,7 +1939,7 @@ h1 span {
 
 .tooltip-stat-val {
   font-family: var(--font-body);
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 600;
 }
 
@@ -1849,10 +1961,10 @@ h1 span {
 
 .tooltip-btn-possession {
   width: 100%;
-  padding: 14px;
-  margin-top: 20px;
+  padding: 10px;
+  margin-top: 10px;
   font-family: var(--font-title);
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   border: 1px solid var(--or-mat);
@@ -2058,9 +2170,9 @@ h1 span {
 
 /* ── Tooltip: Character affinities inline ── */
 .tooltip-char-affinities {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 14px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px 10px;
 }
 
 .char-affin-inline {
@@ -2071,12 +2183,12 @@ h1 span {
 
 .char-affin-inline-name {
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   color: var(--gris-text);
 }
 
 .char-affin-inline-stars {
-  font-size: 0.78rem;
+  font-size: 0.7rem;
   color: var(--gris-dim);
 }
 
@@ -2095,14 +2207,14 @@ h1 span {
 .tooltip-mastery-controls {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
 }
 
 .mastery-circle {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  border: 2px solid var(--or-mat);
+  border: 1.5px solid var(--or-mat);
   background: transparent;
   cursor: pointer;
   transition: all 0.2s;
@@ -2111,7 +2223,7 @@ h1 span {
 
 .mastery-circle:hover {
   border-color: var(--or);
-  box-shadow: 0 0 8px rgba(201, 168, 76, 0.3);
+  box-shadow: 0 0 6px rgba(201, 168, 76, 0.3);
 }
 
 .mastery-circle.filled {
@@ -2121,25 +2233,25 @@ h1 span {
 
 .mastery-label {
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: var(--or-clair);
-  margin-left: 8px;
+  margin-left: 4px;
 }
 
 .tooltip-level-controls {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
 }
 
 .level-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
   border: 1px solid var(--or-mat);
   background: transparent;
   color: var(--or);
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
@@ -2160,9 +2272,9 @@ h1 span {
 
 .level-display {
   font-family: var(--font-title);
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: var(--or-clair);
-  min-width: 60px;
+  min-width: 50px;
   text-align: center;
 }
 
@@ -2655,6 +2767,10 @@ footer span {
   .grille-conteneur {
     padding: 0 12px 40px;
   }
+
+  .carte-actions {
+    gap: 6px;
+  }
 }
 
 /* ══════════════════════════════════════════════════════
@@ -2699,10 +2815,7 @@ footer span {
   .import-overlay,
   .export-overlay,
   .toast,
-  .btn-detail,
-  .build-indicateur,
-  .possession-indicateur,
-  .coin-deco {
+  .carte-actions {
     display: none !important;
   }
 

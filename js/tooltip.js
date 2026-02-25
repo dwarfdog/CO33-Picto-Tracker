@@ -14,9 +14,52 @@ App.ouvrirTooltip = function (picto) {
   App.etat.pictoOuvert = picto.id;
   var overlay = document.getElementById('tooltip-overlay');
 
-  // Noms
+  // ── Meta bar (header) : #ID, catégorie, lumina ──
+  var metaId = document.getElementById('tt-meta-id');
+  metaId.textContent = '#' + String(picto.id).padStart(3, '0');
+
+  var metaCat = document.getElementById('tt-meta-cat');
+  if (Array.isArray(picto.categories) && picto.categories.length && DATA.meta && Array.isArray(DATA.meta.categories)) {
+    var catLabels = [];
+    for (var ci = 0; ci < picto.categories.length; ci++) {
+      for (var cm = 0; cm < DATA.meta.categories.length; cm++) {
+        if (DATA.meta.categories[cm].id === picto.categories[ci]) {
+          catLabels.push(App.LANG === 'fr' ? DATA.meta.categories[cm].label_fr : DATA.meta.categories[cm].label_en);
+          break;
+        }
+      }
+    }
+    if (catLabels.length) {
+      metaCat.textContent = catLabels.join(' / ');
+      metaCat.className = 'tooltip-meta-cat cat-' + picto.categories[0];
+      metaCat.style.display = '';
+    } else {
+      metaCat.style.display = 'none';
+    }
+  } else {
+    metaCat.style.display = 'none';
+  }
+
+  var metaLumina = document.getElementById('tt-meta-lumina');
+  if (picto.lumina) {
+    metaLumina.textContent = '\u2726 ' + picto.lumina;
+    metaLumina.style.display = '';
+  } else {
+    metaLumina.style.display = 'none';
+  }
+
+  // Nom principal (langue active)
   document.getElementById('tt-nom-fr').textContent = App.champ(picto, 'nom');
-  document.getElementById('tt-nom-en').textContent = App.nomSecondaire(picto);
+
+  // Nom secondaire : seulement si traduction dérivée (fallback)
+  var nomEnEl = document.getElementById('tt-nom-en');
+  if (!picto.traduction_confirmee) {
+    nomEnEl.textContent = App.nomSecondaire(picto);
+    nomEnEl.style.display = '';
+  } else {
+    nomEnEl.textContent = '';
+    nomEnEl.style.display = 'none';
+  }
 
   // Effet
   document.getElementById('tt-effet').textContent =
@@ -31,7 +74,6 @@ App.ouvrirTooltip = function (picto) {
   var secFlag = document.getElementById('tt-sec-flag');
   var flagText = App.champ(picto, 'flag');
   if (flagText) {
-    // Vider et reconstruire sans innerHTML
     while (flagEl.firstChild) flagEl.removeChild(flagEl.firstChild);
     var flagSvg = App._svgTemplates.flag.cloneNode(true);
     flagSvg.classList.add('flag-icon');
@@ -64,7 +106,7 @@ App.ouvrirTooltip = function (picto) {
     sourceTexts.push(App.t('tooltip_source_boss', { boss: picto.source_boss }));
   }
   if (sourceTexts.length) {
-    ttSource.textContent = sourceTexts.join(' — ');
+    ttSource.textContent = sourceTexts.join(' \u2014 ');
     secSource.style.display = '';
   } else {
     secSource.style.display = 'none';
@@ -103,31 +145,29 @@ App.ouvrirTooltip = function (picto) {
     secStats.style.display = 'none';
   }
 
-  // Lumina
-  var ttLumina = document.getElementById('tt-lumina');
-  var secLumina = document.getElementById('tt-sec-lumina');
-  if (picto.lumina) {
-    ttLumina.textContent = '\u2726 ' + picto.lumina;
-    secLumina.style.display = '';
-  } else {
-    secLumina.style.display = 'none';
-  }
-
-  // Catégorie (support bi-types via tableau categories)
+  // Catégorie (avec badges colorés + texte)
   var secCategorie = document.getElementById('tt-sec-categorie');
   var ttCategorie = document.getElementById('tt-categorie');
+  while (ttCategorie.firstChild) ttCategorie.removeChild(ttCategorie.firstChild);
   if (Array.isArray(picto.categories) && picto.categories.length && DATA.meta && Array.isArray(DATA.meta.categories)) {
-    var catLabels = [];
-    for (var ci = 0; ci < picto.categories.length; ci++) {
-      for (var cm = 0; cm < DATA.meta.categories.length; cm++) {
-        if (DATA.meta.categories[cm].id === picto.categories[ci]) {
-          catLabels.push(App.LANG === 'fr' ? DATA.meta.categories[cm].label_fr : DATA.meta.categories[cm].label_en);
+    var badgeContainer = document.createElement('div');
+    badgeContainer.className = 'tooltip-cat-badges';
+    var catTexts = [];
+    for (var ci2 = 0; ci2 < picto.categories.length; ci2++) {
+      for (var cm2 = 0; cm2 < DATA.meta.categories.length; cm2++) {
+        if (DATA.meta.categories[cm2].id === picto.categories[ci2]) {
+          var catLabel = App.LANG === 'fr' ? DATA.meta.categories[cm2].label_fr : DATA.meta.categories[cm2].label_en;
+          catTexts.push(catLabel);
+          var badge = document.createElement('span');
+          badge.className = 'tooltip-cat-badge cat-' + picto.categories[ci2];
+          badge.textContent = catLabel;
+          badgeContainer.appendChild(badge);
           break;
         }
       }
     }
-    if (catLabels.length) {
-      ttCategorie.textContent = catLabels.join(' / ');
+    if (catTexts.length) {
+      ttCategorie.appendChild(badgeContainer);
       secCategorie.style.display = '';
     } else {
       secCategorie.style.display = 'none';
@@ -197,6 +237,7 @@ App.ouvrirTooltip = function (picto) {
       circle.addEventListener('click', function () {
         var newVal = (App.getMaitrise(picto.id) === level) ? level - 1 : level;
         App.setMaitrise(picto.id, newVal);
+        App.mettreAJourCarteTracking(picto.id);
         App.ouvrirTooltip(picto);
       });
     })(mi);
@@ -208,13 +249,13 @@ App.ouvrirTooltip = function (picto) {
   masteryControls.appendChild(masteryLabel);
   secMastery.style.display = '';
 
-  // Niveau (1-33)
+  // Niveau (1-33 max absolu)
   var secLevel = document.getElementById('tt-sec-level');
   var levelControls = document.getElementById('tt-level-controls');
   while (levelControls.firstChild) levelControls.removeChild(levelControls.firstChild);
 
   var currentLevel = App.getNiveau(picto.id);
-  var maxLevel = (typeof App.getNgMaxLevel === 'function') ? App.getNgMaxLevel() : App.PICTO_LEVEL_MAX;
+  var maxLevel = App.PICTO_LEVEL_MAX;
 
   var btnLevelDown = document.createElement('button');
   btnLevelDown.type = 'button';
@@ -223,6 +264,7 @@ App.ouvrirTooltip = function (picto) {
   btnLevelDown.disabled = currentLevel <= 1;
   btnLevelDown.addEventListener('click', function () {
     App.setNiveau(picto.id, App.getNiveau(picto.id) - 1);
+    App.mettreAJourCarteTracking(picto.id);
     App.ouvrirTooltip(picto);
   });
 
@@ -236,8 +278,8 @@ App.ouvrirTooltip = function (picto) {
   btnLevelUp.textContent = '+';
   btnLevelUp.disabled = currentLevel >= maxLevel;
   btnLevelUp.addEventListener('click', function () {
-    var ngMax = (typeof App.getNgMaxLevel === 'function') ? App.getNgMaxLevel() : App.PICTO_LEVEL_MAX;
-    App.setNiveau(picto.id, Math.min(App.getNiveau(picto.id) + 1, ngMax));
+    App.setNiveau(picto.id, Math.min(App.getNiveau(picto.id) + 1, App.PICTO_LEVEL_MAX));
+    App.mettreAJourCarteTracking(picto.id);
     App.ouvrirTooltip(picto);
   });
 
@@ -251,6 +293,19 @@ App.ouvrirTooltip = function (picto) {
   var possede = App.etat.possedes.has(picto.id);
   btn.textContent = possede ? App.t('tooltip_remove') : App.t('tooltip_add');
   btn.className = 'tooltip-btn-possession' + (possede ? ' possede-btn' : '');
+
+  // ── Visibilité des groupes : masquer un groupe si tous ses enfants section sont display:none ──
+  var groups = ['tt-group-location', 'tt-group-classification'];
+  for (var gi = 0; gi < groups.length; gi++) {
+    var group = document.getElementById(groups[gi]);
+    if (!group) continue;
+    var sections = group.querySelectorAll('.tooltip-section');
+    var allHidden = true;
+    for (var si2 = 0; si2 < sections.length; si2++) {
+      if (sections[si2].style.display !== 'none') { allHidden = false; break; }
+    }
+    group.style.display = allHidden ? 'none' : '';
+  }
 
   App.ouvrirModal(overlay, document.getElementById('tooltip-fermer'));
 };

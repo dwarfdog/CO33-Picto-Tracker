@@ -36,7 +36,28 @@ App.initSvgTemplates = function () {
   checkPath.setAttribute('stroke-linejoin', 'round');
   checkSvg.appendChild(checkPath);
 
-  App._svgTemplates = { flag: flagSvg, check: checkSvg };
+  // SVG œil (bouton détail)
+  var eyeSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  eyeSvg.setAttribute('viewBox', '0 0 24 24');
+  eyeSvg.setAttribute('aria-hidden', 'true');
+  var eyePath1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  eyePath1.setAttribute('d', 'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z');
+  eyePath1.setAttribute('stroke', 'currentColor');
+  eyePath1.setAttribute('stroke-width', '2');
+  eyePath1.setAttribute('fill', 'none');
+  eyePath1.setAttribute('stroke-linecap', 'round');
+  eyePath1.setAttribute('stroke-linejoin', 'round');
+  eyeSvg.appendChild(eyePath1);
+  var eyeCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  eyeCircle.setAttribute('cx', '12');
+  eyeCircle.setAttribute('cy', '12');
+  eyeCircle.setAttribute('r', '3');
+  eyeCircle.setAttribute('stroke', 'currentColor');
+  eyeCircle.setAttribute('stroke-width', '2');
+  eyeCircle.setAttribute('fill', 'none');
+  eyeSvg.appendChild(eyeCircle);
+
+  App._svgTemplates = { flag: flagSvg, check: checkSvg, eye: eyeSvg };
 };
 
 /**
@@ -79,6 +100,7 @@ App.creerStatsBadges = function (stats) {
 
 /**
  * Crée un élément DOM pour une carte picto (construction DOM pure, sans innerHTML).
+ * Structure : topbar → header → corps → footer → actions
  * @param {Object} picto - Objet picto issu de DATA.pictos
  * @returns {HTMLElement}
  */
@@ -94,12 +116,43 @@ App.creerCartePicto = function (picto) {
     el.dataset.gameplayTags = App.resolveGameplayTags(picto).join(',');
   }
 
-  // ── Coin décoratif ──
-  var coinDeco = document.createElement('div');
-  coinDeco.className = 'coin-deco';
-  el.appendChild(coinDeco);
+  // ── Topbar (flex row : endgame, #ID, cat-badge, ✦lumina) ──
+  var topbar = document.createElement('div');
+  topbar.className = 'carte-topbar';
 
-  // ── Header ──
+  if (picto.source_endgame) {
+    var endgameBadge = document.createElement('div');
+    endgameBadge.className = 'carte-endgame-badge';
+    endgameBadge.textContent = '\u2606';
+    endgameBadge.title = App.t('badge_endgame');
+    topbar.appendChild(endgameBadge);
+  }
+
+  var carteId = document.createElement('div');
+  carteId.className = 'carte-id';
+  carteId.textContent = '#' + String(picto.id).padStart(3, '0');
+  topbar.appendChild(carteId);
+
+  if (Array.isArray(picto.categories) && picto.categories.length) {
+    var catBadge = document.createElement('div');
+    catBadge.className = 'carte-cat-badge cat-' + picto.categories[0];
+    catBadge.textContent = picto.categories[0].charAt(0).toUpperCase();
+    if (picto.categories.length > 1) {
+      catBadge.textContent += '/' + picto.categories[1].charAt(0).toUpperCase();
+    }
+    topbar.appendChild(catBadge);
+  }
+
+  if (picto.lumina) {
+    var lumina = document.createElement('div');
+    lumina.className = 'carte-lumina';
+    lumina.textContent = '\u2726 ' + picto.lumina;
+    topbar.appendChild(lumina);
+  }
+
+  el.appendChild(topbar);
+
+  // ── Header (nom principal + secondaire seulement si traduction dérivée) ──
   var header = document.createElement('div');
   header.className = 'carte-header';
 
@@ -109,47 +162,16 @@ App.creerCartePicto = function (picto) {
   nomFr.textContent = App.champ(picto, 'nom');
   header.appendChild(nomFr);
 
-  var nomEn = document.createElement('div');
-  nomEn.className = 'carte-nom-en';
-  nomEn.textContent = App.nomSecondaire(picto);
-  header.appendChild(nomEn);
-
   if (!picto.traduction_confirmee) {
+    var nomEn = document.createElement('div');
+    nomEn.className = 'carte-nom-en';
+    nomEn.textContent = App.nomSecondaire(picto);
+    header.appendChild(nomEn);
+
     var badgeTrad = document.createElement('span');
     badgeTrad.className = 'badge-non-confirme';
     badgeTrad.textContent = App.t('badge_derived');
     header.appendChild(badgeTrad);
-  }
-
-  var carteId = document.createElement('div');
-  carteId.className = 'carte-id';
-  carteId.textContent = '#' + String(picto.id).padStart(3, '0');
-  header.appendChild(carteId);
-
-  if (picto.lumina) {
-    var lumina = document.createElement('div');
-    lumina.className = 'carte-lumina';
-    lumina.textContent = '\u2726 ' + picto.lumina;
-    header.appendChild(lumina);
-  }
-
-  if (picto.source_endgame) {
-    var endgameBadge = document.createElement('div');
-    endgameBadge.className = 'carte-endgame-badge';
-    endgameBadge.textContent = '\u2606';
-    endgameBadge.title = App.t('badge_endgame');
-    header.appendChild(endgameBadge);
-  }
-
-  // Badge catégorie (O/D/S avec couleur)
-  if (Array.isArray(picto.categories) && picto.categories.length) {
-    var catBadge = document.createElement('div');
-    catBadge.className = 'carte-cat-badge cat-' + picto.categories[0];
-    catBadge.textContent = picto.categories[0].charAt(0).toUpperCase();
-    if (picto.categories.length > 1) {
-      catBadge.textContent += '/' + picto.categories[1].charAt(0).toUpperCase();
-    }
-    header.appendChild(catBadge);
   }
 
   el.appendChild(header);
@@ -169,7 +191,7 @@ App.creerCartePicto = function (picto) {
 
   el.appendChild(corps);
 
-  // ── Footer ──
+  // ── Footer (zone + flag) ──
   var footer = document.createElement('div');
   footer.className = 'carte-footer';
 
@@ -178,7 +200,6 @@ App.creerCartePicto = function (picto) {
   zone.textContent = App.champ(picto, 'zone');
   footer.appendChild(zone);
 
-  // Flag (drapeau de téléportation)
   var flagTexte = App.champ(picto, 'flag');
   var flagDiv = document.createElement('div');
   flagDiv.className = 'carte-flag';
@@ -190,33 +211,42 @@ App.creerCartePicto = function (picto) {
   flagDiv.appendChild(flagSpan);
   footer.appendChild(flagDiv);
 
-  // Bouton possession
-  var btnPossession = document.createElement('button');
-  btnPossession.type = 'button';
-  btnPossession.className = 'possession-indicateur';
-  btnPossession.setAttribute('aria-label', App.t('aria_toggle'));
-  btnPossession.setAttribute('aria-pressed', possede ? 'true' : 'false');
-  btnPossession.appendChild(App._svgTemplates.check.cloneNode(true));
-  footer.appendChild(btnPossession);
+  // Suivi (maîtrise + niveau — lecture seule)
+  var tracking = document.createElement('div');
+  tracking.className = 'carte-tracking';
+  App._remplirCarteTracking(tracking, picto.id);
+  footer.appendChild(tracking);
 
-  // Bouton build Lumina
+  el.appendChild(footer);
+
+  // ── Actions (détail, build, possession) ──
+  var actions = document.createElement('div');
+  actions.className = 'carte-actions';
+
+  var btnDetail = document.createElement('button');
+  btnDetail.type = 'button';
+  btnDetail.className = 'btn-detail';
+  btnDetail.setAttribute('aria-label', App.t('tooltip_detail'));
+  btnDetail.appendChild(App._svgTemplates.eye.cloneNode(true));
+  actions.appendChild(btnDetail);
+
   var btnBuild = document.createElement('button');
   btnBuild.type = 'button';
   btnBuild.className = 'build-indicateur' + (dansBuild ? ' actif' : '');
   btnBuild.setAttribute('aria-label', App.t('aria_build_toggle'));
   btnBuild.setAttribute('aria-pressed', dansBuild ? 'true' : 'false');
   btnBuild.textContent = '\u2726';
-  footer.appendChild(btnBuild);
+  actions.appendChild(btnBuild);
 
-  // Bouton détail
-  var btnDetail = document.createElement('button');
-  btnDetail.type = 'button';
-  btnDetail.className = 'btn-detail';
-  btnDetail.setAttribute('aria-label', App.t('tooltip_detail'));
-  btnDetail.textContent = '\u24D8';
-  footer.appendChild(btnDetail);
+  var btnPossession = document.createElement('button');
+  btnPossession.type = 'button';
+  btnPossession.className = 'possession-indicateur';
+  btnPossession.setAttribute('aria-label', App.t('aria_toggle'));
+  btnPossession.setAttribute('aria-pressed', possede ? 'true' : 'false');
+  btnPossession.appendChild(App._svgTemplates.check.cloneNode(true));
+  actions.appendChild(btnPossession);
 
-  el.appendChild(footer);
+  el.appendChild(actions);
 
   // ── Référence au picto pour tri/filtre ──
   el._picto = picto;
@@ -304,7 +334,9 @@ App.mettreAJourCartesTexte = function () {
     var picto = el._picto;
     el.classList.toggle('dans-build', App.estDansBuild(picto.id));
     el.querySelector('.carte-nom-fr').textContent = App.champ(picto, 'nom');
-    el.querySelector('.carte-nom-en').textContent = App.nomSecondaire(picto);
+    // Nom secondaire seulement si traduction dérivée
+    var nomEnEl = el.querySelector('.carte-nom-en');
+    if (nomEnEl) nomEnEl.textContent = App.nomSecondaire(picto);
     el.querySelector('.carte-effet').textContent = App.champ(picto, 'effet');
     el.querySelector('.possession-indicateur').setAttribute('aria-label', App.t('aria_toggle'));
     el.querySelector('.possession-indicateur').setAttribute('aria-pressed', App.etat.possedes.has(picto.id) ? 'true' : 'false');
@@ -338,5 +370,49 @@ App.mettreAJourCartesTexte = function () {
     var corps = el.querySelector('.carte-corps');
     if (oldStats) corps.removeChild(oldStats);
     if (newStats) corps.appendChild(newStats);
+
+    // Tracking (maîtrise + niveau)
+    var trackingEl = el.querySelector('.carte-tracking');
+    if (trackingEl) App._remplirCarteTracking(trackingEl, picto.id);
   });
+};
+
+/**
+ * Remplit le contenu d'un élément carte-tracking (maîtrise + niveau).
+ * @param {HTMLElement} container - Élément .carte-tracking à remplir
+ * @param {number} pictoId - ID du picto
+ */
+App._remplirCarteTracking = function (container, pictoId) {
+  while (container.firstChild) container.removeChild(container.firstChild);
+
+  var mastery = App.getMaitrise(pictoId);
+  var level = App.getNiveau(pictoId);
+
+  // Maîtrise : petits cercles ● / ○
+  var masterySpan = document.createElement('span');
+  masterySpan.className = 'carte-mastery' + (mastery > 0 ? ' actif' : '');
+  var dots = '';
+  for (var i = 0; i < App.MASTERY_MAX; i++) {
+    dots += (i < mastery) ? '\u25CF' : '\u25CB';
+  }
+  masterySpan.textContent = dots;
+  container.appendChild(masterySpan);
+
+  // Niveau
+  var levelSpan = document.createElement('span');
+  levelSpan.className = 'carte-level' + (level > 1 ? ' actif' : '');
+  levelSpan.textContent = App.t('tooltip_level_count', { n: level, max: App.PICTO_LEVEL_MAX });
+  container.appendChild(levelSpan);
+};
+
+/**
+ * Met à jour l'indicateur tracking d'une carte spécifique.
+ * Appelé après modification de maîtrise ou niveau dans la modal.
+ * @param {number} pictoId - ID du picto
+ */
+App.mettreAJourCarteTracking = function (pictoId) {
+  var carte = App.cartesParId && App.cartesParId[pictoId];
+  if (!carte) return;
+  var trackingEl = carte.querySelector('.carte-tracking');
+  if (trackingEl) App._remplirCarteTracking(trackingEl, pictoId);
 };

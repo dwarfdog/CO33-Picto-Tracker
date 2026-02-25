@@ -5,7 +5,7 @@
 //  Cache statique versionné + fallback réseau
 // ══════════════════════════════════════════════════════
 
-var CACHE_NAME = 'co33-picto-v8';
+var CACHE_NAME = 'co33-picto-v9';
 
 var ASSETS_TO_CACHE = [
   './',

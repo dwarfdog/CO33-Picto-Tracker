@@ -150,7 +150,6 @@ App.appliquerTraductions = function () {
   document.querySelector('#tt-sec-effet .tooltip-section-titre').textContent = App.t('tooltip_effect');
   document.querySelector('#tt-sec-stats .tooltip-section-titre').textContent = App.t('tooltip_stats');
   document.querySelector('#tt-sec-zone .tooltip-section-titre').textContent = App.t('tooltip_zone');
-  document.querySelector('#tt-sec-lumina .tooltip-section-titre').textContent = App.t('tooltip_lumina');
   document.querySelector('#tt-sec-flag .tooltip-section-titre').textContent = App.t('tooltip_flag');
   document.querySelector('#tt-sec-obtention .tooltip-section-titre').textContent = App.t('tooltip_obtain');
   var secSourceTitle = document.querySelector('#tt-sec-source .tooltip-section-titre');
@@ -162,6 +161,14 @@ App.appliquerTraductions = function () {
   document.querySelector('#tt-sec-mastery .tooltip-section-titre').textContent = App.t('tooltip_mastery');
   document.querySelector('#tt-sec-level .tooltip-section-titre').textContent = App.t('tooltip_level');
   document.getElementById('tooltip-fermer').setAttribute('aria-label', App.t('tooltip_close'));
+
+  // Tooltip group titres
+  var grpLoc = document.getElementById('tt-group-location-title');
+  if (grpLoc) grpLoc.textContent = App.t('tooltip_group_location');
+  var grpClass = document.getElementById('tt-group-classification-title');
+  if (grpClass) grpClass.textContent = App.t('tooltip_group_classification');
+  var grpTrack = document.getElementById('tt-group-tracking-title');
+  if (grpTrack) grpTrack.textContent = App.t('tooltip_group_tracking');
 
   // Modal import
   document.getElementById('import-title').textContent = App.t('import_title');

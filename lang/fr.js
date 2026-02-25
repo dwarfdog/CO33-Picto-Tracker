@@ -137,6 +137,11 @@
     tooltip_categorie:       'Catégorie',
     tooltip_obtention_type:  'Type d\u2019obtention',
 
+    // Tooltip groupes
+    tooltip_group_location:       'Localisation',
+    tooltip_group_classification: 'Classification',
+    tooltip_group_tracking:       'Suivi',
+
     // Carte
     badge_derived:           '~ trad. dérivée',
     aria_owned:              'Possédé',
