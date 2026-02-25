@@ -1418,18 +1418,12 @@ h1 span {
 }
 
 .carte-picto.possede .carte-mastery {
-  opacity: 0.5;
-}
-
-.carte-picto.possede .carte-mastery.actif {
+  color: var(--or);
   opacity: 1;
 }
 
 .carte-picto.possede .carte-level {
-  opacity: 0.5;
-}
-
-.carte-picto.possede .carte-level.actif {
+  color: var(--or-pale);
   opacity: 1;
 }
 
