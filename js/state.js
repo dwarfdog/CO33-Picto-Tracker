@@ -13,6 +13,8 @@ App.etat = {
   luminaBudget: 0,
   filtreCollection: 'tous', // 'tous' | 'possedes' | 'manquants'
   filtreBuild: 'tous', // 'tous' | 'planifies' | 'hors-plan'
+  filtreGameplayMode: 'any', // 'any' | 'all'
+  filtreGameplayTags: [], // string[]
   filtreZone: '',
   recherche: '',
   tri: 'id-asc',
@@ -213,6 +215,25 @@ App.assurerProfils = function () {
   if (['tous', 'planifies', 'hors-plan'].indexOf(App.etat.filtreBuild) === -1) {
     App.etat.filtreBuild = 'tous';
     changed = true;
+  }
+
+  if (['any', 'all'].indexOf(App.etat.filtreGameplayMode) === -1) {
+    App.etat.filtreGameplayMode = 'any';
+    changed = true;
+  }
+
+  if (!Array.isArray(App.etat.filtreGameplayTags)) {
+    App.etat.filtreGameplayTags = [];
+    changed = true;
+  }
+
+  if (typeof App.nettoyerFiltresGameplay === 'function') {
+    var beforeMode = App.etat.filtreGameplayMode;
+    var beforeTags = App.etat.filtreGameplayTags.slice();
+    App.nettoyerFiltresGameplay();
+    if (beforeMode !== App.etat.filtreGameplayMode || beforeTags.join('|') !== App.etat.filtreGameplayTags.join('|')) {
+      changed = true;
+    }
   }
 
   return changed;

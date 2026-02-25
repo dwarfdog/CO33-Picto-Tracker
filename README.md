@@ -28,6 +28,8 @@ Vos donnees restent sur votre ordinateur (sauvegarde locale).
 - Fiche detaillee de chaque Picto (effet, stats, zone, obtention)
 - Recherche par nom ou effet
 - Filtres : par zone, possedes/manquants
+- Filtres gameplay avances par tags mecaniques (mode "au moins un" / "tous")
+- Route de collecte des manquants regroupes par zone et drapeau
 - Tri : par numero, nom, zone, possession
 - Vue des nouveautes dataset (ajouts / modifications entre versions)
 - Export / import de votre progression (partage entre appareils)
@@ -134,6 +136,7 @@ CO33-Script/
     events.js            <- Interactions utilisateur
     export-import.js     <- Export / import de progression
     filters.js           <- Filtres et tri
+    gameplay-expert.js   <- Tags gameplay experts et route de collecte
     i18n.js              <- Systeme de traduction
     lumina-planner.js    <- Planificateur de build Lumina
     progress.js          <- Barre de progression
@@ -215,6 +218,8 @@ Your data stays on your computer (local storage).
 - Detailed info card for each Picto (effect, stats, zone, how to obtain)
 - Search by name or effect
 - Filters: by zone, owned/missing
+- Advanced gameplay tag filters (match "any" or "all" selected tags)
+- Farm route for missing pictos grouped by zone and nearby flag
 - Sort: by number, name, zone, ownership
 - Dataset updates view (additions / edits between versions)
 - Export / import your progress (share between devices)
@@ -321,6 +326,7 @@ CO33-Script/
     events.js            <- User interactions
     export-import.js     <- Progress export / import
     filters.js           <- Filters and sorting
+    gameplay-expert.js   <- Advanced gameplay tags and farm route
     i18n.js              <- Translation system
     lumina-planner.js    <- Lumina build planner
     progress.js          <- Progress bar

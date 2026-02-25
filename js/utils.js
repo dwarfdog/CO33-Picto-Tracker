@@ -204,11 +204,22 @@ App.maintenirFocusDansModal = function (e) {
  */
 App.buildSearchIndex = function () {
   DATA.pictos.forEach(function (picto) {
+    var gameplaySearch = '';
+    if (typeof App.resolveGameplayTags === 'function') {
+      var tags = App.resolveGameplayTags(picto);
+      if (tags && tags.length && typeof App.getGameplayTagSearchText === 'function') {
+        gameplaySearch = tags.map(function (tagId) {
+          return App.getGameplayTagSearchText(tagId);
+        }).join(' ');
+      }
+    }
+
     picto._searchIndex = App.normaliserTexte(
       (picto.nom_fr || '') + ' ' + (picto.nom_en || '') + ' ' +
       (picto.effet_en || '') + ' ' + (picto.effet_fr || '') + ' ' +
       (picto.zone_en || '') + ' ' + (picto.zone_fr || '') + ' ' +
-      (picto.flag_en || '') + ' ' + (picto.flag_fr || '')
+      (picto.flag_en || '') + ' ' + (picto.flag_fr || '') + ' ' +
+      gameplaySearch
     );
     picto._nomNorm = App.normaliserTexte(App.champ(picto, 'nom'));
     picto._zoneNorm = App.normaliserTexte(App.champ(picto, 'zone'));

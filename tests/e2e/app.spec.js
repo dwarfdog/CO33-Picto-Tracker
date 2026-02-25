@@ -140,6 +140,38 @@ test('build planner computes lumina totals and dedicated filtering', async ({ pa
   expect(firstVisibleId).toBe('1');
 });
 
+test('applies advanced gameplay filters and updates farm route grouping', async ({ page }) => {
+  await openApp(page);
+
+  await page.locator('#gameplay-tag-buttons .btn-filtre-gameplay[data-gameplay-tag="burn"]').click();
+  await expect(page.locator('#gameplay-tag-buttons .btn-filtre-gameplay.actif')).toHaveCount(1);
+  await expect(page.locator('.carte-picto[data-id="2"]')).not.toHaveClass(/cachee/);
+  await expect(page.locator('.carte-picto[data-id="1"]')).toHaveClass(/cachee/);
+
+  await page.locator('#gameplay-tag-buttons .btn-filtre-gameplay[data-gameplay-tag="crit"]').click();
+  await page.selectOption('#filtre-gameplay-mode', 'all');
+
+  const visibleCards = page.locator('#grille .carte-picto:not(.cachee)');
+  const visibleCount = await visibleCards.count();
+  expect(visibleCount).toBeGreaterThan(0);
+
+  const sampleSize = Math.min(5, visibleCount);
+  for (let i = 0; i < sampleSize; i++) {
+    const tags = (await visibleCards.nth(i).getAttribute('data-gameplay-tags')) || '';
+    expect(tags).toContain('burn');
+    expect(tags).toContain('crit');
+  }
+
+  const routeZones = page.locator('#farm-route-groups .farm-route-zone');
+  const routeFlags = page.locator('#farm-route-groups .farm-route-flag');
+  expect(await routeZones.count()).toBeGreaterThan(0);
+  expect(await routeFlags.count()).toBeGreaterThan(0);
+  await expect(page.locator('#farm-route-groups .farm-route-item[data-id="2"]')).toBeVisible();
+
+  await page.locator('#btn-gameplay-clear').click();
+  await expect(page.locator('#gameplay-tag-buttons .btn-filtre-gameplay.actif')).toHaveCount(0);
+});
+
 test('shows dataset additions and updates from metadata changelog', async ({ page }) => {
   await openApp(page);
 

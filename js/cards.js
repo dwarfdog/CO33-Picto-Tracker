@@ -90,6 +90,9 @@ App.creerCartePicto = function (picto) {
     + (possede ? ' possede' : '')
     + (dansBuild ? ' dans-build' : '');
   el.dataset.id = picto.id;
+  if (typeof App.resolveGameplayTags === 'function') {
+    el.dataset.gameplayTags = App.resolveGameplayTags(picto).join(',');
+  }
 
   // ── Coin décoratif ──
   var coinDeco = document.createElement('div');
