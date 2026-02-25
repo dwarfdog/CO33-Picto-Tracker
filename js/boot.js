@@ -128,6 +128,15 @@
     confirmMessage:  'confirm-message',
     btnConfirmYes:   'btn-confirm-yes',
     btnConfirmNo:    'btn-confirm-no',
+    // Settings popover
+    btnSettings:     'btn-settings',
+    settingsPopover: 'settings-popover',
+    // Tab bar
+    tabBar:          'tab-bar',
+    // Grille conteneur
+    grilleConteneur: 'grille-conteneur',
+    // Export all shortcut (in settings popover)
+    btnExportAllShortcut: 'btn-export-all-shortcut',
   });
 
   // Restaurer les préférences UI persistées dans les contrôles DOM
@@ -166,11 +175,15 @@
     App.rendreCharacterBuilds();
   }
 
+  // Initialiser l'onglet actif
+  App.setActiveTab(App.etat.activeTab || 'collection');
+
   // Attachement des événements
   App.attacher();
 
   // Enregistrement du Service Worker (PWA offline)
-  if ('serviceWorker' in navigator) {
+  // Désactivé sur file:// (pas de support SW/CORS hors serveur HTTP)
+  if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     navigator.serviceWorker.register('./sw.js').catch(function (err) {
       console.warn('[SW] Registration failed:', err);
     });

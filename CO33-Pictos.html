@@ -10,32 +10,53 @@
 		<meta property="og:description" content="Track your Picto collection in Clair Obscur: Expedition 33">
 		<meta property="og:type" content="website">
 		<link rel="stylesheet" href="style.css">
-		<link rel="manifest" href="manifest.json">
+		<script>if(location.protocol!=='file:'){var l=document.createElement('link');l.rel='manifest';l.href='manifest.json';document.head.appendChild(l);}</script>
 		<link rel="shortcut icon" href="docs/images/fluidicon.png" type="image/x-icon">
 		<link rel="apple-touch-icon" href="docs/images/fluidicon.png">
 	</head>
 	<body>
 
 		<!-- ══════════════════════════════════════════════════════
-		HEADER
+		HEADER COMPACT
 		══════════════════════════════════════════════════════ -->
-		<header>
-			<div class="ornement-top">
-				<div class="ligne"></div>
-				<svg viewbox="0 0 32 32" aria-hidden="true"><path d="M16 2 L18 12 L28 8 L22 16 L30 20 L20 20 L18 30 L16 22 L14 30 L12 20 L2 20 L10 16 L4 8 L14 12 Z"/></svg>
-				<div class="ligne"></div>
+		<header class="header-compact">
+			<div class="header-titre">
+				<svg class="header-star" viewbox="0 0 32 32" aria-hidden="true"><path d="M16 2 L18 12 L28 8 L22 16 L30 20 L20 20 L18 30 L16 22 L14 30 L12 20 L2 20 L10 16 L4 8 L14 12 Z"/></svg>
+				<h1><span></span></h1>
 			</div>
-			<h1>
-				<span></span>
-			</h1>
-			<div class="ornement-bas">&#10022; &nbsp; &#10022; &nbsp; &#10022;</div>
-			<div class="lang-switcher" id="lang-switcher"></div>
+			<div class="header-actions">
+				<label for="profil-select" class="sr-only" id="lbl-profil-select">Progress profile</label>
+				<select class="select-zone header-profil-select" id="profil-select" aria-labelledby="lbl-profil-select"></select>
+				<button type="button" class="btn-action header-btn" id="btn-profil-add" title=""></button>
+				<div class="lang-switcher" id="lang-switcher"></div>
+				<div class="settings-wrapper">
+					<button type="button" class="btn-action header-btn settings-toggle" id="btn-settings" aria-label="Settings" aria-expanded="false">&#9881;</button>
+					<div class="settings-popover" id="settings-popover">
+						<div class="settings-group">
+							<label for="ng-cycle-select" class="settings-label" id="lbl-ng-cycle">NG Cycle</label>
+							<select class="select-zone" id="ng-cycle-select" aria-labelledby="lbl-ng-cycle">
+								<option value="0">NG</option>
+								<option value="1">NG+</option>
+								<option value="2">NG++</option>
+								<option value="3">NG+++</option>
+							</select>
+						</div>
+						<div class="settings-separator"></div>
+						<button type="button" class="btn-action settings-action" id="btn-export"></button>
+						<button type="button" class="btn-action settings-action" id="btn-import"></button>
+						<input type="file" id="import-fichier" accept=".json,.txt" style="display:none">
+						<button type="button" class="btn-action settings-action" id="btn-export-all-shortcut"></button>
+						<div class="settings-separator"></div>
+						<button type="button" class="btn-action settings-action settings-danger" id="btn-reset"></button>
+					</div>
+				</div>
+			</div>
 		</header>
 
 		<main>
 
 		<!-- ══════════════════════════════════════════════════════
-		PROGRESSION
+		PROGRESSION (compact)
 		══════════════════════════════════════════════════════ -->
 		<div class="progression-wrapper">
 			<div class="progression-header">
@@ -55,214 +76,212 @@
 		</div>
 
 		<!-- ══════════════════════════════════════════════════════
-		CONTROLES
+		TOOLBAR
 		══════════════════════════════════════════════════════ -->
-		<div class="controles">
-			<!-- Recherche -->
-			<div class="champ-recherche">
-				<svg viewbox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-				<label for="recherche" class="sr-only" id="lbl-recherche">Search</label>
-				<input type="text" id="recherche" placeholder="" autocomplete="off" spellcheck="false">
-			</div>
+		<div class="toolbar">
+			<div class="toolbar-ligne-1">
+				<!-- Recherche -->
+				<div class="champ-recherche">
+					<svg viewbox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+					<label for="recherche" class="sr-only" id="lbl-recherche">Search</label>
+					<input type="text" id="recherche" placeholder="" autocomplete="off" spellcheck="false">
+				</div>
 
-			<!-- Zone -->
-			<label for="filtre-zone" class="sr-only" id="lbl-filtre-zone">Zone filter</label>
-			<select class="select-zone" id="filtre-zone">
-				<option value=""></option>
-			</select>
+				<!-- Zone -->
+				<label for="filtre-zone" class="sr-only" id="lbl-filtre-zone">Zone filter</label>
+				<select class="select-zone" id="filtre-zone">
+					<option value=""></option>
+				</select>
 
-			<!-- Catégorie -->
-			<label for="filtre-categorie" class="sr-only" id="lbl-filtre-categorie">Category filter</label>
-			<select class="select-zone" id="filtre-categorie">
-				<option value=""></option>
-			</select>
+				<!-- Catégorie -->
+				<label for="filtre-categorie" class="sr-only" id="lbl-filtre-categorie">Category filter</label>
+				<select class="select-zone" id="filtre-categorie">
+					<option value=""></option>
+				</select>
 
-			<!-- Type d'obtention -->
-			<label for="filtre-obtention" class="sr-only" id="lbl-filtre-obtention">Obtain filter</label>
-			<select class="select-zone" id="filtre-obtention">
-				<option value=""></option>
-			</select>
-
-			<!-- Tri -->
-			<label for="tri-select" class="sr-only" id="lbl-tri-select">Sort order</label>
-			<select class="select-zone" id="tri-select">
-				<option value="id-asc"></option>
-				<option value="id-desc"></option>
-				<option value="nom-asc"></option>
-				<option value="nom-desc"></option>
-				<option value="zone-asc"></option>
-				<option value="zone-desc"></option>
-				<option value="possedes-first"></option>
-				<option value="manquants-first"></option>
-				<option value="build-first"></option>
-				<option value="lumina-asc"></option>
-				<option value="lumina-desc"></option>
-			</select>
-
-			<div class="controles-separateur"></div>
-
-			<!-- Filtres collection -->
-			<div class="filtre-groupe">
-				<span class="filtre-label"></span>
-				<button type="button" class="btn-filtre actif" data-filtre="tous"></button>
-				<button type="button" class="btn-filtre" data-filtre="possedes"></button>
-				<button type="button" class="btn-filtre" data-filtre="manquants"></button>
-			</div>
-
-			<!-- Gestion progression -->
-			<div class="filtre-groupe">
-				<span class="filtre-label"></span>
-				<label for="profil-select" class="sr-only" id="lbl-profil-select">Progress profile</label>
-				<select class="select-zone" id="profil-select" aria-labelledby="lbl-profil-select"></select>
-				<button type="button" class="btn-action" id="btn-profil-add"></button>
-				<button type="button" class="btn-action btn-export" id="btn-export"></button>
-				<button type="button" class="btn-action btn-import" id="btn-import"></button>
-				<input type="file" id="import-fichier" accept=".json,.txt" style="display:none">
-			</div>
-
-			<!-- NG Cycle -->
-			<div class="controles-ligne">
-				<label for="ng-cycle-select" class="sr-only" id="lbl-ng-cycle">NG Cycle</label>
-				<select class="select-zone ng-cycle-select" id="ng-cycle-select" aria-labelledby="lbl-ng-cycle">
-					<option value="0">NG</option>
-					<option value="1">NG+</option>
-					<option value="2">NG++</option>
-					<option value="3">NG+++</option>
+				<!-- Tri -->
+				<label for="tri-select" class="sr-only" id="lbl-tri-select">Sort order</label>
+				<select class="select-zone" id="tri-select">
+					<option value="id-asc"></option>
+					<option value="id-desc"></option>
+					<option value="nom-asc"></option>
+					<option value="nom-desc"></option>
+					<option value="zone-asc"></option>
+					<option value="zone-desc"></option>
+					<option value="possedes-first"></option>
+					<option value="manquants-first"></option>
+					<option value="build-first"></option>
+					<option value="lumina-asc"></option>
+					<option value="lumina-desc"></option>
 				</select>
 			</div>
 
-			<!-- Reset -->
-			<button type="button" class="btn-reset" id="btn-reset"></button>
-		</div>
+			<div class="toolbar-ligne-2">
+				<!-- Filtres collection -->
+				<div class="filtre-groupe">
+					<span class="filtre-label"></span>
+					<button type="button" class="btn-filtre actif" data-filtre="tous"></button>
+					<button type="button" class="btn-filtre" data-filtre="possedes"></button>
+					<button type="button" class="btn-filtre" data-filtre="manquants"></button>
+				</div>
 
-		<!-- Planificateur Lumina -->
-		<section class="lumina-planner" id="lumina-planner">
-			<div class="lumina-planner-entete">
-				<div class="lumina-planner-titre" id="lumina-planner-title"></div>
-				<div class="lumina-planner-actions">
-					<label for="lumina-budget" class="sr-only" id="lbl-lumina-budget">Lumina budget</label>
-					<input type="number" id="lumina-budget" class="lumina-budget-input" min="0" step="1" inputmode="numeric" value="0">
-					<button type="button" class="btn-action" id="btn-lumina-clear"></button>
+				<!-- Compteurs inline -->
+				<div class="compteurs-inline">
+					<span class="compteur-badge possede"><span class="cpt-label"></span><strong id="cpt-possedes">0</strong></span>
+					<span class="compteur-badge manquant"><span class="cpt-label"></span><strong id="cpt-manquants">0</strong></span>
+					<span class="compteur-badge resultats"><span class="cpt-label"></span><strong id="cpt-affiches">0</strong></span>
 				</div>
 			</div>
-			<div class="lumina-planner-stats">
-				<span class="lumina-chip" id="lumina-selected-count"></span>
-				<span class="lumina-chip" id="lumina-total-cost"></span>
-				<span class="lumina-chip" id="lumina-remaining"></span>
-			</div>
-			<div class="lumina-planner-filtres">
-				<span class="filtre-label" id="lumina-filter-label"></span>
-				<button type="button" class="btn-filtre btn-filtre-build actif" data-build-filtre="tous"></button>
-				<button type="button" class="btn-filtre btn-filtre-build" data-build-filtre="planifies"></button>
-				<button type="button" class="btn-filtre btn-filtre-build" data-build-filtre="hors-plan"></button>
-			</div>
-		</section>
+		</div>
 
 		<!-- ══════════════════════════════════════════════════════
-		CHARACTER BUILDS
+		TAB BAR
 		══════════════════════════════════════════════════════ -->
-		<section class="character-builds" id="character-builds" style="display:none">
-			<div class="character-builds-titre" id="character-builds-title"></div>
-			<div class="character-selector" id="character-selector"></div>
-			<div class="character-build-detail" id="character-build-detail"></div>
-		</section>
+		<nav class="tab-bar" id="tab-bar" role="tablist">
+			<button class="tab-btn actif" data-tab="collection" role="tab" aria-selected="true">
+				<span class="tab-icone">&#128203;</span><span class="tab-label"></span>
+			</button>
+			<button class="tab-btn" data-tab="lumina" role="tab" aria-selected="false">
+				<span class="tab-icone">&#9876;</span><span class="tab-label"></span>
+			</button>
+			<button class="tab-btn" data-tab="builds" role="tab" aria-selected="false">
+				<span class="tab-icone">&#128100;</span><span class="tab-label"></span>
+			</button>
+			<button class="tab-btn" data-tab="filtres" role="tab" aria-selected="false">
+				<span class="tab-icone">&#128269;</span><span class="tab-label"></span>
+			</button>
+			<button class="tab-btn" data-tab="infos" role="tab" aria-selected="false">
+				<span class="tab-icone">&#8505;</span><span class="tab-label"></span>
+			</button>
+		</nav>
 
-		<!-- Filtres gameplay experts -->
-		<section class="gameplay-filters" id="gameplay-filters">
-			<div class="gameplay-filters-head">
-				<div class="gameplay-filters-title" id="gameplay-filters-title"></div>
-				<div class="gameplay-filters-hint" id="gameplay-filters-hint"></div>
-			</div>
-			<div class="gameplay-filters-actions">
-				<label for="filtre-gameplay-mode" class="sr-only" id="lbl-gameplay-mode">Gameplay filter mode</label>
-				<select class="select-zone gameplay-mode-select" id="filtre-gameplay-mode" aria-labelledby="lbl-gameplay-mode">
-					<option value="any"></option>
-					<option value="all"></option>
-				</select>
-				<button type="button" class="btn-action" id="btn-gameplay-clear"></button>
-				<span class="gameplay-tag-summary" id="gameplay-tag-summary"></span>
-			</div>
-			<div class="gameplay-tag-buttons" id="gameplay-tag-buttons"></div>
-		</section>
+		<!-- ══════════════════════════════════════════════════════
+		TAB PANELS
+		══════════════════════════════════════════════════════ -->
+		<div class="tab-panels">
+			<!-- Lumina Planner -->
+			<section class="tab-panel" id="tab-panel-lumina" role="tabpanel" style="display:none">
+				<section class="lumina-planner" id="lumina-planner">
+					<div class="lumina-planner-entete">
+						<div class="lumina-planner-titre" id="lumina-planner-title"></div>
+						<div class="lumina-planner-actions">
+							<label for="lumina-budget" class="sr-only" id="lbl-lumina-budget">Lumina budget</label>
+							<input type="number" id="lumina-budget" class="lumina-budget-input" min="0" step="1" inputmode="numeric" value="0">
+							<button type="button" class="btn-action" id="btn-lumina-clear"></button>
+						</div>
+					</div>
+					<div class="lumina-planner-stats">
+						<span class="lumina-chip" id="lumina-selected-count"></span>
+						<span class="lumina-chip" id="lumina-total-cost"></span>
+						<span class="lumina-chip" id="lumina-remaining"></span>
+					</div>
+					<div class="lumina-planner-filtres">
+						<span class="filtre-label" id="lumina-filter-label"></span>
+						<button type="button" class="btn-filtre btn-filtre-build actif" data-build-filtre="tous"></button>
+						<button type="button" class="btn-filtre btn-filtre-build" data-build-filtre="planifies"></button>
+						<button type="button" class="btn-filtre btn-filtre-build" data-build-filtre="hors-plan"></button>
+					</div>
+				</section>
+			</section>
 
-		<!-- Nouveautes dataset -->
-		<section class="dataset-changes" id="dataset-changes">
-			<div class="dataset-changes-head">
-				<div class="dataset-changes-title" id="dataset-changes-title"></div>
-				<div class="dataset-changes-meta" id="dataset-changes-meta"></div>
-			</div>
-			<div class="dataset-changes-note" id="dataset-changes-note"></div>
-			<div class="dataset-changes-columns">
-				<div class="dataset-changes-block">
-					<div class="dataset-changes-block-title" id="dataset-changes-added-title"></div>
-					<ul class="dataset-changes-list" id="dataset-changes-added-list"></ul>
+			<!-- Character Builds -->
+			<section class="tab-panel" id="tab-panel-builds" role="tabpanel" style="display:none">
+				<section class="character-builds" id="character-builds">
+					<div class="character-builds-titre" id="character-builds-title"></div>
+					<div class="character-selector" id="character-selector"></div>
+					<div class="character-build-detail" id="character-build-detail"></div>
+				</section>
+			</section>
+
+			<!-- Filtres avancés -->
+			<section class="tab-panel" id="tab-panel-filtres" role="tabpanel" style="display:none">
+				<!-- Obtention type filter (déplacé de la toolbar) -->
+				<div class="filtres-extra-row">
+					<label for="filtre-obtention" class="sr-only" id="lbl-filtre-obtention">Obtain filter</label>
+					<select class="select-zone" id="filtre-obtention">
+						<option value=""></option>
+					</select>
 				</div>
-				<div class="dataset-changes-block">
-					<div class="dataset-changes-block-title" id="dataset-changes-updated-title"></div>
-					<ul class="dataset-changes-list" id="dataset-changes-updated-list"></ul>
+
+				<!-- Gameplay filters -->
+				<section class="gameplay-filters" id="gameplay-filters">
+					<div class="gameplay-filters-head">
+						<div class="gameplay-filters-title" id="gameplay-filters-title"></div>
+						<div class="gameplay-filters-hint" id="gameplay-filters-hint"></div>
+					</div>
+					<div class="gameplay-filters-actions">
+						<label for="filtre-gameplay-mode" class="sr-only" id="lbl-gameplay-mode">Gameplay filter mode</label>
+						<select class="select-zone gameplay-mode-select" id="filtre-gameplay-mode" aria-labelledby="lbl-gameplay-mode">
+							<option value="any"></option>
+							<option value="all"></option>
+						</select>
+						<button type="button" class="btn-action" id="btn-gameplay-clear"></button>
+						<span class="gameplay-tag-summary" id="gameplay-tag-summary"></span>
+					</div>
+					<div class="gameplay-tag-buttons" id="gameplay-tag-buttons"></div>
+				</section>
+
+				<!-- Farm route -->
+				<section class="farm-route" id="farm-route">
+					<div class="farm-route-head">
+						<div class="farm-route-title" id="farm-route-title"></div>
+						<div class="farm-route-meta" id="farm-route-meta"></div>
+					</div>
+					<div class="farm-route-subtitle" id="farm-route-subtitle"></div>
+					<div class="farm-route-empty" id="farm-route-empty"></div>
+					<div class="farm-route-groups" id="farm-route-groups"></div>
+				</section>
+			</section>
+
+			<!-- Infos -->
+			<section class="tab-panel" id="tab-panel-infos" role="tabpanel" style="display:none">
+				<!-- Dataset changes -->
+				<section class="dataset-changes" id="dataset-changes">
+					<div class="dataset-changes-head">
+						<div class="dataset-changes-title" id="dataset-changes-title"></div>
+						<div class="dataset-changes-meta" id="dataset-changes-meta"></div>
+					</div>
+					<div class="dataset-changes-note" id="dataset-changes-note"></div>
+					<div class="dataset-changes-columns">
+						<div class="dataset-changes-block">
+							<div class="dataset-changes-block-title" id="dataset-changes-added-title"></div>
+							<ul class="dataset-changes-list" id="dataset-changes-added-list"></ul>
+						</div>
+						<div class="dataset-changes-block">
+							<div class="dataset-changes-block-title" id="dataset-changes-updated-title"></div>
+							<ul class="dataset-changes-list" id="dataset-changes-updated-list"></ul>
+						</div>
+						<div class="dataset-changes-block">
+							<div class="dataset-changes-block-title" id="dataset-changes-removed-title"></div>
+							<ul class="dataset-changes-list" id="dataset-changes-removed-list"></ul>
+						</div>
+					</div>
+				</section>
+
+				<!-- Légende interactions -->
+				<div class="legende-interactions">
+					<div class="legende-item">
+						<span class="legende-touche"></span>
+						<span class="legende-texte"></span>
+					</div>
+					<div class="legende-item">
+						<span class="legende-icone check">
+							<svg viewbox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+						</span>
+						<span class="legende-texte"></span>
+					</div>
+					<div class="legende-item">
+						<span class="legende-touche"></span>
+						<span class="legende-texte"></span>
+					</div>
 				</div>
-				<div class="dataset-changes-block">
-					<div class="dataset-changes-block-title" id="dataset-changes-removed-title"></div>
-					<ul class="dataset-changes-list" id="dataset-changes-removed-list"></ul>
-				</div>
-			</div>
-		</section>
-
-		<!-- Route de collecte (manquants) -->
-		<section class="farm-route" id="farm-route">
-			<div class="farm-route-head">
-				<div class="farm-route-title" id="farm-route-title"></div>
-				<div class="farm-route-meta" id="farm-route-meta"></div>
-			</div>
-			<div class="farm-route-subtitle" id="farm-route-subtitle"></div>
-			<div class="farm-route-empty" id="farm-route-empty"></div>
-			<div class="farm-route-groups" id="farm-route-groups"></div>
-		</section>
-
-		<!-- Compteurs -->
-		<div class="compteurs">
-			<div class="compteur-item">
-				<div class="compteur-dot possede"></div>
-				<span>
-					<span class="cpt-label"></span><strong id="cpt-possedes">0</strong>
-				</span>
-			</div>
-			<div class="compteur-item">
-				<div class="compteur-dot manquant"></div>
-				<span>
-					<span class="cpt-label"></span><strong id="cpt-manquants">0</strong>
-				</span>
-			</div>
-			<div class="compteur-item">
-				<div class="compteur-dot resultats"></div>
-				<span>
-					<span class="cpt-label"></span><strong id="cpt-affiches">0</strong>
-				</span>
-			</div>
-		</div>
-
-		<!-- Légende interactions -->
-		<div class="legende-interactions">
-			<div class="legende-item">
-				<span class="legende-touche"></span>
-				<span class="legende-texte"></span>
-			</div>
-			<div class="legende-item">
-				<span class="legende-icone check">
-					<svg viewbox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-				</span>
-				<span class="legende-texte"></span>
-			</div>
-			<div class="legende-item">
-				<span class="legende-touche"></span>
-				<span class="legende-texte"></span>
-			</div>
+			</section>
 		</div>
 
 		<!-- ══════════════════════════════════════════════════════
 		GRILLE
 		══════════════════════════════════════════════════════ -->
-		<div class="grille-conteneur">
+		<div class="grille-conteneur" id="grille-conteneur">
 			<div class="grille" id="grille"></div>
 			<div class="etat-vide" id="etat-vide">
 				<svg viewbox="0 0 24 24" aria-hidden="true"><path d="M9.172 16.172a4 4 0 0 1 5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>

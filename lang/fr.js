@@ -229,6 +229,16 @@
     tooltip_source_boss:     'Boss : {boss}',
     badge_endgame:           'Endgame',
 
+    // Onglets
+    tab_collection:          'Collection',
+    tab_lumina:              'Lumina',
+    tab_builds:              'Builds',
+    tab_filtres:             'Filtres',
+    tab_infos:               'Infos',
+
+    // Settings
+    btn_settings:            'Paramètres',
+
     // Switcher
     lang_label:              'Langue',
     lang_name:               'Français',

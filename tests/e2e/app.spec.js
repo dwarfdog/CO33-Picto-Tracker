@@ -9,6 +9,17 @@ function parseId(text) {
   return Number(String(text || '').replace('#', '').trim());
 }
 
+/** Click the settings gear to open the popover */
+async function openSettings(page) {
+  await page.locator('#btn-settings').click();
+  await expect(page.locator('#settings-popover.visible')).toBeVisible();
+}
+
+/** Switch to a tab by data-tab value */
+async function switchTab(page, tabName) {
+  await page.locator('.tab-btn[data-tab="' + tabName + '"]').click();
+}
+
 test('renders cards and progression counters', async ({ page }) => {
   await openApp(page);
 
@@ -69,6 +80,8 @@ test('imports progress from code and updates owned counters', async ({ page }) =
   await openApp(page);
 
   const importCode = Buffer.from(JSON.stringify([1, 2, 3])).toString('base64');
+  // Open settings popover to access import button
+  await openSettings(page);
   await page.locator('#btn-import').click();
   await expect(page.locator('#import-overlay.visible')).toBeVisible();
   await page.locator('#import-textarea').fill(importCode);
@@ -102,6 +115,8 @@ test('isolates owned state between progression profiles', async ({ page }) => {
   await expect(page.locator('.carte-picto[data-id="1"]')).not.toHaveClass(/possede/);
 
   const runBImportCode = Buffer.from(JSON.stringify([2, 3])).toString('base64');
+  // Open settings popover to access import button
+  await openSettings(page);
   await page.locator('#btn-import').click();
   await expect(page.locator('#import-overlay.visible')).toBeVisible();
   await page.locator('#import-textarea').fill(runBImportCode);
@@ -123,6 +138,9 @@ test('isolates owned state between progression profiles', async ({ page }) => {
 test('build planner computes lumina totals and dedicated filtering', async ({ page }) => {
   await openApp(page);
 
+  // Switch to Lumina tab to access planner controls
+  await switchTab(page, 'lumina');
+
   await page.locator('#lumina-budget').fill('10');
   await page.locator('.carte-picto[data-id="1"] .build-indicateur').click();
   await page.locator('.carte-picto[data-id="2"] .build-indicateur').click();
@@ -143,6 +161,9 @@ test('build planner computes lumina totals and dedicated filtering', async ({ pa
 
 test('applies advanced gameplay filters and updates farm route grouping', async ({ page }) => {
   await openApp(page);
+
+  // Switch to Filtres tab to access gameplay filters
+  await switchTab(page, 'filtres');
 
   await page.locator('#gameplay-tag-buttons .btn-filtre-gameplay[data-gameplay-tag="burn"]').click();
   await expect(page.locator('#gameplay-tag-buttons .btn-filtre-gameplay.actif')).toHaveCount(1);
@@ -175,6 +196,9 @@ test('applies advanced gameplay filters and updates farm route grouping', async 
 
 test('shows dataset additions and updates from metadata changelog', async ({ page }) => {
   await openApp(page);
+
+  // Switch to Infos tab to access dataset changes
+  await switchTab(page, 'infos');
 
   await expect(page.locator('#dataset-changes-title')).not.toBeEmpty();
   await expect(page.locator('#dataset-changes-meta')).toContainText('2026.02.24');
