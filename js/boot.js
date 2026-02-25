@@ -65,19 +65,54 @@
   // Traduction des éléments statiques avant le premier rendu
   App.appliquerTraductions();
 
-  // Cache des éléments DOM fréquemment accédés (AVANT rendreGrille/progression)
-  App._dom = {
-    nbPossedes:  document.getElementById('nb-possedes'),
-    nbTotal:     document.getElementById('nb-total'),
-    barreProg:   document.getElementById('barre-prog'),
-    progPct:     document.getElementById('prog-pct'),
-    cptPossedes: document.getElementById('cpt-possedes'),
-    cptManquants: document.getElementById('cpt-manquants'),
-    cptAffiches: document.getElementById('cpt-affiches'),
-    etatVide:    document.getElementById('etat-vide'),
-    grille:      document.getElementById('grille'),
-    toast:       document.getElementById('toast'),
-  };
+  // Cache centralisé des éléments DOM (AVANT rendreGrille/progression)
+  App._dom = App.initDomRegistry({
+    // Progression
+    nbPossedes:  'nb-possedes',
+    nbTotal:     'nb-total',
+    barreProg:   'barre-prog',
+    progPct:     'prog-pct',
+    // Compteurs
+    cptPossedes: 'cpt-possedes',
+    cptManquants:'cpt-manquants',
+    cptAffiches: 'cpt-affiches',
+    // Grille
+    grille:      'grille',
+    etatVide:    'etat-vide',
+    // Toast
+    toast:       'toast',
+    // Contrôles
+    recherche:       'recherche',
+    filtreZone:      'filtre-zone',
+    triSelect:       'tri-select',
+    profilSelect:    'profil-select',
+    btnProfilAdd:    'btn-profil-add',
+    btnReset:        'btn-reset',
+    // Export / Import
+    btnExport:       'btn-export',
+    btnImport:       'btn-import',
+    importOverlay:   'import-overlay',
+    exportOverlay:   'export-overlay',
+    importTextarea:  'import-textarea',
+    exportTextarea:  'export-textarea',
+    importFichier:   'import-fichier',
+    btnImportValider:'btn-import-valider',
+    btnImportFichier:'btn-import-fichier',
+    btnImportAnnuler:'btn-import-annuler',
+    btnExportCopier: 'btn-export-copier',
+    btnExportFichier:'btn-export-fichier',
+    btnExportFermer: 'btn-export-fermer',
+    // Tooltip
+    tooltipOverlay:  'tooltip-overlay',
+    tooltipFermer:   'tooltip-fermer',
+    ttBtnPossession: 'tt-btn-possession',
+    // Lumina
+    luminaBudget:    'lumina-budget',
+    btnLuminaClear:  'btn-lumina-clear',
+    // Gameplay
+    filtreGameplayMode:'filtre-gameplay-mode',
+    btnGameplayClear:'btn-gameplay-clear',
+  });
 
   // Rendu de la grille et mise à jour de la progression
   App.rendreGrille();

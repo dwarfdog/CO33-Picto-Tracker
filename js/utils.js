@@ -130,14 +130,22 @@ App.getFocusableElements = function (root) {
 };
 
 /**
- * Ouvre une modal avec gestion du focus clavier.
+ * Pile de modals ouvertes (LIFO).
+ * Chaque entrée : { overlay: HTMLElement, previousFocus: HTMLElement }
+ * @type {Array}
+ */
+App._modalStack = [];
+
+/**
+ * Ouvre une modal avec gestion du focus clavier et pile de modals.
  * @param {HTMLElement} overlay
  * @param {HTMLElement} [initialFocusEl]
  */
 App.ouvrirModal = function (overlay, initialFocusEl) {
   if (!overlay || overlay.classList.contains('visible')) return;
 
-  App._lastFocusedBeforeModal = document.activeElement;
+  var previousFocus = document.activeElement;
+  App._modalStack.push({ overlay: overlay, previousFocus: previousFocus });
   App._activeModal = overlay;
   overlay.classList.add('visible');
   document.body.style.overflow = 'hidden';
@@ -151,21 +159,33 @@ App.ouvrirModal = function (overlay, initialFocusEl) {
 };
 
 /**
- * Ferme une modal et restaure le focus.
+ * Ferme une modal et restaure le focus via la pile.
  * @param {HTMLElement} overlay
  */
 App.fermerModal = function (overlay) {
   if (!overlay || !overlay.classList.contains('visible')) return;
 
   overlay.classList.remove('visible');
-  if (App._activeModal === overlay) App._activeModal = null;
 
-  if (!document.querySelector('.tooltip-overlay.visible, .import-overlay.visible, .export-overlay.visible')) {
-    document.body.style.overflow = '';
-    if (App._lastFocusedBeforeModal && typeof App._lastFocusedBeforeModal.focus === 'function') {
-      App._lastFocusedBeforeModal.focus();
+  // Retirer de la pile et récupérer le focus précédent
+  var previousFocus = null;
+  App._modalStack = App._modalStack.filter(function (entry) {
+    if (entry.overlay === overlay) {
+      previousFocus = entry.previousFocus;
+      return false;
     }
-    App._lastFocusedBeforeModal = null;
+    return true;
+  });
+
+  // Mettre à jour la modal active (dernière de la pile)
+  if (App._modalStack.length) {
+    App._activeModal = App._modalStack[App._modalStack.length - 1].overlay;
+  } else {
+    App._activeModal = null;
+    document.body.style.overflow = '';
+    if (previousFocus && typeof previousFocus.focus === 'function') {
+      previousFocus.focus();
+    }
   }
 };
 
@@ -256,4 +276,26 @@ App.safeExec = function (fn, fallbackMsg) {
       App.afficherToast(fallbackMsg, true);
     }
   }
+};
+
+/**
+ * Initialise un registre DOM en résolvant les IDs.
+ * Affiche un warning console si des éléments sont manquants.
+ * @param {Object<string,string>} spec - { clé: 'id-html', ... }
+ * @returns {Object<string,HTMLElement|null>}
+ */
+App.initDomRegistry = function (spec) {
+  var registry = {};
+  var missing = [];
+  var keys = Object.keys(spec);
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    var el = document.getElementById(spec[key]);
+    if (!el) missing.push(spec[key]);
+    registry[key] = el;
+  }
+  if (missing.length) {
+    console.warn('[DOM Registry] Éléments manquants :', missing.join(', '));
+  }
+  return registry;
 };

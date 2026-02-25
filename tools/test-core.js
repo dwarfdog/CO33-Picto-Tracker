@@ -20,6 +20,10 @@ if (typeof global.btoa === 'undefined') {
   };
 }
 
+if (typeof global.requestAnimationFrame === 'undefined') {
+  global.requestAnimationFrame = function (fn) { fn(); return 0; };
+}
+
 function loadScript(relPath) {
   const full = path.join(ROOT, relPath);
   const code = fs.readFileSync(full, 'utf8');

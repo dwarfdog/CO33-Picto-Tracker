@@ -202,19 +202,7 @@ App.appliquerImport = function (ids, options) {
     if (profil) profil.budgetLumina = budget;
   }
 
-  App.sauvegarder();
-  App.rafraichirEtatCartes();
-  if (typeof App.mettreAJourPlanificateurLumina === 'function') {
-    App.mettreAJourPlanificateurLumina();
-  }
-  App.mettreAJourProgression();
-  App.appliquerTri();
-  App.appliquerFiltres();
-
-  if (App.etat.pictoOuvert && typeof App.ouvrirTooltip === 'function') {
-    var picto = App.getPictoById(App.etat.pictoOuvert);
-    if (picto) App.ouvrirTooltip(picto);
-  }
+  App.rafraichirComplet();
 
   return true;
 };
@@ -245,32 +233,36 @@ App.importerDepuisCode = function (code) {
  * Ouvre la modal d'import.
  */
 App.ouvrirImportModal = function () {
-  var textarea = document.getElementById('import-textarea');
-  textarea.value = '';
-  App.ouvrirModal(document.getElementById('import-overlay'), textarea);
+  var dom = App._dom;
+  var textarea = dom.importTextarea || document.getElementById('import-textarea');
+  if (textarea) textarea.value = '';
+  App.ouvrirModal(dom.importOverlay || document.getElementById('import-overlay'), textarea);
 };
 
 /**
  * Ferme la modal d'import.
  */
 App.fermerImportModal = function () {
-  App.fermerModal(document.getElementById('import-overlay'));
+  App.fermerModal(App._dom.importOverlay || document.getElementById('import-overlay'));
 };
 
 /**
  * Ouvre la modal d'export avec le code base64 pré-rempli.
  */
 App.ouvrirExportModal = function () {
+  var dom = App._dom;
   var code = App.genererCodeExport();
-  var textarea = document.getElementById('export-textarea');
-  textarea.value = code;
-  App.ouvrirModal(document.getElementById('export-overlay'), textarea);
-  textarea.select();
+  var textarea = dom.exportTextarea || document.getElementById('export-textarea');
+  if (textarea) {
+    textarea.value = code;
+  }
+  App.ouvrirModal(dom.exportOverlay || document.getElementById('export-overlay'), textarea);
+  if (textarea) textarea.select();
 };
 
 /**
  * Ferme la modal d'export.
  */
 App.fermerExportModal = function () {
-  App.fermerModal(document.getElementById('export-overlay'));
+  App.fermerModal(App._dom.exportOverlay || document.getElementById('export-overlay'));
 };

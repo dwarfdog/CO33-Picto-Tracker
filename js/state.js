@@ -313,21 +313,13 @@ App.activerProfil = function (profilId, options) {
 
   App.rafraichirSelectProfils();
 
-  if (!opts.skipSave) {
-    App.sauvegarder();
-  }
-
   if (!opts.skipRender) {
-    App.rafraichirEtatCartes();
-    if (typeof App.mettreAJourPlanificateurLumina === 'function') App.mettreAJourPlanificateurLumina();
-    if (typeof App.mettreAJourProgression === 'function') App.mettreAJourProgression();
-    if (typeof App.appliquerTri === 'function') App.appliquerTri();
-    if (typeof App.appliquerFiltres === 'function') App.appliquerFiltres();
-  }
-
-  if (!opts.skipTooltip && App.etat.pictoOuvert && typeof App.ouvrirTooltip === 'function') {
-    var picto = App.getPictoById(App.etat.pictoOuvert);
-    if (picto) App.ouvrirTooltip(picto);
+    App.rafraichirComplet({
+      skipSave: opts.skipSave,
+      skipTooltip: opts.skipTooltip
+    });
+  } else if (!opts.skipSave) {
+    App.sauvegarder();
   }
 
   if (!opts.silentToast && profilChanged && typeof App.afficherToast === 'function' && typeof App.t === 'function') {
@@ -510,4 +502,28 @@ App.sauvegarder = function () {
       App.afficherToast(App.t('toast_save_error'), true);
     }
   }
+};
+
+/**
+ * Rafraîchit l'ensemble de l'interface après une modification d'état.
+ * Factorise le pattern répété dans togglePossession, appliquerImport,
+ * activerProfil, viderBuildLumina, reset.
+ * @param {Object} [options]
+ * @param {boolean} [options.skipSave]    - Ne pas sauvegarder
+ * @param {boolean} [options.skipTooltip] - Ne pas rafraîchir le tooltip ouvert
+ */
+App.rafraichirComplet = function (options) {
+  var opts = options || {};
+  if (!opts.skipSave) App.sauvegarder();
+  requestAnimationFrame(function () {
+    App.rafraichirEtatCartes();
+    if (typeof App.mettreAJourPlanificateurLumina === 'function') App.mettreAJourPlanificateurLumina();
+    if (typeof App.mettreAJourProgression === 'function') App.mettreAJourProgression();
+    if (typeof App.appliquerTri === 'function') App.appliquerTri();
+    if (typeof App.appliquerFiltres === 'function') App.appliquerFiltres();
+    if (!opts.skipTooltip && App.etat.pictoOuvert && typeof App.ouvrirTooltip === 'function') {
+      var p = App.getPictoById(App.etat.pictoOuvert);
+      if (p) App.ouvrirTooltip(p);
+    }
+  });
 };
