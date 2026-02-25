@@ -1502,7 +1502,7 @@ h1 span {
   border-color: var(--or-mat);
   background: rgba(201, 168, 76, 0.08);
   color: var(--or);
-  transform: scale(1.12);
+  box-shadow: 0 0 6px rgba(201, 168, 76, 0.25);
 }
 
 .carte-picto.possede .btn-detail {
@@ -1688,20 +1688,21 @@ h1 span {
 
 .tooltip-fermer {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  background: transparent;
+  top: 10px;
+  right: 10px;
+  background: var(--encre);
   border: 1px solid var(--brun-clair);
   color: var(--gris-dim);
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   line-height: 1;
+  z-index: 2;
 }
 
 .tooltip-fermer:hover {
@@ -1710,20 +1711,21 @@ h1 span {
 }
 
 .tooltip-entete {
-  padding: 28px 28px 16px;
+  padding: 16px 20px 12px;
   border-bottom: 1px solid var(--brun-clair);
+  padding-right: 40px;
 }
 
 .tooltip-entete-meta {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .tooltip-meta-id {
   font-family: var(--font-title);
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   letter-spacing: 0.1em;
   color: var(--gris-dim);
 }
@@ -1740,7 +1742,7 @@ h1 span {
 .tooltip-meta-lumina {
   margin-left: auto;
   font-family: var(--font-title);
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   letter-spacing: 0.05em;
   color: var(--stat-lumina);
   padding: 2px 8px;
@@ -1750,7 +1752,7 @@ h1 span {
 
 .tooltip-nom-fr {
   font-family: var(--font-title);
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 600;
   color: var(--ivoire);
   letter-spacing: 0.05em;
@@ -1759,19 +1761,19 @@ h1 span {
 .tooltip-nom-en {
   font-family: var(--font-alt);
   font-style: italic;
-  font-size: 1rem;
-  color: var(--gris-text);
-  margin-top: 4px;
+  font-size: 0.85rem;
+  color: var(--gris-dim);
+  margin-top: 2px;
 }
 
 .tooltip-corps {
-  padding: 20px 28px;
+  padding: 14px 20px;
 }
 
 /* Groupes thématiques */
 .tooltip-group {
-  margin-bottom: 20px;
-  padding-bottom: 16px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
@@ -1783,87 +1785,110 @@ h1 span {
 
 .tooltip-group-titre {
   font-family: var(--font-title);
-  font-size: 0.58rem;
+  font-size: 0.55rem;
   letter-spacing: 0.25em;
   color: var(--or-mat);
   text-transform: uppercase;
-  margin-bottom: 12px;
-  padding-bottom: 6px;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
   border-bottom: 1px solid rgba(201, 168, 76, 0.15);
 }
 
+/* Ligne 2 colonnes */
+.tooltip-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 14px;
+}
+
 .tooltip-section {
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .tooltip-section:last-child {
   margin-bottom: 0;
 }
 
+.tooltip-row-2col > .tooltip-section {
+  margin-bottom: 0;
+}
+
 .tooltip-section-titre {
   font-family: var(--font-title);
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   letter-spacing: 0.2em;
   color: var(--gris-dim);
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .tooltip-section-contenu {
   font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.5;
+  font-size: 0.92rem;
+  line-height: 1.4;
   color: var(--creme);
 }
 
 .tooltip-section-contenu.or {
   color: var(--or);
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
 .tooltip-section-contenu.italique {
   font-style: italic;
   color: var(--gris-text);
-}
-
-.tooltip-section-contenu.lumina {
-  color: var(--stat-lumina);
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 0.85rem;
 }
 
 .tooltip-section-contenu.flag {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .tooltip-section-contenu.flag .flag-icon {
-  width: 16px;
-  height: 16px;
+  width: 13px;
+  height: 13px;
   color: var(--or-mat);
   flex-shrink: 0;
+}
+
+/* Badges catégorie inline (dans classification) */
+.tooltip-cat-badges {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+
+.tooltip-cat-badge {
+  font-family: var(--font-title);
+  font-size: 0.52rem;
+  letter-spacing: 0.06em;
+  padding: 1px 6px;
+  border-radius: 2px;
+  color: #fff;
+  display: inline-block;
 }
 
 .tooltip-stats-grille {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
+  gap: 6px;
 }
 
 .tooltip-stat-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 10px;
+  padding: 4px 8px;
   border: 1px solid var(--brun-clair);
   background: var(--brun-fonce);
 }
 
 .tooltip-stat-nom {
   font-family: var(--font-title);
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   letter-spacing: 0.1em;
   color: var(--gris-dim);
   text-transform: uppercase;
@@ -1871,7 +1896,7 @@ h1 span {
 
 .tooltip-stat-val {
   font-family: var(--font-body);
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 600;
 }
 
@@ -1893,10 +1918,10 @@ h1 span {
 
 .tooltip-btn-possession {
   width: 100%;
-  padding: 14px;
-  margin-top: 20px;
+  padding: 10px;
+  margin-top: 10px;
   font-family: var(--font-title);
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   border: 1px solid var(--or-mat);
@@ -2103,8 +2128,8 @@ h1 span {
 /* ── Tooltip: Character affinities inline ── */
 .tooltip-char-affinities {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 6px 14px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px 10px;
 }
 
 .char-affin-inline {
@@ -2115,12 +2140,12 @@ h1 span {
 
 .char-affin-inline-name {
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   color: var(--gris-text);
 }
 
 .char-affin-inline-stars {
-  font-size: 0.78rem;
+  font-size: 0.7rem;
   color: var(--gris-dim);
 }
 
@@ -2139,14 +2164,14 @@ h1 span {
 .tooltip-mastery-controls {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
 }
 
 .mastery-circle {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  border: 2px solid var(--or-mat);
+  border: 1.5px solid var(--or-mat);
   background: transparent;
   cursor: pointer;
   transition: all 0.2s;
@@ -2155,7 +2180,7 @@ h1 span {
 
 .mastery-circle:hover {
   border-color: var(--or);
-  box-shadow: 0 0 8px rgba(201, 168, 76, 0.3);
+  box-shadow: 0 0 6px rgba(201, 168, 76, 0.3);
 }
 
 .mastery-circle.filled {
@@ -2165,25 +2190,25 @@ h1 span {
 
 .mastery-label {
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: var(--or-clair);
-  margin-left: 8px;
+  margin-left: 4px;
 }
 
 .tooltip-level-controls {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
 }
 
 .level-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
   border: 1px solid var(--or-mat);
   background: transparent;
   color: var(--or);
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
@@ -2204,9 +2229,9 @@ h1 span {
 
 .level-display {
   font-family: var(--font-title);
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: var(--or-clair);
-  min-width: 60px;
+  min-width: 50px;
   text-align: center;
 }
 

@@ -48,9 +48,18 @@ App.ouvrirTooltip = function (picto) {
     metaLumina.style.display = 'none';
   }
 
-  // Noms
+  // Nom principal (langue active)
   document.getElementById('tt-nom-fr').textContent = App.champ(picto, 'nom');
-  document.getElementById('tt-nom-en').textContent = App.nomSecondaire(picto);
+
+  // Nom secondaire : seulement si traduction dérivée (fallback)
+  var nomEnEl = document.getElementById('tt-nom-en');
+  if (!picto.traduction_confirmee) {
+    nomEnEl.textContent = App.nomSecondaire(picto);
+    nomEnEl.style.display = '';
+  } else {
+    nomEnEl.textContent = '';
+    nomEnEl.style.display = 'none';
+  }
 
   // Effet
   document.getElementById('tt-effet').textContent =
@@ -65,7 +74,6 @@ App.ouvrirTooltip = function (picto) {
   var secFlag = document.getElementById('tt-sec-flag');
   var flagText = App.champ(picto, 'flag');
   if (flagText) {
-    // Vider et reconstruire sans innerHTML
     while (flagEl.firstChild) flagEl.removeChild(flagEl.firstChild);
     var flagSvg = App._svgTemplates.flag.cloneNode(true);
     flagSvg.classList.add('flag-icon');
@@ -137,21 +145,29 @@ App.ouvrirTooltip = function (picto) {
     secStats.style.display = 'none';
   }
 
-  // Catégorie (dans le groupe classification)
+  // Catégorie (avec badges colorés + texte)
   var secCategorie = document.getElementById('tt-sec-categorie');
   var ttCategorie = document.getElementById('tt-categorie');
+  while (ttCategorie.firstChild) ttCategorie.removeChild(ttCategorie.firstChild);
   if (Array.isArray(picto.categories) && picto.categories.length && DATA.meta && Array.isArray(DATA.meta.categories)) {
-    var catLabelsBody = [];
+    var badgeContainer = document.createElement('div');
+    badgeContainer.className = 'tooltip-cat-badges';
+    var catTexts = [];
     for (var ci2 = 0; ci2 < picto.categories.length; ci2++) {
       for (var cm2 = 0; cm2 < DATA.meta.categories.length; cm2++) {
         if (DATA.meta.categories[cm2].id === picto.categories[ci2]) {
-          catLabelsBody.push(App.LANG === 'fr' ? DATA.meta.categories[cm2].label_fr : DATA.meta.categories[cm2].label_en);
+          var catLabel = App.LANG === 'fr' ? DATA.meta.categories[cm2].label_fr : DATA.meta.categories[cm2].label_en;
+          catTexts.push(catLabel);
+          var badge = document.createElement('span');
+          badge.className = 'tooltip-cat-badge cat-' + picto.categories[ci2];
+          badge.textContent = catLabel;
+          badgeContainer.appendChild(badge);
           break;
         }
       }
     }
-    if (catLabelsBody.length) {
-      ttCategorie.textContent = catLabelsBody.join(' / ');
+    if (catTexts.length) {
+      ttCategorie.appendChild(badgeContainer);
       secCategorie.style.display = '';
     } else {
       secCategorie.style.display = 'none';
@@ -232,13 +248,13 @@ App.ouvrirTooltip = function (picto) {
   masteryControls.appendChild(masteryLabel);
   secMastery.style.display = '';
 
-  // Niveau (1-33)
+  // Niveau (1-33 max absolu)
   var secLevel = document.getElementById('tt-sec-level');
   var levelControls = document.getElementById('tt-level-controls');
   while (levelControls.firstChild) levelControls.removeChild(levelControls.firstChild);
 
   var currentLevel = App.getNiveau(picto.id);
-  var maxLevel = (typeof App.getNgMaxLevel === 'function') ? App.getNgMaxLevel() : App.PICTO_LEVEL_MAX;
+  var maxLevel = App.PICTO_LEVEL_MAX;
 
   var btnLevelDown = document.createElement('button');
   btnLevelDown.type = 'button';
@@ -260,8 +276,7 @@ App.ouvrirTooltip = function (picto) {
   btnLevelUp.textContent = '+';
   btnLevelUp.disabled = currentLevel >= maxLevel;
   btnLevelUp.addEventListener('click', function () {
-    var ngMax = (typeof App.getNgMaxLevel === 'function') ? App.getNgMaxLevel() : App.PICTO_LEVEL_MAX;
-    App.setNiveau(picto.id, Math.min(App.getNiveau(picto.id) + 1, ngMax));
+    App.setNiveau(picto.id, Math.min(App.getNiveau(picto.id) + 1, App.PICTO_LEVEL_MAX));
     App.ouvrirTooltip(picto);
   });
 

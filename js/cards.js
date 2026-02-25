@@ -152,7 +152,7 @@ App.creerCartePicto = function (picto) {
 
   el.appendChild(topbar);
 
-  // ── Header (noms + badge traduction) ──
+  // ── Header (nom principal + secondaire seulement si traduction dérivée) ──
   var header = document.createElement('div');
   header.className = 'carte-header';
 
@@ -162,12 +162,12 @@ App.creerCartePicto = function (picto) {
   nomFr.textContent = App.champ(picto, 'nom');
   header.appendChild(nomFr);
 
-  var nomEn = document.createElement('div');
-  nomEn.className = 'carte-nom-en';
-  nomEn.textContent = App.nomSecondaire(picto);
-  header.appendChild(nomEn);
-
   if (!picto.traduction_confirmee) {
+    var nomEn = document.createElement('div');
+    nomEn.className = 'carte-nom-en';
+    nomEn.textContent = App.nomSecondaire(picto);
+    header.appendChild(nomEn);
+
     var badgeTrad = document.createElement('span');
     badgeTrad.className = 'badge-non-confirme';
     badgeTrad.textContent = App.t('badge_derived');
@@ -328,7 +328,9 @@ App.mettreAJourCartesTexte = function () {
     var picto = el._picto;
     el.classList.toggle('dans-build', App.estDansBuild(picto.id));
     el.querySelector('.carte-nom-fr').textContent = App.champ(picto, 'nom');
-    el.querySelector('.carte-nom-en').textContent = App.nomSecondaire(picto);
+    // Nom secondaire seulement si traduction dérivée
+    var nomEnEl = el.querySelector('.carte-nom-en');
+    if (nomEnEl) nomEnEl.textContent = App.nomSecondaire(picto);
     el.querySelector('.carte-effet').textContent = App.champ(picto, 'effet');
     el.querySelector('.possession-indicateur').setAttribute('aria-label', App.t('aria_toggle'));
     el.querySelector('.possession-indicateur').setAttribute('aria-pressed', App.etat.possedes.has(picto.id) ? 'true' : 'false');
