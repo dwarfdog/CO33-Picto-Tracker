@@ -260,7 +260,7 @@ App.togglePossession = function (id, el) {
  */
 App.rendreGrille = function () {
   var grille = App._dom.grille || document.getElementById('grille');
-  grille.innerHTML = '';
+  while (grille.firstChild) grille.removeChild(grille.firstChild);
   App.toutes_cartes = [];
   App.cartesParId = {};
 

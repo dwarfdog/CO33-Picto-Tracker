@@ -171,7 +171,6 @@
     export_close:            'Close',
 
     // Footer
-    footer_text:             'Data extracted from <span>Clair Obscur: Expedition 33</span> — Sandfall Interactive &nbsp;·&nbsp; Progress saved locally<br>MIT License © 2026 DwarfDog',
     footer_data:             'Data extracted from Clair Obscur: Expedition 33',
     footer_studio:           'Sandfall Interactive',
     footer_save:             'Progress saved locally',

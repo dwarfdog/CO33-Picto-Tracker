@@ -1,6 +1,6 @@
 // © 2026 DwarfDog — MIT License
 // https://github.com/DwarfDog/CO33-Picto-Tracker
-const DATA = {
+var DATA = {
     "meta": {
         "jeu": "Clair Obscur : Expédition 33",
         "total_pictos": 210,

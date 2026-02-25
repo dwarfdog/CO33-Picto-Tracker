@@ -171,7 +171,6 @@
     export_close:            'Fermer',
 
     // Footer
-    footer_text:             'Données extraites de <span>Clair Obscur : Expédition 33</span> — Sandfall Interactive &nbsp;·&nbsp; Progression sauvegardée localement<br>MIT License © 2026 DwarfDog',
     footer_data:             'Données extraites de Clair Obscur : Expédition 33',
     footer_studio:           'Sandfall Interactive',
     footer_save:             'Progression sauvegardée localement',

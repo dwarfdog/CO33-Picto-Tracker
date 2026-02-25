@@ -6,23 +6,38 @@
 // ══════════════════════════════════════════════════════
 (function () {
   // Guard : vérifier que les données sont chargées
+  /**
+   * Affiche une erreur fatale dans le body (construction DOM pure).
+   * @param {string[]} lines - Lignes de texte à afficher
+   */
+  function afficherErreurFatale(lines) {
+    var p = document.createElement('p');
+    p.style.cssText = 'color:#c0392b;text-align:center;padding:80px 20px;font-family:sans-serif;font-size:1.2rem;';
+    lines.forEach(function (line, i) {
+      if (i > 0) p.appendChild(document.createElement('br'));
+      p.appendChild(document.createTextNode(line));
+    });
+    while (document.body.firstChild) document.body.removeChild(document.body.firstChild);
+    document.body.appendChild(p);
+  }
+
   if (typeof DATA === 'undefined' || !DATA.pictos) {
-    document.body.innerHTML =
-      '<p style="color:#c0392b;text-align:center;padding:80px 20px;font-family:sans-serif;font-size:1.2rem;">' +
-      'Error: data could not be loaded.<br>' +
-      'Erreur\u00a0: les donn\u00e9es n\u2019ont pas pu \u00eatre charg\u00e9es.<br>' +
-      'V\u00e9rifiez que le fichier <code>js/datas/skills-data.js</code> est pr\u00e9sent.</p>';
+    afficherErreurFatale([
+      'Error: data could not be loaded.',
+      'Erreur\u00a0: les donn\u00e9es n\u2019ont pas pu \u00eatre charg\u00e9es.',
+      'V\u00e9rifiez que le fichier js/datas/skills-data.js est pr\u00e9sent.'
+    ]);
     return;
   }
 
   // Validation de la structure des données
   var sample = DATA.pictos[0];
   if (!sample || typeof sample.id !== 'number' || !sample.nom_en) {
-    document.body.innerHTML =
-      '<p style="color:#c0392b;text-align:center;padding:80px 20px;font-family:sans-serif;font-size:1.2rem;">' +
-      'Error: data format is invalid.<br>' +
-      'Erreur\u00a0: le format des donn\u00e9es est invalide.<br>' +
-      'V\u00e9rifiez la structure de <code>js/datas/skills-data.js</code>.</p>';
+    afficherErreurFatale([
+      'Error: data format is invalid.',
+      'Erreur\u00a0: le format des donn\u00e9es est invalide.',
+      'V\u00e9rifiez la structure de js/datas/skills-data.js.'
+    ]);
     return;
   }
 
