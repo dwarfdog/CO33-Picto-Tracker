@@ -10,7 +10,9 @@
 		<meta property="og:description" content="Track your Picto collection in Clair Obscur: Expedition 33">
 		<meta property="og:type" content="website">
 		<link rel="stylesheet" href="style.css">
+		<link rel="manifest" href="manifest.json">
 		<link rel="shortcut icon" href="docs/images/fluidicon.png" type="image/x-icon">
+		<link rel="apple-touch-icon" href="docs/images/fluidicon.png">
 	</head>
 	<body>
 
@@ -69,6 +71,18 @@
 				<option value=""></option>
 			</select>
 
+			<!-- Catégorie -->
+			<label for="filtre-categorie" class="sr-only" id="lbl-filtre-categorie">Category filter</label>
+			<select class="select-zone" id="filtre-categorie">
+				<option value=""></option>
+			</select>
+
+			<!-- Type d'obtention -->
+			<label for="filtre-obtention" class="sr-only" id="lbl-filtre-obtention">Obtain filter</label>
+			<select class="select-zone" id="filtre-obtention">
+				<option value=""></option>
+			</select>
+
 			<!-- Tri -->
 			<label for="tri-select" class="sr-only" id="lbl-tri-select">Sort order</label>
 			<select class="select-zone" id="tri-select">
@@ -106,6 +120,17 @@
 				<input type="file" id="import-fichier" accept=".json,.txt" style="display:none">
 			</div>
 
+			<!-- NG Cycle -->
+			<div class="controles-ligne">
+				<label for="ng-cycle-select" class="sr-only" id="lbl-ng-cycle">NG Cycle</label>
+				<select class="select-zone ng-cycle-select" id="ng-cycle-select" aria-labelledby="lbl-ng-cycle">
+					<option value="0">NG</option>
+					<option value="1">NG+</option>
+					<option value="2">NG++</option>
+					<option value="3">NG+++</option>
+				</select>
+			</div>
+
 			<!-- Reset -->
 			<button type="button" class="btn-reset" id="btn-reset"></button>
 		</div>
@@ -131,6 +156,15 @@
 				<button type="button" class="btn-filtre btn-filtre-build" data-build-filtre="planifies"></button>
 				<button type="button" class="btn-filtre btn-filtre-build" data-build-filtre="hors-plan"></button>
 			</div>
+		</section>
+
+		<!-- ══════════════════════════════════════════════════════
+		CHARACTER BUILDS
+		══════════════════════════════════════════════════════ -->
+		<section class="character-builds" id="character-builds" style="display:none">
+			<div class="character-builds-titre" id="character-builds-title"></div>
+			<div class="character-selector" id="character-selector"></div>
+			<div class="character-build-detail" id="character-build-detail"></div>
 		</section>
 
 		<!-- Filtres gameplay experts -->
@@ -273,6 +307,30 @@
 						<div class="tooltip-section-titre"></div>
 						<div class="tooltip-section-contenu italique" id="tt-obtention"></div>
 					</div>
+					<div class="tooltip-section" id="tt-sec-source">
+						<div class="tooltip-section-titre"></div>
+						<div class="tooltip-section-contenu" id="tt-source"></div>
+					</div>
+					<div class="tooltip-section" id="tt-sec-categorie">
+						<div class="tooltip-section-titre"></div>
+						<div class="tooltip-section-contenu" id="tt-categorie"></div>
+					</div>
+					<div class="tooltip-section" id="tt-sec-obtention-type">
+						<div class="tooltip-section-titre"></div>
+						<div class="tooltip-section-contenu" id="tt-obtention-type"></div>
+					</div>
+					<div class="tooltip-section" id="tt-sec-char-affinity">
+						<div class="tooltip-section-titre"></div>
+						<div class="tooltip-char-affinities" id="tt-char-affinities"></div>
+					</div>
+					<div class="tooltip-section" id="tt-sec-mastery">
+						<div class="tooltip-section-titre"></div>
+						<div class="tooltip-mastery-controls" id="tt-mastery-controls"></div>
+					</div>
+					<div class="tooltip-section" id="tt-sec-level">
+						<div class="tooltip-section-titre"></div>
+						<div class="tooltip-level-controls" id="tt-level-controls"></div>
+					</div>
 					<button type="button" class="tooltip-btn-possession" id="tt-btn-possession"></button>
 				</div>
 			</div>
@@ -305,7 +363,35 @@
 				<div class="export-actions">
 					<button type="button" class="btn-export-copier" id="btn-export-copier"></button>
 					<button type="button" class="btn-export-fichier" id="btn-export-fichier"></button>
+					<button type="button" class="btn-export-all" id="btn-export-all"></button>
 					<button type="button" class="btn-export-fermer" id="btn-export-fermer"></button>
+				</div>
+			</div>
+		</div>
+
+		<!-- ══════════════════════════════════════════════════════
+		MODAL PROMPT (remplace prompt() natif)
+		══════════════════════════════════════════════════════ -->
+		<div class="prompt-overlay" id="prompt-overlay" role="dialog" aria-modal="true" aria-labelledby="prompt-title">
+			<div class="prompt-panneau" role="document">
+				<div class="prompt-titre" id="prompt-title"></div>
+				<input type="text" class="prompt-input" id="prompt-input" autocomplete="off" spellcheck="false">
+				<div class="prompt-actions">
+					<button type="button" class="btn-prompt-ok" id="btn-prompt-ok"></button>
+					<button type="button" class="btn-prompt-cancel" id="btn-prompt-cancel"></button>
+				</div>
+			</div>
+		</div>
+
+		<!-- ══════════════════════════════════════════════════════
+		MODAL CONFIRM (remplace confirm() natif)
+		══════════════════════════════════════════════════════ -->
+		<div class="confirm-overlay" id="confirm-overlay" role="alertdialog" aria-modal="true" aria-labelledby="confirm-message">
+			<div class="confirm-panneau" role="document">
+				<div class="confirm-message" id="confirm-message"></div>
+				<div class="confirm-actions">
+					<button type="button" class="btn-confirm-yes" id="btn-confirm-yes"></button>
+					<button type="button" class="btn-confirm-no" id="btn-confirm-no"></button>
 				</div>
 			</div>
 		</div>
@@ -343,6 +429,7 @@
 		<script src="js/tooltip.js"></script>
 		<script src="js/filters.js"></script>
 		<script src="js/lumina-planner.js"></script>
+		<script src="js/character-builds.js"></script>
 		<script src="js/dataset-changes.js"></script>
 		<script src="js/export-import.js"></script>
 		<script src="js/cards.js"></script>

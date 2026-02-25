@@ -11,14 +11,20 @@ App.etat = {
   possedes: new Set(),
   buildLumina: new Set(),
   luminaBudget: 0,
+  maitrise: {},  // { [pictoId]: 0-4 } — Lumina mastery combats
+  niveaux: {},   // { [pictoId]: 1-33 } — Picto levels
+  ngCycle: 0,    // 0=NG, 1=NG+, 2=NG++, 3=NG+++
   filtreCollection: 'tous', // 'tous' | 'possedes' | 'manquants'
   filtreBuild: 'tous', // 'tous' | 'planifies' | 'hors-plan'
+  filtreCategorie: '',  // '' | 'offensive' | 'defensive' | 'support'
+  filtreObtention: '',  // '' | 'exploration' | 'paint_cage' | 'quest' | 'boss' | 'merchant' | 'story'
   filtreGameplayMode: 'any', // 'any' | 'all'
   filtreGameplayTags: [], // string[]
   filtreZone: '',
   recherche: '',
   tri: 'id-asc',
   pictoOuvert: null, // ID du picto ouvert (number | null)
+  selectedCharacter: 'gustave', // ID du personnage sélectionné dans le build planner
 };
 
 /**
@@ -109,6 +115,126 @@ App.normaliserBudgetLumina = function (raw) {
 };
 
 /**
+ * Normalise un objet de maîtrise Lumina.
+ * Purge les clés invalides et borne les valeurs à [0, MASTERY_MAX].
+ * @param {Object} raw - { [pictoId]: number }
+ * @returns {Object} Objet nettoyé
+ */
+App.normaliserMaitrise = function (raw) {
+  var result = {};
+  if (!raw || typeof raw !== 'object') return result;
+  var keys = Object.keys(raw);
+  for (var i = 0; i < keys.length; i++) {
+    var id = parseInt(keys[i], 10);
+    if (!isFinite(id) || !App._idsValides || !App._idsValides.has(id)) continue;
+    var val = parseInt(raw[keys[i]], 10);
+    if (!isFinite(val) || val < 0) val = 0;
+    if (val > App.MASTERY_MAX) val = App.MASTERY_MAX;
+    if (val > 0) result[id] = val;
+  }
+  return result;
+};
+
+/**
+ * Normalise un objet de niveaux de pictos.
+ * Purge les clés invalides et borne les valeurs à [1, PICTO_LEVEL_MAX].
+ * @param {Object} raw - { [pictoId]: number }
+ * @returns {Object} Objet nettoyé
+ */
+App.normaliserNiveaux = function (raw) {
+  var result = {};
+  if (!raw || typeof raw !== 'object') return result;
+  var keys = Object.keys(raw);
+  for (var i = 0; i < keys.length; i++) {
+    var id = parseInt(keys[i], 10);
+    if (!isFinite(id) || !App._idsValides || !App._idsValides.has(id)) continue;
+    var val = parseInt(raw[keys[i]], 10);
+    if (!isFinite(val) || val < 1) val = 1;
+    if (val > App.PICTO_LEVEL_MAX) val = App.PICTO_LEVEL_MAX;
+    if (val > 1) result[id] = val;
+  }
+  return result;
+};
+
+/**
+ * Définit la maîtrise d'un picto et sauvegarde.
+ * @param {number} pictoId
+ * @param {number} value (0-4)
+ */
+App.setMaitrise = function (pictoId, value) {
+  var val = Math.max(0, Math.min(App.MASTERY_MAX, parseInt(value, 10) || 0));
+  if (val === 0) {
+    delete App.etat.maitrise[pictoId];
+  } else {
+    App.etat.maitrise[pictoId] = val;
+  }
+  var profil = App.getProfilActif();
+  if (profil) profil.maitrise = App.etat.maitrise;
+  App.sauvegarder();
+};
+
+/**
+ * Retourne la maîtrise d'un picto (0 par défaut).
+ * @param {number} pictoId
+ * @returns {number}
+ */
+App.getMaitrise = function (pictoId) {
+  return App.etat.maitrise[pictoId] || 0;
+};
+
+/**
+ * Définit le niveau d'un picto et sauvegarde.
+ * @param {number} pictoId
+ * @param {number} value (1-33)
+ */
+App.setNiveau = function (pictoId, value) {
+  var val = Math.max(1, Math.min(App.PICTO_LEVEL_MAX, parseInt(value, 10) || 1));
+  if (val === 1) {
+    delete App.etat.niveaux[pictoId];
+  } else {
+    App.etat.niveaux[pictoId] = val;
+  }
+  var profil = App.getProfilActif();
+  if (profil) profil.niveaux = App.etat.niveaux;
+  App.sauvegarder();
+};
+
+/**
+ * Retourne le niveau d'un picto (1 par défaut).
+ * @param {number} pictoId
+ * @returns {number}
+ */
+App.getNiveau = function (pictoId) {
+  return App.etat.niveaux[pictoId] || 1;
+};
+
+/**
+ * Retourne le niveau max de picto selon le cycle NG actif.
+ * @returns {number}
+ */
+App.getNgMaxLevel = function () {
+  var cycle = App.etat.ngCycle || 0;
+  for (var i = 0; i < App.NG_CYCLES.length; i++) {
+    if (App.NG_CYCLES[i].id === cycle) return App.NG_CYCLES[i].maxLevel;
+  }
+  return App.PICTO_LEVEL_MAX;
+};
+
+/**
+ * Définit le cycle NG et sauvegarde.
+ * @param {number} cycle (0-3)
+ */
+App.setNgCycle = function (cycle) {
+  var val = parseInt(cycle, 10) || 0;
+  if (val < 0) val = 0;
+  if (val > 3) val = 3;
+  App.etat.ngCycle = val;
+  var profil = App.getProfilActif();
+  if (profil) profil.ngCycle = val;
+  App.sauvegarder();
+};
+
+/**
  * Retourne un profil par son ID.
  * @param {string} profilId
  * @returns {{id:string, nom:string, possedes:Set<number>, buildLumina:Set<number>, budgetLumina:number}|null}
@@ -172,12 +298,23 @@ App.ajouterProfil = function (config) {
   var normalizedBudget = App.normaliserBudgetLumina(budgetSource);
   if (normalizedBudget.changed) changed = true;
 
+  // Maîtrise Lumina (0-4) et niveaux (1-33)
+  var maitrise = App.normaliserMaitrise(cfg.maitrise || {});
+  var niveaux = App.normaliserNiveaux(cfg.niveaux || {});
+
+  // NG cycle (0-3)
+  var ngCycle = parseInt(cfg.ng_cycle, 10) || 0;
+  if (ngCycle < 0 || ngCycle > 3) ngCycle = 0;
+
   var profil = {
     id: profilId,
     nom: nom,
     possedes: normalized.set,
     buildLumina: normalizedBuild.set,
-    budgetLumina: normalizedBudget.value
+    budgetLumina: normalizedBudget.value,
+    maitrise: maitrise,
+    niveaux: niveaux,
+    ngCycle: ngCycle
   };
 
   App.etat.profils.push(profil);
@@ -211,6 +348,9 @@ App.assurerProfils = function () {
   App.etat.possedes = profilActif ? profilActif.possedes : new Set();
   App.etat.buildLumina = profilActif ? profilActif.buildLumina : new Set();
   App.etat.luminaBudget = profilActif ? profilActif.budgetLumina : 0;
+  App.etat.maitrise = profilActif && profilActif.maitrise ? profilActif.maitrise : {};
+  App.etat.niveaux = profilActif && profilActif.niveaux ? profilActif.niveaux : {};
+  App.etat.ngCycle = profilActif ? (profilActif.ngCycle || 0) : 0;
 
   if (['tous', 'planifies', 'hors-plan'].indexOf(App.etat.filtreBuild) === -1) {
     App.etat.filtreBuild = 'tous';
@@ -310,24 +450,19 @@ App.activerProfil = function (profilId, options) {
   App.etat.possedes = profil.possedes;
   App.etat.buildLumina = profil.buildLumina;
   App.etat.luminaBudget = profil.budgetLumina;
+  App.etat.maitrise = profil.maitrise || {};
+  App.etat.niveaux = profil.niveaux || {};
+  App.etat.ngCycle = profil.ngCycle || 0;
 
   App.rafraichirSelectProfils();
 
-  if (!opts.skipSave) {
-    App.sauvegarder();
-  }
-
   if (!opts.skipRender) {
-    App.rafraichirEtatCartes();
-    if (typeof App.mettreAJourPlanificateurLumina === 'function') App.mettreAJourPlanificateurLumina();
-    if (typeof App.mettreAJourProgression === 'function') App.mettreAJourProgression();
-    if (typeof App.appliquerTri === 'function') App.appliquerTri();
-    if (typeof App.appliquerFiltres === 'function') App.appliquerFiltres();
-  }
-
-  if (!opts.skipTooltip && App.etat.pictoOuvert && typeof App.ouvrirTooltip === 'function') {
-    var picto = App.getPictoById(App.etat.pictoOuvert);
-    if (picto) App.ouvrirTooltip(picto);
+    App.rafraichirComplet({
+      skipSave: opts.skipSave,
+      skipTooltip: opts.skipTooltip
+    });
+  } else if (!opts.skipSave) {
+    App.sauvegarder();
   }
 
   if (!opts.silentToast && profilChanged && typeof App.afficherToast === 'function' && typeof App.t === 'function') {
@@ -430,12 +565,27 @@ App.chargerSauvegarde = function () {
             }
           }
 
+          // Migration v4→v5 : maitrise et niveaux (absent → {})
+          var maitrise = (entry.maitrise && typeof entry.maitrise === 'object') ? entry.maitrise : {};
+          var niveaux = (entry.niveaux && typeof entry.niveaux === 'object') ? entry.niveaux : {};
+          if (!entry.maitrise || !entry.niveaux) needsMigration = true;
+
+          // Migration v5→v6 : ng_cycle (absent → 0)
+          var ngCycle = entry.ng_cycle;
+          if (ngCycle === undefined) {
+            ngCycle = 0;
+            needsMigration = true;
+          }
+
           var added = App.ajouterProfil({
             id: entry.id,
             nom: entry.nom,
             possedes: possedes,
             build_lumina: buildLumina,
-            budget_lumina: budgetLumina
+            budget_lumina: budgetLumina,
+            maitrise: maitrise,
+            niveaux: niveaux,
+            ng_cycle: ngCycle
           });
 
           if (added.changed) needsMigration = true;
@@ -445,6 +595,19 @@ App.chargerSauvegarde = function () {
           App.etat.profilActifId = parsed.profil_actif;
         } else {
           needsMigration = true;
+        }
+
+        // Restaurer les préférences UI persistées
+        if (parsed.ui && typeof parsed.ui === 'object') {
+          var validTri = ['id-asc','id-desc','nom-asc','nom-desc','zone-asc','zone-desc','possedes-first','manquants-first','build-first','lumina-asc','lumina-desc'];
+          if (validTri.indexOf(parsed.ui.tri) !== -1) App.etat.tri = parsed.ui.tri;
+          if (['tous','possedes','manquants'].indexOf(parsed.ui.filtreCollection) !== -1) App.etat.filtreCollection = parsed.ui.filtreCollection;
+          if (typeof parsed.ui.filtreZone === 'string') App.etat.filtreZone = parsed.ui.filtreZone;
+          if (['tous','planifies','hors-plan'].indexOf(parsed.ui.filtreBuild) !== -1) App.etat.filtreBuild = parsed.ui.filtreBuild;
+          if (typeof parsed.ui.filtreCategorie === 'string') App.etat.filtreCategorie = parsed.ui.filtreCategorie;
+          if (typeof parsed.ui.filtreObtention === 'string') App.etat.filtreObtention = parsed.ui.filtreObtention;
+          if (['any','all'].indexOf(parsed.ui.filtreGameplayMode) !== -1) App.etat.filtreGameplayMode = parsed.ui.filtreGameplayMode;
+          if (Array.isArray(parsed.ui.filtreGameplayTags)) App.etat.filtreGameplayTags = parsed.ui.filtreGameplayTags;
         }
 
         if (parsed.version !== App.STORAGE_VERSION) {
@@ -475,12 +638,13 @@ App.chargerSauvegarde = function () {
 };
 
 /**
- * Sauvegarde la progression dans localStorage au format v4 (multi-profils).
+ * Sauvegarde la progression dans localStorage au format v6 (multi-profils + mastery/levels + NG cycle).
  * Format :
  * {
- *   version: 4,
+ *   version: 6,
  *   profil_actif: 'profil_xxx',
- *   profils: [{ id, nom, possedes: [...], build_lumina: [...], budget_lumina: 0 }, ...]
+ *   profils: [{ id, nom, possedes, build_lumina, budget_lumina, maitrise, niveaux, ng_cycle }],
+ *   ui: { tri, filtreCollection, filtreZone, filtreBuild, filtreGameplayMode, filtreGameplayTags }
  * }
  */
 App.sauvegarder = function () {
@@ -493,14 +657,27 @@ App.sauvegarder = function () {
         nom: profil.nom,
         possedes: Array.from(profil.possedes).sort(function (a, b) { return a - b; }),
         build_lumina: Array.from(profil.buildLumina).sort(function (a, b) { return a - b; }),
-        budget_lumina: profil.budgetLumina
+        budget_lumina: profil.budgetLumina,
+        maitrise: profil.maitrise || {},
+        niveaux: profil.niveaux || {},
+        ng_cycle: profil.ngCycle || 0
       };
     });
 
     var data = {
       version: App.STORAGE_VERSION,
       profil_actif: App.etat.profilActifId,
-      profils: profils
+      profils: profils,
+      ui: {
+        tri: App.etat.tri,
+        filtreCollection: App.etat.filtreCollection,
+        filtreZone: App.etat.filtreZone,
+        filtreBuild: App.etat.filtreBuild,
+        filtreCategorie: App.etat.filtreCategorie,
+        filtreObtention: App.etat.filtreObtention,
+        filtreGameplayMode: App.etat.filtreGameplayMode,
+        filtreGameplayTags: App.etat.filtreGameplayTags
+      }
     };
 
     localStorage.setItem(App.STORAGE_KEY, JSON.stringify(data));
@@ -510,4 +687,28 @@ App.sauvegarder = function () {
       App.afficherToast(App.t('toast_save_error'), true);
     }
   }
+};
+
+/**
+ * Rafraîchit l'ensemble de l'interface après une modification d'état.
+ * Factorise le pattern répété dans togglePossession, appliquerImport,
+ * activerProfil, viderBuildLumina, reset.
+ * @param {Object} [options]
+ * @param {boolean} [options.skipSave]    - Ne pas sauvegarder
+ * @param {boolean} [options.skipTooltip] - Ne pas rafraîchir le tooltip ouvert
+ */
+App.rafraichirComplet = function (options) {
+  var opts = options || {};
+  if (!opts.skipSave) App.sauvegarder();
+  requestAnimationFrame(function () {
+    App.rafraichirEtatCartes();
+    if (typeof App.mettreAJourPlanificateurLumina === 'function') App.mettreAJourPlanificateurLumina();
+    if (typeof App.mettreAJourProgression === 'function') App.mettreAJourProgression();
+    if (typeof App.appliquerTri === 'function') App.appliquerTri();
+    if (typeof App.appliquerFiltres === 'function') App.appliquerFiltres();
+    if (!opts.skipTooltip && App.etat.pictoOuvert && typeof App.ouvrirTooltip === 'function') {
+      var p = App.getPictoById(App.etat.pictoOuvert);
+      if (p) App.ouvrirTooltip(p);
+    }
+  });
 };

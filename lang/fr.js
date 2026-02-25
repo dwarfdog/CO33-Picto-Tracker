@@ -19,6 +19,10 @@
     search_placeholder:      'Rechercher un picto…',
     label_search:            'Recherche',
     label_zone_filter:       'Filtre de zone',
+    label_categorie_filter:  'Filtre de catégorie',
+    label_obtention_filter:  'Filtre d\u2019obtention',
+    categorie_all:           'Toutes les catégories',
+    obtention_all:           'Tous les types',
     label_sort_order:        'Ordre de tri',
     label_profile_select:    'Profil actif',
     zone_all:                'Toutes les zones',
@@ -124,6 +128,12 @@
     tooltip_detail:          'Voir le détail',
     tooltip_remove:          '— Retirer de ma collection',
     tooltip_add:             '+ Marquer comme possédé',
+    tooltip_mastery:         'Maîtrise Lumina',
+    tooltip_mastery_count:   '{n}/{max}',
+    tooltip_level:           'Niveau',
+    tooltip_level_count:     'Niv. {n}/{max}',
+    tooltip_categorie:       'Catégorie',
+    tooltip_obtention_type:  'Type d\u2019obtention',
 
     // Carte
     badge_derived:           '~ trad. dérivée',
@@ -171,7 +181,6 @@
     export_close:            'Fermer',
 
     // Footer
-    footer_text:             'Données extraites de <span>Clair Obscur : Expédition 33</span> — Sandfall Interactive &nbsp;·&nbsp; Progression sauvegardée localement<br>MIT License © 2026 DwarfDog',
     footer_data:             'Données extraites de Clair Obscur : Expédition 33',
     footer_studio:           'Sandfall Interactive',
     footer_save:             'Progression sauvegardée localement',
@@ -188,6 +197,37 @@
     stat_speed:              'Vitesse',
     stat_crit:               'Crit.',
     stat_lumina:             'Lumina',
+
+    // Modals prompt / confirm
+    prompt_ok:               'Valider',
+    prompt_cancel:           'Annuler',
+    confirm_yes:             'Confirmer',
+    confirm_no:              'Annuler',
+
+    // Export multi-profils
+    export_all_profiles:     'Exporter tout',
+    toast_imported_profiles: '{n} profil(s) importé(s).',
+    import_all_profiles:     'Importer tous les profils',
+
+    // Character builds
+    character_builds_title:  'Build par personnage',
+    character_affinities:    'Affinités :',
+    character_recommended:   'Pictos recommandés',
+    character_synergies:     'Synergies actives',
+    tooltip_char_affinity:   'Affinités personnages',
+
+    // NG Cycle
+    label_ng_cycle:          'Cycle NG',
+    ng_label:                'NG',
+    ng1_label:               'NG+',
+    ng2_label:               'NG++',
+    ng3_label:               'NG+++',
+
+    // Source / Endgame
+    tooltip_source:          'Source',
+    tooltip_source_endgame:  'Endgame',
+    tooltip_source_boss:     'Boss : {boss}',
+    badge_endgame:           'Endgame',
 
     // Switcher
     lang_label:              'Langue',

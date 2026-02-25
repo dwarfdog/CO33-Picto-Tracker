@@ -19,6 +19,10 @@
     search_placeholder:      'Search for a picto…',
     label_search:            'Search',
     label_zone_filter:       'Zone filter',
+    label_categorie_filter:  'Category filter',
+    label_obtention_filter:  'Obtain filter',
+    categorie_all:           'All categories',
+    obtention_all:           'All types',
     label_sort_order:        'Sort order',
     label_profile_select:    'Active profile',
     zone_all:                'All zones',
@@ -124,6 +128,12 @@
     tooltip_detail:          'View details',
     tooltip_remove:          '— Remove from collection',
     tooltip_add:             '+ Mark as owned',
+    tooltip_mastery:         'Lumina Mastery',
+    tooltip_mastery_count:   '{n}/{max}',
+    tooltip_level:           'Level',
+    tooltip_level_count:     'Lv. {n}/{max}',
+    tooltip_categorie:       'Category',
+    tooltip_obtention_type:  'Obtain type',
 
     // Card
     badge_derived:           '~ derived translation',
@@ -171,7 +181,6 @@
     export_close:            'Close',
 
     // Footer
-    footer_text:             'Data extracted from <span>Clair Obscur: Expedition 33</span> — Sandfall Interactive &nbsp;·&nbsp; Progress saved locally<br>MIT License © 2026 DwarfDog',
     footer_data:             'Data extracted from Clair Obscur: Expedition 33',
     footer_studio:           'Sandfall Interactive',
     footer_save:             'Progress saved locally',
@@ -188,6 +197,37 @@
     stat_speed:              'Speed',
     stat_crit:               'Crit.',
     stat_lumina:             'Lumina',
+
+    // Modals prompt / confirm
+    prompt_ok:               'OK',
+    prompt_cancel:           'Cancel',
+    confirm_yes:             'Confirm',
+    confirm_no:              'Cancel',
+
+    // Multi-profile export
+    export_all_profiles:     'Export all',
+    toast_imported_profiles: '{n} profile(s) imported.',
+    import_all_profiles:     'Import all profiles',
+
+    // Character builds
+    character_builds_title:  'Character Build Planner',
+    character_affinities:    'Affinities:',
+    character_recommended:   'Recommended Pictos',
+    character_synergies:     'Active Synergies',
+    tooltip_char_affinity:   'Character Affinities',
+
+    // NG Cycle
+    label_ng_cycle:          'NG Cycle',
+    ng_label:                'NG',
+    ng1_label:               'NG+',
+    ng2_label:               'NG++',
+    ng3_label:               'NG+++',
+
+    // Source / Endgame
+    tooltip_source:          'Source',
+    tooltip_source_endgame:  'Endgame',
+    tooltip_source_boss:     'Boss: {boss}',
+    badge_endgame:           'Endgame',
 
     // Switcher
     lang_label:              'Language',

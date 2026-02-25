@@ -130,14 +130,22 @@ App.getFocusableElements = function (root) {
 };
 
 /**
- * Ouvre une modal avec gestion du focus clavier.
+ * Pile de modals ouvertes (LIFO).
+ * Chaque entrée : { overlay: HTMLElement, previousFocus: HTMLElement }
+ * @type {Array}
+ */
+App._modalStack = [];
+
+/**
+ * Ouvre une modal avec gestion du focus clavier et pile de modals.
  * @param {HTMLElement} overlay
  * @param {HTMLElement} [initialFocusEl]
  */
 App.ouvrirModal = function (overlay, initialFocusEl) {
   if (!overlay || overlay.classList.contains('visible')) return;
 
-  App._lastFocusedBeforeModal = document.activeElement;
+  var previousFocus = document.activeElement;
+  App._modalStack.push({ overlay: overlay, previousFocus: previousFocus });
   App._activeModal = overlay;
   overlay.classList.add('visible');
   document.body.style.overflow = 'hidden';
@@ -151,21 +159,33 @@ App.ouvrirModal = function (overlay, initialFocusEl) {
 };
 
 /**
- * Ferme une modal et restaure le focus.
+ * Ferme une modal et restaure le focus via la pile.
  * @param {HTMLElement} overlay
  */
 App.fermerModal = function (overlay) {
   if (!overlay || !overlay.classList.contains('visible')) return;
 
   overlay.classList.remove('visible');
-  if (App._activeModal === overlay) App._activeModal = null;
 
-  if (!document.querySelector('.tooltip-overlay.visible, .import-overlay.visible, .export-overlay.visible')) {
-    document.body.style.overflow = '';
-    if (App._lastFocusedBeforeModal && typeof App._lastFocusedBeforeModal.focus === 'function') {
-      App._lastFocusedBeforeModal.focus();
+  // Retirer de la pile et récupérer le focus précédent
+  var previousFocus = null;
+  App._modalStack = App._modalStack.filter(function (entry) {
+    if (entry.overlay === overlay) {
+      previousFocus = entry.previousFocus;
+      return false;
     }
-    App._lastFocusedBeforeModal = null;
+    return true;
+  });
+
+  // Mettre à jour la modal active (dernière de la pile)
+  if (App._modalStack.length) {
+    App._activeModal = App._modalStack[App._modalStack.length - 1].overlay;
+  } else {
+    App._activeModal = null;
+    document.body.style.overflow = '';
+    if (previousFocus && typeof previousFocus.focus === 'function') {
+      previousFocus.focus();
+    }
   }
 };
 
@@ -195,6 +215,103 @@ App.maintenirFocusDansModal = function (e) {
     e.preventDefault();
     first.focus();
   }
+};
+
+/**
+ * Ouvre une modal de prompt personnalisée (remplace le prompt() natif).
+ * @param {string}   titre    - Texte affiché comme titre/question
+ * @param {string}   defaut   - Valeur par défaut dans l'input
+ * @param {Function} callback - callback(valeur) si OK, callback(null) si annulé
+ */
+App.ouvrirPrompt = function (titre, defaut, callback) {
+  var overlay = App._dom.promptOverlay || document.getElementById('prompt-overlay');
+  var titleEl = App._dom.promptTitle || document.getElementById('prompt-title');
+  var inputEl = App._dom.promptInput || document.getElementById('prompt-input');
+  var btnOk = App._dom.btnPromptOk || document.getElementById('btn-prompt-ok');
+  var btnCancel = App._dom.btnPromptCancel || document.getElementById('btn-prompt-cancel');
+
+  if (!overlay || !inputEl) {
+    // Fallback au prompt natif si le DOM n'est pas prêt
+    var result = prompt(titre, defaut);
+    if (callback) callback(result);
+    return;
+  }
+
+  if (titleEl) titleEl.textContent = titre || '';
+  inputEl.value = defaut || '';
+  if (btnOk) btnOk.textContent = App.t('prompt_ok');
+  if (btnCancel) btnCancel.textContent = App.t('prompt_cancel');
+
+  function cleanup() {
+    if (btnOk) btnOk.removeEventListener('click', onOk);
+    if (btnCancel) btnCancel.removeEventListener('click', onCancel);
+    if (inputEl) inputEl.removeEventListener('keydown', onKey);
+    App.fermerModal(overlay);
+  }
+
+  function onOk() {
+    var val = inputEl.value.trim();
+    cleanup();
+    if (callback) callback(val || null);
+  }
+
+  function onCancel() {
+    cleanup();
+    if (callback) callback(null);
+  }
+
+  function onKey(e) {
+    if (e.key === 'Enter') { e.preventDefault(); onOk(); }
+    if (e.key === 'Escape') { e.preventDefault(); onCancel(); }
+  }
+
+  if (btnOk) btnOk.addEventListener('click', onOk);
+  if (btnCancel) btnCancel.addEventListener('click', onCancel);
+  inputEl.addEventListener('keydown', onKey);
+  App.ouvrirModal(overlay, inputEl);
+};
+
+/**
+ * Ouvre une modal de confirmation personnalisée (remplace le confirm() natif).
+ * @param {string}   message  - Message de confirmation
+ * @param {Function} callback - callback(true) si confirmé, callback(false) si annulé
+ */
+App.ouvrirConfirm = function (message, callback) {
+  var overlay = App._dom.confirmOverlay || document.getElementById('confirm-overlay');
+  var messageEl = App._dom.confirmMessage || document.getElementById('confirm-message');
+  var btnYes = App._dom.btnConfirmYes || document.getElementById('btn-confirm-yes');
+  var btnNo = App._dom.btnConfirmNo || document.getElementById('btn-confirm-no');
+
+  if (!overlay) {
+    // Fallback au confirm natif si le DOM n'est pas prêt
+    var result = confirm(message);
+    if (callback) callback(result);
+    return;
+  }
+
+  if (messageEl) messageEl.textContent = message || '';
+  if (btnYes) btnYes.textContent = App.t('confirm_yes');
+  if (btnNo) btnNo.textContent = App.t('confirm_no');
+
+  function cleanup() {
+    if (btnYes) btnYes.removeEventListener('click', onYes);
+    if (btnNo) btnNo.removeEventListener('click', onNo);
+    App.fermerModal(overlay);
+  }
+
+  function onYes() {
+    cleanup();
+    if (callback) callback(true);
+  }
+
+  function onNo() {
+    cleanup();
+    if (callback) callback(false);
+  }
+
+  if (btnYes) btnYes.addEventListener('click', onYes);
+  if (btnNo) btnNo.addEventListener('click', onNo);
+  App.ouvrirModal(overlay, btnNo);
 };
 
 /**
@@ -256,4 +373,26 @@ App.safeExec = function (fn, fallbackMsg) {
       App.afficherToast(fallbackMsg, true);
     }
   }
+};
+
+/**
+ * Initialise un registre DOM en résolvant les IDs.
+ * Affiche un warning console si des éléments sont manquants.
+ * @param {Object<string,string>} spec - { clé: 'id-html', ... }
+ * @returns {Object<string,HTMLElement|null>}
+ */
+App.initDomRegistry = function (spec) {
+  var registry = {};
+  var missing = [];
+  var keys = Object.keys(spec);
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    var el = document.getElementById(spec[key]);
+    if (!el) missing.push(spec[key]);
+    registry[key] = el;
+  }
+  if (missing.length) {
+    console.warn('[DOM Registry] Éléments manquants :', missing.join(', '));
+  }
+  return registry;
 };

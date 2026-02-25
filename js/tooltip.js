@@ -53,6 +53,23 @@ App.ouvrirTooltip = function (picto) {
     secObtention.style.display = 'none';
   }
 
+  // Source (boss / endgame)
+  var secSource = document.getElementById('tt-sec-source');
+  var ttSource = document.getElementById('tt-source');
+  var sourceTexts = [];
+  if (picto.source_endgame) {
+    sourceTexts.push(App.t('tooltip_source_endgame'));
+  }
+  if (picto.source_boss) {
+    sourceTexts.push(App.t('tooltip_source_boss', { boss: picto.source_boss }));
+  }
+  if (sourceTexts.length) {
+    ttSource.textContent = sourceTexts.join(' — ');
+    secSource.style.display = '';
+  } else {
+    secSource.style.display = 'none';
+  }
+
   // Stats — construction DOM pure
   var statsGrille = document.getElementById('tt-stats');
   var secStats = document.getElementById('tt-sec-stats');
@@ -95,6 +112,134 @@ App.ouvrirTooltip = function (picto) {
   } else {
     secLumina.style.display = 'none';
   }
+
+  // Catégorie
+  var secCategorie = document.getElementById('tt-sec-categorie');
+  var ttCategorie = document.getElementById('tt-categorie');
+  if (picto.categorie && DATA.meta && Array.isArray(DATA.meta.categories)) {
+    var catMeta = null;
+    for (var ci = 0; ci < DATA.meta.categories.length; ci++) {
+      if (DATA.meta.categories[ci].id === picto.categorie) { catMeta = DATA.meta.categories[ci]; break; }
+    }
+    if (catMeta) {
+      ttCategorie.textContent = App.LANG === 'fr' ? catMeta.label_fr : catMeta.label_en;
+      secCategorie.style.display = '';
+    } else {
+      secCategorie.style.display = 'none';
+    }
+  } else {
+    secCategorie.style.display = 'none';
+  }
+
+  // Type d'obtention
+  var secObtType = document.getElementById('tt-sec-obtention-type');
+  var ttObtType = document.getElementById('tt-obtention-type');
+  if (picto.obtention_type && DATA.meta && Array.isArray(DATA.meta.obtention_types)) {
+    var obtMeta = null;
+    for (var oi = 0; oi < DATA.meta.obtention_types.length; oi++) {
+      if (DATA.meta.obtention_types[oi].id === picto.obtention_type) { obtMeta = DATA.meta.obtention_types[oi]; break; }
+    }
+    if (obtMeta) {
+      ttObtType.textContent = App.LANG === 'fr' ? obtMeta.label_fr : obtMeta.label_en;
+      secObtType.style.display = '';
+    } else {
+      secObtType.style.display = 'none';
+    }
+  } else {
+    secObtType.style.display = 'none';
+  }
+
+  // Affinités par personnage
+  var secCharAffinity = document.getElementById('tt-sec-char-affinity');
+  var charAffinEl = document.getElementById('tt-char-affinities');
+  var chars = (typeof App.getCharacterCatalog === 'function') ? App.getCharacterCatalog() : [];
+  if (chars.length) {
+    while (charAffinEl.firstChild) charAffinEl.removeChild(charAffinEl.firstChild);
+    chars.forEach(function (ch) {
+      var score = App.getCharacterAffinityScore(ch.id, picto);
+      var item = document.createElement('span');
+      item.className = 'char-affin-inline';
+      var nameSpan = document.createElement('span');
+      nameSpan.className = 'char-affin-inline-name';
+      nameSpan.textContent = App.LANG === 'fr' ? ch.nom_fr : ch.nom_en;
+      item.appendChild(nameSpan);
+      var stars = '';
+      for (var si = 0; si < 3; si++) stars += (si < score) ? '\u2605' : '\u2606';
+      var starsSpan = document.createElement('span');
+      starsSpan.className = 'char-affin-inline-stars' + (score > 0 ? ' has-affinity' : '');
+      starsSpan.textContent = stars;
+      item.appendChild(starsSpan);
+      charAffinEl.appendChild(item);
+    });
+    secCharAffinity.style.display = '';
+  } else {
+    secCharAffinity.style.display = 'none';
+  }
+
+  // Maîtrise Lumina (0-4 circles)
+  var secMastery = document.getElementById('tt-sec-mastery');
+  var masteryControls = document.getElementById('tt-mastery-controls');
+  while (masteryControls.firstChild) masteryControls.removeChild(masteryControls.firstChild);
+
+  var currentMastery = App.getMaitrise(picto.id);
+  for (var mi = 1; mi <= App.MASTERY_MAX; mi++) {
+    var circle = document.createElement('button');
+    circle.type = 'button';
+    circle.className = 'mastery-circle' + (mi <= currentMastery ? ' filled' : '');
+    circle.dataset.level = mi;
+    circle.setAttribute('aria-label', App.t('tooltip_mastery_count', { n: mi, max: App.MASTERY_MAX }));
+    (function (level) {
+      circle.addEventListener('click', function () {
+        var newVal = (App.getMaitrise(picto.id) === level) ? level - 1 : level;
+        App.setMaitrise(picto.id, newVal);
+        App.ouvrirTooltip(picto);
+      });
+    })(mi);
+    masteryControls.appendChild(circle);
+  }
+  var masteryLabel = document.createElement('span');
+  masteryLabel.className = 'mastery-label';
+  masteryLabel.textContent = App.t('tooltip_mastery_count', { n: currentMastery, max: App.MASTERY_MAX });
+  masteryControls.appendChild(masteryLabel);
+  secMastery.style.display = '';
+
+  // Niveau (1-33)
+  var secLevel = document.getElementById('tt-sec-level');
+  var levelControls = document.getElementById('tt-level-controls');
+  while (levelControls.firstChild) levelControls.removeChild(levelControls.firstChild);
+
+  var currentLevel = App.getNiveau(picto.id);
+  var maxLevel = (typeof App.getNgMaxLevel === 'function') ? App.getNgMaxLevel() : App.PICTO_LEVEL_MAX;
+
+  var btnLevelDown = document.createElement('button');
+  btnLevelDown.type = 'button';
+  btnLevelDown.className = 'level-btn';
+  btnLevelDown.textContent = '\u2212';
+  btnLevelDown.disabled = currentLevel <= 1;
+  btnLevelDown.addEventListener('click', function () {
+    App.setNiveau(picto.id, App.getNiveau(picto.id) - 1);
+    App.ouvrirTooltip(picto);
+  });
+
+  var levelDisplay = document.createElement('span');
+  levelDisplay.className = 'level-display';
+  levelDisplay.textContent = App.t('tooltip_level_count', { n: currentLevel, max: maxLevel });
+
+  var btnLevelUp = document.createElement('button');
+  btnLevelUp.type = 'button';
+  btnLevelUp.className = 'level-btn';
+  btnLevelUp.textContent = '+';
+  btnLevelUp.disabled = currentLevel >= maxLevel;
+  btnLevelUp.addEventListener('click', function () {
+    var ngMax = (typeof App.getNgMaxLevel === 'function') ? App.getNgMaxLevel() : App.PICTO_LEVEL_MAX;
+    App.setNiveau(picto.id, Math.min(App.getNiveau(picto.id) + 1, ngMax));
+    App.ouvrirTooltip(picto);
+  });
+
+  levelControls.appendChild(btnLevelDown);
+  levelControls.appendChild(levelDisplay);
+  levelControls.appendChild(btnLevelUp);
+  secLevel.style.display = '';
 
   // Bouton possession
   var btn = document.getElementById('tt-btn-possession');

@@ -133,6 +133,14 @@ App.creerCartePicto = function (picto) {
     header.appendChild(lumina);
   }
 
+  if (picto.source_endgame) {
+    var endgameBadge = document.createElement('div');
+    endgameBadge.className = 'carte-endgame-badge';
+    endgameBadge.textContent = '\u2606';
+    endgameBadge.title = App.t('badge_endgame');
+    header.appendChild(endgameBadge);
+  }
+
   el.appendChild(header);
 
   // ── Corps ──
@@ -260,7 +268,7 @@ App.togglePossession = function (id, el) {
  */
 App.rendreGrille = function () {
   var grille = App._dom.grille || document.getElementById('grille');
-  grille.innerHTML = '';
+  while (grille.firstChild) grille.removeChild(grille.firstChild);
   App.toutes_cartes = [];
   App.cartesParId = {};
 

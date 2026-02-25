@@ -20,6 +20,10 @@ if (typeof global.btoa === 'undefined') {
   };
 }
 
+if (typeof global.requestAnimationFrame === 'undefined') {
+  global.requestAnimationFrame = function (fn) { fn(); return 0; };
+}
+
 function loadScript(relPath) {
   const full = path.join(ROOT, relPath);
   const code = fs.readFileSync(full, 'utf8');
@@ -216,6 +220,119 @@ function run() {
   assert.ok(typeof DATA.meta.dataset_version === 'string' && DATA.meta.dataset_version.length > 0);
   assert.ok(typeof DATA.meta.game_version === 'string' && DATA.meta.game_version.length > 0);
   assert.ok(/^\d{4}-\d{2}-\d{2}$/.test(DATA.meta.updated_at));
+
+  // ── PR5: categorie & obtention_type ──
+
+  // meta.categories and meta.obtention_types should be present
+  assert.ok(Array.isArray(DATA.meta.categories) && DATA.meta.categories.length >= 3);
+  assert.ok(Array.isArray(DATA.meta.obtention_types) && DATA.meta.obtention_types.length >= 4);
+
+  // Every picto should have valid categorie and obtention_type
+  var validCats = new Set(DATA.meta.categories.map(function (c) { return c.id; }));
+  var validObts = new Set(DATA.meta.obtention_types.map(function (o) { return o.id; }));
+  DATA.pictos.forEach(function (p) {
+    assert.ok(typeof p.categorie === 'string' && validCats.has(p.categorie),
+      'Picto ' + p.id + ' should have valid categorie, got: ' + p.categorie);
+    assert.ok(typeof p.obtention_type === 'string' && validObts.has(p.obtention_type),
+      'Picto ' + p.id + ' should have valid obtention_type, got: ' + p.obtention_type);
+  });
+
+  // ── PR5: maitrise & niveaux ──
+
+  // MASTERY_MAX and PICTO_LEVEL_MAX constants
+  assert.strictEqual(App.MASTERY_MAX, 4);
+  assert.strictEqual(App.PICTO_LEVEL_MAX, 33);
+  assert.strictEqual(App.STORAGE_VERSION, 6);
+
+  // normaliserMaitrise
+  assert.deepStrictEqual(App.normaliserMaitrise(null), {});
+  assert.deepStrictEqual(App.normaliserMaitrise({ 1: 3, 999999: 2 }), { 1: 3 });
+  assert.deepStrictEqual(App.normaliserMaitrise({ 1: 10 }), { 1: 4 }); // clamped
+  assert.deepStrictEqual(App.normaliserMaitrise({ 1: 0 }), {}); // 0 not stored
+  assert.deepStrictEqual(App.normaliserMaitrise({ 1: -1 }), {}); // negative → 0
+
+  // normaliserNiveaux
+  assert.deepStrictEqual(App.normaliserNiveaux(null), {});
+  assert.deepStrictEqual(App.normaliserNiveaux({ 1: 5, 999999: 2 }), { 1: 5 });
+  assert.deepStrictEqual(App.normaliserNiveaux({ 1: 50 }), { 1: 33 }); // clamped
+  assert.deepStrictEqual(App.normaliserNiveaux({ 1: 1 }), {}); // 1 is default, not stored
+  assert.deepStrictEqual(App.normaliserNiveaux({ 1: 0 }), {}); // below 1 → 1
+
+  // setMaitrise / getMaitrise
+  App.setMaitrise(1, 3);
+  assert.strictEqual(App.getMaitrise(1), 3);
+  App.setMaitrise(1, 0);
+  assert.strictEqual(App.getMaitrise(1), 0);
+
+  // setNiveau / getNiveau
+  App.setNiveau(1, 15);
+  assert.strictEqual(App.getNiveau(1), 15);
+  App.setNiveau(1, 1);
+  assert.strictEqual(App.getNiveau(1), 1);
+
+  // Migration v4→v5 : maitrise and niveaux should default to {}
+  localStorage.clear();
+  localStorage.setItem(App.STORAGE_KEY, JSON.stringify({
+    version: 4,
+    profil_actif: 'p1',
+    profils: [{ id: 'p1', nom: 'Old', possedes: [1, 2], build_lumina: [], budget_lumina: 0 }]
+  }));
+  App.chargerSauvegarde();
+  assert.ok(App.etat.profils.length >= 1, 'Should load v4 profile');
+  assert.deepStrictEqual(App.etat.maitrise, {});
+  assert.deepStrictEqual(App.etat.niveaux, {});
+
+  // Verify v6 save includes maitrise, niveaux and ng_cycle
+  App.setMaitrise(1, 2);
+  App.setNiveau(2, 10);
+  App.setNgCycle(2);
+  App.sauvegarder();
+  var savedV6 = JSON.parse(localStorage.getItem(App.STORAGE_KEY));
+  assert.strictEqual(savedV6.version, 6);
+  var profV6 = savedV6.profils[0];
+  assert.strictEqual(profV6.maitrise[1], 2);
+  assert.strictEqual(profV6.niveaux[2], 10);
+  assert.strictEqual(profV6.ng_cycle, 2);
+
+  // ── PR7: NG Cycle ──
+
+  // NG_CYCLES constant
+  assert.ok(Array.isArray(App.NG_CYCLES) && App.NG_CYCLES.length === 4);
+  assert.strictEqual(App.NG_CYCLES[0].maxLevel, 15);
+  assert.strictEqual(App.NG_CYCLES[3].maxLevel, 33);
+
+  // getNgMaxLevel
+  App.setNgCycle(0);
+  assert.strictEqual(App.getNgMaxLevel(), 15);
+  App.setNgCycle(1);
+  assert.strictEqual(App.getNgMaxLevel(), 22);
+  App.setNgCycle(2);
+  assert.strictEqual(App.getNgMaxLevel(), 28);
+  App.setNgCycle(3);
+  assert.strictEqual(App.getNgMaxLevel(), 33);
+
+  // setNgCycle clamping
+  App.setNgCycle(-1);
+  assert.strictEqual(App.etat.ngCycle, 0);
+  App.setNgCycle(5);
+  assert.strictEqual(App.etat.ngCycle, 3);
+
+  // Migration v5→v6 : ng_cycle should default to 0
+  localStorage.clear();
+  localStorage.setItem(App.STORAGE_KEY, JSON.stringify({
+    version: 5,
+    profil_actif: 'p1',
+    profils: [{ id: 'p1', nom: 'OldV5', possedes: [1], build_lumina: [], budget_lumina: 0, maitrise: {}, niveaux: {} }]
+  }));
+  App.chargerSauvegarde();
+  assert.ok(App.etat.profils.length >= 1, 'Should load v5 profile');
+  assert.strictEqual(App.etat.ngCycle, 0);
+
+  // source_endgame and source_boss fields should exist on some pictos
+  var endgamePictos = DATA.pictos.filter(function (p) { return p.source_endgame === true; });
+  assert.ok(endgamePictos.length >= 10, 'Should have at least 10 endgame pictos');
+  var bossPictos = DATA.pictos.filter(function (p) { return typeof p.source_boss === 'string' && p.source_boss.length > 0; });
+  assert.ok(bossPictos.length >= 10, 'Should have at least 10 boss drop pictos');
 }
 
 if (require.main === module) {

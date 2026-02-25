@@ -60,6 +60,7 @@ test('opens and closes tooltip from card interaction', async ({ page }) => {
   await expect(page.locator('#tt-nom-fr')).not.toBeEmpty();
   await expect(page.locator('#tt-effet')).not.toBeEmpty();
 
+  await page.locator('#tooltip-panneau').evaluate(el => el.scrollTop = 0);
   await page.locator('#tooltip-fermer').click();
   await expect(page.locator('#tooltip-overlay.visible')).toHaveCount(0);
 });
@@ -88,11 +89,11 @@ test('isolates owned state between progression profiles', async ({ page }) => {
   await page.locator('.carte-picto[data-id="1"] .possession-indicateur').click();
   await expect(page.locator('#nb-possedes')).toHaveText('1');
 
-  page.once('dialog', async dialog => {
-    expect(dialog.type()).toBe('prompt');
-    await dialog.accept('Run B');
-  });
   await page.locator('#btn-profil-add').click();
+  await expect(page.locator('#prompt-overlay')).toBeVisible();
+  await page.locator('#prompt-input').fill('Run B');
+  await page.locator('#btn-prompt-ok').click();
+  await expect(page.locator('#prompt-overlay')).not.toBeVisible();
 
   await expect(profileSelect.locator('option')).toHaveCount(2);
   const runBId = await profileSelect.inputValue();

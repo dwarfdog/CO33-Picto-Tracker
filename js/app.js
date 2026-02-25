@@ -14,10 +14,20 @@ var App = {
   // ── Configuration ──
   STORAGE_KEY: 'ce33_pictos_possedes',
   LANG_STORAGE_KEY: 'ce33_langue',
-  STORAGE_VERSION: 4,
+  STORAGE_VERSION: 6,
   MAX_PROFILES: 12,
 
-  // ── Constantes ──
+  // ── Constantes gameplay ──
+  MASTERY_MAX: 4,
+  PICTO_LEVEL_MAX: 33,
+  NG_CYCLES: [
+    { id: 0, key: 'ng',  maxLevel: 15 },
+    { id: 1, key: 'ng1', maxLevel: 22 },
+    { id: 2, key: 'ng2', maxLevel: 28 },
+    { id: 3, key: 'ng3', maxLevel: 33 }
+  ],
+
+  // ── Constantes UI ──
   ANIMATION_DELAY_PER_CARD: 15,
   ANIMATION_DELAY_MAX: 800,
   TOAST_DURATION: 3000,

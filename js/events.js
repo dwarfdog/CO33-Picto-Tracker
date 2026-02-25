@@ -7,62 +7,94 @@
 
 /**
  * Attache tous les écouteurs d'événements de l'application.
+ * Utilise le registre DOM centralisé (App._dom) pour éviter les getElementById répétés.
  * Appelé une seule fois au boot.
  */
 App.attacher = function () {
+  var dom = App._dom;
 
   // ── Recherche (avec debounce) ──
   var rechercheDebounced = App.debounce(function () {
     App.appliquerFiltres();
   }, App.DEBOUNCE_DELAY);
 
-  document.getElementById('recherche').addEventListener('input', function (e) {
-    App.etat.recherche = e.target.value.trim();
-    rechercheDebounced();
-  });
+  if (dom.recherche) {
+    dom.recherche.addEventListener('input', function (e) {
+      App.etat.recherche = e.target.value.trim();
+      rechercheDebounced();
+    });
+  }
 
   // ── Filtre zone ──
-  document.getElementById('filtre-zone').addEventListener('change', function (e) {
-    App.etat.filtreZone = e.target.value;
-    App.appliquerFiltres();
-  });
+  if (dom.filtreZone) {
+    dom.filtreZone.addEventListener('change', function (e) {
+      App.etat.filtreZone = e.target.value;
+      App.appliquerFiltres();
+    });
+  }
+
+  // ── Filtre catégorie ──
+  if (dom.filtreCategorie) {
+    dom.filtreCategorie.addEventListener('change', function (e) {
+      App.etat.filtreCategorie = e.target.value;
+      App.appliquerFiltres();
+    });
+  }
+
+  // ── Filtre type d'obtention ──
+  if (dom.filtreObtention) {
+    dom.filtreObtention.addEventListener('change', function (e) {
+      App.etat.filtreObtention = e.target.value;
+      App.appliquerFiltres();
+    });
+  }
 
   // ── Tri ──
-  document.getElementById('tri-select').addEventListener('change', function (e) {
-    App.etat.tri = e.target.value;
-    App.appliquerTri();
-    App.appliquerFiltres();
-  });
+  if (dom.triSelect) {
+    dom.triSelect.addEventListener('change', function (e) {
+      App.etat.tri = e.target.value;
+      App.appliquerTri();
+      App.appliquerFiltres();
+    });
+  }
 
   // ── Profils de progression ──
-  document.getElementById('profil-select').addEventListener('change', function (e) {
-    App.activerProfil(e.target.value);
-  });
+  if (dom.profilSelect) {
+    dom.profilSelect.addEventListener('change', function (e) {
+      App.activerProfil(e.target.value);
+    });
+  }
 
-  document.getElementById('btn-profil-add').addEventListener('click', function () {
-    var suggestion = App.nomProfilParDefaut(App.etat.profils.length + 1);
-    var nom = prompt(App.t('profile_prompt_name'), suggestion);
-    if (nom === null) return; // Annulation utilisateur
-    App.creerEtActiverProfil(nom);
-  });
+  if (dom.btnProfilAdd) {
+    dom.btnProfilAdd.addEventListener('click', function () {
+      var suggestion = App.nomProfilParDefaut(App.etat.profils.length + 1);
+      App.ouvrirPrompt(App.t('profile_prompt_name'), suggestion, function (nom) {
+        if (nom !== null) App.creerEtActiverProfil(nom);
+      });
+    });
+  }
 
   // ── Planificateur Lumina ──
   var budgetDebounced = App.debounce(function (value) {
     App.definirBudgetLumina(value);
   }, App.DEBOUNCE_DELAY);
 
-  document.getElementById('lumina-budget').addEventListener('input', function (e) {
-    budgetDebounced(e.target.value);
-  });
+  if (dom.luminaBudget) {
+    dom.luminaBudget.addEventListener('input', function (e) {
+      budgetDebounced(e.target.value);
+    });
 
-  document.getElementById('lumina-budget').addEventListener('change', function (e) {
-    App.definirBudgetLumina(e.target.value);
-    App.mettreAJourPlanificateurLumina();
-  });
+    dom.luminaBudget.addEventListener('change', function (e) {
+      App.definirBudgetLumina(e.target.value);
+      App.mettreAJourPlanificateurLumina();
+    });
+  }
 
-  document.getElementById('btn-lumina-clear').addEventListener('click', function () {
-    App.viderBuildLumina();
-  });
+  if (dom.btnLuminaClear) {
+    dom.btnLuminaClear.addEventListener('click', function () {
+      App.viderBuildLumina();
+    });
+  }
 
   document.querySelectorAll('.btn-filtre-build[data-build-filtre]').forEach(function (btn) {
     btn.addEventListener('click', function () {
@@ -76,14 +108,30 @@ App.attacher = function () {
   });
 
   // ── Filtres gameplay experts ──
-  document.getElementById('filtre-gameplay-mode').addEventListener('change', function (e) {
-    App.etat.filtreGameplayMode = e.target.value === 'all' ? 'all' : 'any';
-    App.appliquerFiltres();
-  });
+  if (dom.filtreGameplayMode) {
+    dom.filtreGameplayMode.addEventListener('change', function (e) {
+      App.etat.filtreGameplayMode = e.target.value === 'all' ? 'all' : 'any';
+      App.appliquerFiltres();
+    });
+  }
 
-  document.getElementById('btn-gameplay-clear').addEventListener('click', function () {
-    App.viderFiltresGameplay();
-  });
+  if (dom.btnGameplayClear) {
+    dom.btnGameplayClear.addEventListener('click', function () {
+      App.viderFiltresGameplay();
+    });
+  }
+
+  // ── NG Cycle ──
+  if (dom.ngCycleSelect) {
+    dom.ngCycleSelect.addEventListener('change', function (e) {
+      App.setNgCycle(parseInt(e.target.value, 10) || 0);
+      // Refresh tooltip if open (level max may have changed)
+      if (App.etat.pictoOuvert && typeof App.ouvrirTooltip === 'function') {
+        var p = App.getPictoById(App.etat.pictoOuvert);
+        if (p) App.ouvrirTooltip(p);
+      }
+    });
+  }
 
   // ── Filtres collection (délégation) ──
   document.querySelectorAll('.btn-filtre[data-filtre]').forEach(function (btn) {
@@ -96,106 +144,142 @@ App.attacher = function () {
   });
 
   // ── Reset ──
-  document.getElementById('btn-reset').addEventListener('click', function () {
-    if (!confirm(App.t('confirm_reset'))) return;
-    App.etat.possedes.clear();
-    App.sauvegarder();
-    App.rafraichirEtatCartes();
-    App.mettreAJourProgression();
-    App.appliquerFiltres();
-  });
+  if (dom.btnReset) {
+    dom.btnReset.addEventListener('click', function () {
+      App.ouvrirConfirm(App.t('confirm_reset'), function (ok) {
+        if (!ok) return;
+        App.etat.possedes.clear();
+        App.rafraichirComplet();
+      });
+    });
+  }
 
   // ── Export ──
-  document.getElementById('btn-export').addEventListener('click', App.exporterProgression);
+  if (dom.btnExport) {
+    dom.btnExport.addEventListener('click', App.exporterProgression);
+  }
 
   // ── Import — ouvrir modal ──
-  document.getElementById('btn-import').addEventListener('click', App.ouvrirImportModal);
+  if (dom.btnImport) {
+    dom.btnImport.addEventListener('click', App.ouvrirImportModal);
+  }
 
   // ── Import — valider le code collé ──
-  document.getElementById('btn-import-valider').addEventListener('click', function () {
-    var code = document.getElementById('import-textarea').value;
-    if (!code.trim()) { App.afficherToast(App.t('toast_no_code'), true); return; }
-    if (App.importerDepuisCode(code)) App.fermerImportModal();
-  });
+  if (dom.btnImportValider) {
+    dom.btnImportValider.addEventListener('click', function () {
+      var code = dom.importTextarea ? dom.importTextarea.value : '';
+      if (!code.trim()) { App.afficherToast(App.t('toast_no_code'), true); return; }
+      if (App.importerDepuisCode(code)) App.fermerImportModal();
+    });
+  }
 
   // ── Import — charger un fichier .json ──
-  document.getElementById('btn-import-fichier').addEventListener('click', function () {
-    document.getElementById('import-fichier').click();
-  });
+  if (dom.btnImportFichier) {
+    dom.btnImportFichier.addEventListener('click', function () {
+      if (dom.importFichier) dom.importFichier.click();
+    });
+  }
 
-  document.getElementById('import-fichier').addEventListener('change', function (e) {
-    var fichier = e.target.files[0];
-    if (!fichier) return;
+  if (dom.importFichier) {
+    dom.importFichier.addEventListener('change', function (e) {
+      var fichier = e.target.files[0];
+      if (!fichier) return;
 
-    // Validation taille
-    if (fichier.size > App.FILE_MAX_SIZE) {
-      App.afficherToast(App.t('toast_file_too_large'), true);
+      // Validation taille
+      if (fichier.size > App.FILE_MAX_SIZE) {
+        App.afficherToast(App.t('toast_file_too_large'), true);
+        e.target.value = '';
+        return;
+      }
+
+      // Validation type
+      if (!fichier.name.match(/\.(json|txt)$/i)) {
+        App.afficherToast(App.t('toast_file_wrong_type'), true);
+        e.target.value = '';
+        return;
+      }
+
+      var reader = new FileReader();
+      reader.onload = function (ev) {
+        if (App.importerDepuisCode(ev.target.result)) App.fermerImportModal();
+      };
+      reader.onerror = function () {
+        App.afficherToast(App.t('toast_invalid_code'), true);
+      };
+      reader.readAsText(fichier);
       e.target.value = '';
-      return;
-    }
-
-    // Validation type
-    if (!fichier.name.match(/\.(json|txt)$/i)) {
-      App.afficherToast(App.t('toast_file_wrong_type'), true);
-      e.target.value = '';
-      return;
-    }
-
-    var reader = new FileReader();
-    reader.onload = function (ev) {
-      if (App.importerDepuisCode(ev.target.result)) App.fermerImportModal();
-    };
-    reader.onerror = function () {
-      App.afficherToast(App.t('toast_invalid_code'), true);
-    };
-    reader.readAsText(fichier);
-    e.target.value = '';
-  });
+    });
+  }
 
   // ── Import — annuler ──
-  document.getElementById('btn-import-annuler').addEventListener('click', App.fermerImportModal);
-  document.getElementById('import-overlay').addEventListener('click', function (e) {
-    if (e.target === document.getElementById('import-overlay')) App.fermerImportModal();
-  });
+  if (dom.btnImportAnnuler) {
+    dom.btnImportAnnuler.addEventListener('click', App.fermerImportModal);
+  }
+  if (dom.importOverlay) {
+    dom.importOverlay.addEventListener('click', function (e) {
+      if (e.target === dom.importOverlay) App.fermerImportModal();
+    });
+  }
 
   // ── Export modal — copier le code ──
-  document.getElementById('btn-export-copier').addEventListener('click', function () {
-    var code = document.getElementById('export-textarea').value;
-    navigator.clipboard.writeText(code).then(function () {
-      App.afficherToast(App.t('toast_copied', { n: App.etat.possedes.size }));
-      App.fermerExportModal();
-    }).catch(function () {
-      document.getElementById('export-textarea').select();
-      App.afficherToast(App.t('toast_copy_fallback'), true);
+  if (dom.btnExportCopier) {
+    dom.btnExportCopier.addEventListener('click', function () {
+      var code = dom.exportTextarea ? dom.exportTextarea.value : '';
+      navigator.clipboard.writeText(code).then(function () {
+        App.afficherToast(App.t('toast_copied', { n: App.etat.possedes.size }));
+        App.fermerExportModal();
+      }).catch(function () {
+        if (dom.exportTextarea) dom.exportTextarea.select();
+        App.afficherToast(App.t('toast_copy_fallback'), true);
+      });
     });
-  });
+  }
 
   // ── Export modal — télécharger fichier .json ──
-  document.getElementById('btn-export-fichier').addEventListener('click', function () {
-    App.telechargerFichier();
-  });
+  if (dom.btnExportFichier) {
+    dom.btnExportFichier.addEventListener('click', function () {
+      App.telechargerFichier();
+    });
+  }
+
+  // ── Export modal — exporter tous les profils ──
+  if (dom.btnExportAll) {
+    dom.btnExportAll.addEventListener('click', function () {
+      App.telechargerTousProfils();
+    });
+  }
 
   // ── Export modal — fermer ──
-  document.getElementById('btn-export-fermer').addEventListener('click', App.fermerExportModal);
-  document.getElementById('export-overlay').addEventListener('click', function (e) {
-    if (e.target === document.getElementById('export-overlay')) App.fermerExportModal();
-  });
+  if (dom.btnExportFermer) {
+    dom.btnExportFermer.addEventListener('click', App.fermerExportModal);
+  }
+  if (dom.exportOverlay) {
+    dom.exportOverlay.addEventListener('click', function (e) {
+      if (e.target === dom.exportOverlay) App.fermerExportModal();
+    });
+  }
 
   // ── Tooltip ──
-  document.getElementById('tooltip-fermer').addEventListener('click', App.fermerTooltip);
-  document.getElementById('tooltip-overlay').addEventListener('click', function (e) {
-    if (e.target === document.getElementById('tooltip-overlay')) App.fermerTooltip();
-  });
+  if (dom.tooltipFermer) {
+    dom.tooltipFermer.addEventListener('click', App.fermerTooltip);
+  }
+  if (dom.tooltipOverlay) {
+    dom.tooltipOverlay.addEventListener('click', function (e) {
+      if (e.target === dom.tooltipOverlay) App.fermerTooltip();
+    });
+  }
 
   // ── Tooltip — toggle possession (pictoOuvert = ID maintenant) ──
-  document.getElementById('tt-btn-possession').addEventListener('click', function () {
-    if (!App.etat.pictoOuvert) return;
-    var id = App.etat.pictoOuvert;
-    var carte = App.cartesParId[id];
-    var picto = App.getPictoById(id);
-    if (carte) App.togglePossession(id, carte);
-    if (picto) App.ouvrirTooltip(picto);
-  });
+  if (dom.ttBtnPossession) {
+    dom.ttBtnPossession.addEventListener('click', function () {
+      if (!App.etat.pictoOuvert) return;
+      var id = App.etat.pictoOuvert;
+      var carte = App.cartesParId[id];
+      var picto = App.getPictoById(id);
+      if (carte) App.togglePossession(id, carte);
+      if (picto) App.ouvrirTooltip(picto);
+    });
+  }
 
   // ── Clavier global ──
   document.addEventListener('keydown', function (e) {

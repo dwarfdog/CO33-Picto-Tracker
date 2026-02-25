@@ -30,8 +30,12 @@ App.appliquerTraductions = function () {
   recherche.setAttribute('aria-label', App.t('search_placeholder'));
   document.getElementById('lbl-recherche').textContent = App.t('label_search');
   document.getElementById('lbl-filtre-zone').textContent = App.t('label_zone_filter');
+  document.getElementById('lbl-filtre-categorie').textContent = App.t('label_categorie_filter');
+  document.getElementById('lbl-filtre-obtention').textContent = App.t('label_obtention_filter');
   document.getElementById('lbl-tri-select').textContent = App.t('label_sort_order');
   document.getElementById('lbl-profil-select').textContent = App.t('label_profile_select');
+  var lblNgCycle = document.getElementById('lbl-ng-cycle');
+  if (lblNgCycle) lblNgCycle.textContent = App.t('label_ng_cycle');
 
   // Tri
   var triSelect = document.getElementById('tri-select');
@@ -119,6 +123,14 @@ App.appliquerTraductions = function () {
   document.querySelector('#tt-sec-lumina .tooltip-section-titre').textContent = App.t('tooltip_lumina');
   document.querySelector('#tt-sec-flag .tooltip-section-titre').textContent = App.t('tooltip_flag');
   document.querySelector('#tt-sec-obtention .tooltip-section-titre').textContent = App.t('tooltip_obtain');
+  var secSourceTitle = document.querySelector('#tt-sec-source .tooltip-section-titre');
+  if (secSourceTitle) secSourceTitle.textContent = App.t('tooltip_source');
+  document.querySelector('#tt-sec-categorie .tooltip-section-titre').textContent = App.t('tooltip_categorie');
+  document.querySelector('#tt-sec-obtention-type .tooltip-section-titre').textContent = App.t('tooltip_obtention_type');
+  var secCharAffinTitle = document.querySelector('#tt-sec-char-affinity .tooltip-section-titre');
+  if (secCharAffinTitle) secCharAffinTitle.textContent = App.t('tooltip_char_affinity');
+  document.querySelector('#tt-sec-mastery .tooltip-section-titre').textContent = App.t('tooltip_mastery');
+  document.querySelector('#tt-sec-level .tooltip-section-titre').textContent = App.t('tooltip_level');
   document.getElementById('tooltip-fermer').setAttribute('aria-label', App.t('tooltip_close'));
 
   // Modal import
@@ -134,7 +146,16 @@ App.appliquerTraductions = function () {
   document.getElementById('export-description').textContent = App.t('export_desc');
   document.getElementById('btn-export-copier').textContent = App.t('export_copy');
   document.getElementById('btn-export-fichier').textContent = App.t('export_download');
+  document.getElementById('btn-export-all').textContent = App.t('export_all_profiles');
   document.getElementById('btn-export-fermer').textContent = App.t('export_close');
+
+  // Modal prompt
+  document.getElementById('btn-prompt-ok').textContent = App.t('prompt_ok');
+  document.getElementById('btn-prompt-cancel').textContent = App.t('prompt_cancel');
+
+  // Modal confirm
+  document.getElementById('btn-confirm-yes').textContent = App.t('confirm_yes');
+  document.getElementById('btn-confirm-no').textContent = App.t('confirm_no');
 
   // Footer — éléments séparés, sans innerHTML
   var ftData = document.getElementById('ft-data');
@@ -161,6 +182,12 @@ App.appliquerTraductions = function () {
   // Zone select
   App.initialiserSelectZone();
 
+  // Category select
+  App.initialiserSelectCategorie();
+
+  // Obtention type select
+  App.initialiserSelectObtention();
+
   // Profils
   App.rafraichirSelectProfils();
 
@@ -177,6 +204,11 @@ App.appliquerTraductions = function () {
   // Route de collecte
   if (typeof App.rendreRouteCollecte === 'function') {
     App.rendreRouteCollecte();
+  }
+
+  // Character builds
+  if (typeof App.rendreCharacterBuilds === 'function') {
+    App.rendreCharacterBuilds();
   }
 };
 
@@ -208,6 +240,50 @@ App.initialiserSelectZone = function () {
     var opt = document.createElement('option');
     opt.value = zoneKey;
     opt.textContent = zonesMap[zoneKey];
+    sel.appendChild(opt);
+  });
+
+  sel.value = valeurCourante;
+};
+
+/**
+ * Initialise le sélecteur de catégorie à partir de DATA.meta.categories.
+ */
+App.initialiserSelectCategorie = function () {
+  var sel = document.getElementById('filtre-categorie');
+  if (!sel) return;
+  var valeurCourante = sel.value;
+
+  while (sel.options.length > 1) sel.remove(1);
+  sel.options[0].textContent = App.t('categorie_all');
+
+  var categories = (DATA.meta && Array.isArray(DATA.meta.categories)) ? DATA.meta.categories : [];
+  categories.forEach(function (cat) {
+    var opt = document.createElement('option');
+    opt.value = cat.id;
+    opt.textContent = App.LANG === 'fr' ? cat.label_fr : cat.label_en;
+    sel.appendChild(opt);
+  });
+
+  sel.value = valeurCourante;
+};
+
+/**
+ * Initialise le sélecteur de type d'obtention à partir de DATA.meta.obtention_types.
+ */
+App.initialiserSelectObtention = function () {
+  var sel = document.getElementById('filtre-obtention');
+  if (!sel) return;
+  var valeurCourante = sel.value;
+
+  while (sel.options.length > 1) sel.remove(1);
+  sel.options[0].textContent = App.t('obtention_all');
+
+  var types = (DATA.meta && Array.isArray(DATA.meta.obtention_types)) ? DATA.meta.obtention_types : [];
+  types.forEach(function (ot) {
+    var opt = document.createElement('option');
+    opt.value = ot.id;
+    opt.textContent = App.LANG === 'fr' ? ot.label_fr : ot.label_en;
     sel.appendChild(opt);
   });
 

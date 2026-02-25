@@ -58,6 +58,9 @@ App.telechargerFichier = function () {
     possedes: Array.from(App.etat.possedes).sort(function (a, b) { return a - b; }),
     build_lumina: Array.from(App.etat.buildLumina || []).sort(function (a, b) { return a - b; }),
     budget_lumina: App.etat.luminaBudget || 0,
+    maitrise: App.etat.maitrise || {},
+    niveaux: App.etat.niveaux || {},
+    ng_cycle: App.etat.ngCycle || 0,
     total: App.etat.possedes.size,
   };
 
@@ -74,6 +77,87 @@ App.telechargerFichier = function () {
   a.click();
   URL.revokeObjectURL(url);
   App.afficherToast(App.t('toast_downloaded', { n: data.total }));
+};
+
+/**
+ * Télécharge un fichier JSON contenant tous les profils.
+ */
+App.telechargerTousProfils = function () {
+  var data = {
+    version: App.STORAGE_VERSION,
+    date: new Date().toISOString(),
+    profil_actif: App.etat.profilActifId,
+    profils: App.etat.profils.map(function (p) {
+      return {
+        id: p.id,
+        nom: p.nom,
+        possedes: Array.from(p.possedes).sort(function (a, b) { return a - b; }),
+        build_lumina: Array.from(p.buildLumina).sort(function (a, b) { return a - b; }),
+        budget_lumina: p.budgetLumina,
+        maitrise: p.maitrise || {},
+        niveaux: p.niveaux || {},
+        ng_cycle: p.ngCycle || 0
+      };
+    }),
+    total_pictos: DATA.pictos.length
+  };
+
+  var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'co33-pictos-all-profiles-' + data.profils.length + 'p.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  App.afficherToast(App.t('toast_imported_profiles', { n: data.profils.length }));
+};
+
+/**
+ * Importe tous les profils depuis un payload multi-profils.
+ * @param {string} code - Code JSON brut ou base64
+ * @returns {boolean}
+ */
+App.importerTousProfils = function (code) {
+  var payload = App.parseImportPayload(code);
+  if (!payload) {
+    App.afficherToast(App.t('toast_invalid_code'), true);
+    return false;
+  }
+
+  // Si le payload contient des profils multiples (JSON brut)
+  var trimmed = code.trim();
+  var parsed = null;
+  try { parsed = JSON.parse(trimmed); } catch (e) {
+    try { parsed = JSON.parse(atob(trimmed)); } catch (e2) { /* ignore */ }
+  }
+
+  if (parsed && Array.isArray(parsed.profils) && parsed.profils.length) {
+    App.etat.profils = [];
+    parsed.profils.forEach(function (entry) {
+      if (!entry || typeof entry !== 'object') return;
+      App.ajouterProfil({
+        id: entry.id,
+        nom: entry.nom,
+        possedes: entry.possedes || [],
+        build_lumina: entry.build_lumina || entry.buildLumina || [],
+        budget_lumina: entry.budget_lumina !== undefined ? entry.budget_lumina : (entry.budgetLumina || 0),
+        maitrise: entry.maitrise || {},
+        niveaux: entry.niveaux || {},
+        ng_cycle: entry.ng_cycle || 0
+      });
+    });
+    if (typeof parsed.profil_actif === 'string') {
+      App.etat.profilActifId = parsed.profil_actif;
+    }
+    App.assurerProfils();
+    App.activerProfil(App.etat.profilActifId, { silentToast: true });
+    App.sauvegarder();
+    App.afficherToast(App.t('toast_imported_profiles', { n: App.etat.profils.length }));
+    return true;
+  }
+
+  // Fallback : import mono-profil classique
+  return App.importerDepuisCode(code);
 };
 
 /**
@@ -202,19 +286,7 @@ App.appliquerImport = function (ids, options) {
     if (profil) profil.budgetLumina = budget;
   }
 
-  App.sauvegarder();
-  App.rafraichirEtatCartes();
-  if (typeof App.mettreAJourPlanificateurLumina === 'function') {
-    App.mettreAJourPlanificateurLumina();
-  }
-  App.mettreAJourProgression();
-  App.appliquerTri();
-  App.appliquerFiltres();
-
-  if (App.etat.pictoOuvert && typeof App.ouvrirTooltip === 'function') {
-    var picto = App.getPictoById(App.etat.pictoOuvert);
-    if (picto) App.ouvrirTooltip(picto);
-  }
+  App.rafraichirComplet();
 
   return true;
 };
@@ -245,32 +317,36 @@ App.importerDepuisCode = function (code) {
  * Ouvre la modal d'import.
  */
 App.ouvrirImportModal = function () {
-  var textarea = document.getElementById('import-textarea');
-  textarea.value = '';
-  App.ouvrirModal(document.getElementById('import-overlay'), textarea);
+  var dom = App._dom;
+  var textarea = dom.importTextarea || document.getElementById('import-textarea');
+  if (textarea) textarea.value = '';
+  App.ouvrirModal(dom.importOverlay || document.getElementById('import-overlay'), textarea);
 };
 
 /**
  * Ferme la modal d'import.
  */
 App.fermerImportModal = function () {
-  App.fermerModal(document.getElementById('import-overlay'));
+  App.fermerModal(App._dom.importOverlay || document.getElementById('import-overlay'));
 };
 
 /**
  * Ouvre la modal d'export avec le code base64 pré-rempli.
  */
 App.ouvrirExportModal = function () {
+  var dom = App._dom;
   var code = App.genererCodeExport();
-  var textarea = document.getElementById('export-textarea');
-  textarea.value = code;
-  App.ouvrirModal(document.getElementById('export-overlay'), textarea);
-  textarea.select();
+  var textarea = dom.exportTextarea || document.getElementById('export-textarea');
+  if (textarea) {
+    textarea.value = code;
+  }
+  App.ouvrirModal(dom.exportOverlay || document.getElementById('export-overlay'), textarea);
+  if (textarea) textarea.select();
 };
 
 /**
  * Ferme la modal d'export.
  */
 App.fermerExportModal = function () {
-  App.fermerModal(document.getElementById('export-overlay'));
+  App.fermerModal(App._dom.exportOverlay || document.getElementById('export-overlay'));
 };

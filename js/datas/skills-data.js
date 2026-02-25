@@ -1,6 +1,6 @@
 // © 2026 DwarfDog — MIT License
 // https://github.com/DwarfDog/CO33-Picto-Tracker
-const DATA = {
+var DATA = {
     "meta": {
         "jeu": "Clair Obscur : Expédition 33",
         "total_pictos": 210,
@@ -12,11 +12,35 @@ const DATA = {
         "changes": {
             "from_dataset_version": "2026.02.17",
             "from_game_version": "1.4.6",
-            "added_ids": [205, 206, 207, 208, 209, 210],
+            "added_ids": [
+                205,
+                206,
+                207,
+                208,
+                209,
+                210
+            ],
             "updated": [
-                { "id": 45, "fields": ["effet_fr", "obtention_fr"] },
-                { "id": 114, "fields": ["lumina"] },
-                { "id": 140, "fields": ["zone_en", "zone_fr"] }
+                {
+                    "id": 45,
+                    "fields": [
+                        "effet_fr",
+                        "obtention_fr"
+                    ]
+                },
+                {
+                    "id": 114,
+                    "fields": [
+                        "lumina"
+                    ]
+                },
+                {
+                    "id": 140,
+                    "fields": [
+                        "zone_en",
+                        "zone_fr"
+                    ]
+                }
             ],
             "removed_ids": [],
             "note_en": "Summary generated from dataset review: includes new pictos and edited fields since the previous release.",
@@ -28,118 +52,257 @@ const DATA = {
                     "id": "ap",
                     "label_en": "AP economy",
                     "label_fr": "Economie PA",
-                    "aliases_en": ["ap", "action points", "resource"],
-                    "aliases_fr": ["pa", "points d'action", "ressource"]
+                    "aliases_en": [
+                        "ap",
+                        "action points",
+                        "resource"
+                    ],
+                    "aliases_fr": [
+                        "pa",
+                        "points d'action",
+                        "ressource"
+                    ]
                 },
                 {
                     "id": "base_attack",
                     "label_en": "Base attack",
                     "label_fr": "Attaque de base",
-                    "aliases_en": ["basic attack", "normal attack"],
-                    "aliases_fr": ["attaque normale"]
+                    "aliases_en": [
+                        "basic attack",
+                        "normal attack"
+                    ],
+                    "aliases_fr": [
+                        "attaque normale"
+                    ]
                 },
                 {
                     "id": "free_aim",
                     "label_en": "Free aim",
                     "label_fr": "Visee libre",
-                    "aliases_en": ["aim shot", "ranged utility"],
-                    "aliases_fr": ["tir en visee libre", "tir vise"]
+                    "aliases_en": [
+                        "aim shot",
+                        "ranged utility"
+                    ],
+                    "aliases_fr": [
+                        "tir en visee libre",
+                        "tir vise"
+                    ]
                 },
                 {
                     "id": "burn",
                     "label_en": "Burn",
                     "label_fr": "Brulure",
-                    "aliases_en": ["fire status", "dot"],
-                    "aliases_fr": ["feu", "degats sur la duree"]
+                    "aliases_en": [
+                        "fire status",
+                        "dot"
+                    ],
+                    "aliases_fr": [
+                        "feu",
+                        "degats sur la duree"
+                    ]
                 },
                 {
                     "id": "mark",
                     "label_en": "Mark",
                     "label_fr": "Marque",
-                    "aliases_en": ["marked target", "focus target"],
-                    "aliases_fr": ["cible marquee"]
+                    "aliases_en": [
+                        "marked target",
+                        "focus target"
+                    ],
+                    "aliases_fr": [
+                        "cible marquee"
+                    ]
                 },
                 {
                     "id": "break",
                     "label_en": "Break / Stagger",
                     "label_fr": "Fracture",
-                    "aliases_en": ["stagger", "break damage"],
-                    "aliases_fr": ["degats de fracture", "stagger"]
+                    "aliases_en": [
+                        "stagger",
+                        "break damage"
+                    ],
+                    "aliases_fr": [
+                        "degats de fracture",
+                        "stagger"
+                    ]
                 },
                 {
                     "id": "crit",
                     "label_en": "Critical",
                     "label_fr": "Critique",
-                    "aliases_en": ["critical chance", "critical damage"],
-                    "aliases_fr": ["chance critique", "degats critiques"]
+                    "aliases_en": [
+                        "critical chance",
+                        "critical damage"
+                    ],
+                    "aliases_fr": [
+                        "chance critique",
+                        "degats critiques"
+                    ]
                 },
                 {
                     "id": "survival",
                     "label_en": "Survival",
                     "label_fr": "Survie",
-                    "aliases_en": ["healing", "shield", "hp"],
-                    "aliases_fr": ["soin", "carapace", "sante"]
+                    "aliases_en": [
+                        "healing",
+                        "shield",
+                        "hp"
+                    ],
+                    "aliases_fr": [
+                        "soin",
+                        "carapace",
+                        "sante"
+                    ]
                 },
                 {
                     "id": "buff_debuff",
                     "label_en": "Buff / Debuff",
                     "label_fr": "Buff / Debuff",
-                    "aliases_en": ["status effects", "team utility"],
-                    "aliases_fr": ["alterations", "support"]
+                    "aliases_en": [
+                        "status effects",
+                        "team utility"
+                    ],
+                    "aliases_fr": [
+                        "alterations",
+                        "support"
+                    ]
                 },
                 {
                     "id": "other",
                     "label_en": "Other mechanics",
                     "label_fr": "Autres mecaniques",
-                    "aliases_en": ["misc", "other"],
-                    "aliases_fr": ["divers", "autre"]
+                    "aliases_en": [
+                        "misc",
+                        "other"
+                    ],
+                    "aliases_fr": [
+                        "divers",
+                        "autre"
+                    ]
                 }
             ],
             "rules": [
                 {
                     "tag": "ap",
-                    "keywords_en": [" ap ", "action point"],
-                    "keywords_fr": [" pa ", "point d'action"]
+                    "keywords_en": [
+                        " ap ",
+                        "action point"
+                    ],
+                    "keywords_fr": [
+                        " pa ",
+                        "point d'action"
+                    ]
                 },
                 {
                     "tag": "base_attack",
-                    "keywords_en": ["base attack", "basic attack"],
-                    "keywords_fr": ["attaque de base", "attaques de base"]
+                    "keywords_en": [
+                        "base attack",
+                        "basic attack"
+                    ],
+                    "keywords_fr": [
+                        "attaque de base",
+                        "attaques de base"
+                    ]
                 },
                 {
                     "tag": "free_aim",
-                    "keywords_en": ["free aim", "aim shot", "free shot"],
-                    "keywords_fr": ["visee libre", "tir en visee", "tirs en visee"]
+                    "keywords_en": [
+                        "free aim",
+                        "aim shot",
+                        "free shot"
+                    ],
+                    "keywords_fr": [
+                        "visee libre",
+                        "tir en visee",
+                        "tirs en visee"
+                    ]
                 },
                 {
                     "tag": "burn",
-                    "keywords_en": ["burn", "burning"],
-                    "keywords_fr": ["brulure", "brulant", "brulures"]
+                    "keywords_en": [
+                        "burn",
+                        "burning"
+                    ],
+                    "keywords_fr": [
+                        "brulure",
+                        "brulant",
+                        "brulures"
+                    ]
                 },
                 {
                     "tag": "mark",
-                    "keywords_en": [" mark ", "marked"],
-                    "keywords_fr": [" marque ", "marquee"]
+                    "keywords_en": [
+                        " mark ",
+                        "marked"
+                    ],
+                    "keywords_fr": [
+                        " marque ",
+                        "marquee"
+                    ]
                 },
                 {
                     "tag": "break",
-                    "keywords_en": ["break damage", "stagger"],
-                    "keywords_fr": ["fracture", "degats de fracture"]
+                    "keywords_en": [
+                        "break damage",
+                        "stagger"
+                    ],
+                    "keywords_fr": [
+                        "fracture",
+                        "degats de fracture"
+                    ]
                 },
                 {
                     "tag": "crit",
-                    "keywords_en": ["critical", " crit "],
-                    "keywords_fr": ["critique", " crit "]
+                    "keywords_en": [
+                        "critical",
+                        " crit "
+                    ],
+                    "keywords_fr": [
+                        "critique",
+                        " crit "
+                    ]
                 },
                 {
                     "tag": "survival",
-                    "keywords_en": ["heal", "healing", "health", "hp", "shell", "shield", "barrier", "revive", "below 50%"],
-                    "keywords_fr": ["soin", "teinte curative", "sante", "pv", "carapace", "bouclier", "revive", "en dessous de 50"]
+                    "keywords_en": [
+                        "heal",
+                        "healing",
+                        "health",
+                        "hp",
+                        "shell",
+                        "shield",
+                        "barrier",
+                        "revive",
+                        "below 50%"
+                    ],
+                    "keywords_fr": [
+                        "soin",
+                        "teinte curative",
+                        "sante",
+                        "pv",
+                        "carapace",
+                        "bouclier",
+                        "revive",
+                        "en dessous de 50"
+                    ]
                 },
                 {
                     "tag": "buff_debuff",
-                    "keywords_en": ["powerful", "defenceless", "defenseless", "status effect", "buff", "debuff"],
-                    "keywords_fr": ["surpuissance", "vulnerabilite", "alteration", "buff", "debuff"]
+                    "keywords_en": [
+                        "powerful",
+                        "defenceless",
+                        "defenseless",
+                        "status effect",
+                        "buff",
+                        "debuff"
+                    ],
+                    "keywords_fr": [
+                        "surpuissance",
+                        "vulnerabilite",
+                        "alteration",
+                        "buff",
+                        "debuff"
+                    ]
                 }
             ],
             "tag_overrides": {}
@@ -150,7 +313,193 @@ const DATA = {
             "clair-obscur.fandom.com/fr/wiki/Pictos",
             "steamcommunity.com/sharedfiles/filedetails/?id=3496217661"
         ],
-        "note": "Les traductions marquées 'traduction_confirmee: false' sont dérivées des patterns de nommage officiels du jeu (non vérifiées in-game)."
+        "note": "Les traductions marquées 'traduction_confirmee: false' sont dérivées des patterns de nommage officiels du jeu (non vérifiées in-game).",
+        "categories": [
+            {
+                "id": "offensive",
+                "label_en": "Offensive",
+                "label_fr": "Offensif"
+            },
+            {
+                "id": "defensive",
+                "label_en": "Defensive",
+                "label_fr": "Défensif"
+            },
+            {
+                "id": "support",
+                "label_en": "Support",
+                "label_fr": "Support"
+            }
+        ],
+        "obtention_types": [
+            {
+                "id": "exploration",
+                "label_en": "Exploration",
+                "label_fr": "Exploration"
+            },
+            {
+                "id": "paint_cage",
+                "label_en": "Paint Cage",
+                "label_fr": "Cage de Peinture"
+            },
+            {
+                "id": "quest",
+                "label_en": "Quest",
+                "label_fr": "Quête"
+            },
+            {
+                "id": "boss",
+                "label_en": "Boss",
+                "label_fr": "Boss"
+            },
+            {
+                "id": "merchant",
+                "label_en": "Merchant",
+                "label_fr": "Marchand"
+            },
+            {
+                "id": "story",
+                "label_en": "Story",
+                "label_fr": "Histoire"
+            }
+        ],
+        "characters": [
+            {
+                "id": "gustave",
+                "nom_en": "Gustave",
+                "nom_fr": "Gustave",
+                "role_en": "Charged AoE / Lightning",
+                "role_fr": "AoE chargé / Foudre",
+                "affinities": [
+                    "break",
+                    "base_attack",
+                    "buff_debuff"
+                ],
+                "max_pictos": 3
+            },
+            {
+                "id": "lune",
+                "nom_en": "Lune",
+                "nom_fr": "Lune",
+                "role_en": "Versatile Utility",
+                "role_fr": "Utilitaire polyvalent",
+                "affinities": [
+                    "burn",
+                    "survival",
+                    "buff_debuff"
+                ],
+                "max_pictos": 3
+            },
+            {
+                "id": "maelle",
+                "nom_en": "Maëlle",
+                "nom_fr": "Maëlle",
+                "role_en": "Primary DPS / Fire",
+                "role_fr": "DPS principal / Feu",
+                "affinities": [
+                    "burn",
+                    "crit",
+                    "base_attack"
+                ],
+                "max_pictos": 3
+            },
+            {
+                "id": "sciel",
+                "nom_en": "Sciel",
+                "nom_fr": "Sciel",
+                "role_en": "Fortune / Dual mechanic",
+                "role_fr": "Fortune / Double mécanique",
+                "affinities": [
+                    "crit",
+                    "ap",
+                    "buff_debuff"
+                ],
+                "max_pictos": 3
+            },
+            {
+                "id": "verso",
+                "nom_en": "Verso",
+                "nom_fr": "Verso",
+                "role_en": "Burn enabler / Perfection",
+                "role_fr": "Applicateur Brûlure / Perfection",
+                "affinities": [
+                    "burn",
+                    "free_aim",
+                    "mark"
+                ],
+                "max_pictos": 3
+            },
+            {
+                "id": "monoco",
+                "nom_en": "Monoco",
+                "nom_fr": "Monoco",
+                "role_en": "Shapeshifter / Break",
+                "role_fr": "Métamorphe / Fracture",
+                "affinities": [
+                    "break",
+                    "survival",
+                    "base_attack"
+                ],
+                "max_pictos": 3
+            }
+        ],
+        "synergies": [
+            {
+                "id": "burn_crit",
+                "label_en": "Burn + Critical",
+                "label_fr": "Brûlure + Critique",
+                "required_tags": [
+                    "burn",
+                    "crit"
+                ],
+                "description_en": "Maximize critical damage on burning targets",
+                "description_fr": "Maximiser les dégâts critiques sur cibles en brûlure"
+            },
+            {
+                "id": "break_attack",
+                "label_en": "Break + Attack",
+                "label_fr": "Fracture + Attaque",
+                "required_tags": [
+                    "break",
+                    "base_attack"
+                ],
+                "description_en": "Stack break damage with base attack bonuses",
+                "description_fr": "Cumuler les dégâts de fracture avec les bonus d'attaque de base"
+            },
+            {
+                "id": "ap_survival",
+                "label_en": "AP + Survival",
+                "label_fr": "PA + Survie",
+                "required_tags": [
+                    "ap",
+                    "survival"
+                ],
+                "description_en": "Sustain AP economy while maintaining team health",
+                "description_fr": "Économie de PA avec maintien de la santé de l'équipe"
+            },
+            {
+                "id": "mark_burn",
+                "label_en": "Mark + Burn",
+                "label_fr": "Marque + Brûlure",
+                "required_tags": [
+                    "mark",
+                    "burn"
+                ],
+                "description_en": "Exploit marked targets with burn damage over time",
+                "description_fr": "Exploiter les cibles marquées avec les brûlures"
+            },
+            {
+                "id": "buff_crit",
+                "label_en": "Buff + Critical",
+                "label_fr": "Buff + Critique",
+                "required_tags": [
+                    "buff_debuff",
+                    "crit"
+                ],
+                "description_en": "Amplify critical output through status buffs",
+                "description_fr": "Amplifier les critiques via les buffs de statut"
+            }
+        ]
     },
     "pictos": [
         {
@@ -170,7 +519,9 @@ const DATA = {
             "flag_en": "Meadows Corridor",
             "flag_fr": "",
             "obtention_en": "Defeat the Portier after Lune joins the party.",
-            "obtention_fr": "Obtenu automatique après le premier combat fait avec Lune"
+            "obtention_fr": "Obtenu automatique après le premier combat fait avec Lune",
+            "categorie": "support",
+            "obtention_type": "story"
         },
         {
             "id": 2,
@@ -189,7 +540,9 @@ const DATA = {
             "flag_en": "Meadows Corridor",
             "flag_fr": "",
             "obtention_en": "After getting Lanceram, look for a path on the right that leads to a small cave.",
-            "obtention_fr": "Dans la petite grotte à droite après avoir battu les premiers Lanceliers dans le couloir des clairières."
+            "obtention_fr": "Dans la petite grotte à droite après avoir battu les premiers Lanceliers dans le couloir des clairières.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 3,
@@ -209,6 +562,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Defeat the Chromatic Lancelier after learning about flying enemies.",
             "obtention_fr": "Obtenu en battant le Lancelier Chromatique dans le couloir des clairières.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 4,
@@ -228,6 +583,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "From the campsite, go through the cave path until you're outside, and then head left towards the cliff.",
             "obtention_fr": "Au camp d’expédition abandonné, près du bord de la falaise après avoir rencontré l’Amphorien blanc.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 5,
@@ -247,6 +604,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "From the campsite, go through the cave path. When you're outside, turn right and follow the path.",
             "obtention_fr": "Au camp d’expédition abandonné, après avoir rencontré l’Amphorien blanc, suivez le chemin à droite dans la zone suivante jusqu’à des caisses.",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 6,
@@ -266,6 +625,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Defeat Eveque, the boss of the area, to get this Pictos.",
             "obtention_fr": "Obtenu en battant l’Evêque.",
+            "categorie": "defensive",
+            "obtention_type": "boss", "source_boss": "Eveque"
         },
         {
             "id": 7,
@@ -285,6 +646,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Instead of leaving Spring Meadows after the Eveque fight, turn around and follow the path on the right.",
             "obtention_fr": "Après avoir battu l’Evêque, partez du message laissé en rouge puis suivez le chemin sur la gauche. Le picto est au bout d’une pointe rocheuse.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 8,
@@ -304,6 +667,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Immediately upon loading the map, enter the path to the left of the anchor. The Pictos is on the ground at the end of the path.",
             "obtention_fr": "Face à l’ancre géante, partez vers la gauche pour trouver le picto derrière les algues.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 9,
@@ -323,6 +688,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Follow the path beyond the Paint Cage to reach a fork that is marked with several lanterns on the ground. Head left at the fork and defeat the two enemies at the end of the path. The Pictos is on the ground just past those enemies.",
             "obtention_fr": "Face au sentier éclairé de lanternes, suivez le chemin sur la gauche pour trouver le pic dans le cul-de-sac.",
+            "categorie": "offensive",
+            "obtention_type": "paint_cage"
         },
         {
             "id": 10,
@@ -342,6 +709,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "After Gustave and Lune extract Maelle from the Manor, speak with the Gestral Merchant who appears in front of the hut. Fight and defeat that merchant to add this Pictos to their wares.",
             "obtention_fr": "À acheter à Noco après l’avoir affronté.",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 11,
@@ -361,6 +730,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Pass the Flag and immediately look to the right to find this Pictos on the ground.",
             "obtention_fr": "En partant du drapeau de la Grotte de Corail, dirigez-vous vers la droite.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 12,
@@ -380,6 +751,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "(1) Players will encounter a mass from which several lanterns extend just past the Expedition Flag. After passing that mass, players should look for a short ramp on their left, which leads to an alcove with this Pictos. (2) Buy from Merchant for 53,880 Chroma from Sacred River.",
             "obtention_fr": "(1) Après le drapeau de la Grotte de Corail, montez la pente à votre gauche. (2) À acheter au Gestral marchand pour 53 880 chroma après l’avoir battu au Fleuve Sacré",
+            "categorie": "support",
+            "obtention_type": "merchant"
         },
         {
             "id": 13,
@@ -399,6 +772,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Players can now climb the aforementioned two-handhold wall and follow the path forward. Before reaching the buildings on this path, players should enter a small corridor on their right and fight the Bourgeon that they encounter to obtain the Pictos, weapon, and quest item.",
             "obtention_fr": "Obtenu en battant le Bourgeon.",
+            "categorie": "offensive",
+            "obtention_type": "quest"
         },
         {
             "id": 14,
@@ -418,6 +793,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "This Pictos is on the ground just past the Chromatic Troubadour.",
             "obtention_fr": "Obtenu après avoir battu le Troubadour Chromatique. Le picto se ramasse juste derrière lui.",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 15,
@@ -437,6 +814,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Players who head straight forward from the Flag will find that there are two buildings emerging from the ground. Players should get on top of those buildings and then use their grappling hooks to reach the buildings on the side of the area. Players should then go right and grab this Pictos from the ground.",
             "obtention_fr": "Dans la rue de Lumière, utilisez le grappin pour monter sur les toits et trouver le picto au pied de l’arbre rouge.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 16,
@@ -456,6 +835,8 @@ const DATA = {
             "flag_fr": "Entrée",
             "obtention_en": "Find this Pictos on the ground to the left of the illuminated spot that was used to trap the local Petank.",
             "obtention_fr": "En partant de la position du Petank, dirigez-vous vers la gauche pour trouver le picto.",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 17,
@@ -475,6 +856,8 @@ const DATA = {
             "flag_fr": "Entrée",
             "obtention_en": "Players should follow the stream in the area with the Petank to reach a wall with handholds, which they can shimmy across. This action will lead players to a small area with this Pictos.",
             "obtention_fr": "Après avoir croisé le Petank, suivez le chemin principal et longer la paroi sur la gauche pour trouve le picto légèrement en contrebas.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 18,
@@ -493,6 +876,8 @@ const DATA = {
             "flag_fr": "Labyrinthe du Sanctuaire",
             "obtention_en": "After passing the Sanctuary Maze Expedition Flag, players should go right at the fork and look for a small alcove on their right. There is a low gap in this alcove through which players can crawl, and they should go right when they emerge. Players should then make their way to the far end of the area and use the two handholds on the left to climb a small wall. There is a path at the top that leads directly to this Pictos.",
             "obtention_fr": "Escaladez la paroi près de la grotte pour trouver le picto dans une impasse.",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 19,
@@ -512,6 +897,8 @@ const DATA = {
             "flag_fr": "Labyrinthe du Sanctuaire",
             "obtention_en": "Players should now descend the handholds that they used to reach the Energising Start II Pictos and enter the tunnel that is ahead. This tunnel leads to a Catapult Sakapatate, who is guarding this Pictos in a small alcove.",
             "obtention_fr": "Après avoir battu un Sakapatate, affrontez l’ennemi dans la partie droite de la caverne pour récupérer le picto.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 20,
@@ -531,6 +918,8 @@ const DATA = {
             "flag_fr": "Labyrinthe du Sanctuaire",
             "obtention_en": "In the area just before the area with the blue statues, use paint break to destroy a root. Head forward to the Gestral Totem expedition flag. Jump into the water and follow it into an alcove with the Pictos.",
             "obtention_fr": "En partant du drapeau d’expédition 63, avancez sur votre gauche jusqu’à atteindre une zone où se trouve un sakapatate. Là, vous devrez briser un rocher avec le pouvoir Brise peinture. Le picto se trouve au bout du chemin.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 21,
@@ -550,6 +939,8 @@ const DATA = {
             "flag_fr": "Ruelle de la cloche géante",
             "obtention_en": "Players will encounter the Ultimate Sakapatate, the map's final boss, not long after passing the Giant Bell Alley Expedition Flag, and they will receive this Pictos upon besting the foe in combat.",
             "obtention_fr": "Obtenu en battant le Sakapatate Ultime.",
+            "categorie": "offensive",
+            "obtention_type": "boss", "source_boss": "Ultimate Sakapatate"
         },
         {
             "id": 22,
@@ -569,6 +960,8 @@ const DATA = {
             "flag_fr": "Ruelle de la cloche géante",
             "obtention_en": "There is a tunnel through which players can crawl next to the Energy Tint Shard, and the path that is beyond that tunnel leads directly to this Pictos.",
             "obtention_fr": "Dans l’arène du Sakapatate Ultime, baissez-vous pour entrer dans le recoin situé à droite et y trouver le picto.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 23,
@@ -588,6 +981,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Buy from the Bazaar",
             "obtention_fr": "À acheter au premier marchand du bazar Gestral.",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 24,
@@ -607,6 +1002,8 @@ const DATA = {
             "obtention_fr": "Parler au joueur Gestral et répondez « Je m’en fiche » à sa question pour obtenir le picto.",
             "flag_en": "",
             "flag_fr": "",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 25,
@@ -625,6 +1022,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "In the Bazaar, enter the alcove to trigger a duel with a black market Gestral. Defeat to unlock in shop.",
             "obtention_fr": "À acheté à l’escroc marchand du bazar Gestral.",
+            "categorie": "defensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 26,
@@ -644,6 +1043,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Beat Matthieu",
             "obtention_fr": "Obtenu après avoir battu pour la première fois Matthieu le Colosse.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 27,
@@ -663,6 +1064,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Beat Bertrand",
             "obtention_fr": "Obtenu après avoir battu pour la première fois Bertrand les Grosses Mains.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 28,
@@ -682,6 +1085,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Beat Dominique",
             "obtention_fr": "Obtenu après avoir battu pour la première fois Dominique aux Grands Pieds.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 29,
@@ -701,6 +1106,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Beat Julien",
             "obtention_fr": "",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 30,
@@ -720,6 +1127,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Beat all opponents",
             "obtention_fr": "Obtenu après avoir battu pour la première fois Julien Petite-Tête.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 31,
@@ -739,6 +1148,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Speak with Merchant in Bazaar after completing Forgotten Battlefield.",
             "obtention_fr": "Allez voir le marchand Jujubrie au bazar Gestral et donnez lui le picto étrange récupéré pendant le prologue. Il vous le réparera pour en faire un picto de Visée améliorée.",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 32,
@@ -758,6 +1169,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Defeat Francois.",
             "obtention_fr": "Obtenu en battant François.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 33,
@@ -776,6 +1189,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Leave the cave after Esquie makes the path for you, and the Pictos will be outside in the front entrance.",
             "obtention_fr": "Sur le chemin pour sortir de la grotte, après avoir utilisé le grappin.",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 34,
@@ -795,6 +1210,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Enter through the portal on the beach. Look forward and to the left.",
             "obtention_fr": "À trouver près de l’accès arrière des Falaises de Rochevague.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 35,
@@ -814,6 +1231,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Defeat the big rock monster 'Hexga' on the path after the entrance rest point.",
             "obtention_fr": "Obtenu en battant le trio d’ennemis près du carrousel à l’est du Casino flottant.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 36,
@@ -833,6 +1252,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Look to the left of the rock monster to find an old ship. Inside the ship is the Pictos",
             "obtention_fr": "Entrez dans le dirigeable écrasé pour trouver le picto.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 37,
@@ -852,7 +1273,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "After beating the rock monster, Hexga, continue forward to find some more monsters in the next area. Beat the enemy on the left side of the area to find the Pictos.",
             "obtention_fr": "Obtenu en battant le cultiste.",
-            "zone_en": "Stone Wave Cliffs",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 38,
@@ -872,6 +1294,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Before using the grappling point that leads to the Paintress Shrine rest area, hop on the platforms to the right to find a side area with an enemy and a secret Pictos.",
             "obtention_fr": "Grimpez sur les rochers en face du gazébo pour trouver le picto.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 39,
@@ -891,6 +1315,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "When a monster jumps out at you, hug the right wall to find a slope leading to the Pictos.",
             "obtention_fr": "Derrière un pilier rocheux de la zone centrale du temple de la Peintresse.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 40,
@@ -910,6 +1336,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "When you're looking for the three rock crystals in a cave, you need to jump across some tall platforms with careful timing.",
             "obtention_fr": "Après être sorti dans la Caverne des Marées, partez sur la droite et sautez sur les rochers pour trouver le picto.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 41,
@@ -929,6 +1357,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Perilous Parry is obtained as a drop by defeating Gold Chevaliere found at Stone Wave Cliffs.",
             "obtention_fr": "Obtenu en battant la chevalière d’or chromatique.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 42,
@@ -947,6 +1377,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Give three crystals to Hexga.",
             "obtention_fr": "Obtenu en aidant l’Hexga Blanc.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 43,
@@ -966,6 +1398,8 @@ const DATA = {
             "flag_fr": "Bâtiments Inondés",
             "obtention_en": "Grapple back across, return to the bottom of the building, and use the grapple point to the left to cross the gap. Continue along the path to encounter two Nevrons. The Healing Tint Energy Pictos is on the ground just past those enemies.",
             "obtention_fr": "Obtenu en battant l’Hexga situé près des bâtiments.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 44,
@@ -985,6 +1419,8 @@ const DATA = {
             "flag_fr": "Bâtiments Inondés",
             "obtention_en": "Descend through the structure and follow the path to enter yet another building. Climb to the top and look left upon exiting the building to find a grapple point that can be used to reach an area with the Enfeebling Mark Pictos.",
             "obtention_fr": "Utilisez le Grappin pour trouver le picto sur le toit de l’immeuble.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 45,
@@ -1004,6 +1440,8 @@ const DATA = {
             "flag_fr": "Vagues de Basalte",
             "obtention_en": "Defeat the Lampmaster boss",
             "obtention_fr": "",
+            "categorie": "offensive",
+            "obtention_type": "boss"
         },
         {
             "id": 46,
@@ -1023,6 +1461,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Found on the Continent, in front of the entrance to Dark Shores, about 100 feet away is a cluster of crates you can break apart, containing the Picto.",
             "obtention_fr": "",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 47,
@@ -1042,6 +1482,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "There is a Bourgeon between Esquie's Nest and Stone Wave Cliffs. There is a Lost Gestral just past it, and this Pictos is in a camp nearby.",
             "obtention_fr": "",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 48,
@@ -1060,6 +1502,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Beach north of Gestral Village",
             "obtention_fr": "",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 49,
@@ -1079,6 +1523,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Find the Wood Boards and give it to the spirit by the entrance",
             "obtention_fr": "",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 50,
@@ -1098,6 +1544,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "On the first Painting Workshop isle. Walk to the opposite side past the monsters.",
             "obtention_fr": "",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 51,
@@ -1117,6 +1565,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "On the island with the portal into White Tree.",
             "obtention_fr": "",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 52,
@@ -1136,6 +1586,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Small beach north of the island with the portal into White Tree.",
             "obtention_fr": "",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 53,
@@ -1155,6 +1607,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Walk a little north of Endless Night Sanctuary to find this on the ground.",
             "obtention_fr": "",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 54,
@@ -1174,6 +1628,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "(1) Near the entrance to The Carousel. (2) Complete Stage 7, Trial 3 of the Endless Tower",
             "obtention_fr": "",
+            "categorie": "offensive",
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 55,
@@ -1193,6 +1649,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "In a camp next to the merchant on small beach southeast of Gestral Beach (NW). Surrounded by enemies.",
             "obtention_fr": "",
+            "categorie": "defensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 56,
@@ -1212,6 +1670,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Beat Bourgeon that is near Merchant NW of Gestral Beach (NW).",
             "obtention_fr": "",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 57,
@@ -1231,6 +1691,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Past Burning Death Bourgeon.",
             "obtention_fr": "",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 58,
@@ -1250,6 +1712,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Defeat Sprong. It's a huge enemy walking in the water next to Blades' Graveyard/Crimson Forest.",
             "obtention_fr": "",
+            "categorie": "defensive",
+            "obtention_type": "boss", "source_boss": "Sprong"
         },
         {
             "id": 59,
@@ -1269,6 +1733,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Beat the Chromatic Aberration on floating island between Dark Shores and The Fountain.",
             "obtention_fr": "",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 60,
@@ -1288,6 +1754,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Defeat the Eveque east of Stone Wave Cliffs Cave.",
             "obtention_fr": "",
+            "categorie": "offensive",
+            "obtention_type": "boss", "source_boss": "Eveque"
         },
         {
             "id": 61,
@@ -1307,6 +1775,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Paint Break a root southeast of Abbest Cave in the area filled with statues.",
             "obtention_fr": "",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 62,
@@ -1326,6 +1796,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "The Picto can be found in a paint spike in the area of the Chromatic Petank to the east of The Meadows on the world map (accessible via Esquie flight).",
             "obtention_fr": "",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 63,
@@ -1345,6 +1817,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Beat the Frost Eveque northeast of Forgotten Battlefield exit.",
             "obtention_fr": "",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 64,
@@ -1364,6 +1838,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Beat the Grosse Tete in front of Coastal Cave (northeast of Forgotten Battlefield)",
             "obtention_fr": "",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 65,
@@ -1382,6 +1858,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Defeat the Serpenphare (flying dragon boss).",
             "obtention_fr": "",
+            "categorie": "defensive",
+            "obtention_type": "boss", "source_boss": "Serpenphare"
         },
         {
             "id": 66,
@@ -1401,6 +1879,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Look east of Monoco's Station/south of Frozen Hearts to find an ice monster near a broken camp.",
             "obtention_fr": "",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 67,
@@ -1420,6 +1900,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Beat the Chromatic Petank in the field southeast of Forgotten Battlefield/East of Gestral Village.",
             "obtention_fr": "",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 68,
@@ -1439,6 +1921,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Defeat the first wild enemy after entering the gates of Forgotten Battlefield.",
             "obtention_fr": "",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 69,
@@ -1458,6 +1942,8 @@ const DATA = {
             "flag_fr": "Porte principale",
             "obtention_en": "After entering the main area, enter a side area to the left that leads you to some items, including the Pictos.",
             "obtention_fr": "",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 70,
@@ -1476,6 +1962,8 @@ const DATA = {
             "flag_fr": "Porte principale",
             "obtention_en": "Right side of the big open area. In the trenches.",
             "obtention_fr": "",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 71,
@@ -1495,6 +1983,8 @@ const DATA = {
             "flag_fr": "Fortifications",
             "obtention_en": "From the Flag, use the footholds, follow the path until you see a staircase to the right. Defeat the enemy patrol and look to the left to find a hidden item.",
             "obtention_fr": "",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 72,
@@ -1513,6 +2003,8 @@ const DATA = {
             "flag_fr": "Champ de Bataille",
             "obtention_en": "When you see the Faded Woman near the flag, turn to the right and go through the hall, and then take the second right to find a special enemy called Chromatic Luster. It'll drop the Pictos.",
             "obtention_fr": "",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 73,
@@ -1532,6 +2024,8 @@ const DATA = {
             "flag_fr": "Champ de Bataille",
             "obtention_en": "(1) Same area as above. Turn right at the woman, take the first right to find a magic rope. (2) Complete Stage 8, Trial 3 of Endless Tower",
             "obtention_fr": "",
+            "categorie": "defensive",
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 74,
@@ -1551,6 +2045,8 @@ const DATA = {
             "flag_fr": "Ancien Pont",
             "obtention_en": "When you pick up the Expedition 57 journal, look nearby to find stairs leading to a rope. You'll find the trader Kasumi.",
             "obtention_fr": "",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 75,
@@ -1570,6 +2066,8 @@ const DATA = {
             "flag_fr": "Ancien Pont",
             "obtention_en": "Fight the boss after passing this flag.",
             "obtention_fr": "",
+            "categorie": "offensive",
+            "obtention_type": "boss"
         },
         {
             "id": 76,
@@ -1589,6 +2087,8 @@ const DATA = {
             "flag_fr": "Ancien Pont",
             "obtention_en": "From the flag, cross the bridge using the grapple, turn right to enter a new woodsy area to find the Pictos in the middle.",
             "obtention_fr": "",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 77,
@@ -1607,6 +2107,8 @@ const DATA = {
             "obtention_fr": "",
             "flag_en": "Entrance",
             "flag_fr": "Entrée",
+            "categorie": "defensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 78,
@@ -1626,6 +2128,8 @@ const DATA = {
             "flag_fr": "Entrée",
             "obtention_en": "Buy from Merchant near Entrance rest point - 20,400 Chroma.",
             "obtention_fr": "Achetez au marchand près du point de repos à l'entrée - 20,400 Chroma.",
+            "categorie": "defensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 79,
@@ -1645,6 +2149,8 @@ const DATA = {
             "flag_fr": "Rue droite",
             "obtention_en": "Pass the grappling point, you'll eventually have to jump over a gap before reaching the next area, but if you drop down a ledge to the right, you'll find this Pictos. If you've reached the faded man, you've gone too far.",
             "obtention_fr": "Passez le point d'ancrage, vous finirez par devoir sauter une fente avant d'atteindre la prochaine zone, mais si vous descendez sur un rocher à droite, vous trouverez ces Pictos. Si vous avez atteint le homme fade, vous avez allé trop loin.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 80,
@@ -1664,6 +2170,8 @@ const DATA = {
             "flag_fr": "Rue droite",
             "obtention_en": "When Maelle and Verso split, you're gonna use a grapple point to cross a broken bridge. Turn left after walking forward a bit to find three enemies huddled around the Pictos.",
             "obtention_fr": "Lorsque Maelle et Verso se séparent, vous allez utiliser un point d'ancrage pour traverser un pont en ruine. Tournez à gauche après avoir avancé un peu pour trouver trois ennemis regroupés autour des Pictos.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 81,
@@ -1683,6 +2191,8 @@ const DATA = {
             "flag_fr": "Jardins du Manoir",
             "obtention_en": "After Renoir is defeated, follow the path beyond the Paint Cage to access a section that is filled with grapple points, threads, and handholds. After traversing that section, descend the slope and defeat the Nevron at the bottom to obtain the Perilous Parry Pictos. The Healing Death Pictos is on the ground next to that Nevron.",
             "obtention_fr": "Après la défaite de Renoir, suivez le chemin au-delà du cage de peinture pour accéder à une section remplie de points d'ancrage, de fils et de poignées. Après avoir traversé cette section, descendez la pente et battre le Nevron au bas pour obtenir les Pictos Perilous Parry. Les Pictos de la Mort Curative sont sur le sol à côté de ce Nevron.",
+            "categorie": "defensive",
+            "obtention_type": "paint_cage"
         },
         {
             "id": 82,
@@ -1702,6 +2212,8 @@ const DATA = {
             "flag_fr": "Gare de la Ruine",
             "obtention_en": "After beating Renoir, return to the Entrance expedition flag and follow the critical path to reach a ledge where two gold threads can be activated. Head right at the ledge to reach the Train Station Ruins expedition flag, and continue forward, descending a gold thread when necessary, to reach the Chromatic Danseuse.",
             "obtention_fr": "Après avoir battu Renoir, retournez au drapeau d'expédition à l'entrée et suivez le chemin critique pour atteindre un rocher où deux fils d'or peuvent être activés. Tournez à droite au rocher pour atteindre le drapeau d'expédition de la Gare de la Ruine, et continuez en avant, descendant un fil d'or lorsque nécessaire, pour atteindre le Chromatic Danseuse.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 83,
@@ -1721,6 +2233,8 @@ const DATA = {
             "flag_fr": "Place",
             "obtention_en": "Buy from Merchant nearby for 19,200 Chroma.",
             "obtention_fr": "Achetez au marchand près de vous pour 19,200 Chroma.",
+            "categorie": "defensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 84,
@@ -1740,6 +2254,8 @@ const DATA = {
             "flag_fr": "Vallée de la Joie",
             "obtention_en": "From the flag, pass the first group of dancing monsters, keep heading right until you see a big moving face with closed eyes. Head up the hill to the right to find an enemy near the pictos.",
             "obtention_fr": "À partir du drapeau, passez le premier groupe de monstres dansants, continuez vers la droite jusqu'à voir un grand visage en mouvement avec les yeux fermés. Montez la colline à droite pour trouver un ennemi près des Pictos.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 85,
@@ -1759,6 +2275,8 @@ const DATA = {
             "flag_fr": "Vallée de la Colère",
             "obtention_en": "From the Flag, head to the right towards the big face. Look to the right to find a little cave. Walk inside and then towards the left to find some enemies standing near the Pictos.",
             "obtention_fr": "À partir du drapeau, allez vers la droite vers le grand visage. Regardez à droite pour trouver une petite grotte. Entrez et allez vers la gauche pour trouver quelques ennemis debout près des Pictos.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 86,
@@ -1778,6 +2296,8 @@ const DATA = {
             "flag_fr": "Vallée de la Colère",
             "obtention_en": "From the Flag, head right towards the big face, but head left into a corridor that leads to a magic rope and a Pictos.",
             "obtention_fr": "À partir du drapeau, allez vers la droite vers le grand visage, mais allez à gauche dans un couloir qui mène à un fil magique et à des Pictos.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 87,
@@ -1797,6 +2317,8 @@ const DATA = {
             "flag_fr": "Vallée de la Colère",
             "obtention_en": "From the flag, head straight and then right to find a hidden area leading to Chromatic Ramasseur. Defeat it to get the Pictos.",
             "obtention_fr": "À partir du drapeau, allez tout droit et puis à droite pour trouver une zone cachée menant au Chromatic Ramasseur. Battre le Ramasseur Chromatique pour obtenir les Pictos.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 88,
@@ -1815,6 +2337,8 @@ const DATA = {
             "flag_fr": "Vallée de la Colère",
             "obtention_en": "From the flag, head straight and then right to find a hidden area leading to Chromatic Ramasseur. Next to it, you'll find the Picto.",
             "obtention_fr": "À partir du drapeau, allez tout droit et puis à droite pour trouver une zone cachée menant au Chromatic Ramasseur. A côté de celui-ci, vous trouverez le Picto.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 89,
@@ -1834,6 +2358,8 @@ const DATA = {
             "flag_fr": "Place",
             "obtention_en": "Beat the Axon boss (Visages / Mask Keeper)",
             "obtention_fr": "Battez le boss Axon (Visages / Gardien des masques)",
+            "categorie": "offensive",
+            "obtention_type": "boss", "source_boss": "Axon (Visages)"
         },
         {
             "id": 90,
@@ -1853,6 +2379,8 @@ const DATA = {
             "flag_fr": "Classes de danse",
             "obtention_en": "Go forward on the main path up the stairs, and then go inside the room to the left to find stairs. Go down to find a magic rope. Use the grapple to reach a paint cage. Destroy its parts to get the Pictos.",
             "obtention_fr": "Allez tout droit sur la grande voie jusqu'aux escaliers, et puis entrez dans la pièce à gauche pour trouver des escaliers. Descendez pour trouver un fil magique. Utilisez le grappin pour atteindre un cage de peinture. Détruisez ses parties pour obtenir les Pictos.",
+            "categorie": "offensive",
+            "obtention_type": "paint_cage"
         },
         {
             "id": 91,
@@ -1872,6 +2400,8 @@ const DATA = {
             "flag_fr": "Classes de danse",
             "obtention_en": "Go forward on the main path up the stairs, and then go inside the room to the left to find stairs. Go down to find a magic rope. Use the grapple to reach a paint cage. Use the magic platform to reach a new area and then turn right to find the Pictos behind the Chromatic Greatsword Cultist.",
             "obtention_fr": "Allez tout droit sur la grande voie jusqu'aux escaliers, et puis entrez dans la pièce à gauche pour trouver des escaliers. Descendez pour trouver un fil magique. Utilisez le grappin pour atteindre un cage de peinture. Utilisez la plateforme magique pour atteindre une nouvelle zone et puis tournez à droite pour trouver les Pictos derrière le Cultiste Chromatic Greatsword.",
+            "categorie": "defensive",
+            "obtention_type": "paint_cage"
         },
         {
             "id": 92,
@@ -1891,6 +2421,8 @@ const DATA = {
             "flag_fr": "Classes de danse",
             "obtention_en": "When you get off the moving platform to land in the area where the Chromatic enemy is, go to the opposite end to find this Pictos and some handholds.",
             "obtention_fr": "Lorsque vous vous détachez de la plateforme mobile pour atterrir dans la zone où l'ennemi chromatique est, allez à l'extrémité opposée pour trouver ces Pictos et quelques poignées.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 93,
@@ -1910,6 +2442,8 @@ const DATA = {
             "flag_fr": "Classes de danse",
             "obtention_en": "When you get to the room with the large statue in the middle, head to the right to enter a multi tiered room that looks like the inside of an organ. Head to the bottom of this area to find the Benisseur. Defeat it to get the pictos.",
             "obtention_fr": "Lorsque vous arrivez dans la pièce avec la grande statue au milieu, allez à droite pour entrer dans une pièce multi-étages qui ressemble à l'intérieur d'un organe. Allez au bas de cette zone pour trouver le Benisseur. Battre le Benisseur pour obtenir les Pictos.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 94,
@@ -1928,6 +2462,8 @@ const DATA = {
             "flag_fr": "Classes de danse",
             "obtention_en": "When you get to the room with the large statue in the middle, head to the right to enter a multi-tiered room that looks like the inside of an organ. Head to the bottom of this area.",
             "obtention_fr": "Lorsque vous arrivez dans la pièce avec la grande statue au milieu, allez à droite pour entrer dans une pièce multi-étages qui ressemble à l'intérieur d'un organe. Allez au bas de cette zone.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 95,
@@ -1947,6 +2483,8 @@ const DATA = {
             "flag_fr": "Classes de danse",
             "obtention_en": "Go past the door to the Manor, and then take a right before the next grapple point.",
             "obtention_fr": "Allez à travers la porte vers le Manoir, et puis tournez à droite avant le prochain point d'ancrage.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 96,
@@ -1966,6 +2504,8 @@ const DATA = {
             "flag_fr": "Atelier de couture",
             "obtention_en": "Defeat the Tisseur (large optional weaver boss)",
             "obtention_fr": "Battez le Tisseur (boss optional weaver)",
+            "categorie": "defensive",
+            "obtention_type": "boss", "source_boss": "Tisseur"
         },
         {
             "id": 97,
@@ -1985,6 +2525,8 @@ const DATA = {
             "flag_fr": "Chemin en ruines",
             "obtention_en": "Head to the right from the flag to find a magic rope. Head down, use the grapple point, and follow the trail to find this Pictos.",
             "obtention_fr": "Allez à droite à partir du drapeau pour trouver un fil magique. Descendez, utilisez le point d'ancrage, et suivez le chemin pour trouver ces Pictos.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 98,
@@ -2003,6 +2545,8 @@ const DATA = {
             "flag_fr": "Chemin en ruines",
             "obtention_en": "From the flag, head to the area on the left to find handholds. Use them to reach a magic rope. Follow the path to find a Merchant at the end of it.",
             "obtention_fr": "À partir du drapeau, allez à la zone à gauche pour trouver des poignées. Utilisez-les pour atteindre un fil magique. Suivez le chemin pour trouver un Marchand à la fin de celui-ci.",
+            "categorie": "support",
+            "obtention_type": "merchant"
         },
         {
             "id": 99,
@@ -2022,6 +2566,8 @@ const DATA = {
             "flag_fr": "Chemin en ruines",
             "obtention_en": "From the flag, head to the area on the left to find handholds. Use them to reach a magic rope. Follow the path to find a Merchant at the end of it.",
             "obtention_fr": "À partir du drapeau, allez à la zone à gauche pour trouver des poignées. Utilisez-les pour atteindre un fil magique. Suivez le chemin pour trouver un Marchand à la fin de celui-ci.",
+            "categorie": "support",
+            "obtention_type": "merchant"
         },
         {
             "id": 100,
@@ -2041,6 +2587,8 @@ const DATA = {
             "flag_fr": "Chemin en ruines",
             "obtention_en": "From the flag, head to the area on the left to find handholds. Use them to reach a magic rope. Follow the path to find a Merchant at the end of it.",
             "obtention_fr": "À partir du drapeau, allez à la zone à gauche pour trouver des poignées. Utilisez-les pour atteindre un fil magique. Suivez le chemin pour trouver un Marchand à la fin de celui-ci.",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 101,
@@ -2059,6 +2607,8 @@ const DATA = {
             "flag_fr": "Chemin en ruines",
             "obtention_en": "Beat the boss, Sirene, at the end of the map.",
             "obtention_fr": "Battez le boss, Sirene, à la fin de la carte.",
+            "categorie": "support",
+            "obtention_type": "boss", "source_boss": "Sirene"
         },
         {
             "id": 102,
@@ -2078,6 +2628,8 @@ const DATA = {
             "flag_fr": "Prairies tachées",
             "obtention_en": "Head into the watery area after the second black and white scene with the Paintress. Look on the path to the left to find the merchant. Fight him to buy the Pictos for 40,800 Chroma.",
             "obtention_fr": "Entrez dans la zone aquatique après le second scène noir et blanc avec la Peintresse. Regardez sur le chemin à gauche pour trouver le marchand. Combattrez-le pour acheter les Pictos pour 40,800 Chroma.",
+            "categorie": "defensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 103,
@@ -2097,6 +2649,8 @@ const DATA = {
             "flag_fr": "Eaux tachées",
             "obtention_en": "Go straight from the flag to find a little hidden path leading to the Chromatic Bourgeon. The Pictos is right behind it.",
             "obtention_fr": "Allez tout droit à partir du drapeau pour trouver un petit chemin caché menant au Bourgeon chromatique. Les Pictos sont juste derrière.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 104,
@@ -2116,6 +2670,8 @@ const DATA = {
             "flag_fr": "Falaises tachées",
             "obtention_en": "When you go past the windmill and head on the main path, you'll end up in an area with a Hexga. Look on the right side to find this Pictos.",
             "obtention_fr": "Lorsque vous passez à travers le moulin et que vous continuez sur la grande voie, vous arriverez dans une zone avec un Hexga. Regardez à droite pour trouver ces Pictos.",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 105,
@@ -2134,6 +2690,8 @@ const DATA = {
             "flag_fr": "Falaises tachées",
             "obtention_en": "Turn around, leave the cave, and head to the right to find a secluded area with a Paint Cage. Need Paint Break to reveal one of its locks.",
             "obtention_fr": "Tournez autour, quittez la grotte, et allez à droite pour trouver une zone isolée avec une Cage de peinture. Besoin de Fracture de peinture pour révéler l'un de ses verrous.",
+            "categorie": "offensive",
+            "obtention_type": "paint_cage"
         },
         {
             "id": 106,
@@ -2153,6 +2711,8 @@ const DATA = {
             "flag_fr": "Cœurs tachés",
             "obtention_en": "When the path splits for the first time, head left past a huge rock monster to find a grapple point leading to a Paint Cage.",
             "obtention_fr": "Lorsque le chemin se divise pour la première fois, allez à gauche à travers un grand monstre de roche pour trouver un point d'ancrage menant à une Cage de peinture.",
+            "categorie": "offensive",
+            "obtention_type": "paint_cage"
         },
         {
             "id": 107,
@@ -2172,6 +2732,8 @@ const DATA = {
             "flag_fr": "Cœurs tachés",
             "obtention_en": "When the path splits for the first time, turn left and then look to the right to find some handholds on the wall leading to a Merchant.",
             "obtention_fr": "Lorsque le chemin se divise pour la première fois, tournez à gauche et regardez à droite pour trouver des poignées sur le mur menant à un Marchand.",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 108,
@@ -2191,6 +2753,8 @@ const DATA = {
             "flag_fr": "Cœurs tachés",
             "obtention_en": "Cross the bridge beyond the Tainted Hearts expedition flag and immediately go left to enter an area with Gargant, a large Nevron. There are handholds on the wall to the right of that foe, and they lead to a merchant that sells a variety of items. The Enfeebling Attack Pictos is on the ground just past the merchant, next to a wrecked train.",
             "obtention_fr": "Traversez le pont au-delà du drapeau de l'expédition des Cœurs tachés et allez immédiatement à gauche pour entrer dans une zone avec Gargant, un grand Nevron. Il y a des poignées sur le mur à droite de cet ennemi, et elles mènent à un marchand qui vend une variété d'articles. Les Pictos de l'Attaque affaiblissante sont sur le sol juste après le marchand, près d'un train détruit.",
+            "categorie": "defensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 109,
@@ -2210,6 +2774,8 @@ const DATA = {
             "flag_fr": "Lumière tachée",
             "obtention_en": "When you pass the big tree into a new area, immediately turn left and grapple onto the platform on the other side to fight some enemies.",
             "obtention_fr": "Lorsque vous passez l'arbre grand dans une nouvelle zone, tournez immédiatement à gauche et grappillez-vous sur la plateforme de l'autre côté pour combattre quelques ennemis.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 110,
@@ -2229,6 +2795,8 @@ const DATA = {
             "flag_fr": "Sommet de la tour",
             "obtention_en": "Defeat Renoir",
             "obtention_fr": "Battez Renoir",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 111,
@@ -2248,6 +2816,8 @@ const DATA = {
             "flag_fr": "Entrée",
             "obtention_en": "After beating the Paintress, return to the arena in which you fought her to encounter Chromatic Clair Obscur. Beat the Nevron to obtain the Combo Attack II Pictos.",
             "obtention_fr": "Après avoir battu la Peintresse, retournez dans l'arène dans laquelle vous l'avez affrontée pour rencontrer Chromatic Clair Obscur. Battez le Nevron pour obtenir les Pictos de l'Attaque combo II.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 112,
@@ -2266,6 +2836,8 @@ const DATA = {
             "flag_fr": "Entrée",
             "obtention_en": "Defeat the Paintress.",
             "obtention_fr": "Battez la Peintresse.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 113,
@@ -2285,6 +2857,8 @@ const DATA = {
             "flag_fr": "Port",
             "obtention_en": "Fight the Abberation near the first big horse statue.",
             "obtention_fr": "Combattre l'Abberation près de la première statue de cheval grande.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 114,
@@ -2304,6 +2878,8 @@ const DATA = {
             "flag_fr": "Port",
             "obtention_en": "When you need to use the magic rope at the end of the initial path, ignore the grapple point to the left and instead head on the path to the right to lead you to the Pictos.",
             "obtention_fr": "Lorsque vous devez utiliser le fil magique à la fin du chemin initial, ignorez le point d'ancrage à gauche et allez plutôt sur le chemin à droite pour vous mener aux Pictos.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 115,
@@ -2323,6 +2899,8 @@ const DATA = {
             "flag_fr": "Ruelle brisée",
             "obtention_en": "From the flag, turn around to see the Pictos near the large tree.",
             "obtention_fr": "À partir du drapeau, tournez autour pour voir les Pictos près de l'arbre grand.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 116,
@@ -2342,6 +2920,8 @@ const DATA = {
             "flag_fr": "Ruelle brisée",
             "obtention_en": "Continue the path until you spot a large creature with a light on its head. Defeat the Chromatic Echassier.",
             "obtention_fr": "Continuez le chemin jusqu'à ce que vous voyiez un grand animal avec une lumière sur sa tête. Battez le Chromatic Echassier.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 117,
@@ -2361,6 +2941,8 @@ const DATA = {
             "flag_fr": "Opéra",
             "obtention_en": "Follow the path, use two grapple points, head on the left path, and keep an eye on the right wall to find this one. (You can find a dupe on the opposite side.)",
             "obtention_fr": "Suivez le chemin, utilisez deux points d'ancrage, allez sur le chemin à gauche, et gardez un œil sur le mur à droite pour trouver celui-ci. (Vous pouvez trouver un duplicat sur le côté opposé.)",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 118,
@@ -2380,6 +2962,8 @@ const DATA = {
             "flag_fr": "Jardins de Lumière",
             "obtention_en": "Buy from Merchant after fighting him. Turn around and the merchant will be to the left. 53,200 Chroma.",
             "obtention_fr": "Achetez au Marchand après avoir combattu le Chromatic Echassier. Tournez autour et le marchand sera à gauche. 53,200 Chroma.",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 119,
@@ -2399,6 +2983,8 @@ const DATA = {
             "flag_fr": "Jardins de Lumière",
             "obtention_en": "When you start walking the main path after the flag, turn on the second set of staircases to the left to find a Pictos by some enemies.",
             "obtention_fr": "Lorsque vous commencez à marcher sur la grande voie après le drapeau, tournez sur les deuxièmes escales à gauche pour trouver des Pictos parmi quelques ennemis.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 120,
@@ -2418,6 +3004,8 @@ const DATA = {
             "flag_fr": "Jardins de Lumière",
             "obtention_en": "Fight Creation at the end of the garden path to get this.",
             "obtention_fr": "Combattre Création à la fin du chemin du jardin pour obtenir celui-ci.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 121,
@@ -2437,6 +3025,8 @@ const DATA = {
             "flag_fr": "Entrée",
             "obtention_en": "After you grapple and use a magic rope, look right to see the Pictos behind enemies.",
             "obtention_fr": "Après avoir grappillé et utilisé un fil magique, regardez à droite pour voir les Pictos derrière les ennemis.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 122,
@@ -2456,6 +3046,8 @@ const DATA = {
             "flag_fr": "Montagne",
             "obtention_en": "Fight the first group of monsters after the flag.",
             "obtention_fr": "Combattre le premier groupe d'ennemis après le drapeau.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 123,
@@ -2475,6 +3067,8 @@ const DATA = {
             "flag_fr": "Montagne",
             "obtention_en": "Before the second hot air balloon ride, look to the left to find handholds leading to a side area. You'll find the Pictos at the end of it.",
             "obtention_fr": "Avant le second ballon gonflable, regardez à gauche pour trouver des poignées menant à une zone latérale. Vous trouverez les Pictos à la fin de celle-ci.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 124,
@@ -2494,6 +3088,8 @@ const DATA = {
             "flag_fr": "Montagne",
             "obtention_en": "Before the second hot air balloon ride, look to the left to find handholds leading to a side area. You'll find the Pictos at the end of it.",
             "obtention_fr": "Avant le second ballon gonflable, regardez à gauche pour trouver des poignées menant à une zone latérale. Vous trouverez les Pictos à la fin de celle-ci.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 125,
@@ -2513,6 +3109,8 @@ const DATA = {
             "flag_fr": "Zone brumeuse",
             "obtention_en": "Cross the second wooden bridge and then turn right.",
             "obtention_fr": "Crosser le second pont en bois et ensuite tourner à droite.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 126,
@@ -2532,6 +3130,8 @@ const DATA = {
             "flag_fr": "Zone brumeuse",
             "obtention_en": "Head to the path on the left to find a hot air balloon ride, and speak to the nearby Merchant. 67,350 Chroma.",
             "obtention_fr": "Allez sur le chemin à gauche pour trouver un ballon gonflable, et parlez au marchand près de vous. 67,350 Chroma.",
+            "categorie": "defensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 127,
@@ -2551,6 +3151,8 @@ const DATA = {
             "flag_fr": "Zone brumeuse",
             "obtention_en": "Head to the path on the left to find a hot air balloon ride, and speak to the nearby Merchant. 53,880 Chroma.",
             "obtention_fr": "Allez sur le chemin à gauche pour trouver un ballon gonflable, et parlez au marchand près de vous. 53,880 Chroma.",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 128,
@@ -2570,6 +3172,8 @@ const DATA = {
             "flag_fr": "Zone brumeuse",
             "obtention_en": "Head to the path on the left to find a hot air balloon ride, and speak to the nearby Merchant. 53,880 Chroma.",
             "obtention_fr": "Allez sur le chemin à gauche pour trouver un ballon gonflable, et parlez au marchand près de vous. 53,880 Chroma.",
+            "categorie": "support",
+            "obtention_type": "merchant"
         },
         {
             "id": 129,
@@ -2589,6 +3193,8 @@ const DATA = {
             "flag_fr": "Zone brumeuse",
             "obtention_en": "Head to the path on the left to find a hot air balloon ride, and speak to the nearby Merchant. 49,391 Chroma.",
             "obtention_fr": "Allez sur le chemin à gauche pour trouver un ballon gonflable, et parlez au marchand près de vous. 49,391 Chroma.",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 130,
@@ -2608,6 +3214,8 @@ const DATA = {
             "flag_fr": "Zone brumeuse",
             "obtention_en": "Head to the path on the left to find a hot air balloon ride. Use the grappling points afterwards to find a magic rope leading down to a Pictos.",
             "obtention_fr": "Allez sur le chemin à gauche pour trouver un ballon gonflable, et utilisez les points d'ancrage ensuite pour trouver un fil magique menant à des Pictos.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 131,
@@ -2627,6 +3235,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Complete Stage 2, Trial 3",
             "obtention_fr": "Compléter le Stage 2, Trial 3",
+            "categorie": "defensive",
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 132,
@@ -2646,6 +3256,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Complete Stage 5, Trial 3",
             "obtention_fr": "Compléter le Stage 5, Trial 3",
+            "categorie": "offensive",
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 133,
@@ -2665,6 +3277,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Complete Stage 6, Trial 3",
             "obtention_fr": "Compléter le Stage 6, Trial 3",
+            "categorie": "offensive",
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 134,
@@ -2684,6 +3298,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Complete Stage 9, Trial 3",
             "obtention_fr": "Compléter le Stage 9, Trial 3",
+            "categorie": "offensive",
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 135,
@@ -2703,6 +3319,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Complete Stage 10, Trial 3",
             "obtention_fr": "Compléter le Stage 10, Trial 3",
+            "categorie": "defensive",
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 136,
@@ -2722,6 +3340,8 @@ const DATA = {
             "flag_fr": "Place Centrale",
             "obtention_en": "From the Flag, run towards the faded boy to find a staircase past him. Take it down to find a magic rope that leads to an elevator. Fight the giant rock monster (Gargant)",
             "obtention_fr": "À partir du drapeau, courrez vers le garçon qui est en train de se décomposer pour trouver une échelle. Descendez-la pour trouver un fil magique qui mène à un ascenseur. Combattez le monstre de roche géant (Gargant)",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 137,
@@ -2741,6 +3361,8 @@ const DATA = {
             "flag_fr": "Place Centrale",
             "obtention_en": "From the Flag, run towards the faded boy to find a staircase past him. Take it down to find a magic rope that leads to an elevator and a new area. Run down the stairs, head towards the left to find a grapple point. Follow the path and grapple to reach the Pictos.",
             "obtention_fr": "À partir du drapeau, courrez vers le garçon qui est en train de se décomposer pour trouver une échelle. Descendez-la pour trouver un fil magique qui mène à un ascenseur et à une nouvelle zone. Descendez les escaliers, dirigez-vous vers la gauche pour trouver un point d'ancrage. Suivez le chemin et grappillez-vous pour atteindre les Pictos.",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 138,
@@ -2760,6 +3382,8 @@ const DATA = {
             "flag_fr": "Place Centrale",
             "obtention_en": "To the right of the flag, take the stairs and rope down to the lower section of Flying Manor. The Picto can be found on the ledge to the left after riding the rope up to the Lampmaster boss area.",
             "obtention_fr": "À droite du drapeau, prenez les escaliers et grappillez-vous pour atteindre la section inférieure du Manoir Suspendu. Les Pictos peuvent être trouvés sur la plage à gauche après avoir grappillé jusqu'à la zone du boss Lampmaster.",
+            "categorie": "support",
+            "obtention_type": "boss", "source_boss": "Lampmaster"
         },
         {
             "id": 139,
@@ -2779,6 +3403,8 @@ const DATA = {
             "flag_fr": "Place Centrale",
             "obtention_en": "From the Flag, go towards the grapple point leading to the big locked door. Look to the right to find a large picture frame you can walk on. It'll lead to a new area. You'll find this Picto on one of the upper walkways.",
             "obtention_fr": "À partir du drapeau, allez vers le point d'ancrage qui mène à la grande porte verrouillée. Regardez à droite pour trouver un grand cadre de photo que vous pouvez marcher dessus. Il mène à une nouvelle zone. Vous trouverez ces Pictos sur l'une des allées supérieures.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 140,
@@ -2798,6 +3424,8 @@ const DATA = {
             "flag_fr": "Place Centrale",
             "obtention_en": "Beat the Dualliste and then go to the upper area near where you fought him to find a grapple point leading to a Paint Cage containing the Pictos.",
             "obtention_fr": "Battez le Dualliste et ensuite allez dans la zone supérieure près de l'endroit où vous l'avez battu pour trouver un point d'ancrage qui mène à une cage de peinture contenant les Pictos.",
+            "categorie": "offensive",
+            "obtention_type": "paint_cage"
         },
         {
             "id": 141,
@@ -2817,6 +3445,8 @@ const DATA = {
             "flag_fr": "Place Centrale",
             "obtention_en": "Take the elevator right next to the Flag. When you get up, follow the path and hug the left to find a magic rope. Stay on the left and find a grapple that leads to the Pictos behind a monster",
             "obtention_fr": "Prenez l'ascenseur juste à côté du drapeau. Lorsque vous arrivez en haut, suivez le chemin et restez à gauche pour trouver un fil magique. Restez à gauche et trouvez un grappin qui mène aux Pictos derrière un monstre",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 142,
@@ -2836,6 +3466,8 @@ const DATA = {
             "flag_fr": "Place Centrale",
             "obtention_en": "Take the elevator right next to the Flag. When you get up, follow the path and then once it splits into three, head on the left path to find a merchant.",
             "obtention_fr": "Prenez l'ascenseur juste à côté du drapeau. Lorsque vous arrivez en haut, suivez le chemin et restez à gauche pour trouver un fil magique. Restez à gauche et trouvez un grappin qui mène aux Pictos derrière un monstre",
+            "categorie": "defensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 143,
@@ -2855,6 +3487,8 @@ const DATA = {
             "flag_fr": "Place Centrale",
             "obtention_en": "(1) Take the elevator right next to the Flag. When you get up, follow the path and then once it splits into three, head on the left path to find a merchant. (2) You can find the Gradient Break Pictos in a small cave along one of the paths behind the Grandis NPC at Endless Night Sanctuary.",
             "obtention_fr": "Prenez l'ascenseur juste à côté du drapeau. Lorsque vous arrivez en haut, suivez le chemin et restez à gauche pour trouver un fil magique. Restez à gauche et trouvez un grappin qui mène aux Pictos derrière un monstre",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 144,
@@ -2874,6 +3508,8 @@ const DATA = {
             "flag_fr": "Place Centrale",
             "obtention_en": "Take the elevator right next to the Flag. When you get up, follow the path and then once it splits into three, head on the left path to find a merchant.",
             "obtention_fr": "Prenez l'ascenseur juste à côté du drapeau. Lorsque vous arrivez en haut, suivez le chemin et restez à gauche pour trouver un fil magique. Restez à gauche et trouvez un grappin qui mène aux Pictos derrière un monstre",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 145,
@@ -2893,6 +3529,8 @@ const DATA = {
             "flag_fr": "Place Centrale",
             "obtention_en": "Take the elevator right next to the Flag. When you get up, follow the path and then once it splits into three, head on the left path to find a merchant.",
             "obtention_fr": "Prenez l'ascenseur juste à côté du drapeau. Lorsque vous arrivez en haut, suivez le chemin et restez à gauche pour trouver un fil magique. Restez à gauche et trouvez un grappin qui mène aux Pictos derrière un monstre",
+            "categorie": "defensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 146,
@@ -2912,6 +3550,8 @@ const DATA = {
             "flag_fr": "Place Centrale",
             "obtention_en": "Defeat Goblu as part of the challenge (take the elevator next to the flag). The Pictos will be next to Goblu.",
             "obtention_fr": "Battez Goblu comme partie du défi (prenez l'ascenseur juste à côté du drapeau). Les Pictos seront près de Goblu.",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 147,
@@ -2930,6 +3570,8 @@ const DATA = {
             "flag_fr": "Place Centrale",
             "obtention_en": "Defeat Clea at the end of Flying Manor.",
             "obtention_fr": "Battez Clea à la fin du Manoir Suspendu.",
+            "categorie": "defensive",
+            "obtention_type": "boss", "source_boss": "Clea"
         },
         {
             "id": 148,
@@ -2949,6 +3591,8 @@ const DATA = {
             "flag_fr": "Groove de Resinveil",
             "obtention_en": "From Journal 35, turn around and walk along the stone path. Look to the right for the Pictos.",
             "obtention_fr": "À partir du Journal 35, tournez autour et marchez le long du chemin de pierre. Regardez à droite pour trouver les Pictos.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 149,
@@ -2968,6 +3612,8 @@ const DATA = {
             "flag_fr": "Groove de Resinveil",
             "obtention_en": "Left from the flag, grapple across and follow the path to a Merchant.",
             "obtention_fr": "À partir du drapeau, grappillez-vous et suivez le chemin pour trouver un commerçant.",
+            "categorie": "support",
+            "obtention_type": "merchant"
         },
         {
             "id": 150,
@@ -2987,6 +3633,8 @@ const DATA = {
             "flag_fr": "Entrée",
             "obtention_en": "Find a staircase at the end of this small map.",
             "obtention_fr": "Trouvez une échelle à la fin de cette petite carte.",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 151,
@@ -3006,6 +3654,8 @@ const DATA = {
             "flag_fr": "Plage Sanglante",
             "obtention_en": "Run straight past the flag to the end of the area to find this surrounded by enemies.",
             "obtention_fr": "Courrez tout droit devant le drapeau jusqu'à la fin de la zone pour trouver ceux qui sont entourés par des ennemis.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 152,
@@ -3025,6 +3675,8 @@ const DATA = {
             "flag_fr": "Grotte",
             "obtention_en": "Beat the Chromatic Hexga at the end.",
             "obtention_fr": "Battez le trio d’ennemis près du carrousel à l’est du Casino flottant.",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 153,
@@ -3044,6 +3696,8 @@ const DATA = {
             "flag_fr": "Grotte",
             "obtention_en": "Beat the Chromatic Hexga at the end. Look to the left of it.",
             "obtention_fr": "Battez le trio d’ennemis près du carrousel à l’est du Casino flottant.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 154,
@@ -3063,6 +3717,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Buy from Merchant for 67,350 Chroma.",
             "obtention_fr": "Achetez au commerçant pour 67,350 Chroma.",
+            "categorie": "defensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 155,
@@ -3079,6 +3735,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Buy from Merchant for 53,880 Chroma.",
             "obtention_fr": "Achetez au commerçant pour 53,880 Chroma.",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 156,
@@ -3098,6 +3756,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Beat Chromatic Abbest",
             "obtention_fr": "Battez Chromatic Abbest",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 157,
@@ -3117,6 +3777,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Solve the Painting Workshop mystery and defeat the Lampmaster",
             "obtention_fr": "Résolvez le mystère de l'Atelier et battez le Maître de la Lampe",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 158,
@@ -3135,6 +3797,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Beat the Mime at the Portal.",
             "obtention_fr": "Battez le mime à la Porte.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 159,
@@ -3154,6 +3818,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Defeat the mirror challenges and enter the double doors up the staircase.",
             "obtention_fr": "Battez les défis miroir et entrez dans les portes doubles à l'échelle.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 160,
@@ -3173,6 +3839,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Find all nine Lost Gestrals for Sastro",
             "obtention_fr": "Trouvez les neuf Gestrals perdus pour Sastro",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 161,
@@ -3192,6 +3860,8 @@ const DATA = {
             "flag_fr": "Chutes Glaciales",
             "obtention_en": "If you're facing the bells near the flag, turn right and hug the wall. Run up the cliff, and then you'll see the Pictos across the way that you can jump to by using a frozen bell.",
             "obtention_fr": "Si vous êtes face aux cloches près du drapeau, tournez à droite et accrochez-vous au mur. Courrez vers le haut du rocher, et vous verrez les Pictos de l'autre côté que vous pouvez atteindre en utilisant une cloche gelée.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 162,
@@ -3211,6 +3881,8 @@ const DATA = {
             "flag_fr": "Chutes Glaciales",
             "obtention_en": "From the Flag, look out towards the flaming enemies to see a magic rope. Take it up to find an area with some Chroma. Follow the path up there to find a grappling hook. Use the handholds and then jump to a path on the right to find another grapple point leading to the Pictos.",
             "obtention_fr": "À partir du drapeau, regardez vers les ennemis en flammes pour voir un fil magique. Prenez-le pour trouver une zone avec du Chroma. Suivez le chemin vers le haut pour trouver un grappin. Utilisez les mains et puis sautez sur un chemin à droite pour trouver un autre point d'ancrage menant aux Pictos.",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 163,
@@ -3230,6 +3902,8 @@ const DATA = {
             "flag_fr": "Creux du Moissonneur",
             "obtention_en": "Pass the flag and head to the right of the tall stone statue. There is a short path to the right of the long ramp, and the Pictos is at the end.",
             "obtention_fr": "Passer le drapeau et allez à droite de la grande statue de pierre. Il y a un chemin court à droite de la grande rampe, et le picto est à la fin.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 164,
@@ -3248,6 +3922,8 @@ const DATA = {
             "flag_fr": "Creux du Moissonneur",
             "obtention_en": "Buy from nearby Merchant for 5320 Chroma. From the flag, head towards the right to find a slope that leads to an area with blue lamps. You'll find a grapple point.",
             "obtention_fr": "Achetez au commerçant près pour 5320 Chroma. À partir du drapeau, allez vers la droite pour trouver une pente qui mène à une zone avec des lampes bleues. Vous trouverez un point d'ancrage.",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 165,
@@ -3267,6 +3943,8 @@ const DATA = {
             "flag_fr": "Creux du Moissonneur",
             "obtention_en": "From the flag, go straight into the large clearing. Stay on the right until you find a large slope that leads to an area with lamps. Use the grapple point at the end to find a Merchant.",
             "obtention_fr": "À partir du drapeau, allez tout droit dans la grande clairière. Restez à droite jusqu'à trouver une grande pente qui mène à une zone avec des lampes. Utilisez le point d'ancrage à la fin pour trouver un commerçant.",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 166,
@@ -3286,6 +3964,8 @@ const DATA = {
             "flag_fr": "Entrée",
             "obtention_en": "Hook a left after passing the flag to find a grapple point.",
             "obtention_fr": "Grappillez-vous à gauche après avoir passé le drapeau pour trouver un point d'ancrage.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 167,
@@ -3305,6 +3985,8 @@ const DATA = {
             "flag_fr": "Entrée",
             "obtention_en": "Follow the main path until you reach the fading man. Walk down the slope on the right once you pass him. Hook a left before entering the round gate to find a slope that leads to a grapple point and a Merchant.",
             "obtention_fr": "Suivez le chemin principal jusqu'à ce que vous atteigniez le homme qui se désintègre. Descendez la pente à droite une fois que vous l'avez passé. Grappillez-vous à gauche avant d'entrer dans la porte ronde pour trouver une pente qui mène à un point d'ancrage et un commerçant.",
+            "categorie": "defensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 168,
@@ -3324,6 +4006,8 @@ const DATA = {
             "flag_fr": "Entrée",
             "obtention_en": "Follow the main path until you reach the fading man. Walk down the slope on the right once you pass him. Hook a left before entering the round gate to find a slope that leads to a grapple point and a Merchant. Jump on the bridge behind the Merchant.",
             "obtention_fr": "Suivez le chemin principal jusqu'à ce que vous atteigniez le homme qui se désintègre. Descendez la pente à droite une fois que vous l'avez passé. Grappillez-vous à gauche avant d'entrer dans la porte ronde pour trouver une pente qui mène à un point d'ancrage et un commerçant. Sautez sur le pont derrière le commerçant.",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 169,
@@ -3343,6 +4027,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Donate Chroma to help Benisseur.",
             "obtention_fr": "Donnez du Chroma pour aider Benisseur.",
+            "categorie": "defensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 170,
@@ -3362,6 +4048,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Complete the Dark Gestral Arena",
             "obtention_fr": "Complétez l'Arène Sombre des Gestrals",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 171,
@@ -3378,6 +4066,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Fight the Chalier.",
             "obtention_fr": "Battez le Chalier.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 172,
@@ -3397,6 +4087,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Deliver the Eternal Ice to the Grandis Trader nearby.",
             "obtention_fr": "Délivrez la Glace Éternelle au commerçant Grandis près.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 173,
@@ -3416,6 +4108,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "The Greater Rush Pictos is purchasable from the Grandis merchant in Monoco's Station for 85,750 Chroma after retrieving the Eternal Ice from the Gargant in Frozen Hearts.",
             "obtention_fr": "Le Pictos de la Rapidité améliorée est achetable au commerçant Grandis à la Gare de Monoco pour 85,750 Chroma après avoir récupéré la Glace Éternelle du Gargant dans Glacier Ardent.",
+            "categorie": "support",
+            "obtention_type": "merchant"
         },
         {
             "id": 174,
@@ -3435,6 +4129,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Beat the Chromatic Chapelier at The Crows (shoot all the crows)",
             "obtention_fr": "Battez le Chapelier Chromatique aux Corbeaux (tuez tous les corbeaux avec un tir rapide pour le faire apparaitre)",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 175,
@@ -3454,6 +4150,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Purchase from the Merchant.",
             "obtention_fr": "Achetez au commerçant.",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 176,
@@ -3473,6 +4171,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Purchase from the Merchant.",
             "obtention_fr": "Achetez au commerçant.",
+            "categorie": "support",
+            "obtention_type": "merchant"
         },
         {
             "id": 177,
@@ -3492,6 +4192,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Purchase from the Merchant.",
             "obtention_fr": "Achetez au commerçant.",
+            "categorie": "defensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 178,
@@ -3508,6 +4210,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Purchase from the Merchant.",
             "obtention_fr": "Achetez au commerçant.",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 179,
@@ -3524,6 +4228,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Purchase from the Merchant.",
             "obtention_fr": "Achetez au commerçant.",
+            "categorie": "defensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 180,
@@ -3543,6 +4249,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Purchase from the Merchant.",
             "obtention_fr": "Achetez au commerçant.",
+            "categorie": "defensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 181,
@@ -3562,6 +4270,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Can be obtained upon destroying the Paint Cage in Glacial Falls past the Manor entrance.",
             "obtention_fr": "Peut être obtenu en détruisant la Cage de Peinture dans les Chutes Glaciales après avoir passé le Manoir.",
+            "categorie": "defensive",
+            "obtention_type": "paint_cage"
         },
         {
             "id": 182,
@@ -3581,6 +4291,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "You can find the Pictos by destroying a Paint Spike on a beach northeast of The Reacher.",
             "obtention_fr": "Vous pouvez trouver les Pictos en détruisant un piquet de peinture sur la plage au nord-est de L'Aspirante.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 183,
@@ -3600,6 +4312,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "You can find the Pictos surrounded by Nevrons in an abandoned camp northwest of the Floating Cemetary.",
             "obtention_fr": "Vous pouvez trouver le Picto entouré de Nevrons dans un camp abandonné au nord-ouest du Cimetière Flottant.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 184,
@@ -3616,6 +4330,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "You can find Effective Support Pictos surrounded by Nevrons northeast of Sirene.",
             "obtention_fr": "Vous pouvez trouver le Picto entouré de Nevrons au nord-est de Sirene.",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 185,
@@ -3635,6 +4351,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Energising Burn is obtained as a drop by defeating Chromatic Veilleur found at Frozen Hearts.",
             "obtention_fr": "Peut être obtenu en battant le Veilleur Chromatique au Glacier Ardent.",
+            "categorie": "support",
+            "obtention_type": "exploration"
         },
         {
             "id": 186,
@@ -3654,6 +4372,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Energising Stun is obtained as a reward for solving a Painted Cage puzzle in the Flying Manor area.",
             "obtention_fr": "Peut être obtenu en résolvant un puzzle de Cage de Peinture dans la zone du Manoir Suspendu.",
+            "categorie": "support",
+            "obtention_type": "paint_cage"
         },
         {
             "id": 187,
@@ -3673,6 +4393,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Purchase from the Merchant.",
             "obtention_fr": "Achetez au commerçant.",
+            "categorie": "offensive",
+            "obtention_type": "merchant"
         },
         {
             "id": 188,
@@ -3689,6 +4411,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "You can find the Powerful Mark Pictos being guarded by two Steel Chevalieres on a platform in the Goblu boss area.",
             "obtention_fr": "Vous pouvez trouver le Picto entouré de deux Chevaux de Steel dans une plateforme dans la zone du Boss Goblu.",
+            "categorie": "offensive",
+            "obtention_type": "boss", "source_boss": "Steel Chevalieres"
         },
         {
             "id": 189,
@@ -3708,6 +4432,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "You can find the Powerful Shots Pictos by breaking a Paint Spike near the Gestral doctor.",
             "obtention_fr": "Vous pouvez trouver le Picto en détruisant un piquet de peinture près du docteur Gestral.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 190,
@@ -3727,6 +4453,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "You can get the Rejuvenating Revive Pictos after breaking a Paint Spike in the Old Farm area.",
             "obtention_fr": "Dans Falaises de Rochevague (Vieille ferme), en bas de la ferme, dans une zone disponible derrière un rocher de peinture à détruire.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 191,
@@ -3746,6 +4474,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "This can be found on the ground under wooden crates near the Bourgeon southeast of Forgotten Battlefield (requires Esquie flight).",
             "obtention_fr": "Peut être trouvé sur le sol sous des caisses en bois près du Bourgeon au sud-est du Champ de Bataille Oublié (requiert vol d'Esquie).",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 192,
@@ -3765,6 +4495,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "After entering the Flying Manor, go down the first flight of stairs facing the Nevron statue, then turn right and jump off the staircase leading to a cliff.\nGo down the rope and continue walking to the right. You'll find the Pictos sitting on the edge of a broken picture frame.",
             "obtention_fr": "Au tout début de la zone, aller en bas puis derrière le premier escalier (par la droite). Le Picto se trouve en suivant le chemin derrière le premier escalier de la zone.",
+            "categorie": "defensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 193,
@@ -3784,6 +4516,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "The Gradient Break Pictos can be found in a tiny alcove in the passage between the two paths past the behind the Grandis Engineer in Endless Night Sanctuary.",
             "obtention_fr": "Les Pictos Fracture Gradient peuvent être trouvés dans une petite niche dans le passage entre les deux chemins derrière le Grandis Ingénieur au Sanctuaire de la Nuit Éternelle.",
+            "categorie": "offensive",
+            "obtention_type": "exploration"
         },
         {
             "id": 194,
@@ -3803,6 +4537,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Alternating Critical can be found at Verso's Drafts. Can be found from the Open Playground expedition flag. Head towards the left fork and enter the cave. From the cave entrance, enter the tunnel on the right to find the picto at the end.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Peut être trouvé à partir du drapeau de l'Expédition du Parc Ouvert. Allez vers la gauche et entrez dans la grotte. À partir de l'entrée de la grotte, entrez dans le tunnel à droite pour trouver le Picto à la fin.",
+            "categorie": "offensive",
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 195,
@@ -3822,6 +4558,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Consuming Attack can be obtained by exchanging 130,200 Chromas from Najabla at Verso's Drafts.",
             "obtention_fr": "Peut être obtenu en échangeant 130,200 Chromas de Najabla à Esquisses de Verso.",
+            "categorie": "offensive",
+            "obtention_type": "merchant", "source_endgame": true
         },
         {
             "id": 196,
@@ -3841,6 +4579,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Slowing Attack can be found at Verso's Drafts. It's found in a pool near the Gestral Baths flag, and the orange glowing Esquies.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Il se trouve dans un bassin près du drapeau des Bains de Gestral, et les Esquies orange lumineuses.",
+            "categorie": "defensive",
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 197,
@@ -3861,6 +4601,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Double Third can be found at Verso's Drafts. Defeat the Barbacusette and Machinepieds on the cliff past the Open Playground expedition flag.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Combattre le Barbacusette et le Machinepieds sur le rocher après le drapeau de l'Expédition du Parc Ouvert.",
+            "categorie": "defensive",
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 198,
@@ -3879,6 +4621,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Trigger-Happy is obtained as a drop by defeating Romanifo (Half-Baked Gestral) found at Verso's Drafts.",
             "obtention_fr": "Peut être obtenu en battant Romanifo (Gestral demi-cuit) à Esquisses de Verso.",
+            "categorie": "offensive",
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 199,
@@ -3897,6 +4641,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Feint can be found at Verso's Drafts. Beat Monsieur Frappe in the Candy Land area by parrying his attack 3 times.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Combattre Monsieur Frappe dans la zone de la Bonbonnerie en parant son attaque 3 fois.",
+            "categorie": "offensive",
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 200,
@@ -3915,6 +4661,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Frenzy can be found at Verso's Drafts. Defeat the Licornapieds boss near the Licornapieds Station flag to get the Picto.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Combattre le boss Licornapieds près du drapeau de la Station Licornapieds pour obtenir le Picto.",
+            "categorie": "offensive",
+            "obtention_type": "boss", "source_endgame": true, "source_boss": "Licornapieds"
         },
         {
             "id": 201,
@@ -3935,6 +4683,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Longer Break can be found at Verso's Drafts. Defeat the Barbacusette and Machinepieds on the cliff past the Open Playground expedition flag.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Combattre le Barbacusette et le Machinepieds sur le rocher après le drapeau de l'Expédition du Parc Ouvert.",
+            "categorie": "defensive",
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 202,
@@ -3954,6 +4704,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Clea's Death is obtained as a drop by defeating Clea Unleashed found at the Endless Tower. You'll need to beat the original Clea in the Flying Manor first to unlock her Unleashed version. Interact with the painting to start the boss fight.",
             "obtention_fr": "Peut être obtenu en battant Clea Déchaînée trouvée à la Tour infinie. Vous devrez d'abord battre la Clea originale dans le Manoir Suspendu pour débloquer sa version Déchaînée. Interagissez avec le tableau pour démarrer le combat.",
+            "categorie": "offensive",
+            "obtention_type": "boss", "source_endgame": true, "source_boss": "Clea Unleashed"
         },
         {
             "id": 203,
@@ -3973,6 +4725,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Gradient Parry can be found at Verso's Drafts. Go down the pathway from the Gestral Baths expedition flag and pick up Gradient Parry from the Esquie statue's hand. The statue is near a #5 Hopscotch tile.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Allez le long du chemin depuis le drapeau des Bains de Gestral et récupérez le Parade Gradient de la main de la statue d'Esquie. La statue est près d'un tuile #5 Hopscotch.",
+            "categorie": "offensive",
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 204,
@@ -3992,6 +4746,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Damage Share can be found at Verso's Drafts. Defeat the Barbacusette and two Licornes just past the entrance of the cave to obtain Damage Share. You can reach this cave from the Open Playground expedition flag and taking the left fork.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Combattre le Barbacusette et deux Licornes juste après l'entrée de la grotte pour obtenir le Partage de dégâts. Vous pouvez atteindre cette grotte à partir du drapeau de l'Expédition du Parc Ouvert et en prenant le chemin de gauche.",
+            "categorie": "support",
+            "obtention_type": "boss", "source_endgame": true, "source_boss": "Barbacusette"
         },
         {
             "id": 205,
@@ -4010,6 +4766,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "First Life can be found at Endless Tower. Interact with the painting and defeat Chromatic Lampmaster in the boss fight.",
             "obtention_fr": "Peut être trouvé à la Tour infinie. Interagissez avec le tableau et battre Chromatic Lampmaster dans le combat de boss.",
+            "categorie": "offensive",
+            "obtention_type": "boss", "source_endgame": true, "source_boss": "Chromatic Lampmaster"
         },
         {
             "id": 206,
@@ -4028,6 +4786,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "AP Discount can be obtained by exchanging 217,000 Chromas from Najabla at Verso's Drafts.",
             "obtention_fr": "Peut être obtenu en échangeant 217,000 Chromas de Najabla à Esquisses de Verso.",
+            "categorie": "support",
+            "obtention_type": "merchant", "source_endgame": true
         },
         {
             "id": 207,
@@ -4046,6 +4806,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "SOS Healing Tint can be found at Verso's Drafts. Defeat the Franctale on the left path past the Open Playground expedition flag.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Combattre le Franctale sur le chemin de gauche après le drapeau de l'Expédition du Parc Ouvert.",
+            "categorie": "defensive",
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 208,
@@ -4065,6 +4827,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Empowered Healer can be found at Verso's Drafts. From the Gestral Baths flag, head onward down the path, keeping right. There will be a short platforming section across planks of a broken bridge. Jump across successfully to obtain this Picto.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Depuis le drapeau des Bains de Gestral, allez tout droit le long du chemin, en gardant à droite. Il y aura une section de saut en planches d'un pont cassé. Sautez avec succès pour obtenir ce Picto.",
+            "categorie": "offensive",
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 209,
@@ -4083,6 +4847,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Gradient Overcharge can be found at Verso's Drafts. It's found on a large piece of floating candy near the entrance of Candy Land. Climb the overhead beams of the swing in the area to reach the candy.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Il se trouve sur une grande pièce de bonbon flottante près de l'entrée de la Bonbonnerie. Montez les poutres au-dessus du balançoire dans la zone pour atteindre le bonbon.",
+            "categorie": "offensive",
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 210,
@@ -4101,6 +4867,8 @@ const DATA = {
             "flag_fr": "",
             "obtention_en": "Empowering Jumps can be found at Verso's Drafts. Head north from the Open Playground expedition flag to the Half-Baked Gestral on a seesaw. Start the Seesaw Challenge and jump each time the Gestral lands. Completing it rewards you with Empowering Jumps.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Allez au nord à partir du drapeau de l'Expédition du Parc Ouvert jusqu'à Gestral demi-cuit sur une balançoire. Démarrez le défi de la balançoire et sautez chaque fois que Gestral atterrit. Compléter ce défi vous récompense avec des Sauts renforçants.",
+            "categorie": "offensive",
+            "obtention_type": "exploration", "source_endgame": true
         }
     ]
 };
