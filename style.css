@@ -188,7 +188,6 @@ body {
   justify-content: space-between;
   padding: 10px 20px;
   position: relative;
-  overflow: hidden;
 }
 
 .header-compact::before {
