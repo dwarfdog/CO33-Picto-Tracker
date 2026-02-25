@@ -5,6 +5,85 @@
 //  Dépend de : App (app.js) — tous les modules
 // ══════════════════════════════════════════════════════
 
+/* ── Configuration des onglets ── */
+App.TAB_CONFIG = {
+  collection: { panel: null,                showGrid: true  },
+  lumina:     { panel: 'tab-panel-lumina',   showGrid: true  },
+  builds:     { panel: 'tab-panel-builds',   showGrid: false },
+  filtres:    { panel: 'tab-panel-filtres',  showGrid: true  },
+  infos:      { panel: 'tab-panel-infos',    showGrid: false }
+};
+
+/**
+ * Active un onglet et affiche/masque les panneaux correspondants.
+ * @param {string} tabName
+ */
+App.setActiveTab = function (tabName) {
+  if (!App.TAB_CONFIG[tabName]) tabName = 'collection';
+
+  // Mise à jour des boutons
+  var buttons = document.querySelectorAll('.tab-btn[data-tab]');
+  for (var i = 0; i < buttons.length; i++) {
+    var isActive = buttons[i].getAttribute('data-tab') === tabName;
+    buttons[i].classList.toggle('actif', isActive);
+    buttons[i].setAttribute('aria-selected', isActive ? 'true' : 'false');
+  }
+
+  // Masquer tous les panneaux
+  var panels = document.querySelectorAll('.tab-panel');
+  for (var j = 0; j < panels.length; j++) {
+    panels[j].style.display = 'none';
+  }
+
+  // Afficher le panneau actif
+  var cfg = App.TAB_CONFIG[tabName];
+  if (cfg && cfg.panel) {
+    var panel = document.getElementById(cfg.panel);
+    if (panel) panel.style.display = '';
+  }
+
+  // Grille visible ou non
+  var grilleConteneur = App._dom ? App._dom.grilleConteneur : document.getElementById('grille-conteneur');
+  if (grilleConteneur) {
+    grilleConteneur.style.display = (cfg && cfg.showGrid === false) ? 'none' : '';
+  }
+
+  // Sauvegarder l'onglet actif
+  App.etat.activeTab = tabName;
+  if (typeof App.sauvegarder === 'function') App.sauvegarder();
+
+  // Rafraîchir le contenu spécifique
+  if (tabName === 'builds' && typeof App.rendreCharacterBuilds === 'function') {
+    App.rendreCharacterBuilds();
+  }
+  if (tabName === 'filtres' && typeof App.rendreRouteCollecte === 'function') {
+    App.rendreRouteCollecte();
+  }
+  if (tabName === 'infos' && typeof App.rendreNouveautesDataset === 'function') {
+    App.rendreNouveautesDataset();
+  }
+};
+
+/**
+ * Ouvre ou ferme le popover settings.
+ */
+App.toggleSettingsPopover = function () {
+  var dom = App._dom;
+  if (!dom || !dom.settingsPopover || !dom.btnSettings) return;
+  var visible = dom.settingsPopover.classList.toggle('visible');
+  dom.btnSettings.setAttribute('aria-expanded', visible ? 'true' : 'false');
+};
+
+/**
+ * Ferme le popover settings.
+ */
+App.fermerSettingsPopover = function () {
+  var dom = App._dom;
+  if (!dom || !dom.settingsPopover) return;
+  dom.settingsPopover.classList.remove('visible');
+  if (dom.btnSettings) dom.btnSettings.setAttribute('aria-expanded', 'false');
+};
+
 /**
  * Attache tous les écouteurs d'événements de l'application.
  * Utilise le registre DOM centralisé (App._dom) pour éviter les getElementById répétés.
@@ -281,12 +360,45 @@ App.attacher = function () {
     });
   }
 
+  // ── Onglets ──
+  document.querySelectorAll('.tab-btn[data-tab]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      App.setActiveTab(btn.getAttribute('data-tab'));
+    });
+  });
+
+  // ── Settings popover ──
+  if (dom.btnSettings) {
+    dom.btnSettings.addEventListener('click', function (e) {
+      e.stopPropagation();
+      App.toggleSettingsPopover();
+    });
+  }
+
+  // Fermer le popover au clic extérieur
+  document.addEventListener('click', function (e) {
+    if (dom.settingsPopover && dom.settingsPopover.classList.contains('visible')) {
+      if (!dom.settingsPopover.contains(e.target) && e.target !== dom.btnSettings) {
+        App.fermerSettingsPopover();
+      }
+    }
+  });
+
+  // ── Export all (raccourci dans le popover) ──
+  if (dom.btnExportAllShortcut) {
+    dom.btnExportAllShortcut.addEventListener('click', function () {
+      App.telechargerTousProfils();
+      App.fermerSettingsPopover();
+    });
+  }
+
   // ── Clavier global ──
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Tab') {
       App.maintenirFocusDansModal(e);
     }
     if (e.key === 'Escape') {
+      App.fermerSettingsPopover();
       App.fermerTooltip();
       App.fermerImportModal();
       App.fermerExportModal();

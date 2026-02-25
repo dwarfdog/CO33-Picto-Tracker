@@ -25,6 +25,7 @@ App.etat = {
   tri: 'id-asc',
   pictoOuvert: null, // ID du picto ouvert (number | null)
   selectedCharacter: 'gustave', // ID du personnage sélectionné dans le build planner
+  activeTab: 'collection', // 'collection' | 'lumina' | 'builds' | 'filtres' | 'infos'
 };
 
 /**
@@ -608,6 +609,8 @@ App.chargerSauvegarde = function () {
           if (typeof parsed.ui.filtreObtention === 'string') App.etat.filtreObtention = parsed.ui.filtreObtention;
           if (['any','all'].indexOf(parsed.ui.filtreGameplayMode) !== -1) App.etat.filtreGameplayMode = parsed.ui.filtreGameplayMode;
           if (Array.isArray(parsed.ui.filtreGameplayTags)) App.etat.filtreGameplayTags = parsed.ui.filtreGameplayTags;
+          var validTabs = ['collection','lumina','builds','filtres','infos'];
+          if (validTabs.indexOf(parsed.ui.activeTab) !== -1) App.etat.activeTab = parsed.ui.activeTab;
         }
 
         if (parsed.version !== App.STORAGE_VERSION) {
@@ -676,7 +679,8 @@ App.sauvegarder = function () {
         filtreCategorie: App.etat.filtreCategorie,
         filtreObtention: App.etat.filtreObtention,
         filtreGameplayMode: App.etat.filtreGameplayMode,
-        filtreGameplayTags: App.etat.filtreGameplayTags
+        filtreGameplayTags: App.etat.filtreGameplayTags,
+        activeTab: App.etat.activeTab
       }
     };
 

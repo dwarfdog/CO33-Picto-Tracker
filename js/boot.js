@@ -128,6 +128,15 @@
     confirmMessage:  'confirm-message',
     btnConfirmYes:   'btn-confirm-yes',
     btnConfirmNo:    'btn-confirm-no',
+    // Settings popover
+    btnSettings:     'btn-settings',
+    settingsPopover: 'settings-popover',
+    // Tab bar
+    tabBar:          'tab-bar',
+    // Grille conteneur
+    grilleConteneur: 'grille-conteneur',
+    // Export all shortcut (in settings popover)
+    btnExportAllShortcut: 'btn-export-all-shortcut',
   });
 
   // Restaurer les préférences UI persistées dans les contrôles DOM
@@ -165,6 +174,9 @@
   if (typeof App.rendreCharacterBuilds === 'function') {
     App.rendreCharacterBuilds();
   }
+
+  // Initialiser l'onglet actif
+  App.setActiveTab(App.etat.activeTab || 'collection');
 
   // Attachement des événements
   App.attacher();

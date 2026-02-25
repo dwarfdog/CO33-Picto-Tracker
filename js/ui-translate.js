@@ -48,23 +48,44 @@ App.appliquerTraductions = function () {
     triSelect.options[i].textContent = App.t(sortKeys[i]);
   }
 
-  // Filtres
-  var filtreGroupes = document.querySelectorAll('.filtre-groupe');
-  filtreGroupes[0].querySelector('.filtre-label').textContent = App.t('filter_label');
+  // Filtres collection (une seule filtre-groupe dans la toolbar)
+  var filtreGroupe = document.querySelector('.toolbar .filtre-groupe');
+  if (filtreGroupe) {
+    var lbl = filtreGroupe.querySelector('.filtre-label');
+    if (lbl) lbl.textContent = App.t('filter_label');
+  }
   var filterBtns = document.querySelectorAll('.btn-filtre[data-filtre]');
-  filterBtns[0].textContent = App.t('filter_all');
-  filterBtns[1].textContent = App.t('filter_owned');
-  filterBtns[2].textContent = App.t('filter_missing');
+  if (filterBtns[0]) filterBtns[0].textContent = App.t('filter_all');
+  if (filterBtns[1]) filterBtns[1].textContent = App.t('filter_owned');
+  if (filterBtns[2]) filterBtns[2].textContent = App.t('filter_missing');
 
-  // Groupe Progression
-  filtreGroupes[1].querySelector('.filtre-label').textContent = App.t('progression_group_label');
-
-  // Boutons
+  // Boutons (header + settings popover)
   document.getElementById('btn-profil-add').textContent = App.t('btn_profile_add');
   document.getElementById('btn-profil-add').setAttribute('aria-label', App.t('btn_profile_add'));
   document.getElementById('btn-export').textContent = App.t('btn_export');
   document.getElementById('btn-import').textContent = App.t('btn_import');
   document.getElementById('btn-reset').textContent = App.t('btn_reset');
+  var btnSettings = document.getElementById('btn-settings');
+  if (btnSettings) btnSettings.setAttribute('aria-label', App.t('btn_settings'));
+  var btnExportAllShortcut = document.getElementById('btn-export-all-shortcut');
+  if (btnExportAllShortcut) btnExportAllShortcut.textContent = App.t('export_all_profiles');
+
+  // Onglets
+  var tabLabels = {
+    'collection': 'tab_collection',
+    'lumina': 'tab_lumina',
+    'builds': 'tab_builds',
+    'filtres': 'tab_filtres',
+    'infos': 'tab_infos'
+  };
+  var tabBtns = document.querySelectorAll('.tab-btn[data-tab]');
+  for (var t = 0; t < tabBtns.length; t++) {
+    var tabKey = tabBtns[t].getAttribute('data-tab');
+    var labelSpan = tabBtns[t].querySelector('.tab-label');
+    if (labelSpan && tabLabels[tabKey]) {
+      labelSpan.textContent = App.t(tabLabels[tabKey]);
+    }
+  }
 
   // Planificateur Lumina
   document.getElementById('lumina-planner-title').textContent = App.t('lumina_planner_title');
@@ -96,22 +117,30 @@ App.appliquerTraductions = function () {
     App.rendreFiltresGameplay();
   }
 
-  // Compteurs — mise à jour du label via textContent (plus de innerHTML)
-  var cptItems = document.querySelectorAll('.compteur-item');
-  var cptLabel0 = cptItems[0].querySelector('.cpt-label');
-  if (cptLabel0) cptLabel0.textContent = App.t('counter_owned') + ' ';
-  var cptLabel1 = cptItems[1].querySelector('.cpt-label');
-  if (cptLabel1) cptLabel1.textContent = App.t('counter_missing') + ' ';
-  var cptLabel2 = cptItems[2].querySelector('.cpt-label');
-  if (cptLabel2) cptLabel2.textContent = App.t('counter_shown') + ' ';
+  // Compteurs inline
+  var cptBadges = document.querySelectorAll('.compteur-badge');
+  if (cptBadges[0]) {
+    var lbl0 = cptBadges[0].querySelector('.cpt-label');
+    if (lbl0) lbl0.textContent = App.t('counter_owned') + ' ';
+  }
+  if (cptBadges[1]) {
+    var lbl1 = cptBadges[1].querySelector('.cpt-label');
+    if (lbl1) lbl1.textContent = App.t('counter_missing') + ' ';
+  }
+  if (cptBadges[2]) {
+    var lbl2 = cptBadges[2].querySelector('.cpt-label');
+    if (lbl2) lbl2.textContent = App.t('counter_shown') + ' ';
+  }
 
   // Légende
   var legendItems = document.querySelectorAll('.legende-item');
-  legendItems[0].querySelector('.legende-touche').textContent = App.t('legend_click');
-  legendItems[0].querySelector('.legende-texte').textContent = App.t('legend_check');
-  legendItems[1].querySelector('.legende-texte').textContent = App.t('legend_detail');
-  legendItems[2].querySelector('.legende-touche').textContent = App.t('legend_space');
-  legendItems[2].querySelector('.legende-texte').textContent = App.t('legend_space_desc');
+  if (legendItems.length >= 3) {
+    legendItems[0].querySelector('.legende-touche').textContent = App.t('legend_click');
+    legendItems[0].querySelector('.legende-texte').textContent = App.t('legend_check');
+    legendItems[1].querySelector('.legende-texte').textContent = App.t('legend_detail');
+    legendItems[2].querySelector('.legende-touche').textContent = App.t('legend_space');
+    legendItems[2].querySelector('.legende-texte').textContent = App.t('legend_space_desc');
+  }
 
   // État vide
   document.querySelector('.etat-vide p').textContent = App.t('empty_state');
