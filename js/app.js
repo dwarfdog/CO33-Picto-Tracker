@@ -39,6 +39,7 @@ var App = {
   _pictoParId: null,       // Map<number, Object> — Lookup rapide par ID
   _cachedStatLabels: null, // Object — Labels de stats mis en cache après changement de langue
   _svgTemplates: {},       // Object — SVGs clonables (flag, checkmark)
+  _gameplayConfigCache: null, // Object — Config gameplay normalisee (tags/regles)
 
   // ── État d'accessibilité des modales ──
   _activeModal: null,

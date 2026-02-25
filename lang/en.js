@@ -57,6 +57,16 @@
     lumina_total_cost:       'Total Lumina: {n}',
     lumina_remaining:        'Remaining: {n}',
 
+    // Expert gameplay filters
+    gameplay_filters_title:  'Advanced gameplay filters',
+    gameplay_filters_hint:   'Select one or more mechanics to isolate target builds.',
+    gameplay_mode_label:     'Tag matching mode',
+    gameplay_mode_any:       'Any selected tag',
+    gameplay_mode_all:       'All selected tags',
+    gameplay_clear:          'Clear gameplay tags',
+    gameplay_selection_none: 'No gameplay tag selected',
+    gameplay_selection_count:'Gameplay tags selected: {n}',
+
     // Dataset changes
     dataset_changes_title:         'Dataset updates',
     dataset_changes_meta_line:     'Comparison {fromDataset} / game {fromGame} -> {toDataset} / game {toGame}',
@@ -77,6 +87,16 @@
     dataset_change_field_stats:    'Stats',
     dataset_change_field_translation:'Translation state',
     dataset_change_field_other:    'Field {field}',
+
+    // Farm route
+    farm_route_title:         'Farm route - missing pictos',
+    farm_route_subtitle:      'Grouping is based on currently visible missing entries (zone + nearby flag).',
+    farm_route_meta:          'Missing: {n} pictos across {zones} zone(s)',
+    farm_route_empty:         'No missing picto matches current filters.',
+    farm_route_zone_count:    '{n} missing',
+    farm_route_no_flag:       'No nearby flag',
+    farm_route_lumina_tag:    'Lumina {n}',
+    farm_route_tags_tag:      'Tags: {tags}',
 
     // Counters
     counter_owned:           'Owned:',

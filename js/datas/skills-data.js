@@ -22,6 +22,128 @@ const DATA = {
             "note_en": "Summary generated from dataset review: includes new pictos and edited fields since the previous release.",
             "note_fr": "Resume genere depuis la revue dataset : inclut les nouveaux pictos et les champs modifies depuis la version precedente."
         },
+        "gameplay": {
+            "tags": [
+                {
+                    "id": "ap",
+                    "label_en": "AP economy",
+                    "label_fr": "Economie PA",
+                    "aliases_en": ["ap", "action points", "resource"],
+                    "aliases_fr": ["pa", "points d'action", "ressource"]
+                },
+                {
+                    "id": "base_attack",
+                    "label_en": "Base attack",
+                    "label_fr": "Attaque de base",
+                    "aliases_en": ["basic attack", "normal attack"],
+                    "aliases_fr": ["attaque normale"]
+                },
+                {
+                    "id": "free_aim",
+                    "label_en": "Free aim",
+                    "label_fr": "Visee libre",
+                    "aliases_en": ["aim shot", "ranged utility"],
+                    "aliases_fr": ["tir en visee libre", "tir vise"]
+                },
+                {
+                    "id": "burn",
+                    "label_en": "Burn",
+                    "label_fr": "Brulure",
+                    "aliases_en": ["fire status", "dot"],
+                    "aliases_fr": ["feu", "degats sur la duree"]
+                },
+                {
+                    "id": "mark",
+                    "label_en": "Mark",
+                    "label_fr": "Marque",
+                    "aliases_en": ["marked target", "focus target"],
+                    "aliases_fr": ["cible marquee"]
+                },
+                {
+                    "id": "break",
+                    "label_en": "Break / Stagger",
+                    "label_fr": "Fracture",
+                    "aliases_en": ["stagger", "break damage"],
+                    "aliases_fr": ["degats de fracture", "stagger"]
+                },
+                {
+                    "id": "crit",
+                    "label_en": "Critical",
+                    "label_fr": "Critique",
+                    "aliases_en": ["critical chance", "critical damage"],
+                    "aliases_fr": ["chance critique", "degats critiques"]
+                },
+                {
+                    "id": "survival",
+                    "label_en": "Survival",
+                    "label_fr": "Survie",
+                    "aliases_en": ["healing", "shield", "hp"],
+                    "aliases_fr": ["soin", "carapace", "sante"]
+                },
+                {
+                    "id": "buff_debuff",
+                    "label_en": "Buff / Debuff",
+                    "label_fr": "Buff / Debuff",
+                    "aliases_en": ["status effects", "team utility"],
+                    "aliases_fr": ["alterations", "support"]
+                },
+                {
+                    "id": "other",
+                    "label_en": "Other mechanics",
+                    "label_fr": "Autres mecaniques",
+                    "aliases_en": ["misc", "other"],
+                    "aliases_fr": ["divers", "autre"]
+                }
+            ],
+            "rules": [
+                {
+                    "tag": "ap",
+                    "keywords_en": [" ap ", "action point"],
+                    "keywords_fr": [" pa ", "point d'action"]
+                },
+                {
+                    "tag": "base_attack",
+                    "keywords_en": ["base attack", "basic attack"],
+                    "keywords_fr": ["attaque de base", "attaques de base"]
+                },
+                {
+                    "tag": "free_aim",
+                    "keywords_en": ["free aim", "aim shot", "free shot"],
+                    "keywords_fr": ["visee libre", "tir en visee", "tirs en visee"]
+                },
+                {
+                    "tag": "burn",
+                    "keywords_en": ["burn", "burning"],
+                    "keywords_fr": ["brulure", "brulant", "brulures"]
+                },
+                {
+                    "tag": "mark",
+                    "keywords_en": [" mark ", "marked"],
+                    "keywords_fr": [" marque ", "marquee"]
+                },
+                {
+                    "tag": "break",
+                    "keywords_en": ["break damage", "stagger"],
+                    "keywords_fr": ["fracture", "degats de fracture"]
+                },
+                {
+                    "tag": "crit",
+                    "keywords_en": ["critical", " crit "],
+                    "keywords_fr": ["critique", " crit "]
+                },
+                {
+                    "tag": "survival",
+                    "keywords_en": ["heal", "healing", "health", "hp", "shell", "shield", "barrier", "revive", "below 50%"],
+                    "keywords_fr": ["soin", "teinte curative", "sante", "pv", "carapace", "bouclier", "revive", "en dessous de 50"]
+                },
+                {
+                    "tag": "buff_debuff",
+                    "keywords_en": ["powerful", "defenceless", "defenseless", "status effect", "buff", "debuff"],
+                    "keywords_fr": ["surpuissance", "vulnerabilite", "alteration", "buff", "debuff"]
+                }
+            ],
+            "tag_overrides": {}
+        },
         "sources": [
             "monster-soluce.com/jeux/clair-obscur-expedition-33/guide-solution/pictos",
             "generation-game.com/guide-emplacements-de-tous-les-pictos-de-clair-obscur-expedition-33",

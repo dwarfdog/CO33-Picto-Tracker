@@ -54,6 +54,7 @@ function run() {
   loadScript('js/i18n.js');
   loadScript('js/utils.js');
   loadScript('js/state.js');
+  loadScript('js/gameplay-expert.js');
   loadScript('js/lumina-planner.js');
   loadScript('js/dataset-changes.js');
   loadScript('js/export-import.js');
@@ -78,6 +79,45 @@ function run() {
   const picto140 = DATA.pictos.find(function (p) { return p.id === 140; });
   assert.ok(picto140, 'Picto 140 must exist');
   assert.ok((picto140._searchIndex || '').indexOf('flying manor') !== -1);
+  assert.ok(Array.isArray(picto140._gameplayTags), 'Gameplay tags should be resolved during indexing');
+
+  // gameplay tags catalog + resolver
+  const gameplayCfg = App.getGameplayConfig();
+  assert.ok(gameplayCfg.tags.length >= 5, 'Gameplay tags catalog must be populated');
+  assert.ok(gameplayCfg.tagMap.ap, 'Gameplay tag "ap" must exist');
+  assert.ok(gameplayCfg.tagMap.other, 'Gameplay fallback tag "other" must exist');
+
+  const picto2 = DATA.pictos.find(function (p) { return p.id === 2; });
+  const picto12 = DATA.pictos.find(function (p) { return p.id === 12; });
+  assert.ok(picto2, 'Picto 2 must exist');
+  assert.ok(picto12, 'Picto 12 must exist');
+  assert.ok(App.resolveGameplayTags(picto2).indexOf('burn') !== -1);
+  assert.ok(App.resolveGameplayTags(picto2).indexOf('crit') !== -1);
+  assert.ok(App.resolveGameplayTags(picto12).indexOf('mark') !== -1);
+
+  const unknownGameplayPicto = {
+    id: 999999,
+    nom_en: 'Unknown',
+    nom_fr: 'Inconnu',
+    effet_en: 'No documented behavior',
+    effet_fr: '',
+    obtention_en: '',
+    obtention_fr: ''
+  };
+  assert.deepStrictEqual(App.resolveGameplayTags(unknownGameplayPicto), ['other']);
+
+  // farm route grouping by zone/flag
+  App.LANG = 'en';
+  const route = App.construireRouteCollecte([
+    DATA.pictos.find(function (p) { return p.id === 1; }),
+    DATA.pictos.find(function (p) { return p.id === 2; }),
+    DATA.pictos.find(function (p) { return p.id === 8; })
+  ]);
+  assert.strictEqual(route.length, 2);
+  assert.strictEqual(route[0].zoneLabel, 'Flying Waters');
+  assert.strictEqual(route[1].zoneLabel, 'Spring Meadows');
+  assert.strictEqual(route[1].total, 2);
+  assert.ok(route[1].flags.some(function (f) { return f.flagLabel === 'Meadows Corridor'; }));
 
   // parseImportData supports base64 and raw JSON/v2+/v4
   const sampleIds = [1, 2, 3];

@@ -60,6 +60,8 @@ App.appliquerTri = function () {
 App.appliquerFiltres = function () {
   var rechercheNorm = App.etat.recherche ? App.normaliserTexte(App.etat.recherche) : '';
   var nbAffiches = 0;
+  var selectedTags = Array.isArray(App.etat.filtreGameplayTags) ? App.etat.filtreGameplayTags : [];
+  var gameplayMode = App.etat.filtreGameplayMode === 'all' ? 'all' : 'any';
 
   App.toutes_cartes.forEach(function (carte) {
     var picto = carte._picto;
@@ -78,6 +80,30 @@ App.appliquerFiltres = function () {
     // Filtre zone
     if (App.etat.filtreZone && App.zoneKey(picto) !== App.etat.filtreZone) ok = false;
 
+    // Filtre gameplay expert (multi-tags)
+    if (ok && selectedTags.length) {
+      var tags = (typeof App.resolveGameplayTags === 'function') ? App.resolveGameplayTags(picto) : [];
+      if (!tags.length) {
+        ok = false;
+      } else if (gameplayMode === 'all') {
+        for (var i = 0; i < selectedTags.length; i++) {
+          if (tags.indexOf(selectedTags[i]) === -1) {
+            ok = false;
+            break;
+          }
+        }
+      } else {
+        var hasAny = false;
+        for (var j = 0; j < selectedTags.length; j++) {
+          if (tags.indexOf(selectedTags[j]) !== -1) {
+            hasAny = true;
+            break;
+          }
+        }
+        if (!hasAny) ok = false;
+      }
+    }
+
     // Filtre recherche — utilise l'index pré-calculé
     if (ok && rechercheNorm) {
       if ((picto._searchIndex || '').indexOf(rechercheNorm) === -1) ok = false;
@@ -90,4 +116,8 @@ App.appliquerFiltres = function () {
   var dom = App._dom;
   dom.cptAffiches.textContent = nbAffiches;
   dom.etatVide.classList.toggle('visible', nbAffiches === 0);
+
+  if (typeof App.rendreRouteCollecte === 'function') {
+    App.rendreRouteCollecte();
+  }
 };

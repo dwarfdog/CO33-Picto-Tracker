@@ -57,6 +57,16 @@
     lumina_total_cost:       'Total Lumina : {n}',
     lumina_remaining:        'Restant : {n}',
 
+    // Filtres gameplay experts
+    gameplay_filters_title:  'Filtres gameplay avances',
+    gameplay_filters_hint:   'Selectionnez une ou plusieurs mecaniques pour cibler un farm.',
+    gameplay_mode_label:     'Mode de correspondance',
+    gameplay_mode_any:       'Au moins un tag',
+    gameplay_mode_all:       'Tous les tags selectionnes',
+    gameplay_clear:          'Vider les tags gameplay',
+    gameplay_selection_none: 'Aucun tag gameplay selectionne',
+    gameplay_selection_count:'Tags gameplay selectionnes : {n}',
+
     // Nouveautes dataset
     dataset_changes_title:         'Nouveautes dataset',
     dataset_changes_meta_line:     'Comparaison {fromDataset} / jeu {fromGame} -> {toDataset} / jeu {toGame}',
@@ -77,6 +87,16 @@
     dataset_change_field_stats:    'Statistiques',
     dataset_change_field_translation:'Etat traduction',
     dataset_change_field_other:    'Champ {field}',
+
+    // Route de collecte
+    farm_route_title:         'Route de collecte - pictos manquants',
+    farm_route_subtitle:      'Regroupement base sur les manquants visibles (zone + drapeau proche).',
+    farm_route_meta:          'Manquants : {n} pictos dans {zones} zone(s)',
+    farm_route_empty:         'Aucun picto manquant ne correspond aux filtres actifs.',
+    farm_route_zone_count:    '{n} manquants',
+    farm_route_no_flag:       'Sans drapeau proche',
+    farm_route_lumina_tag:    'Lumina {n}',
+    farm_route_tags_tag:      'Tags : {tags}',
 
     // Compteurs
     counter_owned:           'Possédés :',

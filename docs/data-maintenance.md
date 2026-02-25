@@ -34,6 +34,13 @@ Optional but recommended for changelog UI:
 - `changes.removed_ids` (array of IDs removed since previous dataset)
 - `changes.note_en` / `changes.note_fr` (short release note)
 
+Required for advanced gameplay filters:
+
+- `gameplay.tags` (non-empty array of `{ id, label_en, label_fr }`)
+- `gameplay.rules` (non-empty array of `{ tag, keywords_en[] / keywords_fr[] }`)
+- `gameplay.tag_overrides` (optional object: `pictoId -> [tagIds]`)
+- Include a fallback tag (`id: "other"`) to guarantee classification.
+
 ## Local checks
 
 Run all checks:
@@ -59,6 +66,7 @@ The report includes:
 - Summary coverage for current tracked fields
 - Coverage by language for `nom`, `effet`, `zone`, `flag`, `obtention`
 - `raw` values (exact `*_xx` field) and `resolved` values (with English fallback)
+- gameplay tag coherence checks are covered by `node tools/validate-data.js` (run via `check-all.js`)
 
 JSON output:
 

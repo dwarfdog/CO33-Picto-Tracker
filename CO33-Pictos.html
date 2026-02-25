@@ -133,6 +133,24 @@
 			</div>
 		</section>
 
+		<!-- Filtres gameplay experts -->
+		<section class="gameplay-filters" id="gameplay-filters">
+			<div class="gameplay-filters-head">
+				<div class="gameplay-filters-title" id="gameplay-filters-title"></div>
+				<div class="gameplay-filters-hint" id="gameplay-filters-hint"></div>
+			</div>
+			<div class="gameplay-filters-actions">
+				<label for="filtre-gameplay-mode" class="sr-only" id="lbl-gameplay-mode">Gameplay filter mode</label>
+				<select class="select-zone gameplay-mode-select" id="filtre-gameplay-mode" aria-labelledby="lbl-gameplay-mode">
+					<option value="any"></option>
+					<option value="all"></option>
+				</select>
+				<button type="button" class="btn-action" id="btn-gameplay-clear"></button>
+				<span class="gameplay-tag-summary" id="gameplay-tag-summary"></span>
+			</div>
+			<div class="gameplay-tag-buttons" id="gameplay-tag-buttons"></div>
+		</section>
+
 		<!-- Nouveautes dataset -->
 		<section class="dataset-changes" id="dataset-changes">
 			<div class="dataset-changes-head">
@@ -154,6 +172,17 @@
 					<ul class="dataset-changes-list" id="dataset-changes-removed-list"></ul>
 				</div>
 			</div>
+		</section>
+
+		<!-- Route de collecte (manquants) -->
+		<section class="farm-route" id="farm-route">
+			<div class="farm-route-head">
+				<div class="farm-route-title" id="farm-route-title"></div>
+				<div class="farm-route-meta" id="farm-route-meta"></div>
+			</div>
+			<div class="farm-route-subtitle" id="farm-route-subtitle"></div>
+			<div class="farm-route-empty" id="farm-route-empty"></div>
+			<div class="farm-route-groups" id="farm-route-groups"></div>
 		</section>
 
 		<!-- Compteurs -->
@@ -307,6 +336,7 @@
 		<script src="js/i18n.js"></script>
 		<script src="js/state.js"></script>
 		<script src="js/utils.js"></script>
+		<script src="js/gameplay-expert.js"></script>
 
 		<!-- ══ Features ══ -->
 		<script src="js/progress.js"></script>

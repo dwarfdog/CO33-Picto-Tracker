@@ -75,6 +75,23 @@ App.appliquerTraductions = function () {
   luminaFilterButtons[1].textContent = App.t('lumina_filter_selected');
   luminaFilterButtons[2].textContent = App.t('lumina_filter_unselected');
 
+  // Filtres gameplay experts
+  document.getElementById('gameplay-filters-title').textContent = App.t('gameplay_filters_title');
+  document.getElementById('gameplay-filters-hint').textContent = App.t('gameplay_filters_hint');
+  document.getElementById('lbl-gameplay-mode').textContent = App.t('gameplay_mode_label');
+
+  var gameplayModeSelect = document.getElementById('filtre-gameplay-mode');
+  gameplayModeSelect.options[0].textContent = App.t('gameplay_mode_any');
+  gameplayModeSelect.options[1].textContent = App.t('gameplay_mode_all');
+
+  var btnGameplayClear = document.getElementById('btn-gameplay-clear');
+  btnGameplayClear.textContent = App.t('gameplay_clear');
+  btnGameplayClear.setAttribute('aria-label', App.t('gameplay_clear'));
+
+  if (typeof App.rendreFiltresGameplay === 'function') {
+    App.rendreFiltresGameplay();
+  }
+
   // Compteurs — mise à jour du label via textContent (plus de innerHTML)
   var cptItems = document.querySelectorAll('.compteur-item');
   var cptLabel0 = cptItems[0].querySelector('.cpt-label');
@@ -155,6 +172,11 @@ App.appliquerTraductions = function () {
   // Nouveautes dataset
   if (typeof App.rendreNouveautesDataset === 'function') {
     App.rendreNouveautesDataset();
+  }
+
+  // Route de collecte
+  if (typeof App.rendreRouteCollecte === 'function') {
+    App.rendreRouteCollecte();
   }
 };
 

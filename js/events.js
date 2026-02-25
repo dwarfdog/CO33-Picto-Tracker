@@ -75,6 +75,16 @@ App.attacher = function () {
     });
   });
 
+  // ── Filtres gameplay experts ──
+  document.getElementById('filtre-gameplay-mode').addEventListener('change', function (e) {
+    App.etat.filtreGameplayMode = e.target.value === 'all' ? 'all' : 'any';
+    App.appliquerFiltres();
+  });
+
+  document.getElementById('btn-gameplay-clear').addEventListener('click', function () {
+    App.viderFiltresGameplay();
+  });
+
   // ── Filtres collection (délégation) ──
   document.querySelectorAll('.btn-filtre[data-filtre]').forEach(function (btn) {
     btn.addEventListener('click', function () {
