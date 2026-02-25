@@ -137,6 +137,11 @@
     tooltip_categorie:       'Category',
     tooltip_obtention_type:  'Obtain type',
 
+    // Tooltip groups
+    tooltip_group_location:       'Location',
+    tooltip_group_classification: 'Classification',
+    tooltip_group_tracking:       'Tracking',
+
     // Card
     badge_derived:           '~ derived translation',
     aria_owned:              'Owned',

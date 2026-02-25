@@ -14,6 +14,40 @@ App.ouvrirTooltip = function (picto) {
   App.etat.pictoOuvert = picto.id;
   var overlay = document.getElementById('tooltip-overlay');
 
+  // ── Meta bar (header) : #ID, catégorie, lumina ──
+  var metaId = document.getElementById('tt-meta-id');
+  metaId.textContent = '#' + String(picto.id).padStart(3, '0');
+
+  var metaCat = document.getElementById('tt-meta-cat');
+  if (Array.isArray(picto.categories) && picto.categories.length && DATA.meta && Array.isArray(DATA.meta.categories)) {
+    var catLabels = [];
+    for (var ci = 0; ci < picto.categories.length; ci++) {
+      for (var cm = 0; cm < DATA.meta.categories.length; cm++) {
+        if (DATA.meta.categories[cm].id === picto.categories[ci]) {
+          catLabels.push(App.LANG === 'fr' ? DATA.meta.categories[cm].label_fr : DATA.meta.categories[cm].label_en);
+          break;
+        }
+      }
+    }
+    if (catLabels.length) {
+      metaCat.textContent = catLabels.join(' / ');
+      metaCat.className = 'tooltip-meta-cat cat-' + picto.categories[0];
+      metaCat.style.display = '';
+    } else {
+      metaCat.style.display = 'none';
+    }
+  } else {
+    metaCat.style.display = 'none';
+  }
+
+  var metaLumina = document.getElementById('tt-meta-lumina');
+  if (picto.lumina) {
+    metaLumina.textContent = '\u2726 ' + picto.lumina;
+    metaLumina.style.display = '';
+  } else {
+    metaLumina.style.display = 'none';
+  }
+
   // Noms
   document.getElementById('tt-nom-fr').textContent = App.champ(picto, 'nom');
   document.getElementById('tt-nom-en').textContent = App.nomSecondaire(picto);
@@ -64,7 +98,7 @@ App.ouvrirTooltip = function (picto) {
     sourceTexts.push(App.t('tooltip_source_boss', { boss: picto.source_boss }));
   }
   if (sourceTexts.length) {
-    ttSource.textContent = sourceTexts.join(' — ');
+    ttSource.textContent = sourceTexts.join(' \u2014 ');
     secSource.style.display = '';
   } else {
     secSource.style.display = 'none';
@@ -103,31 +137,21 @@ App.ouvrirTooltip = function (picto) {
     secStats.style.display = 'none';
   }
 
-  // Lumina
-  var ttLumina = document.getElementById('tt-lumina');
-  var secLumina = document.getElementById('tt-sec-lumina');
-  if (picto.lumina) {
-    ttLumina.textContent = '\u2726 ' + picto.lumina;
-    secLumina.style.display = '';
-  } else {
-    secLumina.style.display = 'none';
-  }
-
-  // Catégorie (support bi-types via tableau categories)
+  // Catégorie (dans le groupe classification)
   var secCategorie = document.getElementById('tt-sec-categorie');
   var ttCategorie = document.getElementById('tt-categorie');
   if (Array.isArray(picto.categories) && picto.categories.length && DATA.meta && Array.isArray(DATA.meta.categories)) {
-    var catLabels = [];
-    for (var ci = 0; ci < picto.categories.length; ci++) {
-      for (var cm = 0; cm < DATA.meta.categories.length; cm++) {
-        if (DATA.meta.categories[cm].id === picto.categories[ci]) {
-          catLabels.push(App.LANG === 'fr' ? DATA.meta.categories[cm].label_fr : DATA.meta.categories[cm].label_en);
+    var catLabelsBody = [];
+    for (var ci2 = 0; ci2 < picto.categories.length; ci2++) {
+      for (var cm2 = 0; cm2 < DATA.meta.categories.length; cm2++) {
+        if (DATA.meta.categories[cm2].id === picto.categories[ci2]) {
+          catLabelsBody.push(App.LANG === 'fr' ? DATA.meta.categories[cm2].label_fr : DATA.meta.categories[cm2].label_en);
           break;
         }
       }
     }
-    if (catLabels.length) {
-      ttCategorie.textContent = catLabels.join(' / ');
+    if (catLabelsBody.length) {
+      ttCategorie.textContent = catLabelsBody.join(' / ');
       secCategorie.style.display = '';
     } else {
       secCategorie.style.display = 'none';
@@ -251,6 +275,19 @@ App.ouvrirTooltip = function (picto) {
   var possede = App.etat.possedes.has(picto.id);
   btn.textContent = possede ? App.t('tooltip_remove') : App.t('tooltip_add');
   btn.className = 'tooltip-btn-possession' + (possede ? ' possede-btn' : '');
+
+  // ── Visibilité des groupes : masquer un groupe si tous ses enfants section sont display:none ──
+  var groups = ['tt-group-location', 'tt-group-classification'];
+  for (var gi = 0; gi < groups.length; gi++) {
+    var group = document.getElementById(groups[gi]);
+    if (!group) continue;
+    var sections = group.querySelectorAll('.tooltip-section');
+    var allHidden = true;
+    for (var si2 = 0; si2 < sections.length; si2++) {
+      if (sections[si2].style.display !== 'none') { allHidden = false; break; }
+    }
+    group.style.display = allHidden ? 'none' : '';
+  }
 
   App.ouvrirModal(overlay, document.getElementById('tooltip-fermer'));
 };

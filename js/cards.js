@@ -36,7 +36,28 @@ App.initSvgTemplates = function () {
   checkPath.setAttribute('stroke-linejoin', 'round');
   checkSvg.appendChild(checkPath);
 
-  App._svgTemplates = { flag: flagSvg, check: checkSvg };
+  // SVG œil (bouton détail)
+  var eyeSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  eyeSvg.setAttribute('viewBox', '0 0 24 24');
+  eyeSvg.setAttribute('aria-hidden', 'true');
+  var eyePath1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  eyePath1.setAttribute('d', 'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z');
+  eyePath1.setAttribute('stroke', 'currentColor');
+  eyePath1.setAttribute('stroke-width', '2');
+  eyePath1.setAttribute('fill', 'none');
+  eyePath1.setAttribute('stroke-linecap', 'round');
+  eyePath1.setAttribute('stroke-linejoin', 'round');
+  eyeSvg.appendChild(eyePath1);
+  var eyeCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  eyeCircle.setAttribute('cx', '12');
+  eyeCircle.setAttribute('cy', '12');
+  eyeCircle.setAttribute('r', '3');
+  eyeCircle.setAttribute('stroke', 'currentColor');
+  eyeCircle.setAttribute('stroke-width', '2');
+  eyeCircle.setAttribute('fill', 'none');
+  eyeSvg.appendChild(eyeCircle);
+
+  App._svgTemplates = { flag: flagSvg, check: checkSvg, eye: eyeSvg };
 };
 
 /**
@@ -79,6 +100,7 @@ App.creerStatsBadges = function (stats) {
 
 /**
  * Crée un élément DOM pour une carte picto (construction DOM pure, sans innerHTML).
+ * Structure : topbar → header → corps → footer → actions
  * @param {Object} picto - Objet picto issu de DATA.pictos
  * @returns {HTMLElement}
  */
@@ -94,12 +116,43 @@ App.creerCartePicto = function (picto) {
     el.dataset.gameplayTags = App.resolveGameplayTags(picto).join(',');
   }
 
-  // ── Coin décoratif ──
-  var coinDeco = document.createElement('div');
-  coinDeco.className = 'coin-deco';
-  el.appendChild(coinDeco);
+  // ── Topbar (flex row : endgame, #ID, cat-badge, ✦lumina) ──
+  var topbar = document.createElement('div');
+  topbar.className = 'carte-topbar';
 
-  // ── Header ──
+  if (picto.source_endgame) {
+    var endgameBadge = document.createElement('div');
+    endgameBadge.className = 'carte-endgame-badge';
+    endgameBadge.textContent = '\u2606';
+    endgameBadge.title = App.t('badge_endgame');
+    topbar.appendChild(endgameBadge);
+  }
+
+  var carteId = document.createElement('div');
+  carteId.className = 'carte-id';
+  carteId.textContent = '#' + String(picto.id).padStart(3, '0');
+  topbar.appendChild(carteId);
+
+  if (Array.isArray(picto.categories) && picto.categories.length) {
+    var catBadge = document.createElement('div');
+    catBadge.className = 'carte-cat-badge cat-' + picto.categories[0];
+    catBadge.textContent = picto.categories[0].charAt(0).toUpperCase();
+    if (picto.categories.length > 1) {
+      catBadge.textContent += '/' + picto.categories[1].charAt(0).toUpperCase();
+    }
+    topbar.appendChild(catBadge);
+  }
+
+  if (picto.lumina) {
+    var lumina = document.createElement('div');
+    lumina.className = 'carte-lumina';
+    lumina.textContent = '\u2726 ' + picto.lumina;
+    topbar.appendChild(lumina);
+  }
+
+  el.appendChild(topbar);
+
+  // ── Header (noms + badge traduction) ──
   var header = document.createElement('div');
   header.className = 'carte-header';
 
@@ -121,37 +174,6 @@ App.creerCartePicto = function (picto) {
     header.appendChild(badgeTrad);
   }
 
-  var carteId = document.createElement('div');
-  carteId.className = 'carte-id';
-  carteId.textContent = '#' + String(picto.id).padStart(3, '0');
-  header.appendChild(carteId);
-
-  if (picto.lumina) {
-    var lumina = document.createElement('div');
-    lumina.className = 'carte-lumina';
-    lumina.textContent = '\u2726 ' + picto.lumina;
-    header.appendChild(lumina);
-  }
-
-  if (picto.source_endgame) {
-    var endgameBadge = document.createElement('div');
-    endgameBadge.className = 'carte-endgame-badge';
-    endgameBadge.textContent = '\u2606';
-    endgameBadge.title = App.t('badge_endgame');
-    header.appendChild(endgameBadge);
-  }
-
-  // Badge catégorie (O/D/S avec couleur)
-  if (Array.isArray(picto.categories) && picto.categories.length) {
-    var catBadge = document.createElement('div');
-    catBadge.className = 'carte-cat-badge cat-' + picto.categories[0];
-    catBadge.textContent = picto.categories[0].charAt(0).toUpperCase();
-    if (picto.categories.length > 1) {
-      catBadge.textContent += '/' + picto.categories[1].charAt(0).toUpperCase();
-    }
-    header.appendChild(catBadge);
-  }
-
   el.appendChild(header);
 
   // ── Corps ──
@@ -169,7 +191,7 @@ App.creerCartePicto = function (picto) {
 
   el.appendChild(corps);
 
-  // ── Footer ──
+  // ── Footer (zone + flag) ──
   var footer = document.createElement('div');
   footer.className = 'carte-footer';
 
@@ -178,7 +200,6 @@ App.creerCartePicto = function (picto) {
   zone.textContent = App.champ(picto, 'zone');
   footer.appendChild(zone);
 
-  // Flag (drapeau de téléportation)
   var flagTexte = App.champ(picto, 'flag');
   var flagDiv = document.createElement('div');
   flagDiv.className = 'carte-flag';
@@ -190,33 +211,36 @@ App.creerCartePicto = function (picto) {
   flagDiv.appendChild(flagSpan);
   footer.appendChild(flagDiv);
 
-  // Bouton possession
-  var btnPossession = document.createElement('button');
-  btnPossession.type = 'button';
-  btnPossession.className = 'possession-indicateur';
-  btnPossession.setAttribute('aria-label', App.t('aria_toggle'));
-  btnPossession.setAttribute('aria-pressed', possede ? 'true' : 'false');
-  btnPossession.appendChild(App._svgTemplates.check.cloneNode(true));
-  footer.appendChild(btnPossession);
+  el.appendChild(footer);
 
-  // Bouton build Lumina
+  // ── Actions (détail, build, possession) ──
+  var actions = document.createElement('div');
+  actions.className = 'carte-actions';
+
+  var btnDetail = document.createElement('button');
+  btnDetail.type = 'button';
+  btnDetail.className = 'btn-detail';
+  btnDetail.setAttribute('aria-label', App.t('tooltip_detail'));
+  btnDetail.appendChild(App._svgTemplates.eye.cloneNode(true));
+  actions.appendChild(btnDetail);
+
   var btnBuild = document.createElement('button');
   btnBuild.type = 'button';
   btnBuild.className = 'build-indicateur' + (dansBuild ? ' actif' : '');
   btnBuild.setAttribute('aria-label', App.t('aria_build_toggle'));
   btnBuild.setAttribute('aria-pressed', dansBuild ? 'true' : 'false');
   btnBuild.textContent = '\u2726';
-  footer.appendChild(btnBuild);
+  actions.appendChild(btnBuild);
 
-  // Bouton détail
-  var btnDetail = document.createElement('button');
-  btnDetail.type = 'button';
-  btnDetail.className = 'btn-detail';
-  btnDetail.setAttribute('aria-label', App.t('tooltip_detail'));
-  btnDetail.textContent = '\u24D8';
-  footer.appendChild(btnDetail);
+  var btnPossession = document.createElement('button');
+  btnPossession.type = 'button';
+  btnPossession.className = 'possession-indicateur';
+  btnPossession.setAttribute('aria-label', App.t('aria_toggle'));
+  btnPossession.setAttribute('aria-pressed', possede ? 'true' : 'false');
+  btnPossession.appendChild(App._svgTemplates.check.cloneNode(true));
+  actions.appendChild(btnPossession);
 
-  el.appendChild(footer);
+  el.appendChild(actions);
 
   // ── Référence au picto pour tri/filtre ──
   el._picto = picto;
