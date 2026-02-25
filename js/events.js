@@ -33,6 +33,22 @@ App.attacher = function () {
     });
   }
 
+  // ── Filtre catégorie ──
+  if (dom.filtreCategorie) {
+    dom.filtreCategorie.addEventListener('change', function (e) {
+      App.etat.filtreCategorie = e.target.value;
+      App.appliquerFiltres();
+    });
+  }
+
+  // ── Filtre type d'obtention ──
+  if (dom.filtreObtention) {
+    dom.filtreObtention.addEventListener('change', function (e) {
+      App.etat.filtreObtention = e.target.value;
+      App.appliquerFiltres();
+    });
+  }
+
   // ── Tri ──
   if (dom.triSelect) {
     dom.triSelect.addEventListener('change', function (e) {

@@ -30,6 +30,8 @@ App.appliquerTraductions = function () {
   recherche.setAttribute('aria-label', App.t('search_placeholder'));
   document.getElementById('lbl-recherche').textContent = App.t('label_search');
   document.getElementById('lbl-filtre-zone').textContent = App.t('label_zone_filter');
+  document.getElementById('lbl-filtre-categorie').textContent = App.t('label_categorie_filter');
+  document.getElementById('lbl-filtre-obtention').textContent = App.t('label_obtention_filter');
   document.getElementById('lbl-tri-select').textContent = App.t('label_sort_order');
   document.getElementById('lbl-profil-select').textContent = App.t('label_profile_select');
 
@@ -119,6 +121,10 @@ App.appliquerTraductions = function () {
   document.querySelector('#tt-sec-lumina .tooltip-section-titre').textContent = App.t('tooltip_lumina');
   document.querySelector('#tt-sec-flag .tooltip-section-titre').textContent = App.t('tooltip_flag');
   document.querySelector('#tt-sec-obtention .tooltip-section-titre').textContent = App.t('tooltip_obtain');
+  document.querySelector('#tt-sec-categorie .tooltip-section-titre').textContent = App.t('tooltip_categorie');
+  document.querySelector('#tt-sec-obtention-type .tooltip-section-titre').textContent = App.t('tooltip_obtention_type');
+  document.querySelector('#tt-sec-mastery .tooltip-section-titre').textContent = App.t('tooltip_mastery');
+  document.querySelector('#tt-sec-level .tooltip-section-titre').textContent = App.t('tooltip_level');
   document.getElementById('tooltip-fermer').setAttribute('aria-label', App.t('tooltip_close'));
 
   // Modal import
@@ -170,6 +176,12 @@ App.appliquerTraductions = function () {
   // Zone select
   App.initialiserSelectZone();
 
+  // Category select
+  App.initialiserSelectCategorie();
+
+  // Obtention type select
+  App.initialiserSelectObtention();
+
   // Profils
   App.rafraichirSelectProfils();
 
@@ -217,6 +229,50 @@ App.initialiserSelectZone = function () {
     var opt = document.createElement('option');
     opt.value = zoneKey;
     opt.textContent = zonesMap[zoneKey];
+    sel.appendChild(opt);
+  });
+
+  sel.value = valeurCourante;
+};
+
+/**
+ * Initialise le sélecteur de catégorie à partir de DATA.meta.categories.
+ */
+App.initialiserSelectCategorie = function () {
+  var sel = document.getElementById('filtre-categorie');
+  if (!sel) return;
+  var valeurCourante = sel.value;
+
+  while (sel.options.length > 1) sel.remove(1);
+  sel.options[0].textContent = App.t('categorie_all');
+
+  var categories = (DATA.meta && Array.isArray(DATA.meta.categories)) ? DATA.meta.categories : [];
+  categories.forEach(function (cat) {
+    var opt = document.createElement('option');
+    opt.value = cat.id;
+    opt.textContent = App.LANG === 'fr' ? cat.label_fr : cat.label_en;
+    sel.appendChild(opt);
+  });
+
+  sel.value = valeurCourante;
+};
+
+/**
+ * Initialise le sélecteur de type d'obtention à partir de DATA.meta.obtention_types.
+ */
+App.initialiserSelectObtention = function () {
+  var sel = document.getElementById('filtre-obtention');
+  if (!sel) return;
+  var valeurCourante = sel.value;
+
+  while (sel.options.length > 1) sel.remove(1);
+  sel.options[0].textContent = App.t('obtention_all');
+
+  var types = (DATA.meta && Array.isArray(DATA.meta.obtention_types)) ? DATA.meta.obtention_types : [];
+  types.forEach(function (ot) {
+    var opt = document.createElement('option');
+    opt.value = ot.id;
+    opt.textContent = App.LANG === 'fr' ? ot.label_fr : ot.label_en;
     sel.appendChild(opt);
   });
 

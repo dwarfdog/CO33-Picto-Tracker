@@ -14,10 +14,14 @@ var App = {
   // ── Configuration ──
   STORAGE_KEY: 'ce33_pictos_possedes',
   LANG_STORAGE_KEY: 'ce33_langue',
-  STORAGE_VERSION: 4,
+  STORAGE_VERSION: 5,
   MAX_PROFILES: 12,
 
-  // ── Constantes ──
+  // ── Constantes gameplay ──
+  MASTERY_MAX: 4,
+  PICTO_LEVEL_MAX: 33,
+
+  // ── Constantes UI ──
   ANIMATION_DELAY_PER_CARD: 15,
   ANIMATION_DELAY_MAX: 800,
   TOAST_DURATION: 3000,

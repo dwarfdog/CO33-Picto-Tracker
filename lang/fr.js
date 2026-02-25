@@ -19,6 +19,10 @@
     search_placeholder:      'Rechercher un picto…',
     label_search:            'Recherche',
     label_zone_filter:       'Filtre de zone',
+    label_categorie_filter:  'Filtre de catégorie',
+    label_obtention_filter:  'Filtre d\u2019obtention',
+    categorie_all:           'Toutes les catégories',
+    obtention_all:           'Tous les types',
     label_sort_order:        'Ordre de tri',
     label_profile_select:    'Profil actif',
     zone_all:                'Toutes les zones',
@@ -124,6 +128,12 @@
     tooltip_detail:          'Voir le détail',
     tooltip_remove:          '— Retirer de ma collection',
     tooltip_add:             '+ Marquer comme possédé',
+    tooltip_mastery:         'Maîtrise Lumina',
+    tooltip_mastery_count:   '{n}/{max}',
+    tooltip_level:           'Niveau',
+    tooltip_level_count:     'Niv. {n}',
+    tooltip_categorie:       'Catégorie',
+    tooltip_obtention_type:  'Type d\u2019obtention',
 
     // Carte
     badge_derived:           '~ trad. dérivée',

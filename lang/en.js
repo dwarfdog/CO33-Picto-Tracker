@@ -19,6 +19,10 @@
     search_placeholder:      'Search for a picto…',
     label_search:            'Search',
     label_zone_filter:       'Zone filter',
+    label_categorie_filter:  'Category filter',
+    label_obtention_filter:  'Obtain filter',
+    categorie_all:           'All categories',
+    obtention_all:           'All types',
     label_sort_order:        'Sort order',
     label_profile_select:    'Active profile',
     zone_all:                'All zones',
@@ -124,6 +128,12 @@
     tooltip_detail:          'View details',
     tooltip_remove:          '— Remove from collection',
     tooltip_add:             '+ Mark as owned',
+    tooltip_mastery:         'Lumina Mastery',
+    tooltip_mastery_count:   '{n}/{max}',
+    tooltip_level:           'Level',
+    tooltip_level_count:     'Lv. {n}',
+    tooltip_categorie:       'Category',
+    tooltip_obtention_type:  'Obtain type',
 
     // Card
     badge_derived:           '~ derived translation',

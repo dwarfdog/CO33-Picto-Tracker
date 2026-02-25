@@ -111,6 +111,8 @@
     luminaBudget:    'lumina-budget',
     btnLuminaClear:  'btn-lumina-clear',
     // Gameplay
+    filtreCategorie:   'filtre-categorie',
+    filtreObtention:   'filtre-obtention',
     filtreGameplayMode:'filtre-gameplay-mode',
     btnGameplayClear:'btn-gameplay-clear',
     // Modal prompt
@@ -138,6 +140,12 @@
     document.querySelectorAll('.btn-filtre-build[data-build-filtre]').forEach(function (btn) {
       btn.classList.toggle('actif', btn.dataset.buildFiltre === App.etat.filtreBuild);
     });
+  }
+  if (App._dom.filtreCategorie && App.etat.filtreCategorie) {
+    App._dom.filtreCategorie.value = App.etat.filtreCategorie;
+  }
+  if (App._dom.filtreObtention && App.etat.filtreObtention) {
+    App._dom.filtreObtention.value = App.etat.filtreObtention;
   }
   if (App._dom.filtreGameplayMode && App.etat.filtreGameplayMode) {
     App._dom.filtreGameplayMode.value = App.etat.filtreGameplayMode;

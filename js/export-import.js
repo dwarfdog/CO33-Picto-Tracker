@@ -58,6 +58,8 @@ App.telechargerFichier = function () {
     possedes: Array.from(App.etat.possedes).sort(function (a, b) { return a - b; }),
     build_lumina: Array.from(App.etat.buildLumina || []).sort(function (a, b) { return a - b; }),
     budget_lumina: App.etat.luminaBudget || 0,
+    maitrise: App.etat.maitrise || {},
+    niveaux: App.etat.niveaux || {},
     total: App.etat.possedes.size,
   };
 
@@ -90,7 +92,9 @@ App.telechargerTousProfils = function () {
         nom: p.nom,
         possedes: Array.from(p.possedes).sort(function (a, b) { return a - b; }),
         build_lumina: Array.from(p.buildLumina).sort(function (a, b) { return a - b; }),
-        budget_lumina: p.budgetLumina
+        budget_lumina: p.budgetLumina,
+        maitrise: p.maitrise || {},
+        niveaux: p.niveaux || {}
       };
     }),
     total_pictos: DATA.pictos.length
@@ -134,7 +138,9 @@ App.importerTousProfils = function (code) {
         nom: entry.nom,
         possedes: entry.possedes || [],
         build_lumina: entry.build_lumina || entry.buildLumina || [],
-        budget_lumina: entry.budget_lumina !== undefined ? entry.budget_lumina : (entry.budgetLumina || 0)
+        budget_lumina: entry.budget_lumina !== undefined ? entry.budget_lumina : (entry.budgetLumina || 0),
+        maitrise: entry.maitrise || {},
+        niveaux: entry.niveaux || {}
       });
     });
     if (typeof parsed.profil_actif === 'string') {

@@ -80,6 +80,12 @@ App.appliquerFiltres = function () {
     // Filtre zone
     if (App.etat.filtreZone && App.zoneKey(picto) !== App.etat.filtreZone) ok = false;
 
+    // Filtre catégorie
+    if (ok && App.etat.filtreCategorie && picto.categorie !== App.etat.filtreCategorie) ok = false;
+
+    // Filtre type d'obtention
+    if (ok && App.etat.filtreObtention && picto.obtention_type !== App.etat.filtreObtention) ok = false;
+
     // Filtre gameplay expert (multi-tags)
     if (ok && selectedTags.length) {
       var tags = (typeof App.resolveGameplayTags === 'function') ? App.resolveGameplayTags(picto) : [];

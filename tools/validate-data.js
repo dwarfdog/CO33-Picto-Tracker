@@ -321,6 +321,58 @@ function validate() {
     errors.push('meta.total_pictos (' + meta.total_pictos + ') does not match pictos.length (' + pictos.length + ').');
   }
 
+  // Validate meta.categories
+  const validCategories = new Set();
+  if (meta.categories !== undefined) {
+    if (!Array.isArray(meta.categories) || meta.categories.length === 0) {
+      errors.push('meta.categories must be a non-empty array when provided.');
+    } else {
+      for (let i = 0; i < meta.categories.length; i++) {
+        const cat = meta.categories[i];
+        if (!cat || typeof cat !== 'object') {
+          errors.push('meta.categories[' + i + '] must be an object.');
+          continue;
+        }
+        if (!isNonEmptyString(cat.id)) {
+          errors.push('meta.categories[' + i + '].id must be a non-empty string.');
+          continue;
+        }
+        if (validCategories.has(cat.id)) {
+          errors.push('meta.categories contains duplicate id "' + cat.id + '".');
+        }
+        validCategories.add(cat.id);
+        if (!isNonEmptyString(cat.label_en)) errors.push('meta.categories[' + i + '].label_en is required.');
+        if (!isNonEmptyString(cat.label_fr)) errors.push('meta.categories[' + i + '].label_fr is required.');
+      }
+    }
+  }
+
+  // Validate meta.obtention_types
+  const validObtentionTypes = new Set();
+  if (meta.obtention_types !== undefined) {
+    if (!Array.isArray(meta.obtention_types) || meta.obtention_types.length === 0) {
+      errors.push('meta.obtention_types must be a non-empty array when provided.');
+    } else {
+      for (let i = 0; i < meta.obtention_types.length; i++) {
+        const ot = meta.obtention_types[i];
+        if (!ot || typeof ot !== 'object') {
+          errors.push('meta.obtention_types[' + i + '] must be an object.');
+          continue;
+        }
+        if (!isNonEmptyString(ot.id)) {
+          errors.push('meta.obtention_types[' + i + '].id must be a non-empty string.');
+          continue;
+        }
+        if (validObtentionTypes.has(ot.id)) {
+          errors.push('meta.obtention_types contains duplicate id "' + ot.id + '".');
+        }
+        validObtentionTypes.add(ot.id);
+        if (!isNonEmptyString(ot.label_en)) errors.push('meta.obtention_types[' + i + '].label_en is required.');
+        if (!isNonEmptyString(ot.label_fr)) errors.push('meta.obtention_types[' + i + '].label_fr is required.');
+      }
+    }
+  }
+
   const ids = new Set();
   let minId = Infinity;
   let maxId = -Infinity;
@@ -329,6 +381,8 @@ function validate() {
   let effetFrCount = 0;
   let obtentionFrCount = 0;
   const gameplayUsage = {};
+  const categorieUsage = {};
+  const obtentionTypeUsage = {};
 
   function resolveGameplayTagsForPicto(picto) {
     const resolved = [];
@@ -484,6 +538,28 @@ function validate() {
       }
     }
 
+    // Validate categorie
+    if (p.categorie !== undefined) {
+      if (!isNonEmptyString(p.categorie)) {
+        errors.push('id ' + p.id + ': categorie must be a non-empty string when provided.');
+      } else if (validCategories.size && !validCategories.has(p.categorie)) {
+        errors.push('id ' + p.id + ': categorie "' + p.categorie + '" is not declared in meta.categories.');
+      } else {
+        categorieUsage[p.categorie] = (categorieUsage[p.categorie] || 0) + 1;
+      }
+    }
+
+    // Validate obtention_type
+    if (p.obtention_type !== undefined) {
+      if (!isNonEmptyString(p.obtention_type)) {
+        errors.push('id ' + p.id + ': obtention_type must be a non-empty string when provided.');
+      } else if (validObtentionTypes.size && !validObtentionTypes.has(p.obtention_type)) {
+        errors.push('id ' + p.id + ': obtention_type "' + p.obtention_type + '" is not declared in meta.obtention_types.');
+      } else {
+        obtentionTypeUsage[p.obtention_type] = (obtentionTypeUsage[p.obtention_type] || 0) + 1;
+      }
+    }
+
     if (isNonEmptyString(p.effet_fr)) effetFrCount++;
     if (isNonEmptyString(p.obtention_fr)) obtentionFrCount++;
   }
@@ -540,6 +616,26 @@ function validate() {
       .map(function (tagId) { return tagId + '=' + gameplayUsage[tagId]; })
       .join(', ');
     warnings.push('Gameplay tags coverage: ' + (coverage || 'none') + '.');
+  }
+
+  // Report categorie coverage
+  if (validCategories.size) {
+    const catCoverage = Object.keys(categorieUsage)
+      .sort()
+      .map(function (k) { return k + '=' + categorieUsage[k]; })
+      .join(', ');
+    const catTotal = Object.values(categorieUsage).reduce(function (a, b) { return a + b; }, 0);
+    warnings.push('Categorie coverage: ' + catTotal + '/' + pictos.length + ' (' + (catCoverage || 'none') + ').');
+  }
+
+  // Report obtention_type coverage
+  if (validObtentionTypes.size) {
+    const obtCoverage = Object.keys(obtentionTypeUsage)
+      .sort()
+      .map(function (k) { return k + '=' + obtentionTypeUsage[k]; })
+      .join(', ');
+    const obtTotal = Object.values(obtentionTypeUsage).reduce(function (a, b) { return a + b; }, 0);
+    warnings.push('Obtention type coverage: ' + obtTotal + '/' + pictos.length + ' (' + (obtCoverage || 'none') + ').');
   }
 
   return { errors, warnings, pictosCount: pictos.length, confirmed, derived };

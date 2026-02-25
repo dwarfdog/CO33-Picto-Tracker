@@ -96,6 +96,105 @@ App.ouvrirTooltip = function (picto) {
     secLumina.style.display = 'none';
   }
 
+  // Catégorie
+  var secCategorie = document.getElementById('tt-sec-categorie');
+  var ttCategorie = document.getElementById('tt-categorie');
+  if (picto.categorie && DATA.meta && Array.isArray(DATA.meta.categories)) {
+    var catMeta = null;
+    for (var ci = 0; ci < DATA.meta.categories.length; ci++) {
+      if (DATA.meta.categories[ci].id === picto.categorie) { catMeta = DATA.meta.categories[ci]; break; }
+    }
+    if (catMeta) {
+      ttCategorie.textContent = App.LANG === 'fr' ? catMeta.label_fr : catMeta.label_en;
+      secCategorie.style.display = '';
+    } else {
+      secCategorie.style.display = 'none';
+    }
+  } else {
+    secCategorie.style.display = 'none';
+  }
+
+  // Type d'obtention
+  var secObtType = document.getElementById('tt-sec-obtention-type');
+  var ttObtType = document.getElementById('tt-obtention-type');
+  if (picto.obtention_type && DATA.meta && Array.isArray(DATA.meta.obtention_types)) {
+    var obtMeta = null;
+    for (var oi = 0; oi < DATA.meta.obtention_types.length; oi++) {
+      if (DATA.meta.obtention_types[oi].id === picto.obtention_type) { obtMeta = DATA.meta.obtention_types[oi]; break; }
+    }
+    if (obtMeta) {
+      ttObtType.textContent = App.LANG === 'fr' ? obtMeta.label_fr : obtMeta.label_en;
+      secObtType.style.display = '';
+    } else {
+      secObtType.style.display = 'none';
+    }
+  } else {
+    secObtType.style.display = 'none';
+  }
+
+  // Maîtrise Lumina (0-4 circles)
+  var secMastery = document.getElementById('tt-sec-mastery');
+  var masteryControls = document.getElementById('tt-mastery-controls');
+  while (masteryControls.firstChild) masteryControls.removeChild(masteryControls.firstChild);
+
+  var currentMastery = App.getMaitrise(picto.id);
+  for (var mi = 1; mi <= App.MASTERY_MAX; mi++) {
+    var circle = document.createElement('button');
+    circle.type = 'button';
+    circle.className = 'mastery-circle' + (mi <= currentMastery ? ' filled' : '');
+    circle.dataset.level = mi;
+    circle.setAttribute('aria-label', App.t('tooltip_mastery_count', { n: mi, max: App.MASTERY_MAX }));
+    (function (level) {
+      circle.addEventListener('click', function () {
+        var newVal = (App.getMaitrise(picto.id) === level) ? level - 1 : level;
+        App.setMaitrise(picto.id, newVal);
+        App.ouvrirTooltip(picto);
+      });
+    })(mi);
+    masteryControls.appendChild(circle);
+  }
+  var masteryLabel = document.createElement('span');
+  masteryLabel.className = 'mastery-label';
+  masteryLabel.textContent = App.t('tooltip_mastery_count', { n: currentMastery, max: App.MASTERY_MAX });
+  masteryControls.appendChild(masteryLabel);
+  secMastery.style.display = '';
+
+  // Niveau (1-33)
+  var secLevel = document.getElementById('tt-sec-level');
+  var levelControls = document.getElementById('tt-level-controls');
+  while (levelControls.firstChild) levelControls.removeChild(levelControls.firstChild);
+
+  var currentLevel = App.getNiveau(picto.id);
+
+  var btnLevelDown = document.createElement('button');
+  btnLevelDown.type = 'button';
+  btnLevelDown.className = 'level-btn';
+  btnLevelDown.textContent = '\u2212';
+  btnLevelDown.disabled = currentLevel <= 1;
+  btnLevelDown.addEventListener('click', function () {
+    App.setNiveau(picto.id, App.getNiveau(picto.id) - 1);
+    App.ouvrirTooltip(picto);
+  });
+
+  var levelDisplay = document.createElement('span');
+  levelDisplay.className = 'level-display';
+  levelDisplay.textContent = App.t('tooltip_level_count', { n: currentLevel });
+
+  var btnLevelUp = document.createElement('button');
+  btnLevelUp.type = 'button';
+  btnLevelUp.className = 'level-btn';
+  btnLevelUp.textContent = '+';
+  btnLevelUp.disabled = currentLevel >= App.PICTO_LEVEL_MAX;
+  btnLevelUp.addEventListener('click', function () {
+    App.setNiveau(picto.id, App.getNiveau(picto.id) + 1);
+    App.ouvrirTooltip(picto);
+  });
+
+  levelControls.appendChild(btnLevelDown);
+  levelControls.appendChild(levelDisplay);
+  levelControls.appendChild(btnLevelUp);
+  secLevel.style.display = '';
+
   // Bouton possession
   var btn = document.getElementById('tt-btn-possession');
   var possede = App.etat.possedes.has(picto.id);
