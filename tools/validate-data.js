@@ -560,6 +560,16 @@ function validate() {
       }
     }
 
+    // Validate source_endgame
+    if (p.source_endgame !== undefined && typeof p.source_endgame !== 'boolean') {
+      errors.push('id ' + p.id + ': source_endgame must be a boolean when provided.');
+    }
+
+    // Validate source_boss
+    if (p.source_boss !== undefined && !isNonEmptyString(p.source_boss)) {
+      errors.push('id ' + p.id + ': source_boss must be a non-empty string when provided.');
+    }
+
     if (isNonEmptyString(p.effet_fr)) effetFrCount++;
     if (isNonEmptyString(p.obtention_fr)) obtentionFrCount++;
   }
@@ -636,6 +646,17 @@ function validate() {
       .join(', ');
     const obtTotal = Object.values(obtentionTypeUsage).reduce(function (a, b) { return a + b; }, 0);
     warnings.push('Obtention type coverage: ' + obtTotal + '/' + pictos.length + ' (' + (obtCoverage || 'none') + ').');
+  }
+
+  // Report endgame/boss coverage
+  let endgameCount = 0;
+  let bossCount = 0;
+  for (let i = 0; i < pictos.length; i++) {
+    if (pictos[i].source_endgame === true) endgameCount++;
+    if (isNonEmptyString(pictos[i].source_boss)) bossCount++;
+  }
+  if (endgameCount || bossCount) {
+    warnings.push('Endgame coverage: ' + endgameCount + '/' + pictos.length + ', Boss drops: ' + bossCount + '/' + pictos.length + '.');
   }
 
   return { errors, warnings, pictosCount: pictos.length, confirmed, derived };

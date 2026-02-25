@@ -626,7 +626,7 @@ var DATA = {
             "obtention_en": "Defeat Eveque, the boss of the area, to get this Pictos.",
             "obtention_fr": "Obtenu en battant l’Evêque.",
             "categorie": "defensive",
-            "obtention_type": "boss"
+            "obtention_type": "boss", "source_boss": "Eveque"
         },
         {
             "id": 7,
@@ -940,7 +940,7 @@ var DATA = {
             "obtention_en": "Players will encounter the Ultimate Sakapatate, the map's final boss, not long after passing the Giant Bell Alley Expedition Flag, and they will receive this Pictos upon besting the foe in combat.",
             "obtention_fr": "Obtenu en battant le Sakapatate Ultime.",
             "categorie": "offensive",
-            "obtention_type": "boss"
+            "obtention_type": "boss", "source_boss": "Ultimate Sakapatate"
         },
         {
             "id": 22,
@@ -1629,7 +1629,7 @@ var DATA = {
             "obtention_en": "(1) Near the entrance to The Carousel. (2) Complete Stage 7, Trial 3 of the Endless Tower",
             "obtention_fr": "",
             "categorie": "offensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 55,
@@ -1713,7 +1713,7 @@ var DATA = {
             "obtention_en": "Defeat Sprong. It's a huge enemy walking in the water next to Blades' Graveyard/Crimson Forest.",
             "obtention_fr": "",
             "categorie": "defensive",
-            "obtention_type": "boss"
+            "obtention_type": "boss", "source_boss": "Sprong"
         },
         {
             "id": 59,
@@ -1755,7 +1755,7 @@ var DATA = {
             "obtention_en": "Defeat the Eveque east of Stone Wave Cliffs Cave.",
             "obtention_fr": "",
             "categorie": "offensive",
-            "obtention_type": "boss"
+            "obtention_type": "boss", "source_boss": "Eveque"
         },
         {
             "id": 61,
@@ -1859,7 +1859,7 @@ var DATA = {
             "obtention_en": "Defeat the Serpenphare (flying dragon boss).",
             "obtention_fr": "",
             "categorie": "defensive",
-            "obtention_type": "boss"
+            "obtention_type": "boss", "source_boss": "Serpenphare"
         },
         {
             "id": 66,
@@ -2025,7 +2025,7 @@ var DATA = {
             "obtention_en": "(1) Same area as above. Turn right at the woman, take the first right to find a magic rope. (2) Complete Stage 8, Trial 3 of Endless Tower",
             "obtention_fr": "",
             "categorie": "defensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 74,
@@ -2359,7 +2359,7 @@ var DATA = {
             "obtention_en": "Beat the Axon boss (Visages / Mask Keeper)",
             "obtention_fr": "Battez le boss Axon (Visages / Gardien des masques)",
             "categorie": "offensive",
-            "obtention_type": "boss"
+            "obtention_type": "boss", "source_boss": "Axon (Visages)"
         },
         {
             "id": 90,
@@ -2505,7 +2505,7 @@ var DATA = {
             "obtention_en": "Defeat the Tisseur (large optional weaver boss)",
             "obtention_fr": "Battez le Tisseur (boss optional weaver)",
             "categorie": "defensive",
-            "obtention_type": "boss"
+            "obtention_type": "boss", "source_boss": "Tisseur"
         },
         {
             "id": 97,
@@ -2608,7 +2608,7 @@ var DATA = {
             "obtention_en": "Beat the boss, Sirene, at the end of the map.",
             "obtention_fr": "Battez le boss, Sirene, à la fin de la carte.",
             "categorie": "support",
-            "obtention_type": "boss"
+            "obtention_type": "boss", "source_boss": "Sirene"
         },
         {
             "id": 102,
@@ -3236,7 +3236,7 @@ var DATA = {
             "obtention_en": "Complete Stage 2, Trial 3",
             "obtention_fr": "Compléter le Stage 2, Trial 3",
             "categorie": "defensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 132,
@@ -3257,7 +3257,7 @@ var DATA = {
             "obtention_en": "Complete Stage 5, Trial 3",
             "obtention_fr": "Compléter le Stage 5, Trial 3",
             "categorie": "offensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 133,
@@ -3278,7 +3278,7 @@ var DATA = {
             "obtention_en": "Complete Stage 6, Trial 3",
             "obtention_fr": "Compléter le Stage 6, Trial 3",
             "categorie": "offensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 134,
@@ -3299,7 +3299,7 @@ var DATA = {
             "obtention_en": "Complete Stage 9, Trial 3",
             "obtention_fr": "Compléter le Stage 9, Trial 3",
             "categorie": "offensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 135,
@@ -3320,7 +3320,7 @@ var DATA = {
             "obtention_en": "Complete Stage 10, Trial 3",
             "obtention_fr": "Compléter le Stage 10, Trial 3",
             "categorie": "defensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 136,
@@ -3383,7 +3383,7 @@ var DATA = {
             "obtention_en": "To the right of the flag, take the stairs and rope down to the lower section of Flying Manor. The Picto can be found on the ledge to the left after riding the rope up to the Lampmaster boss area.",
             "obtention_fr": "À droite du drapeau, prenez les escaliers et grappillez-vous pour atteindre la section inférieure du Manoir Suspendu. Les Pictos peuvent être trouvés sur la plage à gauche après avoir grappillé jusqu'à la zone du boss Lampmaster.",
             "categorie": "support",
-            "obtention_type": "boss"
+            "obtention_type": "boss", "source_boss": "Lampmaster"
         },
         {
             "id": 139,
@@ -3571,7 +3571,7 @@ var DATA = {
             "obtention_en": "Defeat Clea at the end of Flying Manor.",
             "obtention_fr": "Battez Clea à la fin du Manoir Suspendu.",
             "categorie": "defensive",
-            "obtention_type": "boss"
+            "obtention_type": "boss", "source_boss": "Clea"
         },
         {
             "id": 148,
@@ -4412,7 +4412,7 @@ var DATA = {
             "obtention_en": "You can find the Powerful Mark Pictos being guarded by two Steel Chevalieres on a platform in the Goblu boss area.",
             "obtention_fr": "Vous pouvez trouver le Picto entouré de deux Chevaux de Steel dans une plateforme dans la zone du Boss Goblu.",
             "categorie": "offensive",
-            "obtention_type": "boss"
+            "obtention_type": "boss", "source_boss": "Steel Chevalieres"
         },
         {
             "id": 189,
@@ -4538,7 +4538,7 @@ var DATA = {
             "obtention_en": "Alternating Critical can be found at Verso's Drafts. Can be found from the Open Playground expedition flag. Head towards the left fork and enter the cave. From the cave entrance, enter the tunnel on the right to find the picto at the end.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Peut être trouvé à partir du drapeau de l'Expédition du Parc Ouvert. Allez vers la gauche et entrez dans la grotte. À partir de l'entrée de la grotte, entrez dans le tunnel à droite pour trouver le Picto à la fin.",
             "categorie": "offensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 195,
@@ -4559,7 +4559,7 @@ var DATA = {
             "obtention_en": "Consuming Attack can be obtained by exchanging 130,200 Chromas from Najabla at Verso's Drafts.",
             "obtention_fr": "Peut être obtenu en échangeant 130,200 Chromas de Najabla à Esquisses de Verso.",
             "categorie": "offensive",
-            "obtention_type": "merchant"
+            "obtention_type": "merchant", "source_endgame": true
         },
         {
             "id": 196,
@@ -4580,7 +4580,7 @@ var DATA = {
             "obtention_en": "Slowing Attack can be found at Verso's Drafts. It's found in a pool near the Gestral Baths flag, and the orange glowing Esquies.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Il se trouve dans un bassin près du drapeau des Bains de Gestral, et les Esquies orange lumineuses.",
             "categorie": "defensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 197,
@@ -4602,7 +4602,7 @@ var DATA = {
             "obtention_en": "Double Third can be found at Verso's Drafts. Defeat the Barbacusette and Machinepieds on the cliff past the Open Playground expedition flag.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Combattre le Barbacusette et le Machinepieds sur le rocher après le drapeau de l'Expédition du Parc Ouvert.",
             "categorie": "defensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 198,
@@ -4622,7 +4622,7 @@ var DATA = {
             "obtention_en": "Trigger-Happy is obtained as a drop by defeating Romanifo (Half-Baked Gestral) found at Verso's Drafts.",
             "obtention_fr": "Peut être obtenu en battant Romanifo (Gestral demi-cuit) à Esquisses de Verso.",
             "categorie": "offensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 199,
@@ -4642,7 +4642,7 @@ var DATA = {
             "obtention_en": "Feint can be found at Verso's Drafts. Beat Monsieur Frappe in the Candy Land area by parrying his attack 3 times.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Combattre Monsieur Frappe dans la zone de la Bonbonnerie en parant son attaque 3 fois.",
             "categorie": "offensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 200,
@@ -4662,7 +4662,7 @@ var DATA = {
             "obtention_en": "Frenzy can be found at Verso's Drafts. Defeat the Licornapieds boss near the Licornapieds Station flag to get the Picto.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Combattre le boss Licornapieds près du drapeau de la Station Licornapieds pour obtenir le Picto.",
             "categorie": "offensive",
-            "obtention_type": "boss"
+            "obtention_type": "boss", "source_endgame": true, "source_boss": "Licornapieds"
         },
         {
             "id": 201,
@@ -4684,7 +4684,7 @@ var DATA = {
             "obtention_en": "Longer Break can be found at Verso's Drafts. Defeat the Barbacusette and Machinepieds on the cliff past the Open Playground expedition flag.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Combattre le Barbacusette et le Machinepieds sur le rocher après le drapeau de l'Expédition du Parc Ouvert.",
             "categorie": "defensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 202,
@@ -4705,7 +4705,7 @@ var DATA = {
             "obtention_en": "Clea's Death is obtained as a drop by defeating Clea Unleashed found at the Endless Tower. You'll need to beat the original Clea in the Flying Manor first to unlock her Unleashed version. Interact with the painting to start the boss fight.",
             "obtention_fr": "Peut être obtenu en battant Clea Déchaînée trouvée à la Tour infinie. Vous devrez d'abord battre la Clea originale dans le Manoir Suspendu pour débloquer sa version Déchaînée. Interagissez avec le tableau pour démarrer le combat.",
             "categorie": "offensive",
-            "obtention_type": "boss"
+            "obtention_type": "boss", "source_endgame": true, "source_boss": "Clea Unleashed"
         },
         {
             "id": 203,
@@ -4726,7 +4726,7 @@ var DATA = {
             "obtention_en": "Gradient Parry can be found at Verso's Drafts. Go down the pathway from the Gestral Baths expedition flag and pick up Gradient Parry from the Esquie statue's hand. The statue is near a #5 Hopscotch tile.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Allez le long du chemin depuis le drapeau des Bains de Gestral et récupérez le Parade Gradient de la main de la statue d'Esquie. La statue est près d'un tuile #5 Hopscotch.",
             "categorie": "offensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 204,
@@ -4747,7 +4747,7 @@ var DATA = {
             "obtention_en": "Damage Share can be found at Verso's Drafts. Defeat the Barbacusette and two Licornes just past the entrance of the cave to obtain Damage Share. You can reach this cave from the Open Playground expedition flag and taking the left fork.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Combattre le Barbacusette et deux Licornes juste après l'entrée de la grotte pour obtenir le Partage de dégâts. Vous pouvez atteindre cette grotte à partir du drapeau de l'Expédition du Parc Ouvert et en prenant le chemin de gauche.",
             "categorie": "support",
-            "obtention_type": "boss"
+            "obtention_type": "boss", "source_endgame": true, "source_boss": "Barbacusette"
         },
         {
             "id": 205,
@@ -4767,7 +4767,7 @@ var DATA = {
             "obtention_en": "First Life can be found at Endless Tower. Interact with the painting and defeat Chromatic Lampmaster in the boss fight.",
             "obtention_fr": "Peut être trouvé à la Tour infinie. Interagissez avec le tableau et battre Chromatic Lampmaster dans le combat de boss.",
             "categorie": "offensive",
-            "obtention_type": "boss"
+            "obtention_type": "boss", "source_endgame": true, "source_boss": "Chromatic Lampmaster"
         },
         {
             "id": 206,
@@ -4787,7 +4787,7 @@ var DATA = {
             "obtention_en": "AP Discount can be obtained by exchanging 217,000 Chromas from Najabla at Verso's Drafts.",
             "obtention_fr": "Peut être obtenu en échangeant 217,000 Chromas de Najabla à Esquisses de Verso.",
             "categorie": "support",
-            "obtention_type": "merchant"
+            "obtention_type": "merchant", "source_endgame": true
         },
         {
             "id": 207,
@@ -4807,7 +4807,7 @@ var DATA = {
             "obtention_en": "SOS Healing Tint can be found at Verso's Drafts. Defeat the Franctale on the left path past the Open Playground expedition flag.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Combattre le Franctale sur le chemin de gauche après le drapeau de l'Expédition du Parc Ouvert.",
             "categorie": "defensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 208,
@@ -4828,7 +4828,7 @@ var DATA = {
             "obtention_en": "Empowered Healer can be found at Verso's Drafts. From the Gestral Baths flag, head onward down the path, keeping right. There will be a short platforming section across planks of a broken bridge. Jump across successfully to obtain this Picto.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Depuis le drapeau des Bains de Gestral, allez tout droit le long du chemin, en gardant à droite. Il y aura une section de saut en planches d'un pont cassé. Sautez avec succès pour obtenir ce Picto.",
             "categorie": "offensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 209,
@@ -4848,7 +4848,7 @@ var DATA = {
             "obtention_en": "Gradient Overcharge can be found at Verso's Drafts. It's found on a large piece of floating candy near the entrance of Candy Land. Climb the overhead beams of the swing in the area to reach the candy.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Il se trouve sur une grande pièce de bonbon flottante près de l'entrée de la Bonbonnerie. Montez les poutres au-dessus du balançoire dans la zone pour atteindre le bonbon.",
             "categorie": "offensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         },
         {
             "id": 210,
@@ -4868,7 +4868,7 @@ var DATA = {
             "obtention_en": "Empowering Jumps can be found at Verso's Drafts. Head north from the Open Playground expedition flag to the Half-Baked Gestral on a seesaw. Start the Seesaw Challenge and jump each time the Gestral lands. Completing it rewards you with Empowering Jumps.",
             "obtention_fr": "Peut être trouvé à Esquisses de Verso. Allez au nord à partir du drapeau de l'Expédition du Parc Ouvert jusqu'à Gestral demi-cuit sur une balançoire. Démarrez le défi de la balançoire et sautez chaque fois que Gestral atterrit. Compléter ce défi vous récompense avec des Sauts renforçants.",
             "categorie": "offensive",
-            "obtention_type": "exploration"
+            "obtention_type": "exploration", "source_endgame": true
         }
     ]
 };

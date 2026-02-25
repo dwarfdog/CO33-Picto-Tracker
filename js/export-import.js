@@ -60,6 +60,7 @@ App.telechargerFichier = function () {
     budget_lumina: App.etat.luminaBudget || 0,
     maitrise: App.etat.maitrise || {},
     niveaux: App.etat.niveaux || {},
+    ng_cycle: App.etat.ngCycle || 0,
     total: App.etat.possedes.size,
   };
 
@@ -94,7 +95,8 @@ App.telechargerTousProfils = function () {
         build_lumina: Array.from(p.buildLumina).sort(function (a, b) { return a - b; }),
         budget_lumina: p.budgetLumina,
         maitrise: p.maitrise || {},
-        niveaux: p.niveaux || {}
+        niveaux: p.niveaux || {},
+        ng_cycle: p.ngCycle || 0
       };
     }),
     total_pictos: DATA.pictos.length
@@ -140,7 +142,8 @@ App.importerTousProfils = function (code) {
         build_lumina: entry.build_lumina || entry.buildLumina || [],
         budget_lumina: entry.budget_lumina !== undefined ? entry.budget_lumina : (entry.budgetLumina || 0),
         maitrise: entry.maitrise || {},
-        niveaux: entry.niveaux || {}
+        niveaux: entry.niveaux || {},
+        ng_cycle: entry.ng_cycle || 0
       });
     });
     if (typeof parsed.profil_actif === 'string') {

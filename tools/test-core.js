@@ -242,7 +242,7 @@ function run() {
   // MASTERY_MAX and PICTO_LEVEL_MAX constants
   assert.strictEqual(App.MASTERY_MAX, 4);
   assert.strictEqual(App.PICTO_LEVEL_MAX, 33);
-  assert.strictEqual(App.STORAGE_VERSION, 5);
+  assert.strictEqual(App.STORAGE_VERSION, 6);
 
   // normaliserMaitrise
   assert.deepStrictEqual(App.normaliserMaitrise(null), {});
@@ -282,15 +282,57 @@ function run() {
   assert.deepStrictEqual(App.etat.maitrise, {});
   assert.deepStrictEqual(App.etat.niveaux, {});
 
-  // Verify v5 save includes maitrise and niveaux
+  // Verify v6 save includes maitrise, niveaux and ng_cycle
   App.setMaitrise(1, 2);
   App.setNiveau(2, 10);
+  App.setNgCycle(2);
   App.sauvegarder();
-  var savedV5 = JSON.parse(localStorage.getItem(App.STORAGE_KEY));
-  assert.strictEqual(savedV5.version, 5);
-  var profV5 = savedV5.profils[0];
-  assert.strictEqual(profV5.maitrise[1], 2);
-  assert.strictEqual(profV5.niveaux[2], 10);
+  var savedV6 = JSON.parse(localStorage.getItem(App.STORAGE_KEY));
+  assert.strictEqual(savedV6.version, 6);
+  var profV6 = savedV6.profils[0];
+  assert.strictEqual(profV6.maitrise[1], 2);
+  assert.strictEqual(profV6.niveaux[2], 10);
+  assert.strictEqual(profV6.ng_cycle, 2);
+
+  // ── PR7: NG Cycle ──
+
+  // NG_CYCLES constant
+  assert.ok(Array.isArray(App.NG_CYCLES) && App.NG_CYCLES.length === 4);
+  assert.strictEqual(App.NG_CYCLES[0].maxLevel, 15);
+  assert.strictEqual(App.NG_CYCLES[3].maxLevel, 33);
+
+  // getNgMaxLevel
+  App.setNgCycle(0);
+  assert.strictEqual(App.getNgMaxLevel(), 15);
+  App.setNgCycle(1);
+  assert.strictEqual(App.getNgMaxLevel(), 22);
+  App.setNgCycle(2);
+  assert.strictEqual(App.getNgMaxLevel(), 28);
+  App.setNgCycle(3);
+  assert.strictEqual(App.getNgMaxLevel(), 33);
+
+  // setNgCycle clamping
+  App.setNgCycle(-1);
+  assert.strictEqual(App.etat.ngCycle, 0);
+  App.setNgCycle(5);
+  assert.strictEqual(App.etat.ngCycle, 3);
+
+  // Migration v5→v6 : ng_cycle should default to 0
+  localStorage.clear();
+  localStorage.setItem(App.STORAGE_KEY, JSON.stringify({
+    version: 5,
+    profil_actif: 'p1',
+    profils: [{ id: 'p1', nom: 'OldV5', possedes: [1], build_lumina: [], budget_lumina: 0, maitrise: {}, niveaux: {} }]
+  }));
+  App.chargerSauvegarde();
+  assert.ok(App.etat.profils.length >= 1, 'Should load v5 profile');
+  assert.strictEqual(App.etat.ngCycle, 0);
+
+  // source_endgame and source_boss fields should exist on some pictos
+  var endgamePictos = DATA.pictos.filter(function (p) { return p.source_endgame === true; });
+  assert.ok(endgamePictos.length >= 10, 'Should have at least 10 endgame pictos');
+  var bossPictos = DATA.pictos.filter(function (p) { return typeof p.source_boss === 'string' && p.source_boss.length > 0; });
+  assert.ok(bossPictos.length >= 10, 'Should have at least 10 boss drop pictos');
 }
 
 if (require.main === module) {

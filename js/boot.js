@@ -115,6 +115,8 @@
     filtreObtention:   'filtre-obtention',
     filtreGameplayMode:'filtre-gameplay-mode',
     btnGameplayClear:'btn-gameplay-clear',
+    // NG Cycle
+    ngCycleSelect:   'ng-cycle-select',
     // Modal prompt
     promptOverlay:   'prompt-overlay',
     promptTitle:     'prompt-title',
@@ -149,6 +151,9 @@
   }
   if (App._dom.filtreGameplayMode && App.etat.filtreGameplayMode) {
     App._dom.filtreGameplayMode.value = App.etat.filtreGameplayMode;
+  }
+  if (App._dom.ngCycleSelect) {
+    App._dom.ngCycleSelect.value = App.etat.ngCycle || 0;
   }
 
   // Rendu de la grille et mise à jour de la progression

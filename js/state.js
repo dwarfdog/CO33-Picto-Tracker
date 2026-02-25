@@ -13,6 +13,7 @@ App.etat = {
   luminaBudget: 0,
   maitrise: {},  // { [pictoId]: 0-4 } — Lumina mastery combats
   niveaux: {},   // { [pictoId]: 1-33 } — Picto levels
+  ngCycle: 0,    // 0=NG, 1=NG+, 2=NG++, 3=NG+++
   filtreCollection: 'tous', // 'tous' | 'possedes' | 'manquants'
   filtreBuild: 'tous', // 'tous' | 'planifies' | 'hors-plan'
   filtreCategorie: '',  // '' | 'offensive' | 'defensive' | 'support'
@@ -208,6 +209,32 @@ App.getNiveau = function (pictoId) {
 };
 
 /**
+ * Retourne le niveau max de picto selon le cycle NG actif.
+ * @returns {number}
+ */
+App.getNgMaxLevel = function () {
+  var cycle = App.etat.ngCycle || 0;
+  for (var i = 0; i < App.NG_CYCLES.length; i++) {
+    if (App.NG_CYCLES[i].id === cycle) return App.NG_CYCLES[i].maxLevel;
+  }
+  return App.PICTO_LEVEL_MAX;
+};
+
+/**
+ * Définit le cycle NG et sauvegarde.
+ * @param {number} cycle (0-3)
+ */
+App.setNgCycle = function (cycle) {
+  var val = parseInt(cycle, 10) || 0;
+  if (val < 0) val = 0;
+  if (val > 3) val = 3;
+  App.etat.ngCycle = val;
+  var profil = App.getProfilActif();
+  if (profil) profil.ngCycle = val;
+  App.sauvegarder();
+};
+
+/**
  * Retourne un profil par son ID.
  * @param {string} profilId
  * @returns {{id:string, nom:string, possedes:Set<number>, buildLumina:Set<number>, budgetLumina:number}|null}
@@ -275,6 +302,10 @@ App.ajouterProfil = function (config) {
   var maitrise = App.normaliserMaitrise(cfg.maitrise || {});
   var niveaux = App.normaliserNiveaux(cfg.niveaux || {});
 
+  // NG cycle (0-3)
+  var ngCycle = parseInt(cfg.ng_cycle, 10) || 0;
+  if (ngCycle < 0 || ngCycle > 3) ngCycle = 0;
+
   var profil = {
     id: profilId,
     nom: nom,
@@ -282,7 +313,8 @@ App.ajouterProfil = function (config) {
     buildLumina: normalizedBuild.set,
     budgetLumina: normalizedBudget.value,
     maitrise: maitrise,
-    niveaux: niveaux
+    niveaux: niveaux,
+    ngCycle: ngCycle
   };
 
   App.etat.profils.push(profil);
@@ -318,6 +350,7 @@ App.assurerProfils = function () {
   App.etat.luminaBudget = profilActif ? profilActif.budgetLumina : 0;
   App.etat.maitrise = profilActif && profilActif.maitrise ? profilActif.maitrise : {};
   App.etat.niveaux = profilActif && profilActif.niveaux ? profilActif.niveaux : {};
+  App.etat.ngCycle = profilActif ? (profilActif.ngCycle || 0) : 0;
 
   if (['tous', 'planifies', 'hors-plan'].indexOf(App.etat.filtreBuild) === -1) {
     App.etat.filtreBuild = 'tous';
@@ -419,6 +452,7 @@ App.activerProfil = function (profilId, options) {
   App.etat.luminaBudget = profil.budgetLumina;
   App.etat.maitrise = profil.maitrise || {};
   App.etat.niveaux = profil.niveaux || {};
+  App.etat.ngCycle = profil.ngCycle || 0;
 
   App.rafraichirSelectProfils();
 
@@ -536,6 +570,13 @@ App.chargerSauvegarde = function () {
           var niveaux = (entry.niveaux && typeof entry.niveaux === 'object') ? entry.niveaux : {};
           if (!entry.maitrise || !entry.niveaux) needsMigration = true;
 
+          // Migration v5→v6 : ng_cycle (absent → 0)
+          var ngCycle = entry.ng_cycle;
+          if (ngCycle === undefined) {
+            ngCycle = 0;
+            needsMigration = true;
+          }
+
           var added = App.ajouterProfil({
             id: entry.id,
             nom: entry.nom,
@@ -543,7 +584,8 @@ App.chargerSauvegarde = function () {
             build_lumina: buildLumina,
             budget_lumina: budgetLumina,
             maitrise: maitrise,
-            niveaux: niveaux
+            niveaux: niveaux,
+            ng_cycle: ngCycle
           });
 
           if (added.changed) needsMigration = true;
@@ -596,12 +638,12 @@ App.chargerSauvegarde = function () {
 };
 
 /**
- * Sauvegarde la progression dans localStorage au format v5 (multi-profils + mastery/levels).
+ * Sauvegarde la progression dans localStorage au format v6 (multi-profils + mastery/levels + NG cycle).
  * Format :
  * {
- *   version: 5,
+ *   version: 6,
  *   profil_actif: 'profil_xxx',
- *   profils: [{ id, nom, possedes, build_lumina, budget_lumina, maitrise, niveaux }],
+ *   profils: [{ id, nom, possedes, build_lumina, budget_lumina, maitrise, niveaux, ng_cycle }],
  *   ui: { tri, filtreCollection, filtreZone, filtreBuild, filtreGameplayMode, filtreGameplayTags }
  * }
  */
@@ -617,7 +659,8 @@ App.sauvegarder = function () {
         build_lumina: Array.from(profil.buildLumina).sort(function (a, b) { return a - b; }),
         budget_lumina: profil.budgetLumina,
         maitrise: profil.maitrise || {},
-        niveaux: profil.niveaux || {}
+        niveaux: profil.niveaux || {},
+        ng_cycle: profil.ngCycle || 0
       };
     });
 

@@ -53,6 +53,23 @@ App.ouvrirTooltip = function (picto) {
     secObtention.style.display = 'none';
   }
 
+  // Source (boss / endgame)
+  var secSource = document.getElementById('tt-sec-source');
+  var ttSource = document.getElementById('tt-source');
+  var sourceTexts = [];
+  if (picto.source_endgame) {
+    sourceTexts.push(App.t('tooltip_source_endgame'));
+  }
+  if (picto.source_boss) {
+    sourceTexts.push(App.t('tooltip_source_boss', { boss: picto.source_boss }));
+  }
+  if (sourceTexts.length) {
+    ttSource.textContent = sourceTexts.join(' — ');
+    secSource.style.display = '';
+  } else {
+    secSource.style.display = 'none';
+  }
+
   // Stats — construction DOM pure
   var statsGrille = document.getElementById('tt-stats');
   var secStats = document.getElementById('tt-sec-stats');
@@ -192,6 +209,7 @@ App.ouvrirTooltip = function (picto) {
   while (levelControls.firstChild) levelControls.removeChild(levelControls.firstChild);
 
   var currentLevel = App.getNiveau(picto.id);
+  var maxLevel = (typeof App.getNgMaxLevel === 'function') ? App.getNgMaxLevel() : App.PICTO_LEVEL_MAX;
 
   var btnLevelDown = document.createElement('button');
   btnLevelDown.type = 'button';
@@ -205,15 +223,16 @@ App.ouvrirTooltip = function (picto) {
 
   var levelDisplay = document.createElement('span');
   levelDisplay.className = 'level-display';
-  levelDisplay.textContent = App.t('tooltip_level_count', { n: currentLevel });
+  levelDisplay.textContent = App.t('tooltip_level_count', { n: currentLevel, max: maxLevel });
 
   var btnLevelUp = document.createElement('button');
   btnLevelUp.type = 'button';
   btnLevelUp.className = 'level-btn';
   btnLevelUp.textContent = '+';
-  btnLevelUp.disabled = currentLevel >= App.PICTO_LEVEL_MAX;
+  btnLevelUp.disabled = currentLevel >= maxLevel;
   btnLevelUp.addEventListener('click', function () {
-    App.setNiveau(picto.id, App.getNiveau(picto.id) + 1);
+    var ngMax = (typeof App.getNgMaxLevel === 'function') ? App.getNgMaxLevel() : App.PICTO_LEVEL_MAX;
+    App.setNiveau(picto.id, Math.min(App.getNiveau(picto.id) + 1, ngMax));
     App.ouvrirTooltip(picto);
   });
 

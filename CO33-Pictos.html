@@ -120,6 +120,17 @@
 				<input type="file" id="import-fichier" accept=".json,.txt" style="display:none">
 			</div>
 
+			<!-- NG Cycle -->
+			<div class="controles-ligne">
+				<label for="ng-cycle-select" class="sr-only" id="lbl-ng-cycle">NG Cycle</label>
+				<select class="select-zone ng-cycle-select" id="ng-cycle-select" aria-labelledby="lbl-ng-cycle">
+					<option value="0">NG</option>
+					<option value="1">NG+</option>
+					<option value="2">NG++</option>
+					<option value="3">NG+++</option>
+				</select>
+			</div>
+
 			<!-- Reset -->
 			<button type="button" class="btn-reset" id="btn-reset"></button>
 		</div>
@@ -295,6 +306,10 @@
 					<div class="tooltip-section" id="tt-sec-obtention">
 						<div class="tooltip-section-titre"></div>
 						<div class="tooltip-section-contenu italique" id="tt-obtention"></div>
+					</div>
+					<div class="tooltip-section" id="tt-sec-source">
+						<div class="tooltip-section-titre"></div>
+						<div class="tooltip-section-contenu" id="tt-source"></div>
 					</div>
 					<div class="tooltip-section" id="tt-sec-categorie">
 						<div class="tooltip-section-titre"></div>

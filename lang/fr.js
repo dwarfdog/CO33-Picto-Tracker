@@ -131,7 +131,7 @@
     tooltip_mastery:         'Maîtrise Lumina',
     tooltip_mastery_count:   '{n}/{max}',
     tooltip_level:           'Niveau',
-    tooltip_level_count:     'Niv. {n}',
+    tooltip_level_count:     'Niv. {n}/{max}',
     tooltip_categorie:       'Catégorie',
     tooltip_obtention_type:  'Type d\u2019obtention',
 
@@ -215,6 +215,19 @@
     character_recommended:   'Pictos recommandés',
     character_synergies:     'Synergies actives',
     tooltip_char_affinity:   'Affinités personnages',
+
+    // NG Cycle
+    label_ng_cycle:          'Cycle NG',
+    ng_label:                'NG',
+    ng1_label:               'NG+',
+    ng2_label:               'NG++',
+    ng3_label:               'NG+++',
+
+    // Source / Endgame
+    tooltip_source:          'Source',
+    tooltip_source_endgame:  'Endgame',
+    tooltip_source_boss:     'Boss : {boss}',
+    badge_endgame:           'Endgame',
 
     // Switcher
     lang_label:              'Langue',

@@ -34,6 +34,8 @@ App.appliquerTraductions = function () {
   document.getElementById('lbl-filtre-obtention').textContent = App.t('label_obtention_filter');
   document.getElementById('lbl-tri-select').textContent = App.t('label_sort_order');
   document.getElementById('lbl-profil-select').textContent = App.t('label_profile_select');
+  var lblNgCycle = document.getElementById('lbl-ng-cycle');
+  if (lblNgCycle) lblNgCycle.textContent = App.t('label_ng_cycle');
 
   // Tri
   var triSelect = document.getElementById('tri-select');
@@ -121,6 +123,8 @@ App.appliquerTraductions = function () {
   document.querySelector('#tt-sec-lumina .tooltip-section-titre').textContent = App.t('tooltip_lumina');
   document.querySelector('#tt-sec-flag .tooltip-section-titre').textContent = App.t('tooltip_flag');
   document.querySelector('#tt-sec-obtention .tooltip-section-titre').textContent = App.t('tooltip_obtain');
+  var secSourceTitle = document.querySelector('#tt-sec-source .tooltip-section-titre');
+  if (secSourceTitle) secSourceTitle.textContent = App.t('tooltip_source');
   document.querySelector('#tt-sec-categorie .tooltip-section-titre').textContent = App.t('tooltip_categorie');
   document.querySelector('#tt-sec-obtention-type .tooltip-section-titre').textContent = App.t('tooltip_obtention_type');
   var secCharAffinTitle = document.querySelector('#tt-sec-char-affinity .tooltip-section-titre');

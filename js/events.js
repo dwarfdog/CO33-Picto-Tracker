@@ -121,6 +121,18 @@ App.attacher = function () {
     });
   }
 
+  // ── NG Cycle ──
+  if (dom.ngCycleSelect) {
+    dom.ngCycleSelect.addEventListener('change', function (e) {
+      App.setNgCycle(parseInt(e.target.value, 10) || 0);
+      // Refresh tooltip if open (level max may have changed)
+      if (App.etat.pictoOuvert && typeof App.ouvrirTooltip === 'function') {
+        var p = App.getPictoById(App.etat.pictoOuvert);
+        if (p) App.ouvrirTooltip(p);
+      }
+    });
+  }
+
   // ── Filtres collection (délégation) ──
   document.querySelectorAll('.btn-filtre[data-filtre]').forEach(function (btn) {
     btn.addEventListener('click', function () {

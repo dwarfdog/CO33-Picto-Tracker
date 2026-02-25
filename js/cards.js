@@ -133,6 +133,14 @@ App.creerCartePicto = function (picto) {
     header.appendChild(lumina);
   }
 
+  if (picto.source_endgame) {
+    var endgameBadge = document.createElement('div');
+    endgameBadge.className = 'carte-endgame-badge';
+    endgameBadge.textContent = '\u2606';
+    endgameBadge.title = App.t('badge_endgame');
+    header.appendChild(endgameBadge);
+  }
+
   el.appendChild(header);
 
   // ── Corps ──
